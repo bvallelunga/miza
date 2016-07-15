@@ -1,0 +1,19 @@
+{
+  "name": "sledge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "ejs": "^2.4.1",
+    "express": "~4.2.x"
+  },
+  "engines": {
+    "node": ">=4.1"
+  }
+}
