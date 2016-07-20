@@ -11,7 +11,11 @@
   "dependencies": {
     "body-parser": "^1.14.2",
     "ejs": "^2.4.1",
-    "express": "~4.2.x"
+    "express": "~4.2.x",
+    "express-logger": "0.0.3",
+    "morgan": "^1.7.0",
+    "request": "^2.73.0",
+    "url": "^0.11.0"
   },
   "engines": {
     "node": ">=4.1"

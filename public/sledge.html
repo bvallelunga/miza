@@ -1,35 +1,96 @@
 <html>
 	<head>
-  	<title>Sledge Tester</title>
-		<script type='text/javascript'>
-      var googletag = googletag || {};
-      googletag.cmd = googletag.cmd || [];
-      (function() {
-        var gads = document.createElement('script');
-        gads.async = true;
-        gads.type = 'text/javascript';
-        var useSSL = 'https:' == document.location.protocol;
-        gads.src = (useSSL ? 'https:' : 'http:') +
-          '//www.googletagservices.com/tag/js/gpt.js';
-        var node = document.getElementsByTagName('script')[0];
-        node.parentNode.insertBefore(gads, node);
-      })();
-    </script>
-    
-    <script type='text/javascript'>
-      googletag.cmd.push(function() {
-        googletag.defineSlot('/72625737/sledge', [300, 250], 'div-gpt-ad-1468566910229-0').addService(googletag.pubads());
-        googletag.pubads().enableSingleRequest();
-        googletag.enableServices();
-      });
-    </script>
+  	<title>Sledge Tester</title>	
+  	<style>
+    	.ad {
+      	margin: 50px auto;
+        display: table;
+    	}
+  	</style>
+  	
+    <script type='text/javascript'>    	
+			(function(window, id, data) {	
+  			var API = window[id] = window[id] || {};
+        var base_url = (
+          document.location.protocol + "//" + id.toLowerCase() + 
+          "." + document.location.host.split(".").slice(-2).join(".") + "/"
+        )
+        
+        API.cmd = API.cmd || [];
+  			API.cmd.push(function() {
+          data.init(API)
+          
+          data.slots.forEach(function(s) {
+            API.defineSlot(s[0], s[1], s[2]).addService(API.pubads())
+          })
+        })
+        
+        function url_builder(url) {
+          return [
+            base_url, btoa(url), "?r=", 
+            Math.random(), "&id=", id
+          ].join("")
+        }
+        
+        function tag_builder(url, name, path) {         
+          var tag = document.createElement(name)
+  	      tag[path] = url_builder(url)
+          tag.async = !!data.async;
+          return tag          
+        }
+        
+        function tag_inserted(event, ele) {        
+          ele = ele || event.target
+          var src = ele.src || ele.href
+          var tagName = (ele.tagName || "").toLowerCase()
+          
+          if (!!src && src.indexOf(base_url) == -1 && src.indexOf("javascript:") == -1) {
+            var path = ele.src ? "src" : "href"
+            var node = (tagName == "script") ? tag_builder(src, tagName, path) : ele.cloneNode(true)
+            node[path] = url_builder(src)
+            ele.parentNode.replaceChild(node, ele)
+          }
+          
+          if(tagName == "iframe") { 
+            if(ele.contentDocument == null) return
+            
+            ele.contentDocument.addEventListener('DOMNodeInserted', tag_inserted)
+            ele.write = ele.contentDocument.write = function(content) {
+              this.getElementsByTagName('body')[0].innerHTML += content
+              this.writeln(content)
+            }
+          }
+          
+          ele.childNodes.forEach(function(node) {          
+            return tag_inserted(null, node)
+          })
+        }
+  			
+        document.addEventListener('DOMNodeInserted', tag_inserted)
+        var script = tag_builder("www.googletagservices.com/tag/js/gpt.js", "script", "src")
+        script.type = "text/javascript"
+        document.getElementsByTagName('head')[0].appendChild(script)
+			})(window, "Em1nqJ7AsZ", {
+  		  async: true,
+  		  init: function(API) {
+    		  API.pubads().enableSingleRequest()
+    		  API.enableServices()
+  		  },
+  		  slots: [
+    		  ['/72625737/sledge', [300, 250], 'Em1nqJ7AsZ-1468566910229-0']
+  		  ]
+			})
+		</script>
 	</head>
 	<body>
-		<!-- /72625737/sledge -->
-    <div id='div-gpt-ad-1468566910229-0' style='height:250px; width:300px;'>
-      <script type='text/javascript'>
-        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1468566910229-0'); });
-      </script>
-    </div>
+  	<div class="ad">
+      <div id='Em1nqJ7AsZ-1468566910229-0'>
+        <script type='text/javascript'>
+          Em1nqJ7AsZ.cmd.push(function() { 
+            Em1nqJ7AsZ.display('Em1nqJ7AsZ-1468566910229-0'); 
+          });
+        </script>
+      </div>
+  	</div>
 	</body>
 </html>
