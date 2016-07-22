@@ -8,23 +8,8 @@
     	}
   	</style>
   	
-    <script type='text/javascript'>    	
-			(function(window, id, data) {	
-  			var API = window[id] = window.googletag = window.googletag || {}
-        var base_url = (
-          document.location.protocol + "//" + id.toLowerCase() + 
-          "." + document.location.host.split(".").slice(-2).join(".") + "/"
-        )
-        
-        API.cmd = API.cmd || [];
-  			API.cmd.push(function() {
-          data.init(API)
-          
-          data.slots.forEach(function(s) {
-            API.defineSlot(s[0], s[1], s[2]).addService(API.pubads())
-          })
-        })
-        
+  	<script type='text/javascript'>
+    	(function(w, id, data) {	
         window[id] = window.googletag = window.googletag || {}
       	
       	var base_url = [ 
@@ -64,7 +49,6 @@
           if (!!src && src.indexOf(base_url) == -1 && src.indexOf("javascript:") == -1) {
             var node = (tagName == "script") ? script_builder() : ele.cloneNode(true)
             node[path] = url_builder(src)
-            node[path] += (tagName == "a") ? "?link=true" : ""
             ele.parentNode.replaceChild(node, ele)
           }
           
@@ -82,28 +66,38 @@
         }
         
         document.addEventListener('DOMNodeInserted', tag_inserted)
-        var script = script_builder()
-        script.src = url_builder("www.googletagservices.com/tag/js/gpt.js")
-        document.getElementsByTagName('head')[0].appendChild(script)
-			})(window, "Em1nqJ7AsZ", {
-  		  async: true,
-  		  init: function(API) {
-    		  API.pubads().enableSingleRequest()
-    		  API.enableServices()
-  		  },
-  		  slots: [
-    		  ['/72625737/sledge', [300, 250], 'Em1nqJ7AsZ-1468566910229-0']
-  		  ]
-			})
-		</script>
+      })(window, "Em1nqJ7AsZ")
+    </script>
+  	
+		<script type='text/javascript'>
+      var googletag = googletag || {};
+      googletag.cmd = googletag.cmd || [];
+      (function() {
+        var gads = document.createElement('script');
+        gads.async = true;
+        gads.type = 'text/javascript';
+        var useSSL = 'https:' == document.location.protocol;
+        gads.src = (useSSL ? 'https:' : 'http:') +
+          '//www.googletagservices.com/tag/js/gpt.js';
+        var node = document.getElementsByTagName('script')[0];
+        node.parentNode.insertBefore(gads, node);
+      })();
+    </script>
+    
+    <script type='text/javascript'>
+      googletag.cmd.push(function() {
+        googletag.defineSlot('/72625737/sledge', [300, 250], 'div-gpt-ad-1468566910229-0').addService(googletag.pubads());
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+      });
+    </script>
 	</head>
 	<body>
   	<div class="ad">
-      <div id='Em1nqJ7AsZ-1468566910229-0'>
+  		<!-- /72625737/sledge -->
+      <div id='div-gpt-ad-1468566910229-0' style='height:250px; width:300px;'>
         <script type='text/javascript'>
-          Em1nqJ7AsZ.cmd.push(function() { 
-            Em1nqJ7AsZ.display('Em1nqJ7AsZ-1468566910229-0'); 
-          });
+          googletag.cmd.push(function() { googletag.display('div-gpt-ad-1468566910229-0'); });
         </script>
       </div>
   	</div>

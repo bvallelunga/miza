@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(__dirname + '/public'))
 
 // Sledge
-app.get("*",sledge.downloader, sledge.modifier)
+app.get("/:encoded/:id",sledge.downloader, sledge.modifier)
 
 // Listen 
 app.listen(3030)
