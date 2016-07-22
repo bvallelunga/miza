@@ -33,7 +33,7 @@
         ].join("")
       	
       	function url_builder(url) {
-          return base_url + btoa(url) + "/" + id
+          return base_url + btoa(url) + "?id=" + id
         }
         
         function script_builder() {
@@ -64,7 +64,7 @@
           if (!!src && src.indexOf(base_url) == -1 && src.indexOf("javascript:") == -1) {
             var node = (tagName == "script") ? script_builder() : ele.cloneNode(true)
             node[path] = url_builder(src)
-            node[path] += (tagName == "a") ? "?link=true" : ""
+            node[path] += (tagName == "a") ? "&link=true" : ""
             ele.parentNode.replaceChild(node, ele)
           }
           

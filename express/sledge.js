@@ -4,7 +4,9 @@ var Promise = require("bluebird")
 
 
 module.exports.downloader = function(req, res, next) {
-  var url = new Buffer(req.params.encoded, 'base64').toString("ascii")
+  var url = new Buffer(req.path.slice(1), 'base64').toString("ascii")
+  
+  console.log(url)
   
   if(url.indexOf("://") == -1) {
     url = "http://" + url
@@ -53,15 +55,16 @@ module.exports.downloader = function(req, res, next) {
 module.exports.modifier = function(req, res, next) {
   var data = req.data.content
   var replacers = [
-    [/([^a-zA-Z\d\s:])?googletag([^a-zA-Z\d\s:]|$)/gi, "$1" + req.params.id + "$2"],
-    [/div\-gpt\-ad/gi, req.params.id],
-    [/google\_ads\_iframe/gi, req.params.id + "_iframe"],
-    [/google_/gi, req.params.id + "_"],
-    [/img_ad/gi, req.params.id]
+    [/([^a-zA-Z\d\s:])?googletag([^a-zA-Z\d\s:]|$)/gi, "$1" + req.query.id + "$2"],
+    [/div\-gpt\-ad/gi, req.query.id],
+    [/google\_ads\_iframe/gi, req.query.id + "_iframe"],
+    [/google\_/gi, req.query.id + "_"],
+    [/img\_ad/gi, req.query.id + "_img"]
   ]
   
   for (var i in replacers) {
     var replacer = replacers[i]
+    
     data = data.replace(replacer[0], replacer[1])
   }
 
