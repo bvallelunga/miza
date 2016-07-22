@@ -4,7 +4,7 @@ var Promise = require("bluebird")
 
 
 module.exports.downloader = function(req, res, next) {
-  var url = Buffer.from(req.params.encoded, "base64").toString("ascii")
+  var url = new Buffer(req.params.encoded, 'base64').toString("ascii")
   
   if(url.indexOf("://") == -1) {
     url = "http://" + url
