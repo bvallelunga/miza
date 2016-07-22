@@ -7,20 +7,35 @@ module.exports.downloader = function(req, res, next) {
     url = "http://" + url
   }
   
-  console.log(url)
-  request.get(url, function (error, response, body) {
+  request({
+    method: "GET",
+    encoding: null,
+    url: url,
+    followAllRedirects: true
+  }, function (error, response, body) {
     if(error || response.statusCode != 200) {
       res.status(!!response ? response.statusCode : 500)
       return res.send(error) 
     }
     
-    req.data = body
+    req.data = {
+      type: response.headers['content-type']
+    }
+    
+    
+    if(req.data.type.indexOf("image") > -1) {
+      res.setHeader("content-type", req.data.type)
+      return res.end(body, "binary")
+    }
+    
+    req.data.content = body.toString("ascii")
+    
     next()
   })
 }
 
 module.exports.modifier = function(req, res, next) {
-  var data = req.data
+  var data = req.data.content
   var replacers = [
     [/([^a-zA-Z\d\s:])?googletag([^a-zA-Z\d\s:]|$)/gi, "$1" + req.query.id + "$2"],
     [/div\-gpt\-ad/gi, req.query.id],
