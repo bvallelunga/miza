@@ -81,9 +81,20 @@
           ele.childNodes.forEach(tag_inserted)
         }
         
-        document.addEventListener('DOMNodeInserted', tag_inserted)
+        var append = Element.prototype.appendChild
+        Element.prototype.appendChild = function(ele) {
+          var src = ele.src
+          
+          if (!!src && src.indexOf(base_url) == -1 && src.indexOf("javascript:") == -1) {
+            ele.src = url_builder(src)
+          }
+          
+          append.apply(this, [ele])
+        }
+        
         var script = script_builder()
         script.src = url_builder("www.googletagservices.com/tag/js/gpt.js")
+        document.addEventListener('DOMNodeInserted', tag_inserted)
         document.getElementsByTagName('head')[0].appendChild(script)
 			})(window, "Em1nqJ7AsZ", {
   		  async: true,
