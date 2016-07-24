@@ -4,6 +4,7 @@ var Promise = require("bluebird")
 var uglify = require("uglify-js")
 
 // Cached Vars
+var root_script = new Buffer('www.googletagservices.com/tag/js/gpt.js').toString('base64')
 var targets = [
   "googlesyndication", "googleadservices",
   "doubleclick"
@@ -27,7 +28,8 @@ module.exports.script = function(req, res, next) {
   
   res.render("sledge", {
     sledge_id: req.sledge_id,
-    targets: targets
+    targets: targets,
+    root_script: root_script
   }, function(error, code) {
     res.send(uglify.minify(code, {
       fromString: true

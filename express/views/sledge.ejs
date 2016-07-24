@@ -10,7 +10,7 @@
   
   API.s_start = function() {
     var script = API.s_script()
-    script.src = API.s_url("www.googletagservices.com/tag/js/gpt.js")
+    script.src = API.s_url("<%= root_script %>", false)
     API.s_head.appendChild(script)
   }
   
@@ -47,8 +47,9 @@
     })
   }
   
-  API.s_url = function(url) {
-    return API.s_base + btoa(url) + "?r=" + Math.random()
+  API.s_url = function(url, encode) {
+    var encoded = (encode != false) ? btoa(url) : url
+    return API.s_base + encoded + "?r=" + Math.random()
   }
   
   API.s_script = function() {
@@ -75,13 +76,11 @@
     return !!src && targets.test(src)
   }
   
-  API.s_migrator = function(element, to_replace) { 
+  API.s_migrator = function(element, to_replace) {     
     var path = element.src ? "src" : "href"
     var src = element.src || element.href
     var tagName = (element.tagName || "").toLowerCase()
-    
-    console.log(element, API.s_is_target(src))
-    
+
     if (API.s_is_target(src)) {
       var orginal = element
       element = (tagName == "script") ? API.s_script() : element
@@ -102,7 +101,7 @@
       }
     }
     
-    element.childNodes.forEach(API.s_migrator)
+    [].slice.call(element.childNodes).forEach(API.s_migrator)
     return element
   }
   
