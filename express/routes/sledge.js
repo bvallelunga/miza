@@ -1,7 +1,39 @@
 var request = require("request")
 var redis = require("redis").createClient()
 var Promise = require("bluebird")
+var uglify = require("uglify-js")
 
+// Cached Vars
+var targets = [
+  "googlesyndication", "googleadservices",
+  "doubleclick"
+].map(function(target) {
+  return "(" + target + ")"
+}).join("|")
+
+module.exports.identifier = function(req, res, next) {
+  var domains = req.host.split(".").slice(0, -1)
+  
+  if(domains.length > 0) {
+    req.sledge_id = domains[0]
+  }
+  
+  next()
+}
+
+module.exports.script = function(req, res, next) {
+  if(!req.sledge_id) 
+    return res.redirect("/test.html")
+  
+  res.render("sledge", {
+    sledge_id: req.sledge_id,
+    targets: targets
+  }, function(error, code) {
+    res.send(uglify.minify(code, {
+      fromString: true
+    }).code)
+  })
+}
 
 module.exports.downloader = function(req, res, next) {
   var url = new Buffer(req.path.slice(1), 'base64').toString("ascii")
@@ -53,12 +85,12 @@ module.exports.downloader = function(req, res, next) {
 module.exports.modifier = function(req, res, next) {
   var data = req.data.content
   var replacers = [
-    [/([^a-zA-Z\d\s:])?googletag([^a-zA-Z\d\s:]|$)/gi, "$1" + req.query.id + "$2"],
-    [/div\-gpt\-ad/gi, req.query.id],
-    [/google_ads_iframe/gi, req.query.id + "_iframe"],
-    [/google_/gi, req.query.id + "_"],
-    [/img_ad/gi, req.query.id + "_img"],
-    [/google-ad-content-/gi, req.query.id + "-content"]
+    [/([^a-zA-Z\d\s:])?googletag([^a-zA-Z\d\s:]|$)/gi, "$1" + req.sledge_id + "$2"],
+    [/div\-gpt\-ad/gi, req.sledge_id],
+    [/google_ads_iframe/gi, req.sledge_id + "_iframe"],
+    [/google_/gi, req.sledge_id + "_"],
+    [/img_ad/gi, req.sledge_id + "_img"],
+    [/google-ad-content-/gi, req.sledge_id + "-content"]
   ]
   
   for (var i in replacers) {

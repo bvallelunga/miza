@@ -2,7 +2,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var morgan = require("morgan")
-var sledge = require("./express/sledge")
+var sledge = require("./express/routes/sledge")
 var app = express()
 
 // Express Setup
@@ -19,7 +19,8 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(__dirname + '/public'))
 
 // Sledge
-app.get("*", sledge.downloader, sledge.modifier)
+app.get("/", sledge.identifier, sledge.script)
+app.get("*", sledge.identifier, sledge.downloader, sledge.modifier)
 
 // Listen 
-app.listen(80)
+app.listen(3030)
