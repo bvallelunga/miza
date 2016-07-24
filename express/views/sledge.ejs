@@ -11,22 +11,22 @@
   API.s_start = function() {
     var script = API.s_script()
     script.src = API.s_url("www.googletagservices.com/tag/js/gpt.js")
-    API.s_natives.appendChild.apply(API.s_head, [script])
+    API.s_head.appendChild(script)
   }
   
   API.s_overrides = function(window) {
     [
-      window.Element.prototype.appendChild,
-      window.Element.prototype.insertBefore,
-      window.Document.prototype.writeln
-    ].forEach(function(override) {
-      var method = API.s_natives[override.name] = override
-      override = API.s_override_method(method)
+      [window.Element.prototype, "appendChild"],
+      [window.Element.prototype, "insertBefore"],
+      [window.Document.prototype, "writeln"]
+    ].forEach(function(override) {      
+      var method = API.s_natives[override.name] = override[0][override[1]]
+      override[0][override[1]] = API.s_override_method(method)
     }) 
   }
   
   API.s_override_method = function(override) {
-    return function(element) {      
+    return function(element) {            
       if(override.name == "writeln")
         return API.s_override_writeln(this, content) 
       
@@ -48,12 +48,11 @@
   }
   
   API.s_url = function(url) {
-    return API.s_base + btoa(url)
+    return API.s_base + btoa(url) + "r=" + Math.random()
   }
   
   API.s_script = function() {
     var script = document.createElement('script')
-    script.async = true
     script.setAttribute('type', 'text/javascript')
     return script
   }
@@ -81,11 +80,15 @@
     var src = element.src || element.href
     var tagName = (element.tagName || "").toLowerCase()
     
+    console.log(element, API.s_is_target(src))
+    
     if (API.s_is_target(src)) {
       var orginal = element
       element = (tagName == "script") ? API.s_script() : element
+      element.async = orginal.async
+      element.type = orginal.type
       element[path] = API.s_url(src)
-      element[path] += (tagName == "a") ? "?link=true" : ""
+      element[path] += (tagName == "a") ? "&link=true" : ""
       
       if(to_replace != false)
         orginal.parentNode.replaceChild(element, orginal)

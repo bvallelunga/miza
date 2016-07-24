@@ -20,7 +20,7 @@
           "." + document.location.host.split(".").slice(-2).join(".") + "/"
         )
         
-        script.src = API.s_base
+        script.src = API.s_base + "?r=" + Math.random()
         script.async = true
         document.getElementsByTagName('head')[0].appendChild(script)
 			})(window, "em1nqj7asz")

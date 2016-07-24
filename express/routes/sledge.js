@@ -22,7 +22,7 @@ module.exports.identifier = function(req, res, next) {
 }
 
 module.exports.script = function(req, res, next) {
-  if(!req.sledge_id) 
+  if(!req.sledge_id || req.sledge_id == "sledge") 
     return res.redirect("/test.html")
   
   res.render("sledge", {
@@ -87,10 +87,10 @@ module.exports.modifier = function(req, res, next) {
   var replacers = [
     [/([^a-zA-Z\d\s:])?googletag([^a-zA-Z\d\s:]|$)/gi, "$1" + req.sledge_id + "$2"],
     [/div\-gpt\-ad/gi, req.sledge_id],
-    [/google_ads_iframe/gi, req.sledge_id + "_iframe"],
-    [/google_/gi, req.sledge_id + "_"],
-    [/img_ad/gi, req.sledge_id + "_img"],
-    [/google-ad-content-/gi, req.sledge_id + "-content"]
+    [/google\_ads\_iframe/gi, req.sledge_id + "_iframe"],
+    [/google\_/gi, req.sledge_id + "_"],
+    [/img\_ad/gi, req.sledge_id + "_img"],
+    [/google\-ad\-content-/gi, req.sledge_id + "-content"]
   ]
   
   for (var i in replacers) {
