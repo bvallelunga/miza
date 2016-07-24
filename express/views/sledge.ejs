@@ -48,7 +48,7 @@
   }
   
   API.s_url = function(url) {
-    return API.s_base + btoa(url) + "r=" + Math.random()
+    return API.s_base + btoa(url) + "?r=" + Math.random()
   }
   
   API.s_script = function() {
