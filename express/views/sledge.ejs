@@ -38,6 +38,7 @@
   API.s_override_writeln = function(document, content) {
     var out = API.s_cleaner(this, content)
     document.body.innerHTML += out[0]
+    debugger
     document.getElementsByTagName('head')[0].appendChild(out[1])
   } 
     
@@ -80,7 +81,7 @@
     var path = element.src ? "src" : "href"
     var src = element.src || element.href
     var tagName = (element.tagName || "").toLowerCase()
-
+    
     if (API.s_is_target(src)) {
       var orginal = element
       element = (tagName == "script") ? API.s_script() : element
