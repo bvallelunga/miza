@@ -1,7 +1,6 @@
 var request = require("request")
 var redis = require("redis").createClient()
 var Promise = require("bluebird")
-var uglify = require("uglify-js")
 
 // Cached Vars
 var root_script = new Buffer('www.googletagservices.com/tag/js/gpt.js').toString('base64')
@@ -30,10 +29,6 @@ module.exports.script = function(req, res, next) {
     sledge_id: req.sledge_id,
     targets: targets,
     root_script: root_script
-  }, function(error, code) {
-    res.send(uglify.minify(code, {
-      fromString: true
-    }).code)
   })
 }
 
