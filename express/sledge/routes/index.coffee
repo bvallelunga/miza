@@ -39,13 +39,14 @@ module.exports.downloader = (req, res, next)->
     if not error? and response
       try
         req.data = JSON.parse(response)
+        req.data.cached = true
         
         if req.data.content.type == "Buffer"
           req.data.content = new Buffer(req.data.content.data)
         
         return next()  
       
-      catch e 
+      catch e
         console.log e
     
     request {
@@ -62,8 +63,10 @@ module.exports.downloader = (req, res, next)->
         return res.send error
       
       req.data = {
-        media: "page",
+        url: url
+        media: "page"
         headers: response.headers or {}
+        cached: false
       }
       
       if req.query.link?
@@ -78,28 +81,31 @@ module.exports.downloader = (req, res, next)->
         req.data.content = body.toString("ascii")
       
       res.set req.data.headers
-      Libs.redis.set url, JSON.stringify(req.data)
       next()
 
 
 module.exports.modifier = (req, res, next)->  
   if req.data.media == "link"
-    return res.redirect req.data.href
+    res.redirect req.data.href
     
-  if req.data.media == "image"
-    return res.end req.data.content, "binary"
+  else if req.data.media == "image"
+    res.end req.data.content, "binary"
 
-  data = req.data.content
-  replacers = [
-    [/([^a-zA-Z\d\s:])?googletag([^a-zA-Z\d\s:]|$)/gi, "$1#{req.sledge_id}$2"],
-    [/div\-gpt\-ad/gi, req.sledge_id],
-    [/google\_ads\_iframe/gi, "#{req.sledge_id}_iframe"],
-    [/google\_/gi, "#{req.sledge_id}_"],
-    [/img\_ad/gi, "#{req.sledge_id}_img"],
-    [/google\-ad\-content-/gi, "#{req.sledge_id}-content"]
-  ]
+  else
+    if not req.data.cached
+      replacers = [
+        [/([^a-zA-Z\d\s:])?googletag([^a-zA-Z\d\s:]|$)/gi, "$1#{req.sledge_id}$2"],
+        [/div\-gpt\-ad/gi, req.sledge_id],
+        [/google\_ads\_iframe/gi, "#{req.sledge_id}_iframe"],
+        [/google\_/gi, "#{req.sledge_id}_"],
+        [/img\_ad/gi, "#{req.sledge_id}_img"],
+        [/google\-ad\-content-/gi, "#{req.sledge_id}-content"]
+      ]
+      
+      for replacer in replacers
+        req.data.content = req.data.content.replace replacer[0], replacer[1]
+
+    res.send req.data.content
   
-  for replacer in replacers
-    data = data.replace replacer[0], replacer[1]
-
-  res.send data
+  if not req.data.cached
+    Libs.redis.set req.data.url, JSON.stringify(req.data)

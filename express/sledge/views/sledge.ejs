@@ -1,5 +1,6 @@
 (function(window, API) {
   API.s_init = function() {
+    API.s_prod = <%= Libs.isProd %>
     API.s_head = document.getElementsByTagName('head')[0]
     API.s_natives = {}
     
@@ -49,7 +50,8 @@
   
   API.s_url = function(url, encode) {
     var encoded = (encode != false) ? btoa(url) : url
-    return API.s_base + encoded + "?r=" + Math.random()
+    var random = "r=" + Math.random()
+    return API.s_base + encoded + "?" + (!API.s_prod ? random : "")
   }
   
   API.s_script = function() {

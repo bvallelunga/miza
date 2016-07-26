@@ -1,7 +1,6 @@
 express = require 'express'
 bodyParser = require 'body-parser'
 morgan = require "morgan"
-routers = require "./express/routers"
 app = express()
 
 # Globals
@@ -18,10 +17,11 @@ app.use bodyParser.urlencoded({
 
 
 # Subdomain Routers
+routers = require("./express/routers")()
 app.use routers.engine
 app.use routers.sledge.prefix, routers.sledge.app
 app.use routers.website
 
 
-# Listen 
-app.listen 3030
+# Listen
+app.listen Libs.env.PORT or 3030
