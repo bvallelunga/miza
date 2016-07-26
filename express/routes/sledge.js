@@ -44,47 +44,64 @@ module.exports.downloader = function(req, res, next) {
     url = "http://" + url
   }
   
-  if(!!req.query.link) {
-    return res.redirect(url)
-  }
-  
-  redis.get(url, function(error, response) {    
-    if(!!response) {
+  redis.get(url, function(error, response) {       
+    if(!error && response) {
       try {
         req.data = JSON.parse(response)
+        
+        if(req.data.content.type == "Buffer")
+          req.data.content = new Buffer(req.data.content.data)
+        
         return next()  
-      } catch(e){ }
+      } catch(e){ console.log(e) }
     }
     
     request({
       method: "GET",
       encoding: null,
       url: url,
-      followAllRedirects: true
-    }, function (error, response, body) {
+      followAllRedirects: true,
+      headers: {
+        cookie: req.headers.cookie
+      }
+    }, function (error, response, body) { 
       if(error || response.statusCode != 200) {
         res.status(!!response ? response.statusCode : 500)
         return res.send(error) 
       }
       
       req.data = {
-        type: response.headers['content-type']
+        media: "page",
+        headers: response.headers || {}
       }
       
-      if(req.data.type.indexOf("image") > -1) {
-        res.setHeader("content-type", req.data.type)
-        return res.end(body, "binary")
+      if(!!req.query.link) {
+        req.data.media = "link"
+        req.data.href = response.request.uri.href || url
+      }  
+      
+      if(req.data.headers['content-type'].indexOf("image") > -1) {
+        req.data.media = "image"
+        req.data.content = body
+      } else {
+        req.data.content = body.toString("ascii")
       }
       
-      req.data.content = body.toString("ascii")
+      res.set(req.data.headers)
       redis.set(url, JSON.stringify(req.data))
-      
       next()
     })
   })
 }
 
-module.exports.modifier = function(req, res, next) {
+module.exports.modifier = function(req, res, next) {  
+  if(req.data.media == "link")
+    return res.redirect(req.data.href)
+    
+  if(req.data.media == "image")
+    return res.end(req.data.content, "binary")
+  
+  
   var data = req.data.content
   var replacers = [
     [/([^a-zA-Z\d\s:])?googletag([^a-zA-Z\d\s:]|$)/gi, "$1" + req.sledge_id + "$2"],
