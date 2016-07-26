@@ -1,1 +1,1 @@
-web: coffee server.coffee
+web: forever -w -c coffee server.coffee

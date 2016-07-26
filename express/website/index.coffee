@@ -1,6 +1,7 @@
 express = require 'express'
 app = express()
 
+
 module.exports = ->
   # Express Setup
   app.use require("compression")()
