@@ -13,7 +13,7 @@ module.exports = (srv)->
     engine: (req, res, next)->
       subdomains = req.host.split(".")
     
-      if subdomains.length >= 2 and subdomains[0] != "www"
+      if subdomains.length >= 2 and subdomains[0] not in CONFIG.website_subdomains
         req.url =  "/#{sledge_secret}/#{req.path.slice(1)}"
         
       next()
