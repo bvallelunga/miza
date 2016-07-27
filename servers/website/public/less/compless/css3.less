@@ -1,0 +1,284 @@
+//
+// Display
+//
+.inline-block() {
+    display: -moz-inline-stack;
+    display: inline-block;
+
+    *vertical-align: auto;
+    zoom: 1;
+    *display: inline;
+}
+
+
+//
+// Opacity
+//
+@opacity: .5;
+
+.opacity(@level: @opacity) {
+    opacity: @level;
+}
+
+.transparent() { .opacity(0); }
+.opaque() { .opacity(1); }
+
+
+//
+// Background
+//
+@rgba-background: .5;
+
+.rgba-background(@color, @alpha: @rgba-background) {
+    background: @color;
+
+    @hue: hue(@color);
+    @saturation: saturation(@color);
+    @lightness: lightness(@color);
+    background: hsla(@hue, @saturation, @lightness, @alpha);
+}
+
+
+//
+// Border-radius
+//
+@border-radius: 5px;
+
+.border-radius(@radius: @border-radius) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+}
+
+// just an alias
+.border-radius(@top-right, @bottom-right, @bottom-left, @top-left) {
+    .border-radius(@arguments);
+}
+
+.border-top-right-radius(@radius) {
+    -webkit-border-top-right-radius: @radius;
+    -moz-border-radius-radius: @radius;
+    border-top-right-radius: @radius;
+}
+
+.border-bottom-right-radius(@radius) {
+    -webkit-border-bottom-right-radius: @radius;
+    -moz-border-radius-bottomright: @radius;
+    border-bottom-right-radius: @radius;
+}
+
+.border-bottom-left-radius(@radius) {
+    -webkit-border-bottom-left-radius: @radius;
+    -moz-border-radius-bottomleft: @radius;
+    border-bottom-left-radius: @radius;
+}
+
+.border-top-left-radius(@radius) {
+    -webkit-border-top-left-radius: @radius;
+    -moz-border-radius-topleft: @radius;
+    border-top-left-radius: @radius;
+}
+
+.border-top-radius(@radius) {
+    .border-top-left-radius(@radius);
+    .border-top-right-radius(@radius);
+}
+
+.border-right-radius(@radius) {
+    .border-top-right-radius(@radius);
+    .border-bottom-right-radius(@radius);
+}
+
+.border-bottom-radius(@radius) {
+    .border-bottom-left-radius(@radius);
+    .border-bottom-right-radius(@radius);
+}
+
+.border-left-radius(@radius) {
+    .border-top-left-radius(@radius);
+    .border-bottom-left-radius(@radius);
+}
+
+
+//
+// Transition
+//
+@transition-property: all;
+@transition-duration: .2s;
+@transition-timing-function: ease;
+@transition-delay: 0;
+
+// unfortunately, for now you can specify only one property with ".transition" mixin
+.transition(
+    @property: @transition-property,
+    @duration: @transition-duration,
+    @timing-function: @transition-timing-function,
+    @delay: @transition-delay) {
+        -webkit-transition: @arguments;
+        -moz-transition: @property, @duration, @timing-function;
+        -o-transition: @arguments;
+        transition: @arguments;
+}
+
+.transition-property(@property: @transition-property) {
+        -webkit-transition-property: @property;
+        -moz-transition-property: @property;
+        -o-transition-property: @property;
+        transition-property: @property;
+}
+
+.transition-duration(@duration: @transition-duration) {
+    -webkit-transition-duration: @duration;
+    -moz-transition-duration: @duration;
+    -o-transition-duration: @duration;
+    transition-duration: @duration;
+}
+.transition-timing-function(@timing-function: @transition-timing-function) {
+    -webkit-transition-timing-function: @timing-function;
+    -moz-transition-timing-function: @timing-function;
+    -o-transition-timing-function: @timing-function;
+    transition-timing-function: @timing-function;
+}
+.transition-delay(@delay: @transition-delay) {
+    -webkit-transition-delay: @delay;
+    -moz-transition-delay: @delay;
+    -o-transition-delay: @delay;
+    transition-delay: @delay;
+}
+
+
+//
+// animation
+//
+.animation(@animation) {
+    -webkit-animation: @animation;
+    -moz-animation: @animation;
+    -ms-animation: @animation;
+    -o-animation: @animation;
+    animation: @animation;
+}
+
+
+//
+// Box sizing
+//
+.box-sizing(@box-sizing) {
+    -webkit-box-sizing: @box-sizing;
+    -moz-box-sizing: @box-sizing;
+    box-sizing: @box-sizing;
+}
+
+
+//
+// Gradients
+// (in Compass it is part of Images framework)
+//
+.linear-gradient(@direction, @start, @rest, @fallback:@rest...) {
+    background: @fallback;
+    background: -webkit-linear-gradient(@direction, @start, @rest);
+    background: -moz-linear-gradient(@direction, @start, @rest);
+    background: -ms-linear-gradient(@direction, @start, @rest);
+    background: -o-linear-gradient(@direction, @start, @rest);
+    background: linear-gradient(@direction, @start, @rest);
+}
+
+
+//
+// Font-face
+//
+.font-face(@name, @font-files, @weight: normal, @style: normal) {
+    @font-face {
+        src: @font-files;
+
+        font-family: @name;
+        font-weight: @weight;
+        font-style: @style;
+    }
+}
+
+
+//
+// Box-shadow
+//
+@shadow: 0 0 5px #333;
+.box-shadow(@shadow: @shadow) {
+    -webkit-box-shadow: @shadow;
+    -moz-box-shadown: @shadow;
+    box-shadow: @shadow;
+}
+
+//
+// Transform
+//
+@transform: translate3d(0, 0, 0);
+.transform(@transform: @transform) {
+    -webkit-transform: @transform;
+    -moz-transform: @transform;
+    -ms-transform: @transform;
+    -o-transform: @transform;
+    transform: @transform;
+}
+
+//
+// Filters
+//
+.filter(@filter: @filter) {
+    -webkit-filter: @filter;
+    -moz-filter: @filter;
+    -o-filter: @filter;
+    -ms-filter: @filter;
+
+    // Enables openGL
+    .transform(translate3d(0, 0, 0));
+}
+
+//
+// Appearance
+//
+.appearance(@appearance) {
+    -webkit-appearance: @appearance;
+    -moz-appearance: @appearance;
+    appearance: @appearance;
+}
+
+//
+// Calc Width
+//
+.calc-width(@calc) {
+    width: -moz-calc(@calc);
+    width: -webkit-calc(@calc);
+    width: -o-calc(@calc);
+    width: calc(@calc);
+}
+
+//
+// Calc Height
+//
+.calc-height(@calc) {
+    height: -moz-calc(@calc);
+    height: -webkit-calc(@calc);
+    height: -o-calc(@calc);
+    height: calc(@calc);
+}
+
+
+//
+// Placeholder
+//
+.placeholder(@color) {
+    ::-webkit-input-placeholder {
+       color: @color;
+    }
+
+    :-moz-placeholder { /* Firefox 18- */
+       color: @color;
+    }
+
+    ::-moz-placeholder {  /* Firefox 19+ */
+       color: @color;
+    }
+
+    :-ms-input-placeholder {
+       color: @color;
+    }
+}
