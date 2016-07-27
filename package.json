@@ -2,26 +2,32 @@
   "name": "sledge",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.coffee",
   "scripts": {
-    "start": "node app.js"
+    "start": "coffee server.coffee"
   },
   "author": "",
   "license": "",
   "dependencies": {
     "bluebird": "^3.4.1",
     "body-parser": "^1.14.2",
+    "coffee-script": ">1.1.2",
     "compression": "^1.6.2",
+    "connect-redis": "^3.1.0",
+    "cookie-parser": "^1.4.3",
+    "csurf": "^1.9.0",
     "ejs": "^2.4.1",
     "express": "~4.2.x",
-    "express-logger": "0.0.3",
-    "is-image": "^1.0.1",
-    "isbinaryfile": "^3.0.0",
+    "express-session": "^1.14.0",
+    "express-subdomain": "^1.0.5",
+    "less": "^2.7.1",
     "morgan": "^1.7.0",
+    "piler": "^0.5.1",
     "redis": "^2.6.2",
-    "request": "^2.73.0",
-    "uglify-js": "^2.7.0",
-    "url": "^0.11.0"
+    "request": "^2.73.0"
+  },
+  "devDependencies": {
+    "forever": "^0.15.2"
   },
   "engines": {
     "node": ">=4.1"

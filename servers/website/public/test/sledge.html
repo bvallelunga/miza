@@ -14,7 +14,7 @@
         var script = document.createElement("script")
   			API.cmd = API.cmd || []
   			API.s_id = id
-        API.s_base = "//" + id.toLowerCase() + "." + location.host.replace(/([a-zA-Z0-9]+.)/, "") + "/"
+        API.s_base = "//" + id.toLowerCase() + "." + location.host.split(".").slice(-2).join(".") + "/"
         script.src = API.s_base + "?r=" + Math.random()
         script.async = true
         document.getElementsByTagName('head')[0].appendChild(script)

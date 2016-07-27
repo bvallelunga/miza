@@ -1,5 +1,6 @@
 (function(window, API) {
   API.s_init = function() {
+    API.s_prod = <%= LIBS.isProd %>
     API.s_head = document.getElementsByTagName('head')[0]
     API.s_natives = {}
     
@@ -38,7 +39,6 @@
   API.s_override_writeln = function(document, content) {
     var out = API.s_cleaner(this, content)
     document.body.innerHTML += out[0]
-    debugger
     document.getElementsByTagName('head')[0].appendChild(out[1])
   } 
     
@@ -50,7 +50,8 @@
   
   API.s_url = function(url, encode) {
     var encoded = (encode != false) ? btoa(url) : url
-    return API.s_base + encoded + "?r=" + Math.random()
+    var random = "r=" + Math.random()
+    return API.s_base + encoded + "?" + (!API.s_prod ? random : "")
   }
   
   API.s_script = function() {
