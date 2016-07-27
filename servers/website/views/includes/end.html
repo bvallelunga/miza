@@ -1,0 +1,15 @@
+    <!-- Site Config -->
+    <script type="text/javascript">
+      var config = Object.assign({
+        host: "<%= host %>",
+        title: "<%= full_title %>",
+        name: "<%= site_title %>",
+        delimeter: "<%= site_delimeter %>",
+        media: <%- JSON.stringify(media) %>
+      }, JSON.parse('<%- JSON.stringify(config) %>'))
+    </script>
+
+    <!-- Javascript -->
+    <%- js %>
+  </body>
+</html>

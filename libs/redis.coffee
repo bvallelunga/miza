@@ -1,5 +1,6 @@
 Redis = require("redis")
-redis = Redis.createClient(process.env.REDIS_URL)
+redis = null
 
 # Exports
-module.exports = redis
+module.exports = ->
+  return redis = redis or Redis.createClient(CONFIG.redis_url)

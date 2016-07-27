@@ -2,9 +2,11 @@ express = require 'express'
 bodyParser = require 'body-parser'
 morgan = require "morgan"
 app = express()
+srv = require("http").createServer(app)
 
 # Globals
-GLOBAL.Libs = require("./libs")
+GLOBAL.CONFIG = require("./config")
+GLOBAL.LIBS = require("./libs")()
 
 
 # Express Setup
@@ -17,11 +19,11 @@ app.use bodyParser.urlencoded({
 
 
 # Subdomain Routers
-routers = require("./express/routers")()
+routers = require("./servers/routers")(srv)
 app.use routers.engine
 app.use routers.sledge.prefix, routers.sledge.app
 app.use routers.website
 
 
 # Listen
-app.listen Libs.env.PORT or 3030
+srv.listen CONFIG.port or 3030

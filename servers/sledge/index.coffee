@@ -2,7 +2,7 @@ express = require 'express'
 routes = require "./routes"
 app = express()
 
-module.exports = ->
+module.exports = (srv)->
   # Express Setup
   app.use require("compression")()
   app.set 'views', __dirname + '/views'

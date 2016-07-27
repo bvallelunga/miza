@@ -35,7 +35,7 @@ module.exports.downloader = (req, res, next)->
   if url.indexOf("://") == -1
     url = "http://" + url
   
-  Libs.redis.get url, (error, response)->     
+  LIBS.redis.get url, (error, response)->     
     if not error? and response
       try
         req.data = JSON.parse(response)
@@ -108,4 +108,4 @@ module.exports.modifier = (req, res, next)->
     res.send req.data.content
   
   if not req.data.cached
-    Libs.redis.set req.data.url, JSON.stringify(req.data)
+    LIBS.redis.set req.data.url, JSON.stringify(req.data)

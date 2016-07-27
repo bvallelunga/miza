@@ -1,12 +1,12 @@
-module.exports = ->
+module.exports = (srv)->
   sledge_secret = Math.random().toString(33).slice(2)
 
   return {
     
-    website: require("./website")()
+    website: require("./website")(srv)
     
     sledge: {
-      app: require("./sledge")(),
+      app: require("./sledge")(srv),
       prefix: "/" + sledge_secret
     }
     
