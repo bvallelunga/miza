@@ -1,5 +1,5 @@
 module.exports = {
   
-  homepage: require("./homepage")
+  landing: require("./landing")
   
 }

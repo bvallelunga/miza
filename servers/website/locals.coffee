@@ -23,7 +23,7 @@ module.exports = (req, res, next)->
   res.locals.config = {}
   res.locals.user = req.session.user
   res.locals.title_first = true
-  res.locals.random = if CONFIG.isProd then "" else "?rand=#{Math.random()}"
+  res.locals.random = if CONFIG.isProd then "" else "?r=#{Math.random()}"
   res.locals.search = ""
   res.locals.media = {
     "logo" : "#{res.locals.host}/imgs/logo.png#{res.locals.random}"

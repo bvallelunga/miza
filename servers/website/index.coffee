@@ -22,7 +22,7 @@ module.exports = (srv)->
   
   
   # Routes
-  app.get("/", routes.homepage.root)
+  app.get("/", routes.landing.root)
   
   
   # Export
