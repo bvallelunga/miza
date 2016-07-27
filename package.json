@@ -21,7 +21,7 @@
     "express-session": "^1.14.0",
     "less": "^2.7.1",
     "morgan": "^1.7.0",
-    "piler": "https://github.com/bvallelunga/piler.git#master",
+    "piler": "https://github.com/bvallelunga/piler.git#4ae1fe30d47cf69425dd8ee6e3dfeb0ff780b35b",
     "redis": "^2.6.2",
     "request": "^2.73.0"
   },
