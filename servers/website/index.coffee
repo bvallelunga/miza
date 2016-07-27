@@ -13,6 +13,7 @@ module.exports = (srv)->
   app.use require("csurf")({ cookie: true })
   app.use require('express-session')(CONFIG.cookies.session session, LIBS.redis)
   app.use require("./locals")
+  app.use require("./error")
   
   
   # Public
