@@ -1,0 +1,42 @@
+@import '../compless/all';
+@import '../global/colors';
+
+.sections {
+  padding: 50px 20px;
+
+  .section {
+    padding: 30px 0;
+    
+    .container {
+      width: 1080px;
+    }
+    
+    .code {
+      width: 60%;
+      padding-left: 40px;
+      color: white;
+    }
+    
+    .information {
+      width: 40%;
+      
+      h3 {
+        color: @logo;
+        font-size: 2em;
+        font-weight: lighter;
+        margin-top: 0;
+      } 
+      
+      ul li {
+        font-size: 1.25em;
+        margin-bottom: 25px;
+        
+        div {
+          font-weight: lighter;
+          color: @text;
+          line-height: 1.8em;
+        }
+      }
+    }   
+  }
+}
