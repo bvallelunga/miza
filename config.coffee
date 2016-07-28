@@ -7,7 +7,7 @@ module.exports = {
   mongo_url: process.env.MONGODB_URI
   redis_url: process.env.REDIS_URL
   
-  website_subdomains: ["www", process.env.APP_NAME]
+  website_subdomains: ["www", "sledge", process.env.APP_NAME]
   
   general: {
     company: "Sledge"
