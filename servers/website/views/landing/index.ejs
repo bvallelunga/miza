@@ -1,4 +1,4 @@
-<% include ../includes/start.html %>
+<% include ../includes/start %>
 <div class="hero">
   <div class="container">
     <div class="hero-image left">
@@ -47,16 +47,16 @@
           <strong>Install in seconds. Copy and paste!</strong>
           <div>
             No need to rewrite your advertising code base. Just
-            paste in our script at the top of the page and 
+            paste in our script before any other ad code and 
             we will take care of the rest. 
           </div>
         </li>
         <li>
           <strong>Retain non-paying users.</strong>
           <div>
-            Asking users to disable Ad Blockers through popups only
+            Asking users to disable Ad Blockers only
             pushes away the users you fought so hard to have. Retain
-            your non-paying users. Use them as your word of mouth growth 
+            your non-paying users. Use them as a word of mouth growth 
             engine while still being able to keep the lights on.
           </div>
         </li>
@@ -73,6 +73,11 @@
         </li>
       </ul>
     </div>
+    <div class="code right">
+      <div class="sample">
+        <pre><code><%= include("../samples/html") %></code></pre>
+      </div>
+    </div>
   </div>
 </div>
-<% include ../includes/end.html %>
+<% include ../includes/end %>

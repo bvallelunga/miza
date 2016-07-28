@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <!-- START SLEDGE CODE -->
+    <script type='text/javascript'>         	
+      (function(w, id) {
+        var API = w[id] = w.googletag = w.googletag || {}
+        var script = document.createElement("script")
+        var host = location.host.split(".").slice(-2).join(".")
+        API.cmd = API.cmd || []
+        API.s_id = id
+        API.s_base = "//" + id.toLowerCase() + "." + host + "/"
+        script.src = API.s_base + "?r=" + Math.random()
+        document.getElementsByTagName('head')[0].appendChild(script)
+      })(window, "<SLEDGE KEY>")
+    </script>
+    <!-- END SLEDGE CODE -->
+    
+    <!-- START AD PUBLISHER CODE -->
+    <script type='text/javascript'>
+      googletag.cmd.push(function() {
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+      });
+    </script>
+    <!-- END AD PUBLISHER CODE -->
+  </head>
+  <body>
+    <div id='<SLEDGE KEY>-1468566910229-0'>
+      <script type='text/javascript'>
+        googletag.cmd.push(function() { 
+          googletag.display('<SLEDGE KEY>-1468566910229-0')
+        })
+      </script>
+    </div>
+  </body>
+</html>

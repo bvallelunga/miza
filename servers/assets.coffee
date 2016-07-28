@@ -34,7 +34,7 @@ module.exports = (app, srv, root)->
                 if directory is "global"
                   piler.addUrl link
                 else
-                  piler.addUrl directory link
+                  piler.addUrl directory, link
           else
             for format in formats
               if file.indexOf(format) != -1
