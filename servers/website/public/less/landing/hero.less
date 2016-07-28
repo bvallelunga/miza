@@ -58,21 +58,6 @@
     .actionable {  
       position: relative;
       height: 52px;
-      
-      .button {
-        font-size: 16px;
-        margin: 0;
-        text-transform: capitalize;
-        height: 52px;
-        line-height: 1.4;
-        display: inline-block;
-        position: absolute;
-        top: 0;
-        right: 1px;
-        padding: 15px 0 14px;
-        background: transparent;
-        .border-radius(5px);
-      }
             
       .form {
         width: 70%;
@@ -84,30 +69,16 @@
           position: absolute;
           top: 0;
           width: 70%;
-          background: #fafbfc;
-          color: #8da2b5;
-          border: 1px solid #dde5ed;
-          font-size: 16px;
-          padding: 16px 15px 14px;
-          margin: 0;
           height: 52px;
           .border-radius(5px 0 0 5px);
         }
         
         button {
+          position: absolute;
+          top: 0;
+          right: 1px;
           width: 30%;
-          background: -webkit-linear-gradient(top, #1f8ded 0%, #1985e3 100%);
-          background: linear-gradient(to bottom, #1f8ded 0%, #1985e3 100%);
-          border: 1px solid #1271c4;
-          color: white;
-          padding: 0;
-          .border-radius(0 5px 5px 0);
-          
-          &:hover {
-            border-color: #1271c4;
-            background: -webkit-linear-gradient(top, #1280e0 0%, #0675d6 100%);
-            background: linear-gradient(to bottom, #1280e0 0%, #0675d6 100%);
-          } 
+          .border-radius(0 5px 5px 0); 
         }
       }
       
@@ -137,6 +108,7 @@
             position: relative;
             color: #1f8ceb;
             border: solid 1px #1f8ceb;
+            background: transparent;
             
             &:hover {
               background: #fafbfc

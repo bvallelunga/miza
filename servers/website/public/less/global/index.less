@@ -12,7 +12,6 @@ body {
   font-size: 14px;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   min-width: 1150px;
-  height: 100%;
   position: relative;
   background: white;
   color: #333;
@@ -84,15 +83,47 @@ body {
   *:disabled {
     opacity: .8;
   }
+  
+  input, .input {
+    width: 100%;
+    background: #fafbfc;
+    color: #8da2b5;
+    border: 1px solid #dde5ed;
+    font-size: 16px;
+    padding: 16px 15px 14px;
+    margin: 0;
+    .border-radius(5px);
+  }
+            
+  button, .button {
+    font-size: 16px;
+    margin: 0;
+    text-transform: capitalize;
+    height: 52px;
+    line-height: 1.4;
+    display: inline-block;
+    padding: 15px 0 14px;
+    width: 100%;
+    background: -webkit-linear-gradient(top, #1f8ded 0%, #1985e3 100%);
+    background: linear-gradient(to bottom, #1f8ded 0%, #1985e3 100%);
+    border: 1px solid #1271c4;
+    color: white;
+    padding: 0;
+    .border-radius(5px);
+    
+    &:hover {
+      border-color: #1271c4;
+      background: -webkit-linear-gradient(top, #1280e0 0%, #0675d6 100%);
+      background: linear-gradient(to bottom, #1280e0 0%, #0675d6 100%);
+    } 
+  }
 
-  input,
-  button,
   select,
   textarea {
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     outline: none;
+    margin: 0;
     border: none;
-    margin: 2px 0px;
     .border-radius(0);
     .box-shadow(none);
     .box-sizing(border-box);

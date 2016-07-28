@@ -1,1 +1,1 @@
-https://code.jquery.com/jquery-3.1.0.slim.min.js
+https://code.jquery.com/jquery-3.1.0.min.js

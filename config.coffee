@@ -17,6 +17,10 @@ module.exports = {
     )  
   }
   
+  intercom: {
+    app_id: "jlsf08kq"
+  }
+  
   cookies: {
     session: (session, redis)->
       RedisStore = require('connect-redis')(session)

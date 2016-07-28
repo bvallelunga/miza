@@ -19,11 +19,15 @@ module.exports = (srv)->
   # Public
   require("../assets")(app, srv,  __dirname + '/public')
   app.use "/test", express.static(__dirname + '/public/test')
-  app.use "/imgs", express.static(__dirname + '/public/imgs')
+  app.use "/imgs", express.static(__dirname + '/public/images')
   
   
   # Routes
-  app.get("/", routes.landing.root)
+  app.get("/", routes.landing.get_root)
+  app.post("/beta", routes.landing.post_beta)
+  
+  app.get("/login", routes.auth.get_login)
+  app.post("/login", routes.auth.post_login)
   
   
   # Export

@@ -24,7 +24,8 @@ module.exports = (req, res, next)->
   res.locals.user = req.session.user
   res.locals.title_first = true
   res.locals.random = if CONFIG.isProd then "" else "?r=#{Math.random()}"
-  res.locals.search = ""
+  res.locals.intercom = {}
+  res.locals.intercom_base = CONFIG.intercom
   res.locals.media = {
     "logo" : "#{res.locals.host}/imgs/logo.png#{res.locals.random}"
     "graph": "#{res.locals.host}/imgs/graph.png#{res.locals.random}"
