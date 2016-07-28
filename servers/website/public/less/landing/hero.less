@@ -13,7 +13,7 @@
     padding: 30px 0;
   }
     
-  .image {
+  .hero-image {
     width: 48%;
     
     img {
@@ -21,7 +21,7 @@
     }
   }
   
-  .information {
+  .hero-information {
     width: 52%;
     padding: 8% 100px 0 50px;
     
@@ -32,6 +32,13 @@
       color: @logo;
       text-shadow: 0 2px 0 rgba(0,0,0,0.1);
       margin: 0;
+      
+      sup {
+        font-size: 0.3em;
+        vertical-align: text-top;
+        color: rgba(0,0,0,0.2);
+        text-shadow: none;
+      }
     }
     
     h2 {
@@ -41,7 +48,7 @@
     }
     
     p {
-      color: #666;
+      color: @text;
       font-size: 1.3em;
       margin: 2em 0;
       line-height: 1.5em;
