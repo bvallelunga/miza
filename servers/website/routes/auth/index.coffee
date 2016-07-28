@@ -5,6 +5,10 @@ module.exports.get_login = (req, res, next)->
     title: "Log In"
   }
   
+
+module.exports.get_logout = (req, res, next)->
+  res.redirect "/"
+  
   
 module.exports.post_login = (req, res, next)->
   res.json {

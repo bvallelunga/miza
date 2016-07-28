@@ -27,6 +27,7 @@ module.exports = (srv)->
   app.post "/beta", routes.landing.post_beta
   
   app.get  "/login", routes.auth.get_login
+  app.get  "/logout", routes.auth.get_logout
   app.post "/login", routes.auth.post_login
   
   app.get  "/dashboard", routes.dashboard.get_root
