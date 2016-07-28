@@ -7,7 +7,7 @@ module.exports.get_login = (req, res, next)->
   
   
 module.exports.post_login = (req, res, next)->
-  res.json({
+  res.json {
     success: true
     next: "/dashboard"
-  })
+  }

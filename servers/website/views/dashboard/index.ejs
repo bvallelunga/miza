@@ -1,0 +1,42 @@
+<% include ../includes/start %>
+<%  
+  function isActive(a, b) {
+    return a == b ? "active" : ""
+  }
+%>
+<a class="fixed-back" href="/logout">Sign Out</a>
+<div class="container">
+  <div class="sidebar left">
+    <% include ../includes/logo %>
+    <ul>
+      <li class="<%= isActive(dashboard, "setup") %>">
+        <a href="/dashboard/setup">
+          <span class="fa fa-file-text-o"></span>
+          Setup Guide
+        </a>
+      </li>
+      <li class="<%= isActive(dashboard, "analytics") %>">
+        <a href="/dashboard/analytics">
+          <span class="fa fa-pie-chart"></span>
+          Analytics
+        </a>
+      </li>
+      <li class="<%= isActive(dashboard, "account") %>">
+        <a href="/dashboard/account">
+          <span class="fa fa-user"></span>
+          Account
+        </a>
+      </li>
+      <li class="<%= isActive(dashboard, "settings") %>">
+        <a href="/dashboard/settings">
+          <span class="fa fa-cog"></span>
+          Settings
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="display right <%= dashboard %>-dashboard">
+    <%- include("./" + dashboard) %>
+  </div>
+</div>
+<% include ../includes/end %>

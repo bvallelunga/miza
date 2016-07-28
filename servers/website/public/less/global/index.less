@@ -1,4 +1,5 @@
 @import '../compless/all';
+@import './colors';
 
 html {
   height: 100%;
@@ -14,7 +15,7 @@ body {
   min-width: 1150px;
   position: relative;
   background: white;
-  color: #333;
+  color: @text;
   .reset-box-model();
 
   * {
@@ -75,6 +76,36 @@ body {
   	margin: 0;
   	width: 100%;
   }
+  
+  h1.logo {
+    font-family: "Ubuntu";
+    font-weight: bold;
+    font-size: 2.25em;
+    color: @logo;
+    text-shadow: 0 2px 0 rgba(0,0,0,0.1);
+    margin: 0;
+    
+    sup {
+      font-size: 0.3em;
+      vertical-align: text-top;
+      color: @text_weak;
+      text-shadow: none;
+    }
+  }
+  
+  .fixed-back {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background: #C6C9D0;
+    color: white;
+    padding: 8px 17px;
+    .border-radius(2px);
+    
+    &:hover {
+      background: @logo;
+    }
+  }
 
   .disabled {
     opacity: .8;
@@ -104,17 +135,15 @@ body {
     display: inline-block;
     padding: 15px 0 14px;
     width: 100%;
-    background: -webkit-linear-gradient(top, #1f8ded 0%, #1985e3 100%);
-    background: linear-gradient(to bottom, #1f8ded 0%, #1985e3 100%);
-    border: 1px solid #1271c4;
+    border: 1px solid darken(@blue, 10%);
     color: white;
     padding: 0;
+    .linear-gradient(top, @blue, darken(@blue, 5%),  @blue);
     .border-radius(5px);
     
     &:hover {
-      border-color: #1271c4;
-      background: -webkit-linear-gradient(top, #1280e0 0%, #0675d6 100%);
-      background: linear-gradient(to bottom, #1280e0 0%, #0675d6 100%);
+      border-color: darken(@blue, 15%);
+      .linear-gradient(top, darken(@blue, 5%), darken(@blue, 10%),  darken(@blue, 5%));
     } 
   }
 

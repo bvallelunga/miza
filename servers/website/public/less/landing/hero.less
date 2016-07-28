@@ -25,26 +25,15 @@
     width: 52%;
     padding: 8% 100px 0 50px;
     
-    h1 {
-      font-family: "Ubuntu";
-      font-weight: bold;
+    h1.logo {
       font-size: 4.5em;
-      color: @logo;
-      text-shadow: 0 2px 0 rgba(0,0,0,0.1);
-      margin: 0;
-      
-      sup {
-        font-size: 0.3em;
-        vertical-align: text-top;
-        color: rgba(0,0,0,0.2);
-        text-shadow: none;
-      }
     }
     
     h2 {
       font-size: 2em;
       margin: 0.25em 0;
       font-weight: normal;
+      color: @text_strong;
     }
     
     p {
@@ -106,12 +95,12 @@
           .button {
             width: 100%;
             position: relative;
-            color: #1f8ceb;
-            border: solid 1px #1f8ceb;
+            color: @blue;
+            border: solid 1px @blue;
             background: transparent;
             
             &:hover {
-              background: #fafbfc
+              background: lighten(@blue, 40%);
             }
           }
         }

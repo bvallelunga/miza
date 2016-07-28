@@ -6,8 +6,6 @@ module.exports.get_root = (req, res, next)->
 
 
 module.exports.post_beta = (req, res, next)->
-  console.log(req.body)
-
   res.render "landing/beta", {
     js: req.js.renderTags "auth"
     css: req.css.renderTags "auth"
