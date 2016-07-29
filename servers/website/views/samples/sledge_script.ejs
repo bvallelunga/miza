@@ -1,5 +1,5 @@
 <script type='text/javascript'>         	
-	(function(w, id) {
+  (function(w, id) {
     var API = w[id] = w.googletag = w.googletag || {}
     var script = document.createElement("script")
     var host = location.host.split(".").slice(-2).join(".")
@@ -8,5 +8,5 @@
     API.s_base = "//" + id.toLowerCase() + "." + host + "/"
     script.src = API.s_base + "?r=" + Math.random()
     document.getElementsByTagName('head')[0].appendChild(script)
-  })(window, "<SLEDGE KEY>")
+  })(window, "<%= sledge_key || "<SLEDGE KEY>" %>")
 </script>

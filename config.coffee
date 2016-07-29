@@ -15,6 +15,7 @@ module.exports = {
     description: (
       "This is sledge"
     )  
+    support: "vallelungabrian@gmail.com"
   }
   
   intercom: {
