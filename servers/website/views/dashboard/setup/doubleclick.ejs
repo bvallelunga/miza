@@ -1,7 +1,7 @@
 <div class="guide doubleclick">
   <h3>2) Replace Ad Publisher Script</h3>
   <p>
-    Find the initialization script. It should be located in the 
+    Find the publisher's initialization script. It should be located in the 
     top portion of <strong>head</strong> element and will look
     similar to the snippet below.
   </p>
@@ -13,23 +13,24 @@
   
   <h3>3) Replace Ad Publisher IDs</h3>
   <p>
-    Find all ad display elements that have the id containing <strong>div-gpt-ad</strong>. 
+    Find all ad display elements that have the <strong>id</strong> attribute 
+    containing <strong>div-gpt-ad</strong>. 
     They should be located in the <strong>body</strong> element and will look
     similar to the snippet below.
   </p>
   <pre><code><%= include("../../samples/doubleclick_element") %></code></pre>
   <p>
-    Replace the publisher's display elements with the code snippet below.
-    The <strong>id</strong> attribute of each display element should be changed
-    from <strong>div-gpt-ad</strong> to <strong><%= sledge_key || "<SLEDGE KEY>" %></strong>.
+    Replace the publisher's display elements with the syntax from the code snippet below.
+    <u>DO NOT COPY AND PASTE</u>. The <strong>id</strong> attribute of each display element 
+    should be changed from <strong>div-gpt-ad</strong> to <strong><%= sledge_key || "<SLEDGE KEY>" %></strong>.
   </p>
   <pre><code><%= include("../../samples/sledge_element") %></code></pre>
   
   <h3>4) You are all set!</h3>
   <p>
     Ready. Set. Go! Deploy the changes to your servers and it's off to the races. 
-    We will automatically track when ads are delivered or blocked and show you
-    that data in the <a href="/dashboard/analytics">analytics page</a>. Please
+    We will automatically track impressions and clicks which
+    can be seen in the <a href="/dashboard/analytics">analytics page</a>. Please
     <a href="mailto:<%= support_email %>">contact us</a> at any time if problems
     arise, we will do our best to reach out as soon as possible.
   </p>
