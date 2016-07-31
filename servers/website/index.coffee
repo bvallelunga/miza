@@ -33,6 +33,8 @@ module.exports = (srv)->
   app.get  "/dashboard", routes.dashboard.get_root
   app.get  "/dashboard/:dashboard", routes.dashboard.get_root
   
+  app.get  "*", routes.landing.get_not_found
+  
   
   # Export
   return app

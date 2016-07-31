@@ -15,3 +15,7 @@ module.exports.post_beta = (req, res, next)->
       beta_at: new Date()
     }
   }
+  
+
+module.exports.get_not_found = (req, res, next)->
+  res.redirect "/"
