@@ -6,7 +6,7 @@
 %>
 <div class="fixed-side-nav">
   <% if(user.is_admin) { %>
-    <a href="/user/access">Invite Users</a>
+    <a href="/user/access">Grant Access</a>
   <% } else { %>
     <a class="inverse" href="tel:<%= support_phone_clean %>"><%= support_phone %></a>
   <% } %>

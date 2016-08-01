@@ -18,7 +18,7 @@ module.exports.get_user_access = (req, res, next)->
   res.render "auth/user_access", {
     js: req.js.renderTags "modal"
     css: req.css.renderTags "modal"
-    title: "Invite Users"
+    title: "Grant Access"
   }
   
 

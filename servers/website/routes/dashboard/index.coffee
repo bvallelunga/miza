@@ -11,14 +11,12 @@ module.exports.get_new = (req, res, next)->
   res.render "dashboard/new", {
     js: req.js.renderTags "modal"
     css: req.css.renderTags "modal"
-    title: "New Publisher Account"
+    title: "Create Publisher Account"
   }
   
   
 module.exports.post_new = (req, res, next)->
   domain = url.parse req.body.publisher_domain
-  
-  console.log domain
 
   LIBS.models.Publisher.create({
     domain: "#{domain.hostname || domain.pathname}#{if domain.port? then (":" + domain.port) else "" }"
