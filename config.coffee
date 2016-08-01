@@ -25,6 +25,8 @@ module.exports = {
     app_id: "jlsf08kq"
   }
   
+  heroku_token: process.env.HEROKU_API_TOKEN
+  
   cookies: {
     session: (session, redis)->
       RedisStore = require('connect-redis')(session)

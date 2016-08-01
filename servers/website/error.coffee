@@ -16,4 +16,5 @@ module.exports = (err, req, res, next)->
   res.status(403).json {
     success: false
     message: message
+    csrf: req.csrfToken()
   }

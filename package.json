@@ -20,6 +20,7 @@
     "ejs": "^2.4.1",
     "express": "~4.2.x",
     "express-session": "^1.14.0",
+    "heroku-client": "^3.0.0-beta3",
     "less": "^2.7.1",
     "morgan": "^1.7.0",
     "pg": "^6.0.3",
