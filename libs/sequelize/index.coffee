@@ -7,6 +7,7 @@ module.exports = ->
     return database
 
   sequelize  = new Sequelize(CONFIG.postgres_url, { 
+    logging: false
     dialectOptions: {
       ssl: true
     }

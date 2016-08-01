@@ -13,13 +13,13 @@ module.exports = (srv)->
   app.use require("csurf")({ cookie: true })
   app.use require('express-session')(CONFIG.cookies.session session, LIBS.redis)
   app.use routes.auth.load_user
-  app.use require("./locals")
+  app.use require "./locals"
   
   
   # Public
   require("../assets")(app, srv,  __dirname + '/public')
-  app.use "/test", express.static(__dirname + '/public/test')
-  app.use "/imgs", express.static(__dirname + '/public/images')
+  app.use "/test", express.static __dirname + '/public/test'
+  app.use "/imgs", express.static __dirname + '/public/images'
   
   
   # Routes

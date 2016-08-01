@@ -142,7 +142,6 @@ module.exports.has_publisher = (req, res, next)->
       
     else if not req.user.is_admin
       return null
-      
 
     return LIBS.models.Publisher.findOne({
       where: {
@@ -156,4 +155,7 @@ module.exports.has_publisher = (req, res, next)->
     
     req.publisher = publisher
     next()
+    
+  .catch (error)->
+    res.redirect "/dashboard"
   

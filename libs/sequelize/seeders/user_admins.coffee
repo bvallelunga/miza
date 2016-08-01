@@ -1,3 +1,5 @@
+Promise = require "bluebird"
+
 module.exports = (sequelize, models)->
   
   Promise.props({

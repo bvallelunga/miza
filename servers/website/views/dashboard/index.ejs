@@ -5,7 +5,7 @@
   }
 %>
 <div class="fixed-side-nav">
-  <% console.log(user.is_admin); if(user.is_admin) { %><a href="/user/access">Invite Users</a><% } %>
+  <% if(user.is_admin) { %><a href="/user/access">Invite Users</a><% } %>
   <a href="/logout">Sign Out</a>
 </div>
 <div class="container">
