@@ -28,7 +28,9 @@ module.exports = (req, res, next)->
   res.locals.random = if CONFIG.isProd then "" else "?r=#{Math.random()}"
   res.locals.intercom = {}
   res.locals.intercom_base = CONFIG.intercom
-  res.locals.support_email = CONFIG.general.support
+  res.locals.support_email = CONFIG.general.support.email
+  res.locals.support_phone = CONFIG.general.support.phone
+  res.locals.support_phone_clean = CONFIG.general.support.phone.replace(/\D+/g, '')
   res.locals.media = {
     "logo" : "#{res.locals.host}/imgs/logo.png#{res.locals.random}"
     "graph": "#{res.locals.host}/imgs/graph.png#{res.locals.random}"

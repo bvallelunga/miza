@@ -1,4 +1,8 @@
 <% include ../includes/start %>
+<div class="fixed-side-nav">
+  <a class="inverse" href="tel:<%= support_phone_clean %>"><%= support_phone %></a>
+  <a href="mailto:<%= support_email %>">Contact Us</a>
+</div>
 <div class="hero">
   <div class="container">
     <div class="hero-image left">
@@ -17,7 +21,7 @@
         <form class="form" method="POST" action="/beta">
           <% include ../includes/csrf %>
           <input name="email" type="email" placeholder="Enter your email" required/>
-          <button class="button">Join Beta</button>
+          <button class="button">Request Access</button>
         </form>
         <div class="login">
           <span>or</span>

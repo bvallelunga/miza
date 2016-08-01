@@ -15,7 +15,10 @@ module.exports = {
     description: (
       "This is sledge"
     )  
-    support: "vallelungabrian@gmail.com"
+    support: {
+      email: "vallelungabrian@gmail.com"
+      phone: "(310) 849-2533" 
+    }
   }
   
   intercom: {

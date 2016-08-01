@@ -94,7 +94,7 @@ body {
   }
   
   .fixed-side-nav {
-    position: fixed;
+    position: absolute;
     top: 15px;
     right: 15px;
     min-width: 80px;
@@ -104,12 +104,21 @@ body {
       color: white;
       padding: 8px 17px;
       margin-bottom: 5px;
-      display: block;
       text-align: center;
+      display: inline-block;
       .border-radius(2px);
       
       &:hover {
-        background: @logo;
+        background: @blue;
+      }
+      
+      &.inverse {
+        background: transparent !important;
+        color: @blue;
+        
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
   }
