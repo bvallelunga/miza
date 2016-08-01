@@ -17,9 +17,11 @@ module.exports.get_new = (req, res, next)->
   
 module.exports.post_new = (req, res, next)->
   domain = url.parse req.body.publisher_domain
+  
+  console.log domain
 
   LIBS.models.Publisher.create({
-    domain: "#{domain.hostname}#{if domain.port? then (":" + domain.port) else "" }"
+    domain: "#{domain.hostname || domain.pathname}#{if domain.port? then (":" + domain.port) else "" }"
     name: req.body.publisher_name
   }).then (publisher)->
     return req.user.addPublisher publisher
