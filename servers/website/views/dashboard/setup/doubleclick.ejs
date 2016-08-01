@@ -22,7 +22,7 @@
   <p>
     Replace the publisher's display elements with the syntax from the code snippet below.
     <u>DO NOT COPY AND PASTE</u>. The <strong>id</strong> attribute of each display element 
-    should be changed from <strong>div-gpt-ad</strong> to <strong><%= site.key || "<SLEDGE KEY>" %></strong>.
+    should be changed from <strong>div-gpt-ad</strong> to <strong><%= publisher.key || "<SLEDGE KEY>" %></strong>.
     Then look through the inline javascript code and perform the same replace operations.
   </p>
   <pre><code><%= include("../../samples/sledge_element") %></code></pre>
@@ -31,7 +31,7 @@
   <p>
     Ready. Set. Go! Deploy the changes to your servers and it's off to the races. 
     We will automatically track impressions and clicks which
-    can be seen in the <a href="/dashboard/analytics">analytics page</a>. Please
+    can be seen in the <a href="<%= dashboard_path %>/analytics">analytics page</a>. Please
     <a href="mailto:<%= support_email %>">contact us</a> at any time if problems
     arise, we will do our best to reach out as soon as possible.
   </p>

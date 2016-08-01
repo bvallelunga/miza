@@ -21,8 +21,8 @@
         </form>
         <div class="login">
           <span>or</span>
-          <a href="/login">
-            <button class="button">Log In</button>
+          <a href="/<%= user ? "dashboard" : "login" %>">
+            <button class="button"><%= user ? "Dashboard" : "Sign In" %></button>
           </a>
         </div>
       </div>

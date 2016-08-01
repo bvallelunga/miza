@@ -1,11 +1,13 @@
 <% include ../includes/start %>
-<a class="fixed-back" href="/">Home</a>
+<div class="fixed-side-nav">
+  <a href="/">Home</a>
+</div>
 <div class="container">
   <% include ../includes/logo %>
   <form class="form" method="POST" action="/login">
     <% include ../includes/csrf %>
-    <input class="email" type="email" name="email" placeholder="Email address" required/>
-    <input class="password" type="password" name="password" placeholder="Password" required/>
+    <input class="email top" type="email" name="email" placeholder="Email address" required/>
+    <input class="password bottom" type="password" name="password" placeholder="Password" required/>
     <button class="button" type="submit">Sign In</button>
     <div class="error"></div>
   </form>

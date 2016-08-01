@@ -20,17 +20,30 @@
     margin-left: -20%;
   }
   
-  input {
+  input, textarea {
     padding: 16px 15px;
+    border-top-width: 0;
+    .border-radius(0);
   }
   
-  .email {
+  textarea {
+    margin-bottom: 10px;
+    height: 200px;
+  }
+  
+  .only {
+    border-top-width: 1px;
+    margin-bottom: 15px;
+    .border-radius(3px);
+  }
+  
+  .top {
     margin: 0;
+    border-top-width: 1px;
     .border-radius(3px 3px 0 0);
   }
   
-  .password {
-    border-top: none;
+  .bottom {
     margin-bottom: 15px;
     .border-radius(0 0 3px 3px);
   }

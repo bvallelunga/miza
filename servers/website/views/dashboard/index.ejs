@@ -4,31 +4,34 @@
     return a == b ? "active" : ""
   }
 %>
-<a class="fixed-back" href="/logout">Sign Out</a>
+<div class="fixed-side-nav">
+  <% console.log(user.is_admin); if(user.is_admin) { %><a href="/user/access">Invite Users</a><% } %>
+  <a href="/logout">Sign Out</a>
+</div>
 <div class="container">
   <div class="sidebar left">
     <% include ../includes/logo %>
     <ul>
       <li class="<%= isActive(dashboard, "setup") %>">
-        <a href="/dashboard/setup">
+        <a href="<%= dashboard_path %>/setup">
           <span class="fa fa-file-text-o"></span>
           Setup
         </a>
       </li>
       <li class="<%= isActive(dashboard, "analytics") %>">
-        <a href="/dashboard/analytics">
+        <a href="<%= dashboard_path %>/analytics">
           <span class="fa fa-pie-chart"></span>
           Analytics
         </a>
       </li>
       <li class="<%= isActive(dashboard, "account") %>">
-        <a href="/dashboard/account">
+        <a href="<%= dashboard_path %>/account">
           <span class="fa fa-user"></span>
           Account
         </a>
       </li>
       <li class="<%= isActive(dashboard, "settings") %>">
-        <a href="/dashboard/settings">
+        <a href="<%= dashboard_path %>/settings">
           <span class="fa fa-cog"></span>
           Settings
         </a>

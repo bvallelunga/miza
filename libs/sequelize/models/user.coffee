@@ -1,7 +1,8 @@
-bcrypt = require "bcrypt-nodejs"
+crypto = require 'crypto'
 
 module.exports = (sequelize, DataTypes)->
-
+  hasher = (value)->
+    return crypto.createHash('md5').update(value).digest('hex')
 
   return sequelize.define "User", {
     email: { 
@@ -10,7 +11,7 @@ module.exports = (sequelize, DataTypes)->
       allowNull: false
       validate: {
         isEmail: {
-          msg: "Must be valid email address"
+          msg: "Must be valid a email address"
         }
       }
     }
@@ -18,7 +19,7 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
       allowNull: false
       set: (value)->
-        this.setDataValue 'password', this.generateHash(value) 
+        this.setDataValue 'password', this.hash(value) 
     }
     name: DataTypes.STRING 
     is_admin: { 
@@ -30,15 +31,16 @@ module.exports = (sequelize, DataTypes)->
     underscored: true
     
     classMethods: {
+      hash: hasher
+      
       associate: (models)->
         models.User.belongsToMany models.Publisher, {
-          as: 'Publishers'
+          as: 'publishers'
           through: "UserPublisher"
         }
     }
     instanceMethods: {
-      generateHash: (password)->
-        return bcrypt.hashSync password, bcrypt.genSaltSync(8), null
+      hash: hasher
       
       validPassword: (password)->
         return bcrypt.compareSync password, this.password

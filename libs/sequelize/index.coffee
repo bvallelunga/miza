@@ -15,6 +15,8 @@ module.exports = ->
   migrations = require("./migrations")(sequelize) 
   database   = require("./models")(sequelize)
   
+  require("./seeders")(sequelize, database)
+  
   database.sequelize = sequelize
   database.Sequelize = sequelize
   

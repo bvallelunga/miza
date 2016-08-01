@@ -12,7 +12,7 @@ module.exports = (req, res, next)->
     return res.redirect "//#{req.hostname.split(".").slice(1).join(".")}#{req.path}"
   
   #Locals
-  res.locals.csrf = if req.csrfToken then req.csrfToken() else ""
+  res.locals.csrf = req.csrfToken()
   res.locals.host = req.get "host"
   res.locals.title = ""
   res.locals.css = ""
@@ -23,7 +23,7 @@ module.exports = (req, res, next)->
   res.locals.company = CONFIG.general.company
   res.locals.logo = CONFIG.general.logo
   res.locals.config = {}
-  res.locals.user = req.session.user
+  res.locals.user = req.user
   res.locals.title_first = true
   res.locals.random = if CONFIG.isProd then "" else "?r=#{Math.random()}"
   res.locals.intercom = {}
@@ -33,6 +33,10 @@ module.exports = (req, res, next)->
     "logo" : "#{res.locals.host}/imgs/logo.png#{res.locals.random}"
     "graph": "#{res.locals.host}/imgs/graph.png#{res.locals.random}"
   }
+  
+  if req.user?
+    res.locals.intercom_base.email = req.user.email
+    res.locals.intercom_base.name = req.user.name
   
   # Next
   next()

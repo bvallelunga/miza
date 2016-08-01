@@ -8,5 +8,5 @@
     API.s_base = "//" + id.toLowerCase() + "." + host + "/"
     script.src = API.s_base + "?r=" + Math.random()
     document.getElementsByTagName('head')[0].appendChild(script)
-  })(window, "<%= site.key || "<SLEDGE KEY>" %>")
+  })(window, "<%= publisher.key || "<SLEDGE KEY>" %>")
 </script>

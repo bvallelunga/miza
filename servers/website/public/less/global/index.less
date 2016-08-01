@@ -93,17 +93,24 @@ body {
     }
   }
   
-  .fixed-back {
+  .fixed-side-nav {
     position: fixed;
     top: 15px;
     right: 15px;
-    background: #C6C9D0;
-    color: white;
-    padding: 8px 17px;
-    .border-radius(2px);
+    min-width: 80px;
     
-    &:hover {
-      background: @logo;
+    a {
+      background: #C6C9D0;
+      color: white;
+      padding: 8px 17px;
+      margin-bottom: 5px;
+      display: block;
+      text-align: center;
+      .border-radius(2px);
+      
+      &:hover {
+        background: @logo;
+      }
     }
   }
 
@@ -115,7 +122,8 @@ body {
     opacity: .8;
   }
   
-  input, .input {
+  input, .input,
+  textarea, .textarea {
     width: 100%;
     background: #fafbfc;
     color: #8da2b5;
@@ -136,16 +144,19 @@ body {
     display: inline-block;
     padding: 15px 0 14px;
     width: 100%;
-    border: 1px solid darken(@blue, 10%);
+    border: 1px solid rgba(0,0,0,0.1);
     color: white;
     padding: 0;
     .linear-gradient(top, @blue, darken(@blue, 5%),  @blue);
     .border-radius(5px);
     
     &:hover {
-      border-color: darken(@blue, 15%);
       .linear-gradient(top, darken(@blue, 5%), darken(@blue, 10%),  darken(@blue, 5%));
     } 
+    
+    &.loading {
+      background: #C6C9D0 !important; 
+    }
   }
 
   select,

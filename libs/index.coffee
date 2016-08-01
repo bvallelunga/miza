@@ -1,5 +1,5 @@
 module.exports = ->
   return {
-    sequelize: require("./sequelize")()
+    models: require("./sequelize")()
     redis: require("./redis")()
   }

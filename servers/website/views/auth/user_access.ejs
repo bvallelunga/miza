@@ -1,0 +1,15 @@
+<% include ../includes/start %>
+<div class="fixed-side-nav">
+  <a href="/dashboard">Dashboard</a>
+  <a href="/logout">Sign Out</a>
+</div>
+<div class="container">
+  <% include ../includes/logo %>
+  <form class="form" method="POST" action="/user/access">
+    <% include ../includes/csrf %>
+    <textarea class="textarea only" name="emails" placeholder="One email address per line" required></textarea>
+    <button class="button" type="submit">Give Access</button>
+    <div class="error"></div>
+  </form>
+</div>
+<% include ../includes/end %>

@@ -5,6 +5,7 @@ app = express()
 srv = require("http").createServer(app)
 
 # Globals
+GLOBAL.Promise = require "bluebird"
 GLOBAL.CONFIG = require("./config")
 GLOBAL.LIBS = require("./libs")()
 

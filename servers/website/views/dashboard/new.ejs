@@ -1,0 +1,15 @@
+<% include ../includes/start %>
+<div class="fixed-side-nav">
+  <a href="/logout">Sign Out</a>
+</div>
+<div class="container">
+  <% include ../includes/logo %>
+  <form class="form" method="POST" action="/dashboard/new">
+    <% include ../includes/csrf %>
+    <input class="name top" type="text" name="publisher_name" placeholder="Website Name" required/>
+    <input class="email bottom" type="website" name="publisher_domain" placeholder="Website Domain Name" required/>
+    <button class="button" type="submit">Create Publisher Account</button>
+    <div class="error"></div>
+  </form>
+</div>
+<% include ../includes/end %>
