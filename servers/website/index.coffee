@@ -24,7 +24,7 @@ module.exports = (srv)->
   
   # Routes
   app.get  "/", routes.landing.get_root
-  app.post "/beta", routes.landing.post_beta
+  app.post "/access/request", routes.landing.post_beta
   
   app.get  "/login", routes.auth.not_authenticated, routes.auth.get_login
   app.get  "/register", routes.auth.not_authenticated, routes.auth.get_register
