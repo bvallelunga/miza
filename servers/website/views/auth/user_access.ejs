@@ -3,8 +3,13 @@
   <a href="/dashboard">Dashboard</a>
   <a href="/logout">Sign Out</a>
 </div>
-<div class="container">
+<div class="container large">
   <% include ../includes/logo %>
+  <span>
+    Inviting these users will give them ability to register on the site. It <u>will
+    not</u> send them an invite email, we are doing things that don't
+    scale. Please reach out to them individually with a link to the registration page.
+  </span>
   <form class="form" method="POST" action="/user/access">
     <% include ../includes/csrf %>
     <textarea class="textarea only" name="emails" placeholder="One email address per line" required></textarea>
