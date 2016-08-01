@@ -1,5 +1,8 @@
 <% include ../includes/start %>
-<a class="fixed-back" href="/">Home</a>
+<div class="fixed-side-nav">
+  <a class="inverse" href="tel:<%= support_phone_clean %>"><%= support_phone %></a>
+  <a href="mailto:<%= support_email %>">Contact Us</a>
+</div>
 <div class="container">
   <% include ../includes/logo %>
   <p>

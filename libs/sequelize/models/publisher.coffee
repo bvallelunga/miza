@@ -35,6 +35,13 @@ module.exports = (sequelize, DataTypes)->
       beforeValidate: (publisher, options)->
         if not publisher.key?
           publisher.key = Math.random().toString(36).substr(2, 10)
+          
+      afterCreate: (publisher)->
+        console.log 1, arguments
+
+        
+      afterUpdate: (publisher)->
+        console.log 2, arguments
 
     }
   }
