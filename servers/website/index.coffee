@@ -14,7 +14,6 @@ module.exports = (srv)->
   app.use require('express-session')(CONFIG.cookies.session session, LIBS.redis)
   app.use routes.auth.load_user
   app.use require("./locals")
-  app.use require("./error")
   
   
   # Public
@@ -42,6 +41,7 @@ module.exports = (srv)->
   app.post "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.post_new
   
   app.get  "*", routes.landing.get_not_found
+  app.use  require("./error")
   
   
   # Export
