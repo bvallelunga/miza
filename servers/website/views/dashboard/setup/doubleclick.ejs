@@ -1,5 +1,5 @@
-<div class="guide doubleclick">
-  <h3>2) Replace Ad Publisher Script</h3>
+<div class="guide doubleclick active">
+  <h3>3) Replace the Ad Publisher Script</h3>
   <p>
     Find the publisher's initialization script. It should be located in the 
     top portion of <strong>head</strong> element and will look
@@ -11,7 +11,7 @@
   </p>
   <pre><code><%= include("../../samples/sledge_script") %></code></pre>
   
-  <h3>3) Replace Ad Publisher IDs</h3>
+  <h3>4) Replace the Ad Publisher IDs</h3>
   <p>
     Find all ad display elements that have the <strong>id</strong> attribute 
     containing <strong>div-gpt-ad</strong>. 
@@ -22,12 +22,12 @@
   <p>
     Replace the publisher's display elements with the syntax from the code snippet below.
     <u>DO NOT COPY AND PASTE</u>. The <strong>id</strong> attribute of each display element 
-    should be changed from <strong>div-gpt-ad</strong> to <strong><%= sledge_key || "<SLEDGE KEY>" %></strong>.
+    should be changed from <strong>div-gpt-ad</strong> to <strong><%= site.key || "<SLEDGE KEY>" %></strong>.
     Then look through the inline javascript code and perform the same replace operations.
   </p>
   <pre><code><%= include("../../samples/sledge_element") %></code></pre>
   
-  <h3>4) You are all set!</h3>
+  <h3>5) You are all set!</h3>
   <p>
     Ready. Set. Go! Deploy the changes to your servers and it's off to the races. 
     We will automatically track impressions and clicks which

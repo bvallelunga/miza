@@ -11,5 +11,8 @@ module.exports.get_root = (req, res, next)->
     css: req.css.renderTags "dashboard", "code", "fa"
     title: "Dashboard"
     dashboard: req.params.dashboard
-    sledge_key: "em1nqj7asz"
+    site: {
+      key: "em1nqj7asz"
+      host: "nytimes.com"
+    }
   }

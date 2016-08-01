@@ -1,3 +1,6 @@
+@import '../compless/all';
+@import '../global/colors';
+
 .supported {
   width: 100%;
   background: #fdfdfd;
@@ -10,6 +13,7 @@
     height: 50px;
     margin: 0 35px;
     text-align: left;
+    position: relative;
     display: inline-block;
     
     &:first-child {
@@ -28,6 +32,19 @@
     
     &.disabled {
       opacity: 0.3;
+    }
+    
+    img {
+      height: 100%;
+    }
+    
+    .message {
+      position: absolute;
+      bottom: -20px;
+      width: 100%;
+      text-align: center;
+      color: rgba(0,0,0,0.8);
+      text-shadow: 0 -1px 0 white;
     }
   }
 

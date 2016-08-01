@@ -4,7 +4,7 @@ module.exports = {
   isProd: process.env.NODE_ENV == "production"
   port: process.env.PORT
   
-  mongo_url: process.env.MONGODB_URI
+  postgres_url: process.env.DATABASE_URL
   redis_url: process.env.REDIS_URL
   
   website_subdomains: ["www", "sledge", process.env.APP_NAME]

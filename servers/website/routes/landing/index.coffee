@@ -7,8 +7,7 @@ module.exports.get_root = (req, res, next)->
 
 module.exports.post_beta = (req, res, next)->
   res.render "landing/beta", {
-    js: req.js.renderTags "auth"
-    css: req.css.renderTags "auth"
+    css: req.css.renderTags "modal"
     intercom: {
       email: req.body.email
       beta: true

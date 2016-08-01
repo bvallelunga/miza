@@ -4,9 +4,18 @@
   Please note that the guide is a work in progress and subject to change. We will reach
   out if any changes are required on your end after the setup is complete. 
 </span>
-<h3>1) Select an Ad Publisher</h3>
+<h3>1) Add DNS CNAME</h3>
+<p>
+  Please add this CNAME record to your websites DNS. This will enable traffic to be
+  routed to Sledge though your domain name which will increase the defensibility
+  of ads being delivered on your website. Feel free to <a href="mailto:<%= support_email %>">contact us</a> 
+  if you don't know how, our team can walk you through it over the phone.
+</p>
+<pre><code><%= site.key || "<SLEDGE KEY>" %>.<%= site.host %>.	  300	IN	CNAME	<%= host %>.</code></pre>
+
+<h3>2) Select an Ad Publisher</h3>
 <div class="publishers">
-  <div class="publisher left" data-guide="doubleclick">
+  <div class="publisher left active" data-guide="doubleclick">
     <div class="image" style="background-image: url(/imgs/ZGZw.png)"></div>
     <div class="name">Double Click</div>
   </div>

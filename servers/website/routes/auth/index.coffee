@@ -1,7 +1,7 @@
 module.exports.get_login = (req, res, next)->
   res.render "auth/index", {
-    js: req.js.renderTags "auth"
-    css: req.css.renderTags "auth"
+    js: req.js.renderTags "modal"
+    css: req.css.renderTags "modal"
     title: "Log In"
   }
   
