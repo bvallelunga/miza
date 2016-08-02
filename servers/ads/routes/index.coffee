@@ -1,4 +1,5 @@
 request = require "request"
+uglify = require "uglify-js"
 
 # Cached Vars
 root_script = new Buffer('www.googletagservices.com/tag/js/gpt.js').toString('base64')
@@ -18,15 +19,15 @@ module.exports.identifier = (req, res, next)->
   next()
 
 
-module.exports.script = (req, res, next)->
-  if !req.sledge_id or req.sledge_id == "sledge"
-    return res.redirect("/test.html")
-  
+module.exports.script = (req, res, next)->  
   res.render "sledge", {
     sledge_id: req.sledge_id,
     targets: targets,
     root_script: root_script
-  }
+  }, (error, code)->
+    res.send uglify.minify(code, {
+      fromString: true
+    }).code
 
 
 module.exports.downloader = (req, res, next)->

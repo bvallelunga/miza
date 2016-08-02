@@ -22,7 +22,7 @@ app.use bodyParser.urlencoded({
 # Subdomain Routers
 routers = require("./servers/routers")(srv)
 app.use routers.engine
-app.use routers.sledge.prefix, routers.sledge.app
+app.use routers.ads.prefix, routers.ads.app
 app.use routers.website
 
 
