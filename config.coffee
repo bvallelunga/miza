@@ -28,6 +28,13 @@ module.exports = {
     app_id: "jlsf08kq"
   }
   
+  promises: {
+    warnings: false
+    longStackTraces: true
+    cancellation: true
+    monitoring: true
+  }
+  
   heroku_token: process.env.HEROKU_API_TOKEN
   
   cookies: {

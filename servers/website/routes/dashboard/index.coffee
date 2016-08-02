@@ -16,10 +16,10 @@ module.exports.get_new = (req, res, next)->
   
   
 module.exports.post_new = (req, res, next)->
-  domain = url.parse req.body.publisher_domain.toLowerCase()
+  Publisher = LIBS.models.Publisher 
 
-  LIBS.models.Publisher.create({
-    domain: "#{domain.hostname || domain.pathname}#{if domain.port? then (":" + domain.port) else "" }"
+  Publisher.create({
+    domain: Publisher.get_domain req.body.publisher_domain
     name: req.body.publisher_name
   }).then (publisher)->
     req.user.addPublisher(publisher).then ->
@@ -41,7 +41,7 @@ module.exports.get_publisher = (req, res, next)->
     return res.redirect "#{dashboard_path}/setup"
 
   res.render "dashboard/index", {
-    js: req.js.renderTags "dashboard", "code", "fa"
+    js: req.js.renderTags "dashboard", "code", "fa", "modal"
     css: req.css.renderTags "dashboard", "code", "fa"
     title: "Dashboard"
     dashboard_path: dashboard_path
@@ -54,3 +54,17 @@ module.exports.get_publisher = (req, res, next)->
       }
     }
   }
+  
+  
+module.exports.post_settings = (req, res, next)->
+  req.publisher.update({
+    name: req.body.publisher_name
+    domain: LIBS.models.Publisher.get_domain req.body.publisher_domain
+  }).then ->
+    res.json {
+      success: true
+      next: req.path
+    }
+  
+  .catch next
+  

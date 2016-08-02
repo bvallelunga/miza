@@ -90,6 +90,40 @@
     }
   }
   
+  &.settings-dashboard {
+    form {
+      width: 70%;
+      
+      table {
+        width: 100%;
+        margin-bottom: 20px;
+    
+        td {
+          padding: 10px 0;
+          
+          &.title {
+            width: 30%;
+            font-size: 1.2em;
+          }
+          
+          input:disabled {
+            background: transparent;
+            border-color: transparent;
+            .box-shadow(none);
+          }
+        }
+      }
+    }
+    
+    .error {
+      margin-top: 10px;
+      color: #C50000;
+      font-size: 1.2em;
+      font-weight: lighter;
+      text-align: center;
+    }
+  }
+  
   .publishers {
     margin: 10px -10px -10px -10px;
     .clearfix();

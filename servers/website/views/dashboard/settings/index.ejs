@@ -1,1 +1,24 @@
 <h2>Settings</h2>
+<form class="form" method="POST" action="<%= dashboard_path %>/settings">
+  <% include ../../includes/csrf %>
+  <table>
+    <tr>
+      <td class="title">Name</td>
+      <td><input type="text" name="publisher_name" value="<%= publisher.name %>" placeholder="Tech Crunch" required></td>
+    </tr>
+    <tr>
+      <td class="title">Website</td>
+      <td><input type="url" name="publisher_domain" value="http://<%= publisher.domain %>" placeholder="http://techcrunch.com" required></td>
+    </tr>
+    <tr>
+      <td class="title">API Key</td>
+      <td><input type="text" value="<%= publisher.key %>" disabled></td>
+    </tr>
+    <tr>
+      <td class="title">API Endpoint</td>
+      <td><input type="text" value="http://<%= publisher.endpoint %>" disabled></td>
+    </tr>
+  </table>
+  <button class="button" type="submit">Update Settings</button>
+  <div class="error"></div>
+</form>

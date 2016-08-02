@@ -39,6 +39,7 @@ module.exports = (srv)->
   app.get  "/dashboard/:publisher", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_publisher
   app.get  "/dashboard/:publisher/:dashboard", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_publisher
   app.post "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.post_new
+  app.post  "/dashboard/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.post_settings
   
   
   if not CONFIG.isProd

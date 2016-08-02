@@ -1,3 +1,5 @@
+url = require 'url'
+
 module.exports = (sequelize, DataTypes)->
 
   return sequelize.define "Publisher", {
@@ -42,6 +44,10 @@ module.exports = (sequelize, DataTypes)->
     underscored: true
     
     classMethods: {
+      get_domain: (website)->
+        domain = url.parse website.toLowerCase()
+        return "#{domain.hostname || domain.pathname}#{if domain.port? then (":" + domain.port) else "" }"
+      
       associate: (models)->
         models.Publisher.belongsToMany models.User, {
           as: 'Members'

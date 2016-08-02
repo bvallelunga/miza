@@ -4,19 +4,22 @@ morgan = require "morgan"
 app = express()
 srv = require("http").createServer(app)
 
+
 # Globals
-#GLOBAL.Promise = require "bluebird"
+GLOBAL.Promise = require "bluebird"
 GLOBAL.CONFIG = require("./config")
 GLOBAL.LIBS = require("./libs")()
+
+
+# Promise Config
+Promise.config CONFIG.promises
 
 
 # Express Setup
 app.use morgan(':method :url :response-time')
 app.enable 'trust proxy'
 app.use bodyParser.json()
-app.use bodyParser.urlencoded({
-  extended: true
-})
+app.use bodyParser.urlencoded({ extended: true })
 
 
 # Subdomain Routers
@@ -26,5 +29,5 @@ app.use routers.ads.prefix, routers.ads.app
 app.use routers.website
 
 
-# Listen
+# Server Listen
 srv.listen CONFIG.port or 3030
