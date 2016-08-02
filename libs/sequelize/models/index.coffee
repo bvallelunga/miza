@@ -18,5 +18,4 @@ module.exports = (sequelize)->
     if models[modelName].associate?
       models[modelName].associate models
       
-  sequelize.sync({ force: false })
   return models

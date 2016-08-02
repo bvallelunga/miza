@@ -12,10 +12,10 @@ module.exports = (sequelize, models)->
 createUser = (models)->
   models.User.findOrCreate({
     where: {
-      email: "admin@sledge.io"
+      email: "admin@miza.io"
     },
     defaults: {
-      password: "1burrito2go",
+      password: "changeme",
       name: "Admin"
       is_admin: true
     }
@@ -25,7 +25,7 @@ createUser = (models)->
 createPublisher = (models)->
   models.Publisher.findOrCreate({
     where: {
-      domain: "sledge.io"
+      domain: "miza.io"
     },
     defaults: {
       name: "Demo Publisher"

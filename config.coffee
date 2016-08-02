@@ -7,16 +7,18 @@ module.exports = {
   postgres_url: process.env.DATABASE_URL
   redis_url: process.env.REDIS_URL
   
-  website_subdomains: ["www", "sledge", process.env.APP_NAME]
+  app_name: process.env.APP_NAME
+  website_subdomains: ["www", "miza", process.env.APP_NAME]
   
   general: {
-    company: "Sledge"
+    company: "Miza"
     delimeter: " | "
     description: (
-      "This is sledge"
+      "Watch ads magically reappear on your website with Sledge! " + 
+      "Let us worry about Ad Blockers, so you can focus on what is important."
     )  
     support: {
-      email: "vallelungabrian@gmail.com"
+      email: "brian@miza.io"
       phone: "(310) 849-2533" 
     }
   }

@@ -22,13 +22,11 @@ module.exports.post_new = (req, res, next)->
     domain: "#{domain.hostname || domain.pathname}#{if domain.port? then (":" + domain.port) else "" }"
     name: req.body.publisher_name
   }).then (publisher)->
-    return req.user.addPublisher publisher
-  
-  .then ->
-    res.json {
-      success: true
-      next: "/dashboard"
-    }
+    req.user.addPublisher(publisher).then ->
+      res.json {
+        success: true
+        next: "/dashboard/#{publisher.key}/setup"
+      }
     
   .catch next
 
