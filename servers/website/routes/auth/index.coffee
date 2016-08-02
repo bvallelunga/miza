@@ -30,7 +30,7 @@ module.exports.get_logout = (req, res, next)->
 module.exports.post_login = (req, res, next)->  
   LIBS.models.User.findOne({
     where: {
-      email: req.body.email
+      email: req.body.email.toLowerCase()
       password: LIBS.models.User.hash req.body.password
     }
   }).then (user)->
@@ -54,7 +54,7 @@ module.exports.post_login = (req, res, next)->
 module.exports.post_register = (req, res, next)->  
   LIBS.models.UserAccess.count({
     where: {
-      email: req.body.email 
+      email: req.body.email.toLowerCase()
     }
   }).then (count)->
     if count == 0
@@ -80,7 +80,7 @@ module.exports.post_register = (req, res, next)->
 
 
 module.exports.post_user_access = (req, res, next)->
-  emails = req.body.emails.split("\n")
+  emails = req.body.emails.toLowerCase().split("\n")
 
   LIBS.models.UserAccess.bulkCreate(emails.map (email)->
     return { email: email }
