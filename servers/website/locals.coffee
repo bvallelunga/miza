@@ -7,10 +7,6 @@ module.exports = (req, res, next)->
   res.header 'Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE'
   res.header 'Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
   
-  # Redirect
-  if "www" in req.subdomains
-    return res.redirect "//#{req.hostname.split(".").slice(1).join(".")}#{req.path}"
-  
   #Locals
   res.locals.csrf = req.csrfToken()
   res.locals.host = req.get "host"
