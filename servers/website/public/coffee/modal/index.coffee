@@ -4,7 +4,7 @@ $ ->
     e.stopPropagation()
   
     form = $(this)
-    hint = form.find(".error")
+    hint = form.find(".error").text ""
     button = form.find("button").addClass("loading").text("sending")
   
     $.post(form.attr("action"), form.serialize(), (response)->  
