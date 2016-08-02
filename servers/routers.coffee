@@ -11,6 +11,7 @@ module.exports = (srv)->
     }
     
     engine: (req, res, next)->
+      debugger
       subdomains = req.host.split(".")
     
       if subdomains.length >= 2 and subdomains[0] not in CONFIG.website_subdomains
