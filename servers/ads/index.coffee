@@ -11,7 +11,7 @@ module.exports = (srv)->
   
   # Routes
   app.get "/", routes.auth.has_publisher, routes.core.script
-  app.get "*", routes.auth.has_publisher, routes.core.downloader, routes.core.modifier
+  app.get "*", routes.auth.has_publisher, routes.core.proxy
   
   
   # Error Handlers
