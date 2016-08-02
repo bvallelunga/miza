@@ -45,12 +45,12 @@ module.exports = (sequelize, DataTypes)->
         }
     }
     instanceMethods: {
-      add_domain: (domain)->
+      heroku_add_domain: (domain)->
         LIBS.heroku.post "/apps/#{CONFIG.app_name}/domains", {
           body: { hostname: domain }
         } 
         
-      remove_domain: (domain)->
+      heroku_remove_domain: (domain)->
         LIBS.heroku.delete "/apps/#{CONFIG.app_name}/domains/#{domain}"
  
     }
@@ -62,12 +62,12 @@ module.exports = (sequelize, DataTypes)->
           
       
       afterCreate: (publisher)->
-        publisher.add_domain(publisher.endpoint).catch console.warn
+        publisher.heroku_add_domain(publisher.endpoint).catch console.warn
 
         
       afterUpdate: (publisher)->
-        publisher.add_domain(publisher.endpoint).catch console.warn
-        publisher.remove_domain(publisher.previous "endpoint").catch console.warn
+        if publisher.endpoint != publisher.previous("endpoint")
+          publisher.heroku_add_domain(publisher.endpoint).catch console.warn
 
     }
   }

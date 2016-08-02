@@ -103,7 +103,7 @@ module.exports.load_user = (req, res, next)->
       model: LIBS.models.Publisher
       as: "publishers"
     }]
-  }).then (user)->  
+  }).then (user)->
     req.user = user
     next()
     

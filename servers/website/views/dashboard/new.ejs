@@ -7,8 +7,8 @@
   <% include ../includes/logo %>
   <form class="form" method="POST" action="/dashboard/new">
     <% include ../includes/csrf %>
-    <input class="name top" type="text" name="publisher_name" placeholder="Website Name" required/>
-    <input class="email bottom" type="website" name="publisher_domain" placeholder="Website Domain Name" required/>
+    <input class="name top" type="text" name="publisher_name" placeholder="Publisher Name" required/>
+    <input class="email bottom" type="website" name="publisher_domain" placeholder="http://publisher.com" required/>
     <button class="button" type="submit">Create Publisher Account</button>
     <div class="error"></div>
   </form>
