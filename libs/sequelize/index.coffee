@@ -13,10 +13,13 @@ module.exports = ->
     }
   })
   
-  migrations = require("./migrations")(sequelize) 
-  database   = require("./models")(sequelize)
+  database = require("./models")(sequelize)
   
-  require("./seeders")(sequelize, database)
+  require("./migrations")(sequelize).then ->
+    return sequelize.sync({ force: false })
+    
+  .then ->
+    require("./seeders")(sequelize, database)
   
   database.sequelize = sequelize
   database.Sequelize = sequelize
