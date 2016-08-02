@@ -29,6 +29,7 @@ createPublisher = (models)->
     },
     defaults: {
       name: "Demo Publisher"
+      is_demo: true
     }
   })
 

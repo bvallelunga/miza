@@ -33,6 +33,10 @@ module.exports = (sequelize, DataTypes)->
       unique: true
       allowNull: false
     }
+    is_demo: {
+      type: DataTypes.BOOLEAN
+      defaultValue: false
+    }
   }, {
     paranoid: true,
     underscored: true

@@ -40,6 +40,13 @@ module.exports = (srv)->
   app.get  "/dashboard/:publisher/:dashboard", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_publisher
   app.post "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.post_new
   
+  
+  if not CONFIG.isProd
+    app.get "/demo", routes.demo.publisher, routes.demo.get_root
+    app.get "/demo/:test", routes.demo.publisher, routes.demo.get_root
+  
+  
+  # Error Handlers
   app.get  "*", routes.landing.get_not_found
   app.use  require("./error")
   

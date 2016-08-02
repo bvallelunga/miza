@@ -10,8 +10,12 @@ module.exports = (srv)->
   
   
   # Routes
-  app.get "/", routes.identifier, routes.script
-  app.get "*", routes.identifier, routes.downloader, routes.modifier
+  app.get "/", routes.auth.has_publisher, routes.core.script
+  app.get "*", routes.auth.has_publisher, routes.core.downloader, routes.core.modifier
+  
+  
+  # Error Handlers
+  app.use  require("./error")
   
   
   # Export
