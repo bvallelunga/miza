@@ -1,8 +1,6 @@
 request = require "request"
 
 fetchRedis = (key)->
-  console.log key
-
   new Promise (res, rej)->
     LIBS.redis.get key, (error, response)->             
       if error? or not response?
@@ -16,7 +14,7 @@ fetchRedis = (key)->
       data.cached = true
       
       if data.content.type == "Buffer"
-        data.content = new Buffer(req.data.content.data)
+        data.content = new Buffer(data.content.data)
       
       res data
       

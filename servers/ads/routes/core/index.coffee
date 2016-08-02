@@ -5,7 +5,7 @@ proxy = require "./proxy"
 
 
 module.exports.script = (req, res, next)->  
-  res.render "init", {
+  res.render "script", {
     publisher: req.publisher,
     targets: script.targets,
     root_script: script.roots.double_click

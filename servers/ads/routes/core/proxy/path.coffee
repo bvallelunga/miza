@@ -5,7 +5,7 @@ module.exports = (host, path)->
     
     if url.indexOf("://") == -1
       url = "http://" + url
-      
+    
     return {
       url: url
       key: key

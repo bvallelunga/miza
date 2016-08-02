@@ -3,9 +3,11 @@
     API.s_prod = <%= LIBS.isProd %>
     API.s_head = document.getElementsByTagName('head')[0]
     API.s_natives = {}
+    API.s_has_blocker = false
     
     API.s_listeners(window.document)
     API.s_overrides(window)
+    API.s_blocker_check(window)
     API.s_start()
   }
   
@@ -50,8 +52,11 @@
   
   API.s_url = function(url, encode) {
     var encoded = (encode != false) ? btoa(url) : url
-    var random = "r=" + Math.random()
-    return API.s_base + encoded + "?" + (!API.s_prod ? random : "")
+    var random = "&r=" + Math.random()
+    return (
+      API.s_base + encoded + "?blocker=" + API.s_has_blocker +
+      (!API.s_prod ? random : "") 
+    )
   }
   
   API.s_script = function() {
@@ -72,6 +77,23 @@
 
     return [cleaned, script]
   }
+  
+  
+  API.s_blocker_check = function(window) {
+    var test = document.createElement('div')
+    test.innerHTML = '&nbsp;'
+    test.className = 'adsbox'
+    document.body.appendChild(test)
+    
+    window.setTimeout(function() {
+      if (test.offsetHeight === 0) {
+        API.s_has_blocker = true
+      }
+      
+      test.remove()
+    }, 100)
+  }  
+
   
   API.s_is_target = function(src) {
     var targets = new RegExp("<%= targets %>")
