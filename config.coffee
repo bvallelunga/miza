@@ -8,7 +8,7 @@ module.exports = {
   redis_url: process.env.REDIS_URL
   
   app_name: process.env.APP_NAME
-  website_subdomains: ["www", "miza", process.env.APP_NAME]
+  website_subdomains: ["www", "dev", "miza", process.env.APP_NAME]
   
   general: {
     company: "Miza"
