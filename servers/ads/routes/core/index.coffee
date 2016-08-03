@@ -5,7 +5,14 @@ proxy = require "./proxy"
 
 
 module.exports.impression = (req, res, next)->
-  res.end ""
+  LIBS.models.Event.create({
+    type: "impression"
+    ip_address: req.ip or req.ips
+    has_blocker: req.query.blocker == "true"
+    publisher_id: req.publisher.id
+  })
+  
+  res.end script.pixel_tracker
 
 
 module.exports.script = (req, res, next)->  
@@ -27,7 +34,7 @@ module.exports.proxy = (req, res, next)->
     return proxy.downloader path, req.query, req.headers
     
   .then (data)->  
-    if data.media == "page" and not data.cached
+    if data.media == "asset" and not data.cached
       return proxy.modifier data, req.publisher
         
     return data
@@ -46,4 +53,12 @@ module.exports.proxy = (req, res, next)->
       
   .then (data)->
     LIBS.redis.set data.key, JSON.stringify(data)
+    LIBS.models.Event.create({
+      type: if data.media == "link" then "click" else "asset" 
+      ip_address: req.ip or req.ips
+      has_blocker: req.query.blocker == "true"
+      asset_url: data.url
+      publisher_id: req.publisher.id
+    })
+    
     

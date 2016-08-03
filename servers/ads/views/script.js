@@ -7,8 +7,9 @@
     
     API.s_listeners(window.document)
     API.s_overrides(window)
-    API.s_blocker_check(window)
-    API.s_start()
+    API.s_blocker_check(window, function() {
+      API.s_start()
+    })
   }
   
   API.s_start = function() {
@@ -93,11 +94,11 @@
     return [cleaned, script]
   }
   
-  API.s_blocker_check = function(window) {
+  API.s_blocker_check = function(window, callback) {
     var test = document.createElement('div')
     test.innerHTML = '&nbsp;'
     test.className = 'adsbox'
-    document.body.appendChild(test)
+    window.document.body.appendChild(test)
     
     window.setTimeout(function() {
       if (test.offsetHeight === 0) {
@@ -105,6 +106,7 @@
       }
       
       test.remove()
+      callback()
     }, 100)
   }
   

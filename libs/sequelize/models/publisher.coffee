@@ -50,9 +50,14 @@ module.exports = (sequelize, DataTypes)->
       
       associate: (models)->
         models.Publisher.belongsToMany models.User, {
-          as: 'Members'
+          as: 'members'
           through: "UserPublisher"
         }
+        
+        models.Publisher.hasMany(models.Event, { 
+          as: 'events' 
+        })
+
     }
     instanceMethods: {
       heroku_add_domain: (domain)->

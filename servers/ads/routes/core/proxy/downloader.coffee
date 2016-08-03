@@ -37,7 +37,7 @@ download = (url, query, headers)->
       
   .then (response)->  
     data = {
-      media: "page"
+      media: "asset"
       headers: response.headers or {}
       cached: false
     }
