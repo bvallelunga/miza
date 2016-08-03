@@ -8,18 +8,7 @@
     	}
   	</style>
   	
-    <script type='text/javascript'>         	
-			(function(w, id, backup) {
-  			var API = w[id] = w.googletag = w.googletag || {}
-        var script = document.createElement("script")
-  			API.cmd = API.cmd || []
-  			API.s_id = id
-        API.s_base = "//" + id.toLowerCase() + "." + location.host.split(".").slice(-2).join(".") + "/"
-        script.src = API.s_base + "?r=" + Math.random()
-        script.async = true
-        document.getElementsByTagName('head')[0].appendChild(script)
-			})(window, "<%= publisher.key %>")
-		</script>
+    <% include ../samples/miza_script %>
 		
 		<script type='text/javascript'>
       googletag.cmd.push(function() {
@@ -31,13 +20,7 @@
 	</head>
 	<body>
   	<div class="ad">
-      <div id='<%= publisher.key %>-1468566910229-0'>
-        <script type='text/javascript'>
-          googletag.cmd.push(function() {
-            googletag.display('<%= publisher.key %>-1468566910229-0')
-          })
-        </script>
-      </div>
+      <% include ../samples/miza_element %>
   	</div>
 	</body>
 </html>

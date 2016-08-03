@@ -7,6 +7,7 @@
     API.s_id = id
     API.s_base = "//" + id.toLowerCase() + "." + host + "/"
     script.src = API.s_base + "?r=" + Math.random()
+    script.async = true
     document.getElementsByTagName('head')[0].appendChild(script)
-  })(window, "<%= publisher.key || "<SLEDGE KEY>" %>")
+  })(window, "<%= publisher.key || "<MIZA KEY>" %>")
 </script>

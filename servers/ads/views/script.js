@@ -3,7 +3,6 @@
     API.s_prod = <%= LIBS.isProd %>
     API.s_head = document.getElementsByTagName('head')[0]
     API.s_natives = {}
-    API.s_has_blocker = false
     
     API.s_listeners(window.document)
     API.s_overrides(window)
@@ -18,51 +17,45 @@
     API.s_head.appendChild(script)
   }
   
-  API.s_overrides = function(window, prototype) {
+  API.s_overrides = function(window) {
     [
       [window.Element.prototype, "appendChild"],
       [window.Element.prototype, "insertBefore"],
-      [window.Document.prototype, "write"],
-      [window.Document.prototype, "writeln"]
-    ].forEach(function(override) {    
-      var method = API.s_natives[override[1]]
-      
-      if(prototype != false) {
-        method = API.s_natives[override[1]] = override[0][override[1]]
-        override[0][override[1]] = API.s_override_method(method) 
-      }
-      
-      window.document[override[1]] = API.s_override_method(method)
+      [window.Document.prototype, "writeln"],
+      [window.Document.prototype, "write"]
+    ].forEach(function(override) {      
+      var method = API.s_natives[override.name] = override[0][override[1]]
+      override[0][override[1]] = API.s_method_override(method)
     }) 
   }
   
-  API.s_override_method = function(override) {
-    return function(element) {            
-      if(typeof element == "string")
-        return API.s_override_write(this, element, override) 
+  API.s_method_override = function(method) {
+    return function(content) {                  
+      if(["writeln", "write"].indexOf(method.name) > -1) {
+        return API.s_override_writeln(this, content, method) 
+      }
       
-      var node = API.s_migrator(element, false)
-      override.apply(this, arguments)
+      for(var i = 0; i < arguments.length; i++) {
+        node = arguments[i]
+        
+        if(node instanceof Element) {
+          arguments[i] = API.s_migrator(node, false)
+        }
+      }
+    
+      return method.apply(this, arguments)
     }
   }
   
-  API.s_override_write = function(document, content, method) {
-    var out = API.s_cleaner(content)
-
-    if(method.name == "write") {
-      method.apply(document, [""])
-      API.s_listeners(document)
-      API.s_overrides(document.parentWindow || document.defaultView, false)
-    }     
-    
-    API.s_natives.writeln.apply(document, [out[0]])
+  API.s_override_writeln = function(document, content, method) {
+    var out = API.s_cleaner(this, content)
+    document.body.innerHTML += out[0]
     document.getElementsByTagName('head')[0].appendChild(out[1])
-    API.s_migrator(document)
   } 
     
-  API.s_listeners = function(document) {
-    document.addEventListener('DOMNodeInserted', function(event) {
-      API.s_migrator(event.target)
+  API.s_listeners = function(element) {
+    element.addEventListener('DOMNodeInserted', function(event) {
+      API.s_migrator(event.target) 
     })
   }
   
@@ -81,13 +74,13 @@
     return script
   }
 	  
-  API.s_cleaner = function(text) {         
+  API.s_cleaner = function(document, text) {         
     var script = API.s_script()
     var cleaned = text.replace(/<script(.*?)>([\s\S]*?)<\/script>/gi, function() {
       if(arguments[1].indexOf("src") > -1) 
         return arguments[0]
       
-      script.text += arguments[2] + ";"
+      script.text += arguments[2] + ';'
       return ''
     });
 
@@ -125,7 +118,7 @@
     return !!src && targets.test(src)
   }
   
-  API.s_migrator = function(element, to_replace, from_parent) {    
+  API.s_migrator = function(element, to_replace) {     
     var path = element.src ? "src" : "href"
     var src = element.src || element.href
     var tagName = (element.tagName || "").toLowerCase()
@@ -146,17 +139,12 @@
         orginal.parentNode.replaceChild(element, orginal)
     }
     
-    if(tagName == "iframe" && element.contentDocument != null) {
+    if(tagName == "iframe" && element.contentDocument != null) {             
       API.s_listeners(element.contentDocument)
       API.s_overrides(element.contentWindow)
     }
     
-    if(from_parent != true) {
-      element.querySelectorAll("*").forEach(function(element) {
-        API.s_migrator(element, true, true)
-      })
-    }
-      
+    element.childNodes.forEach(API.s_migrator)
     return element
   }
   
