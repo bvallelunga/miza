@@ -11,6 +11,17 @@ module.exports = {
   website_subdomains: ["www", "dev", "miza", process.env.APP_NAME]
   ads_redirect: "https://miza.io"
   
+  logging_defaults: {
+    development: ":method :url :status :response-time ms"
+    production: ':remote-addr - :req[host] ":method :url HTTP/:http-version" :status ":response-time ms" [:date[clf]] :res[content-length] ":referrer" ":user-agent"'
+  }
+  
+  logger: ->  
+    if not this.isProd 
+      return this.logging_defaults.production
+      
+    return this.logging_defaults.development
+  
   general: {
     company: "Miza"
     delimeter: " | "

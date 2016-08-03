@@ -16,7 +16,7 @@ Promise.config CONFIG.promises
 
 
 # Express Setup
-app.use morgan(':method :url :response-time')
+app.use morgan CONFIG.logger()
 app.enable 'trust proxy'
 app.use bodyParser.json()
 app.use bodyParser.urlencoded({ extended: true })
