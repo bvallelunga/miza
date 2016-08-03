@@ -10,6 +10,9 @@ module.exports.script = (req, res, next)->
     targets: script.targets,
     root_script: script.roots.double_click
   }, (error, code)->
+    if not CONFIG.isProd
+      return res.send code
+  
     res.send uglify.minify(code, {
       fromString: true
     }).code
