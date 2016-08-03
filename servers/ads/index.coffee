@@ -13,6 +13,7 @@ module.exports = (srv)->
   
   # Routes
   app.get "/", routes.auth.has_publisher, routes.core.script
+  app.get "/i", routes.auth.has_publisher, routes.core.impression
   app.get "*", routes.auth.has_publisher, routes.core.proxy
   
   

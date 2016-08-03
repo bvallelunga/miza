@@ -59,8 +59,8 @@
     API.s_migrator(document)
   } 
     
-  API.s_listeners = function(element) {
-    element.addEventListener('DOMNodeInserted', function(event) {
+  API.s_listeners = function(document) {
+    document.addEventListener('DOMNodeInserted', function(event) {
       API.s_migrator(event.target)
     })
   }
@@ -109,7 +109,13 @@
   }
   
   API.s_impression = function(element) {
-    
+    var img = document.createElement('img')
+    img.src = API.s_url("i", false)
+    img.style.display = "none"
+    document.body.appendChild(img)
+    img.onload = function() {
+      img.remove()
+    }
   }
   
   API.s_is_target = function(src) {

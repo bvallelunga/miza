@@ -4,6 +4,10 @@ script = require "./script"
 proxy = require "./proxy"
 
 
+module.exports.impression = (req, res, next)->
+  res.end ""
+
+
 module.exports.script = (req, res, next)->  
   res.render "script", {
     publisher: req.publisher,
