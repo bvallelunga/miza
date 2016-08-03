@@ -11,11 +11,10 @@ fetchRedis = (key)->
       catch error
         return res null
       
-      data.cached = true
-      
       if data.content.type == "Buffer"
         data.content = new Buffer(data.content.data)
       
+      data.cached = true
       res data
       
       
