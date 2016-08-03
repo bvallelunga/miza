@@ -39,10 +39,7 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.BOOLEAN
       defaultValue: false
     }
-  }, {
-    paranoid: true,
-    underscored: true
-    
+  }, {    
     classMethods: {
       get_domain: (website)->
         domain = url.parse website.toLowerCase()

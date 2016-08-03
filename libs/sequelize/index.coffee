@@ -11,6 +11,10 @@ module.exports = ->
     dialectOptions: {
       ssl: true
     }
+    define: {
+      paranoid: true
+      underscored: true 
+    }
   })
   
   database = require("./models")(sequelize)

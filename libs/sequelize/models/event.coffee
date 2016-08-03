@@ -23,7 +23,4 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.BOOLEAN
       allowNull: false
     }
-  }, {
-    paranoid: true
-    underscored: true
   }

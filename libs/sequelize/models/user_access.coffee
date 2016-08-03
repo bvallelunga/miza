@@ -12,9 +12,6 @@ module.exports = (sequelize, DataTypes)->
       }
     }
   }, {
-    paranoid: true,
-    underscored: true
-
     hooks: {
       beforeValidate: (publisher, options)->
         if not publisher.key?

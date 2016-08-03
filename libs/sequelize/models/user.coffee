@@ -27,9 +27,6 @@ module.exports = (sequelize, DataTypes)->
       defaultValue: false
     } 
   }, {
-    paranoid: true,
-    underscored: true
-    
     classMethods: {
       hash: hasher
       
