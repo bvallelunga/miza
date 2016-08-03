@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes)->
         isUrl: true
       }
     }
-    has_blocker: { 
+    protected: { 
       type: DataTypes.BOOLEAN
       allowNull: false
     }
