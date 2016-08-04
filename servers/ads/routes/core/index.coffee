@@ -10,6 +10,7 @@ module.exports.impression = (req, res, next)->
     ip_address: req.ip or req.ips
     protected: req.query.blocker == "true"
     publisher_id: req.publisher.id
+    ad_network: "double click"
   })
   
   res.end script.pixel_tracker
@@ -59,6 +60,7 @@ module.exports.proxy = (req, res, next)->
       protected: req.query.blocker == "true"
       asset_url: data.url
       publisher_id: req.publisher.id
+      ad_network: "double click"
     })
     
     

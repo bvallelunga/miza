@@ -22,6 +22,7 @@ $ ->
           <td>#{log.type}</td>
           <td>#{log.ip_address}</td>
           <td>#{log.protected}</td>
+          <td>#{log.ad_network or ""}</td>
           <td>#{moment.duration(created - now).humanize(true)}</td>
         </tr>
       """)

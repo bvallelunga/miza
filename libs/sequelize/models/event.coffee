@@ -2,6 +2,7 @@ module.exports = (sequelize, DataTypes)->
 
   return sequelize.define "Event", {
     ad_id: DataTypes.STRING
+    ad_network: DataTypes.STRING
     type: { 
       type: DataTypes.ENUM("impression", "click", "asset")
       allowNull: false

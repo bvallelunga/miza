@@ -92,7 +92,10 @@ module.exports.get_analytics_logs = (req, res, next)->
 
   req.publisher.getEvents({ 
     limit: 100 
-    attributes: [ "ip_address", "protected", "created_at", "type" ]
+    attributes: [ 
+      "ip_address", "protected", "ad_network"
+      "created_at", "type" 
+    ]
     where: {
       type: {
         $ne: "asset" 
