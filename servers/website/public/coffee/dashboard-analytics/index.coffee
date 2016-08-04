@@ -14,7 +14,7 @@ $ ->
       created = new Date log.created_at
           
       return $("""
-        <tr>
+        <tr class="#{ if log.protected then "protected" else "normal" }">
           <td>#{log.type}</td>
           <td>#{log.ip_address}</td>
           <td>#{log.protected}</td>
