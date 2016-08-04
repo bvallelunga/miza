@@ -16,11 +16,16 @@ module.exports.impression = (req, res, next)->
   res.end script.pixel_tracker
 
 
-module.exports.script = (req, res, next)->  
+module.exports.script = (req, res, next)->
+  coverage = req.publisher.coverage_ratio
+
+  if coverage < 1 and coverage > Math.random()
+    return res.redirect script.roots.double_click.raw
+ 
   res.render "script", {
     publisher: req.publisher,
     targets: script.targets,
-    root_script: script.roots.double_click
+    root_script: script.roots.double_click.encoded
   }, (error, code)->
     if not CONFIG.isProd
       return res.send code
