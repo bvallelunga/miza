@@ -12,7 +12,21 @@ module.exports.has_publisher = (req, res, next)->
     if not publisher?
       return res.redirect CONFIG.ads_redirect
     
+    req.ip_address = real_ip req
     req.publisher = publisher
     next()
     
   .catch next
+  
+  
+real_ip = (req)->
+  ipAddr = req.headers["x-forwarded-for"]
+  
+  if ipAddr
+    list = ipAddr.split(",");
+    ipAddr = list[list.length-1]
+    
+  else 
+    ipAddr = req.connection.remoteAddress
+    
+  return ipAddr

@@ -7,7 +7,7 @@ proxy = require "./proxy"
 module.exports.impression = (req, res, next)->
   LIBS.models.Event.create({
     type: "impression"
-    ip_address: req.ip or req.ips
+    ip_address: req.ip_address
     protected: req.query.blocker == "true"
     publisher_id: req.publisher.id
     ad_network: "double click"
@@ -56,7 +56,7 @@ module.exports.proxy = (req, res, next)->
     LIBS.redis.set data.key, JSON.stringify(data)
     LIBS.models.Event.create({
       type: if data.media == "link" then "click" else "asset" 
-      ip_address: req.ip or req.ips
+      ip_address: req.ip_address
       protected: req.query.blocker == "true"
       asset_url: data.url
       publisher_id: req.publisher.id

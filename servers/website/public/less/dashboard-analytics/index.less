@@ -62,7 +62,7 @@
   border-spacing: 0;
   
   th {
-    padding: 10px 4px;
+    padding: 10px 8px;
     border-bottom: solid 1px #EDF1F5;
   }
   
@@ -76,13 +76,20 @@
   
   td {
     font-size: 0.95em;
-    padding: 12px 4px;
+    padding: 12px 8px;
     font-weight: lighter;
     width: 20%;
+    vertical-align: text-top;
     
-    &:first-child, &:nth-child(4) {
+    &:first-child, &:nth-child(2) {
       text-transform: capitalize;
     }
+    
+    &:nth-child(4) {
+      word-wrap: break-word;
+      word-break: break-all;
+    } 
+    
     
     &:nth-child(3) {
       text-transform: uppercase;
