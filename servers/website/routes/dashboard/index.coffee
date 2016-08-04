@@ -5,7 +5,7 @@ module.exports.get_root = (req, res, next)->
   if req.user.publishers.length == 0
     res.redirect "/dashboard/new"
     
-  res.redirect "/dashboard/#{req.user.publishers[0].key}/setup"
+  res.redirect "/dashboard/#{req.user.publishers[0].key}/analytics"
   
   
 module.exports.get_new = (req, res, next)->
@@ -42,7 +42,7 @@ module.exports.get_dashboard = (req, res, next)->
   ]
 
   if dashboard not in dashboards
-    return res.redirect "#{dashboard_path}/setup"
+    return res.redirect "#{dashboard_path}/analytics"
     
   switch dashboard
     when "setup"
