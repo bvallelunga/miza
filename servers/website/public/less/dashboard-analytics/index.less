@@ -74,27 +74,48 @@
     opacity: 0.5;
   }
   
+  tr td, tr th {    
+    &:nth-child(1) {
+      width: 15%
+    }
+    
+    &:nth-child(2) {
+      width: 20%
+    }
+    
+    
+    &:nth-child(3) {
+      width: 17%
+    } 
+    
+    
+    &:nth-child(4) {
+      width: 28%;
+    } 
+    
+    &:nth-child(5) {
+      width: 20%;
+    } 
+  }
+  
   td {
     font-size: 0.95em;
     padding: 12px 8px;
     font-weight: lighter;
-    width: 20%;
     vertical-align: text-top;
     
     &:first-child, &:nth-child(2) {
       text-transform: capitalize;
     }
     
+    &:nth-child(3) {
+      text-transform: uppercase;
+    } 
+    
     &:nth-child(4) {
       word-wrap: break-word;
       word-break: break-all;
     } 
-    
-    
-    &:nth-child(3) {
-      text-transform: uppercase;
-    }  
-  
   }
   
   tr:last-child td {
