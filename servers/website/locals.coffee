@@ -13,6 +13,7 @@ module.exports = (req, res, next)->
   #Locals
   res.locals.csrf = req.csrfToken()
   res.locals.host = "#{req.protocol}://#{req.get("host")}"
+  res.locals.url = res.locals.host + req.originalUrl
   res.locals.title = ""
   res.locals.css = ""
   res.locals.js = ""
