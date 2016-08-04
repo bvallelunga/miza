@@ -30,7 +30,7 @@ module.exports = {
       "Let us worry about Ad Blockers, so you can focus on what is important."
     )  
     support: {
-      email: "brian@miza.io"
+      email: "vallelungabrian@gmail.com"
       phone: "(310) 849-2533" 
     }
   }
