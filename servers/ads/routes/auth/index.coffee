@@ -14,6 +14,7 @@ module.exports.has_publisher = (req, res, next)->
     
     req.ip_address = real_ip req
     req.publisher = publisher
+    console.log req.ip_address
     next()
     
   .catch next
