@@ -172,6 +172,8 @@ module.exports.get_analytics_metrics = (req, res, next)->
       }
     })
   }).then (props)->
+    props.all = props.all or 1
+  
     res.json {
       impressions: numeral(props.impressions).format("0a")
       clicks: numeral(props.clicks).format("0a")

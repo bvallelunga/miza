@@ -9,7 +9,11 @@ $ ->
   
   $.get("#{location.pathname}/logs").done (logs)->
     now = new Date()
+    
+    if logs.length == 0
+      return $(".logs-table-message").text "We don't have any logs yet for your account."
   
+    $(".logs-table-message").hide()
     $(".logs-table tbody").append logs.map (log)->
       created = new Date log.created_at
           
