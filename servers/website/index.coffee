@@ -36,8 +36,10 @@ module.exports = (srv)->
   
   app.get  "/dashboard", routes.auth.is_authenticated, routes.dashboard.get_root
   app.get  "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.get_new
-  app.get  "/dashboard/:publisher", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_publisher
-  app.get  "/dashboard/:publisher/:dashboard", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_publisher
+  app.get  "/dashboard/:publisher", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_dashboard
+  app.get  "/dashboard/:publisher/:dashboard", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_dashboard
+  app.get  "/dashboard/:publisher/analytics/logs", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_analytics_logs
+  app.get  "/dashboard/:publisher/analytics/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_analytics_metrics
   app.post "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.post_new
   app.post  "/dashboard/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.post_settings
   

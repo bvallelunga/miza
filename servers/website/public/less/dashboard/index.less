@@ -89,19 +89,7 @@
       text-decoration: underline;
     }
   }
-  
-  &.analytics-dashboard {
-    .coming-soon {
-      width: 100%;
-      text-align: center;
-      margin-top: 200px;
-      font-size: 3.5em;
-      color: @blue;
-      font-weight: bold;
-      text-shadow: 0 2px 0 rgba(0,0,0,0.1);
-    }
-  }
-  
+    
   &.settings-dashboard {
     form {
       width: 70%;
@@ -136,50 +124,52 @@
     }
   }
   
-  .publishers {
-    margin: 10px -10px -10px -10px;
-    .clearfix();
-    
-    .publisher {
-      position: relative;
-      cursor: pointer;
-      width: 180px;
-      padding: 15px 20px;
-      margin: 10px;
-      text-align: center;
-      background: #FDFDFD;
-      border: solid 2px rgba(0,0,0,0.05);
-      display: inline-block;
-      .border-radius(4px);
+  &.setup-dashboard {
+    .publishers {
+      margin: 10px -10px -10px -10px;
+      .clearfix();
       
-      &:not(.disabled):hover, &.active {
-        border-color: @blue;
-      }
-      
-      &.disabled {
-        opacity: 0.5;
-        cursor: default;
-      }
-      
-      .soon {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 100px;
-        font-size: 1em;
-      }
-      
-      .image {
-        height: 120px;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: contain;
-      }
-      
-      .name {
-        margin-top: 20px;
-        font-size: 1.2em;
-        font-weight: bold;
+      .publisher {
+        position: relative;
+        cursor: pointer;
+        width: 180px;
+        padding: 15px 20px;
+        margin: 10px;
+        text-align: center;
+        background: #FDFDFD;
+        border: solid 2px rgba(0,0,0,0.05);
+        display: inline-block;
+        .border-radius(4px);
+        
+        &:not(.disabled):hover, &.active {
+          border-color: @blue;
+        }
+        
+        &.disabled {
+          opacity: 0.5;
+          cursor: default;
+        }
+        
+        .soon {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 100px;
+          font-size: 1em;
+        }
+        
+        .image {
+          height: 120px;
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-size: contain;
+        }
+        
+        .name {
+          margin-top: 20px;
+          font-size: 1.2em;
+          font-weight: bold;
+        }
       }
     }
   }

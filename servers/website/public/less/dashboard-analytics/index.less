@@ -1,0 +1,89 @@
+@import '../compless/all';
+@import '../global/colors';
+
+.metrics {
+  margin-bottom: 65px;
+  .clearfix();
+  
+  .metric {
+    display: inline-block;
+    text-align: center;
+    
+    .primary {
+      font-size: 5em;
+      font-weight: bold;
+      color: @blue;
+      text-shadow: 0 2px 0 rgba(0,0,0,0.1);
+    }
+    
+    .secondary {
+      font-size: 1.2em;
+      color: #b6b6b6;
+    }
+  }
+  
+  .core {
+    width: 50%;
+    font-size: 1.7em;
+  }
+  
+  .secondaries {  
+    width: 50%;
+        
+    .row {
+      padding: 25px 0;
+      border-bottom: solid 1px #f6f6f6;
+      
+      &:first-child {
+        padding-top: 0;
+      }
+      
+      &:last-child {
+        border: none;
+      }
+      
+      .metric {
+        font-size: 0.7em;
+        width: 49%;
+        
+        .primary {
+          color: darken(@blue, 25%);
+        }
+      }
+    }
+  }
+}  
+
+
+.logs-table {
+  width: 100%;
+  text-align: left;
+  font-size: 1.25em;
+  border-spacing: 0;
+  
+  th {
+    padding: 10px 4px;
+    border-bottom: solid 1px #EDF1F5;
+  }
+  
+  td {
+    padding: 12px 4px;
+    border-bottom: solid 1px #f9f9f9;
+    font-weight: lighter;
+    width: 25%;
+    
+    &:first-child {
+      text-transform: capitalize;
+    }
+    
+    &:nth-child(3) {
+      text-transform: uppercase;
+    }
+  
+  }
+  
+  tr:last-child td {
+    border: none;
+  }
+}
+

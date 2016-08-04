@@ -1,3 +1,6 @@
+numeral = require "numeral"
+moment = require "moment"
+
 module.exports = (req, res, next)->
 
   # Header Config
@@ -27,6 +30,8 @@ module.exports = (req, res, next)->
   res.locals.support_email = CONFIG.general.support.email
   res.locals.support_phone = CONFIG.general.support.phone
   res.locals.support_phone_clean = CONFIG.general.support.phone.replace(/\D+/g, '')
+  res.locals.numeral = numeral
+  res.locals.moment = moment
   res.locals.media = {
     "logo" : "#{res.locals.host}/imgs/logo.png#{res.locals.random}"
     "graph": "#{res.locals.host}/imgs/graph.png#{res.locals.random}"
