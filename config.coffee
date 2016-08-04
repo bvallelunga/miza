@@ -13,11 +13,11 @@ module.exports = {
   
   logging_defaults: {
     development: ":method :url :status :response-time ms"
-    production: ':remote-addr - :req[host] ":method :url HTTP/:http-version" :status ":response-time ms" [:date[clf]] :res[content-length] ":referrer" ":user-agent"'
+    production: ':method :req[host]:url :status :response-time ms :remote-addr ":user-agent" ":referrer" :res[content-length] HTTP/:http-version [:date[clf]]'
   }
   
   logger: ->  
-    if not this.isProd 
+    if this.isProd 
       return this.logging_defaults.production
       
     return this.logging_defaults.development
