@@ -35,6 +35,8 @@ module.exports = {
     }
   }
   
+  loader_io: "loaderio-3cf2c8ae8b114038bc3470a9a83de409"
+  
   intercom: {
     app_id: "jlsf08kq"
   }

@@ -18,3 +18,7 @@ module.exports.post_beta = (req, res, next)->
 
 module.exports.get_not_found = (req, res, next)->
   res.redirect "/"
+  
+  
+module.exports.get_loader_io = (req, res, next)->
+  res.send CONFIG.loader_io
