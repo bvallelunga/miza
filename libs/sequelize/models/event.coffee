@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes)->
       validate: {
         isIP: true
       }
+      set: (value)->
+        if value == "::1"
+          value = "127.0.0.1"
+      
+        this.setDataValue 'ip_address', value
     }
     asset_url: {
       type: DataTypes.TEXT

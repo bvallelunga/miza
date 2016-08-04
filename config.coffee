@@ -26,7 +26,7 @@ module.exports = {
     company: "Miza"
     delimeter: " | "
     description: (
-      "Watch ads magically reappear on your website with Sledge! " + 
+      "Watch ads magically reappear on your website with Miza! " + 
       "Let us worry about Ad Blockers, so you can focus on what is important."
     )  
     support: {
