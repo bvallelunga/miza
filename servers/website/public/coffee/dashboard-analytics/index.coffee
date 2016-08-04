@@ -1,4 +1,15 @@
 $ ->
+  downloadMetrics()
+  downloadLogs()
+  
+  setInterval ->
+    downloadMetrics()
+    downloadLogs()
+  
+  , 30000
+
+
+downloadMetrics = ->
   $.get("#{location.pathname}/metrics").done (metrics)->
     $(".ctr-metric").text metrics.ctr
     $(".impressions-metric").text metrics.impressions
@@ -6,7 +17,8 @@ $ ->
     $(".assets-metric").text metrics.assets
     $(".blocked-metric").text metrics.blocked
   
-  
+
+downloadLogs = ->
   $.get("#{location.pathname}/logs").done (logs)->
     now = new Date()
     
@@ -14,7 +26,7 @@ $ ->
       return $(".logs-table-message").text "We don't have any logs yet for your account."
   
     $(".logs-table-message").hide()
-    $(".logs-table tbody").append logs.map (log)->
+    $(".logs-table tbody").html("").append logs.map (log)->
       created = new Date log.created_at
           
       return $("""
