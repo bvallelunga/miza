@@ -41,11 +41,13 @@ module.exports = (sequelize, DataTypes)->
     }
     coverage_ratio: {
       type: DataTypes.DECIMAL(4,2)
-      defaultValue: 1.00
+      defaultValue: 1
       validate: {
         min: 0
         max: 1
       }
+      get: ->      
+        return Number this.getDataValue("coverage_ratio")
     }
   }, {    
     classMethods: {

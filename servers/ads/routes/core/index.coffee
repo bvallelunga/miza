@@ -19,7 +19,7 @@ module.exports.impression = (req, res, next)->
 module.exports.script = (req, res, next)->
   coverage = req.publisher.coverage_ratio
 
-  if coverage < 1 and coverage > Math.random()
+  if coverage < 1 and coverage <= Math.random() 
     return res.redirect script.roots.double_click.raw
  
   res.render "script", {
