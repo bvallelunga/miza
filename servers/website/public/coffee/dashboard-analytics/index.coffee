@@ -1,6 +1,6 @@
 $ ->
   $.get("#{location.pathname}/metrics").done (metrics)->
-    $(".revenue-metric").text metrics.revenue
+    $(".ctr-metric").text metrics.ctr
     $(".impressions-metric").text metrics.impressions
     $(".clicks-metric").text metrics.clicks
     $(".assets-metric").text metrics.assets

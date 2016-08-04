@@ -94,6 +94,9 @@ module.exports.get_analytics_logs = (req, res, next)->
     limit: 100 
     attributes: [ "ip_address", "protected", "created_at", "type" ]
     where: {
+      type: {
+        $ne: "asset" 
+      }
       created_at: {
         $gte: month_ago
       }
@@ -115,6 +118,15 @@ module.exports.get_analytics_metrics = (req, res, next)->
     all: LIBS.models.Event.count({
       where: {
         publisher_id: req.publisher.id
+        created_at: {
+          $gte: month_ago
+        }
+      }
+    })
+    all_clicks: LIBS.models.Event.count({
+      where: {
+        publisher_id: req.publisher.id
+        type: "click"
         created_at: {
           $gte: month_ago
         }
@@ -164,8 +176,8 @@ module.exports.get_analytics_metrics = (req, res, next)->
       impressions: numeral(props.impressions).format("0a")
       clicks: numeral(props.clicks).format("0a")
       assets: numeral(props.assets).format("0a")
-      blocked: numeral(props.blocked/props.all).format("0%")
-      revenue: numeral(100).format("$0a")
+      blocked: numeral(props.blocked/props.all).format("0.0%")
+      ctr: numeral(props.all_clicks/props.all).format("0.0%")
     }
   
   
