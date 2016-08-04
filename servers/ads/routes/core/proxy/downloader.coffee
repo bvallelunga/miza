@@ -11,7 +11,7 @@ fetchRedis = (key)->
       catch error
         return res null
       
-      if data.content.type == "Buffer"
+      if data.content? and data.content.type == "Buffer"
         data.content = new Buffer(data.content.data)
       
       data.cached = true

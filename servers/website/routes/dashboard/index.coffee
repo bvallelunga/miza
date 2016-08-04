@@ -132,6 +132,15 @@ module.exports.get_analytics_metrics = (req, res, next)->
         }
       }
     })
+    all_impressions: LIBS.models.Event.count({
+      where: {
+        publisher_id: req.publisher.id
+        type: "impression"
+        created_at: {
+          $gte: month_ago
+        }
+      }
+    })
     blocked: LIBS.models.Event.count({
       where: {
         publisher_id: req.publisher.id
@@ -171,15 +180,13 @@ module.exports.get_analytics_metrics = (req, res, next)->
         }
       }
     })
-  }).then (props)->
-    props.all = props.all or 1
-  
+  }).then (props)->  
     res.json {
       impressions: numeral(props.impressions).format("0a")
       clicks: numeral(props.clicks).format("0a")
       assets: numeral(props.assets).format("0a")
-      blocked: numeral(props.blocked/props.all).format("0.0%")
-      ctr: numeral(props.all_clicks/props.all).format("0.0%")
+      blocked: numeral(props.blocked/(props.all or 1)).format("0.0%")
+      ctr: numeral(props.all_clicks/(props.all_impressions or 1)).format("0.0%")
     }
   
   
