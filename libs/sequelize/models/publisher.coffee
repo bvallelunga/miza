@@ -39,6 +39,14 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.BOOLEAN
       defaultValue: false
     }
+    coverage_ratio: {
+      type: DataTypes.DECIMAL(4,2)
+      defaultValue: 1.00
+      validate: {
+        min: 0
+        max: 1
+      }
+    }
   }, {    
     classMethods: {
       get_domain: (website)->
