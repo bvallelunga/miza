@@ -1,12 +1,16 @@
 module.exports = { 
 
-  up: (knex)->    
+  up: (knex)->     
     knex.schema.table 'Publishers', (table)->
-      table.boolean("is_demo").defaultTo(false)
+      table.hasColumn("is_demo").then (exists)->
+        if not exists
+          table.boolean("is_demo").defaultTo(false)
   
   
   down: (knex)->
     knex.schema.table 'Publishers', (table)->
-      table.dropColumn("is_demo")
+      table.hasColumn("is_demo").then (exists)->
+        if exists
+          table.dropColumn("is_demo")
 
 }

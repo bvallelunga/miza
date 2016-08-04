@@ -1,7 +1,4 @@
-Promise = require "bluebird"
-
-module.exports = (sequelize, models)->
-  
+module.exports.up = (sequelize, models)->
   Promise.props({
     user: createUser models
     publisher: createPublisher models

@@ -1,10 +1,23 @@
-fs        = require 'fs'
-path      = require 'path'
-basename  = path.basename module.filename 
+Umzug = require 'umzug'
 
-module.exports = (sequelize, models)->     
-  fs.readdirSync(__dirname).filter (file)->
-    return file != basename and file.split(".").slice(-1)[0] == 'coffee'
+module.exports = (sequelize, models)->
+  umzug = new Umzug {
+    storage: 'sequelize'
+    storageOptions: {
+      sequelize: sequelize 
+    }
+    migrations: {
+      params: [ sequelize, models ]
+      path: __dirname
+      pattern: /^(?!index).*\.coffee$/
+    }
+    logger: (message)-> 
+      console.log "Sequelize Seeder: #{message}"
+  }
+    
+  return umzug.up().then (response)-> 
+    files = response.map (data)->
+      return data.file
   
-  .forEach (file)->
-    require("#{__dirname}/#{file}")(sequelize, models)
+    if files.length > 0
+      console.log "Sequelize Seeder: #{files}"

@@ -6,13 +6,10 @@ srv = require("http").createServer(app)
 
 
 # Globals
-GLOBAL.Promise = require "bluebird"
 GLOBAL.CONFIG = require("./config")
-GLOBAL.LIBS = require("./libs")()
-
-
-# Promise Config
+GLOBAL.Promise = require "bluebird"
 Promise.config CONFIG.promises
+GLOBAL.LIBS = require("./libs")()
 
 
 # Express Setup

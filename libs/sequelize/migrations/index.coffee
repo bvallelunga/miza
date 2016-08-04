@@ -1,12 +1,8 @@
-Umzug     = require 'umzug'
-Knex      = require 'knex'
-URL       = require 'url'
-fs        = require 'fs'
-path      = require 'path'
-basename  = path.basename module.filename 
+Umzug = require 'umzug'
+Knex  = require 'knex'
+URL   = require 'url'
 
-
-module.exports = (sequelize)->
+module.exports = (sequelize, models)->
   pg_server = URL.parse CONFIG.postgres_url
   knex = Knex({
     client: "postgresql"
@@ -28,17 +24,16 @@ module.exports = (sequelize)->
     migrations: {
       params: [ knex ]
       path: __dirname
-      pattern: /^\d+[\w-]+\.coffee$/
+      pattern: /^(?!index).*\.coffee$/
     }
+    logger: (message)-> 
+      console.log "Sequelize Migration: #{message}"
   }
   
-  migrations = fs.readdirSync(__dirname).filter (file)->
-    return file != basename and file.split(".").slice(-1)[0] == 'coffee'
-  
-  .map (file)->
-    return path.basename file, ".coffee"
-  
-  return umzug.execute({
-    migrations: migrations,
-    method: 'up'
-  })
+  return umzug.up().then (response)-> 
+    files = response.map (data)->
+      return data.file
+    
+    if files.length > 0
+      console.log "Sequelize Migration: #{files}"
+    

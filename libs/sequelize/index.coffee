@@ -16,16 +16,18 @@ module.exports = ->
       underscored: true 
     }
   })
-  
-  database = require("./models")(sequelize)
-  
+
+  database = {
+    sequelize: sequelize
+    Sequelize: Sequelize
+  }
+
+  models = require("./models")(sequelize)  
   require("./migrations")(sequelize).then ->
+    console.log "Sequelize Sync: #{ Object.keys(models).join(", ") }"
     return sequelize.sync({ force: false })
     
   .then ->
-    require("./seeders")(sequelize, database)
+    require("./seeders")(sequelize, models)
   
-  database.sequelize = sequelize
-  database.Sequelize = sequelize
-  
-  return database
+  return Object.assign(database, models)
