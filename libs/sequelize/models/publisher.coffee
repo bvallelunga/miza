@@ -48,6 +48,7 @@ module.exports = (sequelize, DataTypes)->
       }
       get: ->      
         return Number this.getDataValue("coverage_ratio")
+        
     }
   }, {    
     classMethods: {

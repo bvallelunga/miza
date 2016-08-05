@@ -109,7 +109,30 @@
           input:disabled {
             background: transparent;
             border-color: transparent;
+            padding-left: 0;
             .box-shadow(none);
+          }
+          
+          &.slider {
+            padding: 20px 0 10px;
+          }
+          
+          .slider-range {
+            width: 80%;
+            float: left;
+            border: none;
+            background: @blue;
+          }
+          
+          .slider-display {
+            width: 15%;
+            float: right;
+            background: none;
+            padding: 0;
+            text-align: right;
+            font-size: 1.2em;
+            color: @blue;
+            margin-top: -3px;
           }
         }
       }

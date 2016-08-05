@@ -50,8 +50,8 @@ module.exports.get_dashboard = (req, res, next)->
       css.push "code"
       
     when "settings"
-      js.push "modal"
-  
+      js.push "modal", "range-slider"
+      css.push "range-slider"
     
     when "analytics"
       js.push "dashboard-analytics"
@@ -77,6 +77,7 @@ module.exports.post_settings = (req, res, next)->
   req.publisher.update({
     name: req.body.publisher_name
     domain: LIBS.models.Publisher.get_domain req.body.publisher_domain
+    coverage_ratio: Number(req.body.coverage)
   }).then ->
     res.json {
       success: true

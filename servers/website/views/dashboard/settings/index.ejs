@@ -11,6 +11,14 @@
       <td><input type="url" name="publisher_domain" value="http://<%= publisher.domain %>" placeholder="http://techcrunch.com" required></td>
     </tr>
     <tr>
+      <td class="title">Coverage</td>
+      <td class="slider">
+        <div class="slider-range" data-min="0" data-max="100" data-value="<%= publisher.coverage_ratio * 100 %>"></div>
+        <input class="slider-input" type="hidden" name="coverage" value="<%= publisher.coverage_ratio %>">
+        <div class="slider-display"></div>
+      </td>
+    </tr>
+    <tr>
       <td class="title">API Key</td>
       <td><input type="text" value="<%= publisher.key %>" disabled></td>
     </tr>
