@@ -190,7 +190,7 @@ module.exports.get_analytics_metrics = (req, res, next)->
       clicks: numeral(props.clicks).format("0a")
       assets: numeral(props.assets).format("0a")
       blocked: numeral(props.blocked/(props.all or 1)).format("0%")
-      ctr: numeral(props.all_clicks/(props.all_impressions or 1)).format("0%")
+      ctr: numeral(props.all_clicks/(props.all_impressions or 1)).format("0.00%")
     }
   
   
