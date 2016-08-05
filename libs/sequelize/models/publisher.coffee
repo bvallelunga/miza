@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes)->
       }
       set: (value)->
         this.setDataValue 'domain', value 
-        this.setDataValue 'endpoint', "#{this.key}.#{value}"
+        this.setDataValue 'endpoint', "#{this.key}.#{value.split(".").slice(-2).join(".")}"
     }
     endpoint: {
       type: DataTypes.STRING,
@@ -54,7 +54,8 @@ module.exports = (sequelize, DataTypes)->
     classMethods: {
       get_domain: (website)->
         domain = url.parse website.toLowerCase()
-        return "#{domain.hostname || domain.pathname}#{if domain.port? then (":" + domain.port) else "" }"
+        hostname = (domain.hostname || domain.pathname)
+        return "#{hostname}#{if domain.port? then (":" + domain.port) else "" }"
       
       associate: (models)->
         models.Publisher.belongsToMany models.User, {
