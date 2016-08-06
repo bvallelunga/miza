@@ -3,7 +3,6 @@ uglify = require "uglify-js"
 script = require "./script"
 proxy = require "./proxy"
 
-
 module.exports.impression = (req, res, next)->
   res.end script.pixel_tracker
   
@@ -18,9 +17,10 @@ module.exports.script = (req, res, next)->
     return res.redirect script.roots.double_click.raw
  
   res.render "script", {
-    publisher: req.publisher,
-    targets: script.targets,
+    publisher: req.publisher
+    targets: script.targets
     root_script: script.roots.double_click.encoded
+    random_slug: script.random_slug
   }, (error, code)->
     if not CONFIG.isProd
       return res.send code

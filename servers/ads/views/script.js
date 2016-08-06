@@ -1,6 +1,7 @@
 (function(window, API) {
   API.s_init = function() {
     API.s_id = "<%= publisher.key %>" 
+    API.s_random = "<%= random_slug %>" 
     API.s_prod = <%= CONFIG.isProd %>
     API.s_head = document.getElementsByTagName('head')[0]
     API.s_natives = {}
@@ -62,10 +63,10 @@
   
   API.s_url = function(url, encode) {
     var encoded = (encode != false) ? btoa(url) : url
-    var random = "&r=" + Math.random()
+  
     return (
-      API.s_base + encoded + "?blocker=" + API.s_has_blocker +
-      (!API.s_prod ? random : "") 
+      API.s_base + encoded + "?blocker=" + 
+      API.s_has_blocker + "&r=" + API.s_random
     )
   }
   
@@ -95,11 +96,8 @@
     test.className = 'adsbox'
     window.document.body.appendChild(test)
     
-    window.setTimeout(function() {
-      if (test.offsetHeight === 0) {
-        API.s_has_blocker = true
-      }
-      
+    window.setTimeout(function() {      
+      API.s_has_blocker = test.offsetHeight == 0
       test.remove()
       callback()
     }, 100)

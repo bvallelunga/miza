@@ -1,6 +1,7 @@
 module.exports = {
   
   pixel_tracker: new Buffer("R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7", "base64")
+  random_slug: Math.random().toString(36).substr(2, 20)
   
   roots: {
     double_click: {
