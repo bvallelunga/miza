@@ -1,5 +1,6 @@
 numeral = require "numeral"
 moment = require "moment"
+random_slug = Math.random().toString(36).substr(2, 20)
 
 module.exports = (req, res, next)->
 
@@ -27,7 +28,7 @@ module.exports = (req, res, next)->
   res.locals.user = req.user
   res.locals.title_first = true
   res.locals.is_prod = CONFIG.isProd
-  res.locals.random = if CONFIG.isProd then "" else "?r=#{Math.random()}"
+  res.locals.random = "r=#{random_slug}"
   res.locals.intercom = {}
   res.locals.intercom_base = CONFIG.intercom
   res.locals.support_email = CONFIG.general.support.email
@@ -36,8 +37,8 @@ module.exports = (req, res, next)->
   res.locals.numeral = numeral
   res.locals.moment = moment
   res.locals.media = {
-    "logo" : "#{res.locals.host}/imgs/logo.png#{res.locals.random}"
-    "graph": "#{res.locals.host}/imgs/graph.png#{res.locals.random}"
+    "logo" : "#{res.locals.host}/imgs/logo.png?#{res.locals.random}"
+    "graph": "#{res.locals.host}/imgs/graph.png?#{res.locals.random}"
   }
   
   if req.user?
