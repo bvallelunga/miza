@@ -36,8 +36,8 @@ module.exports = (req, res, next)->
   res.locals.numeral = numeral
   res.locals.moment = moment
   res.locals.media = {
-    "logo" : "/imgs/logo.png#{res.locals.random}"
-    "graph": "/imgs/graph.png#{res.locals.random}"
+    "logo" : "#{res.locals.host}/imgs/logo.png#{res.locals.random}"
+    "graph": "#{res.locals.host}/imgs/graph.png#{res.locals.random}"
   }
   
   if req.user?
