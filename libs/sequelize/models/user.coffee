@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
       allowNull: false
       set: (value)->
-        this.setDataValue 'password', this.hash(value) 
+        @setDataValue 'password', @hash(value) 
     }
     name: DataTypes.STRING 
     is_admin: { 
@@ -40,6 +40,6 @@ module.exports = (sequelize, DataTypes)->
       hash: hasher
       
       validPassword: (password)->
-        return bcrypt.compareSync password, this.password
+        return bcrypt.compareSync password, @password
     }
   }

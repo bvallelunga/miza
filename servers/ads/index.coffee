@@ -5,10 +5,11 @@ app = express()
 
 module.exports = (srv)->
   # Express Setup
-  app.use require("compression")()
   app.set 'views', __dirname + '/views'
   app.set 'view engine', 'js'
   app.engine 'js', ejs.renderFile
+  app.use require("compression")()
+  app.use require("cookie-parser")()
   
   
   # Routes

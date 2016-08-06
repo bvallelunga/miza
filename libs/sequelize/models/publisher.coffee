@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes)->
         }
       }
       set: (value)->
-        this.setDataValue 'domain', value 
-        this.setDataValue 'endpoint', "#{this.key}.#{value.split(".").slice(-2).join(".")}"
+        @setDataValue 'domain', value 
+        @setDataValue 'endpoint', "#{@key}.#{value.split(".").slice(-2).join(".")}"
     }
     endpoint: {
       type: DataTypes.STRING,
@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes)->
         }
       }
       get: ->      
-        return Number this.getDataValue("coverage_ratio")
+        return Number @getDataValue("coverage_ratio")
         
     }
   }, {    

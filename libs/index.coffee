@@ -3,4 +3,5 @@ module.exports = ->
     models: require("./sequelize")()
     redis: require("./redis")()
     heroku: require("./heroku")()
+    queue: require "./queue"
   }

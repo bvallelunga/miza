@@ -5,15 +5,12 @@ proxy = require "./proxy"
 
 
 module.exports.impression = (req, res, next)->
-  LIBS.models.Event.create({
-    type: "impression"
-    ip_address: req.ip or req.ips
-    protected: req.query.blocker == "true"
-    publisher_id: req.publisher.id
-    ad_network: "double click"
-  })
-  
   res.end script.pixel_tracker
+  
+  LIBS.models.Event.generate req, req.publisher, {
+    type: "impression"
+    ad_network: "double click"
+  }
 
 
 module.exports.script = (req, res, next)->
@@ -43,7 +40,7 @@ module.exports.proxy = (req, res, next)->
         
     return data
     
-  .then (data)->
+  .then (data)-> 
     if data.media == "link"
       res.redirect data.href
       
@@ -57,13 +54,8 @@ module.exports.proxy = (req, res, next)->
       
   .then (data)->
     LIBS.redis.set data.key, JSON.stringify(data)
-    LIBS.models.Event.create({
+    LIBS.models.Event.generate req, req.publisher, {
       type: if data.media == "link" then "click" else "asset" 
-      ip_address: req.ip or req.ips
-      protected: req.query.blocker == "true"
-      asset_url: data.url
-      publisher_id: req.publisher.id
       ad_network: "double click"
-    })
-    
-    
+      asset_url: data.url
+    }

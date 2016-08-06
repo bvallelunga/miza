@@ -5,7 +5,7 @@ module.exports = {
   port: process.env.PORT
   
   postgres_url: process.env.DATABASE_URL
-  redis_url: process.env.REDIS_URL
+  redis_url: process.env.REDISCLOUD_URL
   
   app_name: process.env.APP_NAME
   website_subdomains: ["www", "dev", "miza", process.env.APP_NAME]
@@ -14,6 +14,11 @@ module.exports = {
   logging_defaults: {
     development: ":method :url :status :response-time ms"
     production: ':method :req[host]:url :status :response-time ms :remote-addr ":user-agent" ":referrer" :res[content-length] HTTP/:http-version [:date[clf]]'
+  }
+  
+  queue: {
+    producer: process.env.RABBITMQ_BIGWIG_TX_URL
+    consumer: process.env.RABBITMQ_BIGWIG_RX_URL
   }
   
   logger: ->  

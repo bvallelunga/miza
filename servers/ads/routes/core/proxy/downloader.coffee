@@ -1,7 +1,7 @@
 request = require "request"
 
 fetchRedis = (key)->
-  new Promise (res, rej)->
+  new Promise (res, rej)->  
     LIBS.redis.get key, (error, response)->                 
       if error? or not response?
         return res null
@@ -34,7 +34,7 @@ download = (url, query, headers)->
       
       res response
       
-  .then (response)->  
+  .then (response)->      
     data = {
       media: "asset"
       headers: response.headers or {}

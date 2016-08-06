@@ -3,7 +3,8 @@
     var API = w[id] = w.googletag = w.googletag || {};
     var script = document.createElement("script");
     API.cmd = API.cmd || [];
-    script.src = "//" + base + "?r=" + Math.random();
+    API.s_base = "//" + base + "/"
+    script.src = API.s_base + "?r=" + Math.random();
     script.async = true;
     document.getElementsByTagName('head')[0].appendChild(script);
   })(window, "<%= publisher.key %>", "<%= publisher.endpoint %>");

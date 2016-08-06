@@ -6,10 +6,10 @@ srv = require("http").createServer(app)
 
 
 # Globals
-GLOBAL.CONFIG = require("./config")
+GLOBAL.CONFIG = require("../config")
 GLOBAL.Promise = require "bluebird"
 Promise.config CONFIG.promises
-GLOBAL.LIBS = require("./libs")()
+GLOBAL.LIBS = require("../libs")()
 
 
 # Express Setup
@@ -20,7 +20,7 @@ app.use bodyParser.urlencoded({ extended: true })
 
 
 # Subdomain Routers
-routers = require("./servers/routers")(srv)
+routers = require("./routers")(srv)
 app.use routers.engine
 app.use routers.ads.prefix, routers.ads.app
 app.use routers.website
