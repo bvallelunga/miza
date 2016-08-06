@@ -1,6 +1,8 @@
 (function(window, API) {
   API.s_init = function() {
-    API.s_prod = <%= LIBS.isProd %>
+    API.s_id = "<%= publisher.key %>" 
+    API.s_prod = <%= CONFIG.isProd %>
+    API.s_base = "//<%= publisher.endpoint %>/"
     API.s_head = document.getElementsByTagName('head')[0]
     API.s_natives = {}
     
@@ -70,6 +72,7 @@
   
   API.s_script = function() {
     var script = document.createElement('script')
+    script.async = true
     script.setAttribute('type', 'text/javascript')
     return script
   }

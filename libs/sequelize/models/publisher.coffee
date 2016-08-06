@@ -43,8 +43,14 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.DECIMAL(4,2)
       defaultValue: 1
       validate: {
-        min: 0
-        max: 1
+        min: {
+          args: [ 0 ]
+          msg: "Coverage must be greater than or equal to 0%"
+        }
+        max: {
+          args: [ 1 ]
+          msg: "Coverage must be less than or equal to 100%"
+        }
       }
       get: ->      
         return Number this.getDataValue("coverage_ratio")

@@ -2,11 +2,6 @@ $ ->
   downloadMetrics()
   downloadLogs()
   
-  setInterval ->
-    downloadMetrics()
-    downloadLogs() 
-  , 30000
-
 
 downloadMetrics = ->
   $.get("#{location.pathname}/metrics").done (metrics)->
@@ -15,11 +10,14 @@ downloadMetrics = ->
     $(".clicks-metric").text metrics.clicks
     $(".assets-metric").text metrics.assets
     $(".blocked-metric").text metrics.blocked
+    
+    setTimeout downloadMetrics, 5000
   
 
 downloadLogs = ->
   $.get("#{location.pathname}/logs").done (logs)->
     now = new Date()
+    setTimeout downloadLogs, 5000
     
     $(".logs-table-message")
       .toggle(logs.length == 0)

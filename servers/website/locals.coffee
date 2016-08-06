@@ -26,6 +26,7 @@ module.exports = (req, res, next)->
   res.locals.config = {}
   res.locals.user = req.user
   res.locals.title_first = true
+  res.locals.is_prod = CONFIG.isProd
   res.locals.random = if CONFIG.isProd then "" else "?r=#{Math.random()}"
   res.locals.intercom = {}
   res.locals.intercom_base = CONFIG.intercom

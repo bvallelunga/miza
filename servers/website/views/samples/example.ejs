@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <!-- START MIZA CODE -->
+    <script type='text/javascript'>         	
+      (function(w, id, base) {
+        var API = w[id] = w.googletag = w.googletag || {};
+        var script = document.createElement("script");
+        API.cmd = API.cmd || [];
+        script.src = "//" + base + "?r=" + Math.random();
+        script.async = true;
+        document.getElementsByTagName('head')[0].appendChild(script);
+      })(window, "<MIZA KEY>", "<MIZA ENDPOINT>");
+    </script>
+    <!-- END MIZA CODE -->
+  </head>
+  <body>
+    <!-- START AD PUBLISHER CODE -->
+    <script type='text/javascript'>
+      googletag.cmd.push(function() {
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+        googletag.defineSlot(
+          '/72625737/sledge', [300, 250], 
+          '<MIZA KEY>-1468566910229-0'
+        ).addService(googletag.pubads());
+      });
+    </script>
+    <div id='<MIZA KEY>-1468566910229-0'>
+      <script type='text/javascript'>
+        googletag.cmd.push(function() { 
+          googletag.display('<MIZA KEY>-1468566910229-0');
+        });
+      </script>
+    </div>
+    <!-- END AD PUBLISHER CODE -->
+  </body>
+</html>
