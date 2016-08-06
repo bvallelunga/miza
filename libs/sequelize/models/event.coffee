@@ -47,6 +47,14 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.JSONB
       defaultValue: {}
     }
+    browser: {
+      type: DataTypes.JSONB
+      defaultValue: {}
+    }
+    device: {
+      type: DataTypes.JSONB
+      defaultValue: {}
+    }
   }, {
     classMethods: {
       generate: (req, publisher, data)->        
@@ -57,7 +65,7 @@ module.exports = (sequelize, DataTypes)->
           asset_url: data.asset_url
           publisher_id: publisher.id
           ad_network: data.ad_network
-          referrer_url: req.get('Referrer')
+          referrer_url: req.get('referrer')
           cookies: req.cookies
           headers: req.headers
         })

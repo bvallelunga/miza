@@ -20,6 +20,7 @@
     "ejs": "^2.4.1",
     "express": "~4.2.x",
     "express-session": "^1.14.0",
+    "geoip-lite": "^1.1.8",
     "heroku-client": "^3.0.0-beta3",
     "jackrabbit": "^4.3.0",
     "knex": "^0.11.9",
@@ -34,7 +35,9 @@
     "request": "^2.73.0",
     "sequelize": "^3.23.6",
     "uglify-js": "^2.7.0",
-    "umzug": "^1.11.0"
+    "umzug": "^1.11.0",
+    "user-agent-parser": "^0.6.0",
+    "useragent": "^2.1.9"
   },
   "devDependencies": {
     "forever": "^0.15.2",
