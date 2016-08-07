@@ -29,7 +29,16 @@ module.exports = (req, res, next)->
   res.locals.title_first = true
   res.locals.is_prod = CONFIG.isProd
   res.locals.random = "r=#{random_slug}"
-  res.locals.intercom = {}
+  res.locals.intercom = ((user)-> 
+    if not user?
+      return {}
+      
+    return { 
+      id: user.id
+      name: user.name
+      email: user.email  
+    }
+  )(req.user)
   res.locals.intercom_base = CONFIG.intercom
   res.locals.support_email = CONFIG.general.support.email
   res.locals.support_phone = CONFIG.general.support.phone

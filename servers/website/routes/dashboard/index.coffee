@@ -63,13 +63,6 @@ module.exports.get_dashboard = (req, res, next)->
     title: "Dashboard"
     dashboard_path: dashboard_path
     dashboard: dashboard
-    publisher: req.publisher
-    intercom: {
-      company: {
-        id: req.publisher.id
-        name: req.publisher.name
-      }
-    }
   }
   
   

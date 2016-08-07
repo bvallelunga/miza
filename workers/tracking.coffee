@@ -2,7 +2,7 @@ geoip = require 'geoip-lite'
 useragent = require 'user-agent-parser'
 
 # Globals
-GLOBAL.CONFIG = require("../config")
+GLOBAL.CONFIG = require("../config")()
 GLOBAL.Promise = require "bluebird"
 Promise.config CONFIG.promises
 GLOBAL.LIBS = require("../libs")()

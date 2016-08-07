@@ -160,6 +160,12 @@ module.exports.has_publisher = (req, res, next)->
       return res.redirect "/dashboard"
     
     req.publisher = publisher
+    res.locals.publisher
+    res.locals.intercom.company = {
+      id: publisher.id
+      name: publisher.name
+    }
+    
     next()
     
   .catch (error)->

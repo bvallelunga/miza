@@ -6,14 +6,14 @@ srv = require("http").createServer(app)
 
 
 # Globals
-GLOBAL.CONFIG = require("../config")
+GLOBAL.CONFIG = require("../config")()
 GLOBAL.Promise = require "bluebird"
 Promise.config CONFIG.promises
 GLOBAL.LIBS = require("../libs")()
 
 
 # Express Setup
-app.use morgan CONFIG.logger()
+app.use morgan CONFIG.logger
 app.enable 'trust proxy'
 app.use bodyParser.json()
 app.use bodyParser.urlencoded({ extended: true })
