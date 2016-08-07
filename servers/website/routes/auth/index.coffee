@@ -146,21 +146,21 @@ module.exports.has_publisher = (req, res, next)->
     if matches.length > 0
       return matches[0]
       
-    else if not req.user.is_admin
-      return null
-
-    return LIBS.models.Publisher.findOne({
-      where: {
-        key: req.params.publisher
-      }
-    })
+    else if req.user.is_admin
+      return LIBS.models.Publisher.findOne({
+        where: {
+          key: req.params.publisher
+        }
+      })
+      
+    return null
   
   .then (publisher)->
     if not publisher?
       return res.redirect "/dashboard"
     
     req.publisher = publisher
-    res.locals.publisher
+    res.locals.publisher = publisher
     res.locals.intercom.company = {
       id: publisher.id
       name: publisher.name
