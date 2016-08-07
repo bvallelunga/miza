@@ -34,7 +34,7 @@ module.exports = (req, res, next)->
       return {}
       
     return { 
-      id: user.id
+      user_id: user.id
       name: user.name
       email: user.email  
     }
