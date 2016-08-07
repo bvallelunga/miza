@@ -3,9 +3,9 @@ module.exports.has_publisher = (req, res, next)->
   
   if domains.length == 0
     res.redirect CONFIG.ads_redirect
-    
+  
   LIBS.models.Publisher.findOne({
-    where: {
+    where: {      
       key: domains[0]
     }
   }).then (publisher)->

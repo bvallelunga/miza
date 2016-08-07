@@ -28,6 +28,12 @@
           Analytics
         </a>
       </li>
+      <li class="<%= isActive(dashboard, "billing") %>">
+        <a href="<%= dashboard_path %>/billing">
+          <span class="fa fa-credit-card"></span>
+          Billing
+        </a>
+      </li>
       <li class="<%= isActive(dashboard, "settings") %>">
         <a href="<%= dashboard_path %>/settings">
           <span class="fa fa-cog"></span>

@@ -13,9 +13,9 @@ geoip.startWatchingDataUpdate()
 # Handle Queue Messges
 LIBS.queue.consume "event-created", (message, ack, nack)->
   LIBS.models.Event.findById(message.id).then (event)->
-    agent = useragent message.headers['user-agent']    
-    browser = agent.browser
-    device = agent.device
+    agent = useragent message.headers['user-agent']  
+    browser = Object.assign event.browser, agent.browser
+    device = Object.assign event.device, agent.device
     
     browser.engine = agent.engine
     device.os = agent.os

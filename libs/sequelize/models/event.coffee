@@ -61,13 +61,22 @@ module.exports = (sequelize, DataTypes)->
         LIBS.models.Event.create({
           type: data.type 
           ip_address: req.ip or req.ips
-          protected: req.query.blocker == "true"
+          protected: req.query.protected == "true"
           asset_url: data.asset_url
           publisher_id: publisher.id
           ad_network: data.ad_network
           referrer_url: req.get('referrer')
           cookies: req.cookies
           headers: req.headers
+          browser: {
+            demensions: req.query.demensions
+            plugins: req.query.plugins
+            languages: req.query.languages
+            do_not_track: req.query.do_not_track
+          }
+          device: {
+            components: req.query.components
+          }
         })
        
     }

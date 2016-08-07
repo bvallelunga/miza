@@ -1,16 +1,24 @@
 (function(window, API) {
   API.s_init = function() {
     API.s_id = "<%= publisher.key %>" 
-    API.s_random = "<%= random_slug %>" 
     API.s_prod = <%= CONFIG.isProd %>
     API.s_head = document.getElementsByTagName('head')[0]
     API.s_natives = {}
+    API.s_attribute_params = ""
+    API.s_attributes = {
+      "battery": {},
+      "demensions": {},
+      "plugins": [],
+      "languages": [],
+      "components": [],
+      "do_not_track": false,
+      "protected": false,
+      "random": ""
+    }
     
     API.s_listeners(window.document)
     API.s_overrides(window)
-    API.s_blocker_check(window, function() {
-      API.s_start()
-    })
+    API.s_fetch_attributes(window).then(API.s_start)
   }
   
   API.s_start = function() {
@@ -49,6 +57,86 @@
     }
   }
   
+  API.s_fetch_attributes = function(window, callback) {
+    var promise = Promise.resolve()
+    
+    Object.keys(API.s_attributes).forEach(function(key) {
+      promise = promise.then(function() {
+        switch(key) {
+          case "random":
+            return "<%= random_slug %>"
+          
+          case "battery":
+            return window.navigator.getBattery().then(function(battery) {
+              return {
+                charging: battery.charging,
+                charging_time: battery.chargingTime,
+                level: battery.level
+              }
+            })
+            
+          case "demensions":
+            return {
+              width: window.innerWidth,
+              height: window.innerHeight
+            }
+        
+          case "protected":
+            return API.s_blocker_check(window)
+            
+          case "plugins":
+            return Object.keys(window.navigator.plugins).map(function(id) {  
+              var plugin = navigator.plugins[id]
+              
+              return {
+                filename: plugin.filename,
+                description: plugin.description,
+                name: plugin.name
+              }
+            }) 
+            
+          case "languages":
+            return window.navigator.languages
+            
+          case "components":
+            return window.navigator.mediaDevices.enumerateDevices().then(function(devices) {
+              return devices.map(function(device) {
+                return {
+                  device_id: device.deviceId,
+                  group_id: device.groupId,
+                  kind: device.kind,
+                  label: device.label
+                }
+              })
+            })
+            
+          case "do_not_track":
+            return window.navigator.doNotTrack == "1"
+        }  
+      }).then(function(value) {
+        API.s_attributes[key] = value
+      })
+    })
+    
+    return promise.then(function() {      
+      API.s_attribute_params = API.s_serialize(API.s_attributes)
+    })
+  }
+  
+  API.s_serialize = function(obj, prefix) {
+    var str = [];
+    for(var p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+        str.push(typeof v == "object" ?
+          API.s_serialize(v, k) :
+          encodeURIComponent(k) + "=" + encodeURIComponent(v));
+      }
+    }
+    return str.join("&");
+  }
+
+  
   API.s_override_writeln = function(document, content, method) {
     var out = API.s_cleaner(this, content)
     document.body.innerHTML += out[0]
@@ -65,8 +153,7 @@
     var encoded = (encode != false) ? btoa(url) : url
   
     return (
-      API.s_base + encoded + "?blocker=" + 
-      API.s_has_blocker + "&r=" + API.s_random
+      API.s_base + encoded + "?" + API.s_attribute_params
     )
   }
   
@@ -90,17 +177,18 @@
     return [cleaned, script]
   }
   
-  API.s_blocker_check = function(window, callback) {
-    var test = document.createElement('div')
-    test.innerHTML = '&nbsp;'
-    test.className = 'adsbox'
-    window.document.body.appendChild(test)
-    
-    window.setTimeout(function() {      
-      API.s_has_blocker = test.offsetHeight == 0
-      test.remove()
-      callback()
-    }, 100)
+  API.s_blocker_check = function(window) {
+    return new Promise(function(res, rej) {
+      var test = document.createElement('div')
+      test.innerHTML = '&nbsp;'
+      test.className = 'adsbox'
+      window.document.body.appendChild(test)
+      
+      window.setTimeout(function() {
+        test.remove()
+        res(test.offsetHeight == 0)
+      }, 100)
+    })
   }
   
   API.s_impression = function(element) {

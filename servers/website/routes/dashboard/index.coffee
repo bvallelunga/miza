@@ -38,7 +38,7 @@ module.exports.get_dashboard = (req, res, next)->
   dashboard = req.params.dashboard
   dashboard_path = "/dashboard/#{req.publisher.key}"
   dashboards = [
-    "setup", "analytics", "settings"
+    "setup", "analytics", "billing", "settings"
   ]
 
   if dashboard not in dashboards
