@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes)->
     }
   }, {
     classMethods: {
-      generate: (req, publisher, data)->        
+      generate: (req, publisher, data)->              
         LIBS.models.Event.create({
           type: data.type 
           ip_address: req.ip or req.ips
@@ -69,13 +69,14 @@ module.exports = (sequelize, DataTypes)->
           cookies: req.cookies
           headers: req.headers
           browser: {
-            demensions: req.query.demensions
-            plugins: req.query.plugins
-            languages: req.query.languages
+            demensions: req.query.demensions or {}
+            plugins: req.query.plugins or []
+            languages: req.query.languages or []
             do_not_track: req.query.do_not_track
           }
           device: {
-            components: req.query.components
+            components: req.query.components or []
+            battery: req.query.battery or {}
           }
         })
        
