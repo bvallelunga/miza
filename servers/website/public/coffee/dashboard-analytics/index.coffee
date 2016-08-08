@@ -11,7 +11,7 @@ $ ->
 billingMetrics = ->
   $.get("#{location.pathname}/metrics").done (metrics)->
     $(".revenue-metric").text metrics.revenue
-    $(".impressions-metric").text metrics.impressions
+    $(".billed-metric").text moment(metrics.billed).format("MMM D")
     $(".cpm-metric").text metrics.cpm
     $(".owe-metric").text metrics.owe
     $(".fee-metric").text metrics.fee
