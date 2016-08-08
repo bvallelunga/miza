@@ -29,12 +29,7 @@ module.exports = ->
       return logging_defaults.development
     )()
     
-    stripe: (->  
-      if isProd 
-        return "sk_live_Lv7Yh70U6lxGELNFPliJs1lZ"
-        
-      return "sk_test_ZOJ11NC92gDIsEGdqc0POzHS"
-    )()
+    stripe: process.env.STRIPE
     
     general: {
       company: "Miza"
@@ -50,7 +45,7 @@ module.exports = ->
     }
     
     intercom: {
-      app_id: if isProd then "jlsf08kq" else "faw11krb"
+      app_id: process.env.INTERCOM
     }
     
     promises: {
