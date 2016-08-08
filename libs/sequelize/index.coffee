@@ -14,6 +14,7 @@ module.exports = ->
     define: {
       paranoid: true
       underscored: true 
+      freezeTableName: true
     }
   })
 

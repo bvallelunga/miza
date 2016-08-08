@@ -72,6 +72,10 @@ module.exports = (sequelize, DataTypes)->
         models.Publisher.hasMany(models.Event, { 
           as: 'events' 
         })
+        
+        models.Publisher.belongsTo(models.Industry, { 
+          as: 'industry' 
+        })
 
     }
     instanceMethods: {

@@ -35,5 +35,5 @@ module.exports = (sequelize, models)->
       return data.file
     
     if files.length > 0
-      console.log "Sequelize Migration: #{files}"
+      console.log "Sequelize Migration: #{files.join(", ")}"
     

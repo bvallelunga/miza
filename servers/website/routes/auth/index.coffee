@@ -54,15 +54,11 @@ module.exports.post_login = (req, res, next)->
 module.exports.post_register = (req, res, next)-> 
   email = req.body.email.toLowerCase().trim()
  
-  console.log email
- 
   LIBS.models.UserAccess.count({
     where: {
       email: email
     }
-  }).then (count)->
-    console.log count
-  
+  }).then (count)->  
     if count == 0
       return res.status(400).json {
         success: false

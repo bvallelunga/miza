@@ -38,8 +38,5 @@ module.exports = (sequelize, DataTypes)->
     }
     instanceMethods: {
       hash: hasher
-      
-      validPassword: (password)->
-        return bcrypt.compareSync password, @password
     }
   }

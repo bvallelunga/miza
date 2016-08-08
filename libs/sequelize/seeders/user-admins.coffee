@@ -1,12 +1,13 @@
 module.exports.up = (sequelize, models)->
+  
   Promise.props({
-    user: createUser models
-    publisher: createPublisher models
+    user: create_user models
+    publisher: create_publisher models
   }).then (result)->
     result.user[0].addPublisher result.publisher[0]
     
   
-createUser = (models)->
+create_user = (models)->
   models.User.findOrCreate({
     where: {
       email: "admin@miza.io"
@@ -19,7 +20,7 @@ createUser = (models)->
   })
   
 
-createPublisher = (models)->
+create_publisher = (models)->
   models.Publisher.findOrCreate({
     where: {
       domain: "miza.io"
@@ -27,6 +28,7 @@ createPublisher = (models)->
     defaults: {
       name: "Demo Publisher"
       is_demo: true
+      industry_id: 8
     }
   })
 

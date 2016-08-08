@@ -9,19 +9,25 @@ module.exports.get_root = (req, res, next)->
   
   
 module.exports.get_new = (req, res, next)->
-  res.render "dashboard/new", {
-    js: req.js.renderTags "modal"
-    css: req.css.renderTags "modal"
-    title: "Create Publisher Account"
-  }
+  LIBS.models.Industry.findAll().then (industries)->
+    res.render "dashboard/new", {
+      js: req.js.renderTags "modal"
+      css: req.css.renderTags "modal"
+      title: "Create Publisher"
+      industries: industries
+    }
   
   
 module.exports.post_new = (req, res, next)->
   Publisher = LIBS.models.Publisher 
+  
+  if not req.body.publisher_industry?
+    return next "Please select an industry."
 
   Publisher.create({
     domain: Publisher.get_domain req.body.publisher_domain
     name: req.body.publisher_name
+    industry_id: Number req.body.publisher_industry
   }).then (publisher)->
     req.user.addPublisher(publisher).then ->
       res.json {
@@ -57,20 +63,32 @@ module.exports.get_dashboard = (req, res, next)->
       js.push "dashboard-analytics"
       css.push "dashboard-analytics"
   
-  res.render "dashboard/index", {
-    js: req.js.renderTags.apply(req.js, js)
-    css: req.css.renderTags.apply(req.css, css)
-    title: "Dashboard"
-    dashboard_path: dashboard_path
-    dashboard: dashboard
-  }
+  Promise.resolve().then ->
+    if dashboard != "settings"
+      return null
+      
+    return LIBS.models.Industry.findAll()
+    
+  .then (industries)->    
+    res.render "dashboard/index", {
+      js: req.js.renderTags.apply(req.js, js)
+      css: req.css.renderTags.apply(req.css, css)
+      title: "Dashboard"
+      dashboard_path: dashboard_path
+      dashboard: dashboard
+      industries: industries
+    }
   
   
 module.exports.post_settings = (req, res, next)->
+  if not req.body.publisher_industry?
+    return next "Please select an industry."
+  
   req.publisher.update({
     name: req.body.publisher_name
     domain: LIBS.models.Publisher.get_domain req.body.publisher_domain
-    coverage_ratio: Number(req.body.coverage)
+    coverage_ratio: Number req.body.coverage
+    industry_id: Number req.body.publisher_industry
   }).then ->
     res.json {
       success: true
@@ -82,7 +100,7 @@ module.exports.post_settings = (req, res, next)->
   
 module.exports.get_analytics_logs = (req, res, next)->
   month_ago = new Date()
-  month_ago.setMonth(month_ago.getMonth()-1)
+  month_ago.setMonth month_ago.getMonth() - 1
 
   req.publisher.getEvents({ 
     limit: 100 
@@ -109,7 +127,7 @@ module.exports.get_analytics_logs = (req, res, next)->
   
 module.exports.get_analytics_metrics = (req, res, next)->
   month_ago = new Date()
-  month_ago.setMonth(month_ago.getMonth()-1)
+  month_ago.setMonth month_ago.getMonth() - 1
   
   Promise.props({
     all: LIBS.models.Event.count({
