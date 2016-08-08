@@ -14,7 +14,7 @@ module.exports = ->
     redis_url: process.env.REDISCLOUD_URL
     
     app_name: process.env.APP_NAME
-    website_subdomains: ["www", "dev", "miza", process.env.APP_NAME]
+    website_subdomains: ["local", "www", "dev", "miza", process.env.APP_NAME]
     ads_redirect: "https://miza.io"
     
     queue: {

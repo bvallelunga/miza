@@ -1,0 +1,34 @@
+<div class="guide adsense">
+  <h3>3) Replace the Ad Network Script</h3>
+  <p>
+    Find the network's initialization script. It should be located in the 
+    top portion of <span>head</span> element and will look
+    similar to the snippet below.
+  </p>
+  <pre><code><%= include("../../samples/adsense/script") %></code></pre>
+  <p>
+    Replace the network's initialization script with the code snippet below.
+  </p>
+  <pre><code><%= include("../../samples/miza_adsense/script") %></code></pre>
+  
+  <h3>4) Replace the Ad Display Element</h3>
+  <p>
+    Find all ad display element code that contains the text <span>adsbygoogle</span>. 
+    They should be located in the <span>body</span> element and will look
+    similar to the snippet below.
+  </p>
+  <pre><code><%= include("../../samples/adsense/element") %></code></pre>
+  <p>
+     Replace the ad display element with the code snippet below.
+  </p>
+  <pre><code><%= include("../../samples/miza_adsense/element") %></code></pre>
+  
+  <h3>5) You are all set!</h3>
+  <p>
+    Ready. Set. Go! Deploy the changes to your servers and it's off to the races. 
+    We will automatically track impressions and clicks which
+    can be seen in the <a href="<%= dashboard_path %>/analytics">analytics page</a>. Please
+    <a href="mailto:<%= support_email %>">contact us</a> at any time if problems
+    arise, we will do our best to reach out as soon as possible.
+  </p>
+</div>

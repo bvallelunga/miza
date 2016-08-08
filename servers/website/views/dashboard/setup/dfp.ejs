@@ -1,15 +1,15 @@
-<div class="guide doubleclick active">
+<div class="guide dfp active">
   <h3>3) Replace the Ad Network Script</h3>
   <p>
     Find the network's initialization script. It should be located in the 
     top portion of <span>head</span> element and will look
     similar to the snippet below.
   </p>
-  <pre><code><%= include("../../samples/doubleclick_script") %></code></pre>
+  <pre><code><%= include("../../samples/dfp/script") %></code></pre>
   <p>
     Replace the network's initialization script with the code snippet below.
   </p>
-  <pre><code><%= include("../../samples/miza_script") %></code></pre>
+  <pre><code><%= include("../../samples/miza_dfp/script") %></code></pre>
   
   <h3>4) Replace the Ad IDs</h3>
   <p>
@@ -17,7 +17,7 @@
     They should be located in the <span>body</span> element and will look
     similar to the snippet below.
   </p>
-  <pre><code><%= include("../../samples/doubleclick_element") %></code></pre>
+  <pre><code><%= include("../../samples/dfp/element") %></code></pre>
   <p>
     Everywhere you see the text <span>div-gpt-ad</span> replace it with 
     <span><%= publisher.key %></span>. <u>DO NOT COPY AND PASTE WORD FOR WORD.</u> The
@@ -26,7 +26,7 @@
     <span>div-gpt-ad-1468566910229-0</span> is replaced with
     <span><%= publisher.key %>-1468566910229-0</span>.
   </p>
-  <pre><code><%= include("../../samples/miza_element") %></code></pre>
+  <pre><code><%= include("../../samples/miza_dfp/element") %></code></pre>
   
   <h3>5) You are all set!</h3>
   <p>

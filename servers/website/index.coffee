@@ -46,7 +46,7 @@ module.exports = (srv)->
   
   if not CONFIG.isProd
     app.get "/demo", routes.demo.publisher, routes.demo.get_root
-    app.get "/demo/:test", routes.demo.publisher, routes.demo.get_root
+    app.get "/demo/:demo", routes.demo.publisher, routes.demo.get_root
   
   
   # Error Handlers

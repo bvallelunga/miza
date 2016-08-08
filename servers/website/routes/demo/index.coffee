@@ -11,8 +11,10 @@ module.exports.publisher = (req, res, next)->
 
 
 module.exports.get_root = (req, res, next)->
-  req.publisher.endpoint = "#{req.publisher.key}.#{req.get("host")}"
+  host = req.get("host").split(".").slice(-2).join(".")
+  req.publisher.endpoint = "#{req.publisher.key}.#{host}"
 
-  res.render "demo/#{req.params.test or "index"}", {
+  res.render "demo/#{if req.params.demo? then "demo" else "index"}", {
     publisher: req.publisher
+    demo: req.params.demo
   }
