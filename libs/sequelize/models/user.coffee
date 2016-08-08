@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes)->
         @setDataValue 'password', @hash(value) 
     }
     name: DataTypes.STRING 
+    stripe_id: DataTypes.STRING
     is_admin: { 
       type: DataTypes.BOOLEAN
       defaultValue: false
@@ -38,5 +39,24 @@ module.exports = (sequelize, DataTypes)->
     }
     instanceMethods: {
       hash: hasher
+      
+      generate_stripe: ->      
+        return LIBS.stripe.customers.create({
+          email: this.email
+          description: this.name
+          metadata: {
+            id: this.id
+            name: this.name
+          }
+        }).then (customer)=>
+          return this.update({
+            stripe_id: customer.id
+          })
+    
+    }
+    hooks: {
+      afterCreate: (publisher)->
+        publisher.generate_stripe().catch console.warn
+
     }
   }

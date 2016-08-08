@@ -1,6 +1,53 @@
 @import '../compless/all';
 @import '../global/colors';
 
+.billing-dashboard {
+  .metrics {
+    .metric .primary {
+      color: @green;
+    }
+    
+    .secondaries .row .metric .primary {
+      color: darken(@green, 15%);
+    }
+  }
+  
+  .logs-table {
+    tr td, tr th {    
+      &:nth-child(1) {
+        width: 35%
+      }
+      
+      &:nth-child(2) {
+        width: 15%
+      }
+      
+      &:nth-child(3) {
+        width: 15%;
+      } 
+      
+      
+      &:nth-child(4) {
+        width: 15%;
+      } 
+      
+      &:nth-child(5) {
+        width: 20%;
+      } 
+    }
+    
+    tr td:nth-child(2)  {
+      color: @green;
+    }
+    
+    tr td:nth-child(3) {
+      color: @blue;
+      text-transform: capitalize;
+      
+    }
+  }
+}
+
 .metrics {
   margin-bottom: 65px;
   .clearfix();
@@ -23,12 +70,12 @@
   }
   
   .core {
-    width: 50%;
-    font-size: 1.7em;
+    width: 55%;
+    font-size: 1.55em;
   }
   
   .secondaries {  
-    width: 50%;
+    width: 45%;
         
     .row {
       padding: 25px 0;
@@ -66,8 +113,8 @@
     border-bottom: solid 1px #EDF1F5;
   }
   
-  tr.protected td:nth-child(3)  {
-    color: #59923f;
+  tr.protected td:nth-child(2)  {
+    color: @green;
   }
   
   tr.normal {

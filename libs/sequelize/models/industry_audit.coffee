@@ -2,22 +2,25 @@ module.exports = (sequelize, DataTypes)->
   
   return sequelize.define "IndustryAudit", {
     name: DataTypes.STRING
-    type: { 
-      type: DataTypes.ENUM("cpm", "cpc")
-      allowNull: false
-    }
-    cut: {
+    fee: {
       type: DataTypes.DECIMAL(4,3)
       allowNull: false
       get: ->      
-        return Number @getDataValue("cut")
+        return Number @getDataValue("fee")
         
     }
-    cost: {
+    cpc: {
       type: DataTypes.DECIMAL(6,3)
       allowNull: false
       get: ->      
-        return Number @getDataValue("cost")
+        return Number @getDataValue("cpc")
+    
+    }
+    cpm: {
+      type: DataTypes.DECIMAL(6,3)
+      allowNull: false
+      get: ->      
+        return Number @getDataValue("cpm")
         
     }
   }

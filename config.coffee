@@ -29,6 +29,13 @@ module.exports = ->
       return logging_defaults.development
     )()
     
+    stripe: (->  
+      if isProd 
+        return "sk_live_Lv7Yh70U6lxGELNFPliJs1lZ"
+        
+      return "sk_test_ZOJ11NC92gDIsEGdqc0POzHS"
+    )()
+    
     general: {
       company: "Miza"
       delimeter: " | "
