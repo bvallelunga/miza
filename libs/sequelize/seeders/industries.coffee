@@ -21,5 +21,6 @@ create_industry = (models, name, type, cost)->
     defaults: {
       type: type
       cost: cost
+      cut: 0.3
     }
   })

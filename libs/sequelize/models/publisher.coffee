@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes)->
       defaultValue: false
     }
     coverage_ratio: {
-      type: DataTypes.DECIMAL(4,2)
+      type: DataTypes.DECIMAL(3,2)
       defaultValue: 1
       validate: {
         min: {
