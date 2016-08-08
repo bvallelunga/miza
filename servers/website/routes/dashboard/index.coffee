@@ -22,14 +22,10 @@ module.exports.get_new = (req, res, next)->
   
 module.exports.post_new = (req, res, next)->
   Publisher = LIBS.models.Publisher 
-  
-  if not req.body.publisher_industry?
-    return next "Please select an industry."
 
   Publisher.create({
     domain: Publisher.get_domain req.body.publisher_domain
     name: req.body.publisher_name
-    industry_id: Number req.body.publisher_industry
   }).then (publisher)->
     req.user.addPublisher(publisher).then ->
       res.json {
@@ -69,16 +65,16 @@ module.exports.get_dashboard = (req, res, next)->
     if dashboard != "settings"
       return null
       
-    return LIBS.models.Industry.findAll()
+    return req.publisher.getIndustry()
     
-  .then (industries)->    
+  .then (industry)-> 
     res.render "dashboard/index", {
       js: req.js.renderTags.apply(req.js, js)
       css: req.css.renderTags.apply(req.css, css)
       title: "Dashboard"
       dashboard_path: dashboard_path
       dashboard: dashboard
-      industries: industries
+      industry: industry
     }
   
   
