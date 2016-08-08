@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes)->
     instanceMethods: {
       hash: hasher
       
-      generate_stripe: ->      
+      stripe_generate: ->      
         return LIBS.stripe.customers.create({
           email: this.email
           description: this.name
@@ -50,14 +50,15 @@ module.exports = (sequelize, DataTypes)->
             name: this.name
           }
         }).then (customer)=>
-          return this.update({
-            stripe_id: customer.id
-          })
+          this.stripe_id = customer.id
+          return null
     
     }
     hooks: {
-      afterCreate: (publisher)->
-        publisher.generate_stripe().catch console.warn
-
+      beforeCreate: (publisher, options, callback)->
+        publisher.stripe_generate()
+          .then callback        
+          .catch callback
+        
     }
   }
