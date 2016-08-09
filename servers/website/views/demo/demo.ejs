@@ -1,19 +1,24 @@
-<html>
-	<head>
-  	<title>Miza Tester</title>	
-  	<style>
-    	.ad {
-      	margin: 30px auto;
-        display: table;
-    	}
-  	</style>
-  	
-		<%- include("../samples/" + demo + "/script") %>
-		
-	</head>
-	<body>
-  	<div class="ad">
-     <%- include("../samples/" + demo + "/element") %>
-  	</div>
-	</body>
-</html>
+<% include ../includes/start %>
+<% include ../includes/header %>
+<div class="demo">
+  <div class="label">Try turning Ad Blocker On & Off</div>
+  <!--
+  <div class="container left">
+  	<div class="label">Google Adsense (With Miza)</div>
+  	<iframe src="/demo/miza/miza_adsense"></iframe>
+  </div>
+  <div class="container right">
+  	<div class="label">Adsense</div>
+  	<iframe src="/demo/miza/adsense"></iframe>
+  </div>
+  -->
+  <div class="container left">
+  	<div class="label">Double Click (With Miza)</div>
+  	<iframe src="/demo/miza/miza_dfp"></iframe>
+  </div>
+  <div class="container right">
+  	<div class="label">Double Click</div>
+  	<iframe src="/demo/miza/dfp"></iframe>
+  </div>
+</div>
+<% include ../includes/end %>

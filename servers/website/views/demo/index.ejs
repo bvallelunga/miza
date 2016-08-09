@@ -1,50 +1,20 @@
-<html>
-	<head>
-  	<title>Miza Tester</title>
-  	<style>
-    	.container {
-      	width: 50%; 
-    	}
-    	
-    	.container.left {
-      	float: left;
-    	}
-    	
-    	.container.right {
-      	float: right;
-    	}
-    	
-    	.label {
-      	text-align: center;
-      	font-weight: bold;
-      	font-size: 24px;
-      	padding: 30px 0;
-    	}
-    	
-    	iframe {
-      	width: 100%;
-      	height: 325px;
-      	border: none;
-    	}
-  	</style>
-	</head>
-	<body>
-  	<div class="label">Try turning Ad Blocker On & Off</div>
-  	<div class="container left">
-    	<div class="label">Google Adsense (With Miza)</div>
-    	<iframe src="/demo/miza_adsense"></iframe>
-  	</div>
-    <div class="container right">
-    	<div class="label">Adsense</div>
-    	<iframe src="/demo/adsense"></iframe>
-  	</div>
-  	<div class="container left">
-    	<div class="label">Double Click (With Miza)</div>
-    	<iframe src="/demo/miza_dfp"></iframe>
-  	</div>
-    <div class="container right">
-    	<div class="label">Double Click</div>
-    	<iframe src="/demo/dfp"></iframe>
-  	</div>
-	</body>
-</html>
+<% include ../includes/start %>
+<% include ../includes/header %>
+<div class="container large">
+  <% include ../includes/logo %>
+  <div class="list">
+    <a href="/dashboard">
+      <div class="fa fa-tachometer"></div>
+      <div class="name">Dashboard</div>
+    </a>
+    <a href="/demo/miza">
+      <div class="fa fa-eye"></div>
+      <div class="name">Quick Demo</div>
+    </a>
+    <a href="/demo/wordpress">
+      <div class="fa fa-wordpress"></div>
+      <div class="name">Wordpress</div>
+    </a>
+  </div>
+</div>
+<% include ../includes/end %>

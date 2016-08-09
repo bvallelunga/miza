@@ -10,12 +10,11 @@ module.exports.up = (sequelize, models)->
 create_user = (models)->
   models.User.findOrCreate({
     where: {
-      email: "admin@miza.io"
+      email: "demo@miza.io"
     },
     defaults: {
-      password: "1burrito2go",
-      name: "Admin"
-      is_admin: true
+      password: "demo",
+      name: "Demo User"
     }
   })
   
@@ -23,7 +22,7 @@ create_user = (models)->
 create_publisher = (models)->
   models.Publisher.findOrCreate({
     where: {
-      domain: "miza.io"
+      domain: "demo.miza.io"
     },
     defaults: {
       name: "Demo Publisher"
