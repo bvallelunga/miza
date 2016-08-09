@@ -47,7 +47,9 @@ module.exports = (srv)->
   # Admin Routes
   app.get  "/admin", routes.auth.is_admin, routes.admin.get_root
   app.get  "/admin/access", routes.auth.is_admin, routes.admin.get_access
+  app.get  "/admin/industries", routes.auth.is_admin, routes.admin.get_industries
   app.post "/admin/access", routes.auth.is_admin, routes.admin.post_access
+  app.post "/admin/industries", routes.auth.is_admin, routes.admin.post_industries
   
   
   # Dashboard Routes

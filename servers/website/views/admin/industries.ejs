@@ -1,0 +1,32 @@
+<% include ../includes/start %>
+<% include ../includes/header %>
+<div class="container large-2 industries">
+  <% include ../includes/logo %>
+  <form class="form" method="POST" action="/admin/industries">
+    <% include ../includes/csrf %>
+    <table>
+      <head>
+        <tr>
+          <th>Industry</th>
+          <th>CPM</th>
+          <th>CPC</th>
+          <th>Fee</th>
+        </tr>
+      </head>
+      <tbody>
+        <% industries.forEach(function(industry, i) { %>
+          <input type="hidden" name="industries[<%= i %>][id]" value="<%= industry.id %>" required>
+          <tr>
+            <td><input class="only" type="text" name="industries[<%= i %>][name]" value="<%= industry.name %>" placeholder="Name" min="0" step="0.01" required></td>
+            <td><input class="only" type="number" name="industries[<%= i %>][cpm]" value="<%= industry.cpm %>" placeholder="CPM" min="0" step="0.01" required></td>
+            <td><input class="only" type="number" name="industries[<%= i %>][cpc]" value="<%= industry.cpc %>" placeholder="CPC" min="0" step="0.01" required></td>
+            <td><input class="only" type="number" name="industries[<%= i %>][fee]" value="<%= industry.fee %>" placeholder="Fee" min="0" max="1" step="0.01" required></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <button class="button" type="submit">Update Industries</button>
+    <div class="error"></div>
+  </form>
+</div>
+<% include ../includes/end %>

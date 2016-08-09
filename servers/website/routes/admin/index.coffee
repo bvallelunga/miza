@@ -28,3 +28,39 @@ module.exports.post_access = (req, res, next)->
     }
     
   .catch next
+  
+  
+module.exports.get_industries = (req, res, next)->
+  LIBS.models.Industry.findAll().then (industries)->
+    res.render "admin/industries", {
+      js: req.js.renderTags "modal"
+      css: req.css.renderTags "modal", "fa"
+      title: "Update Industries"
+      industries: industries
+    }
+
+
+module.exports.post_industries = (req, res, next)->
+  console.log req.body
+
+  Promise.all req.body.industries.map (industry)->
+    return LIBS.models.Industry.update({
+      name: industry.name
+      cpm: Number industry.cpm
+      cpc: Number industry.cpc
+      fee: Number industry.fee
+    }, {
+      where: {
+        id: industry.id
+      }
+    })
+    
+  .then ->
+    res.json {
+      success: true
+      message: "Industries have been updated!"
+      next: "/admin/industries"
+    }
+    
+  .catch next
+  
