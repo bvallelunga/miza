@@ -22,7 +22,7 @@ create_user = (models)->
 create_publisher = (models)->
   models.Publisher.findOrCreate({
     where: {
-      domain: "demo.miza.io"
+      domain: "miza.io"
     },
     defaults: {
       name: "Demo Publisher"

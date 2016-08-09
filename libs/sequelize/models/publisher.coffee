@@ -1,4 +1,5 @@
 url = require 'url'
+randomstring = require "randomstring"
 
 module.exports = (sequelize, DataTypes)->
 
@@ -91,21 +92,24 @@ module.exports = (sequelize, DataTypes)->
     hooks: {
       beforeValidate: (publisher, options)->
         if not publisher.key?
-          publisher.key = Math.random().toString(36).substr(2, 10)
-          
-          if not isNaN publisher.key.charAt(0)
-            publisher.key += "m"
-          
+          publisher.key = randomstring.generate({
+            length: 15
+            charset: 'alphabetic'
+          }).toLowerCase()
           publisher.endpoint = "#{publisher.key}.#{publisher.domain}"
           
       
-      afterCreate: (publisher)->
-        publisher.heroku_add_domain(publisher.endpoint).catch console.warn
+      afterCreate: (publisher, options, callback)->
+        publisher.heroku_add_domain(publisher.endpoint).then ->
+          callback()
+        .catch console.warn
 
         
-      afterUpdate: (publisher)->
+      afterUpdate: (publisher, options, callback)->
         if publisher.endpoint != publisher.previous("endpoint")
-          publisher.heroku_add_domain(publisher.endpoint).catch console.warn
+          publisher.heroku_add_domain(publisher.endpoint).then ->
+            callback()
+          .catch console.warn
 
     }
   }
