@@ -46,14 +46,17 @@ module.exports = (sequelize, DataTypes)->
         
     }
   }, {
-    hooks: {
-      afterUpdate: (industry)->
-        LIBS.models.IndustryAudit.create {
+    hooks: {            
+      afterUpdate: (industry, options, callback)->               
+        LIBS.models.IndustryAudit.create({
           name: industry.previous "name"
           cpm: industry.previous "cpm"
           cpc: industry.previous "cpc"
           fee: industry.previous "fee"
-        }
+        }).then ->
+          callback()
+          
+        .catch callback
 
     }
   }

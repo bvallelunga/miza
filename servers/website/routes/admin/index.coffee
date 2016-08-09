@@ -20,7 +20,10 @@ module.exports.post_access = (req, res, next)->
     return { 
       email: email.trim() 
     }
-  ).then ->
+  , {
+    returning: false
+    individualHooks: true
+  }).then ->
     res.json {
       success: true
       message: "Users have been approved for registration!"
@@ -31,7 +34,11 @@ module.exports.post_access = (req, res, next)->
   
   
 module.exports.get_industries = (req, res, next)->
-  LIBS.models.Industry.findAll().then (industries)->
+  LIBS.models.Industry.findAll({
+    order: [
+      ['name', 'ASC']
+    ]
+  }).then (industries)->
     res.render "admin/industries", {
       js: req.js.renderTags "modal"
       css: req.css.renderTags "modal", "fa"
@@ -41,15 +48,15 @@ module.exports.get_industries = (req, res, next)->
 
 
 module.exports.post_industries = (req, res, next)->
-  console.log req.body
-
   Promise.all req.body.industries.map (industry)->
     return LIBS.models.Industry.update({
       name: industry.name
       cpm: Number industry.cpm
       cpc: Number industry.cpc
-      fee: Number industry.fee
+      fee: Number(industry.fee)/100
     }, {
+      returning: false
+      individualHooks: true
       where: {
         id: industry.id
       }
