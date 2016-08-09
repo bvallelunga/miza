@@ -1,0 +1,20 @@
+<% include ../includes/start %>
+<% include ../includes/header %>
+<div class="container large-2">
+  <% include ../includes/logo %>
+  <form class="form card" method="POST" action="/account/card">
+    <div class="view left">
+      <% include ../includes/csrf %>
+      <input class="top" type="text" name="number" placeholder="**** **** **** ****" required>
+      <input type="text" name="name" placeholder="Tony Stark" required/>
+      <div class="split">
+        <input class="bottom left" type="text" name="expiry" placeholder="** / ****" required/>
+        <input class="bottom right" type="text" name="cvc" placeholder="***" required/>
+      </div>
+      <button class="button" type="submit">Save Card</button>
+      <div class="error"></div>
+    </div>
+    <div class="card-wrapper view right"></div>
+  </form>
+</div>
+<% include ../includes/end %>

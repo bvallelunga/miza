@@ -24,7 +24,7 @@ module.exports.post_access = (req, res, next)->
     res.json {
       success: true
       message: "Users have been approved for registration!"
-      next: "/user/access"
+      next: "/admin"
     }
     
   .catch next

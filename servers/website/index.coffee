@@ -34,6 +34,15 @@ module.exports = (srv)->
   app.post "/login", routes.auth.not_authenticated, routes.auth.post_login
   app.post "/register", routes.auth.not_authenticated, routes.auth.post_register
   
+
+  # Account Routes
+  app.get  "/account", routes.auth.is_authenticated, routes.account.get_root
+  app.get  "/account/password", routes.auth.is_authenticated, routes.account.get_password
+  app.get  "/account/card", routes.auth.is_authenticated, routes.account.get_card
+  app.post "/account", routes.auth.is_authenticated, routes.account.post_root
+  app.post "/account/password", routes.auth.is_authenticated, routes.account.post_password
+  app.post "/account/card", routes.auth.is_authenticated, routes.account.post_card
+  
   
   # Admin Routes
   app.get  "/admin", routes.auth.is_admin, routes.admin.get_root
@@ -51,7 +60,7 @@ module.exports = (srv)->
   app.get  "/dashboard/:publisher/analytics/logs", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_analytics_logs
   app.get  "/dashboard/:publisher/analytics/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_analytics_metrics
   app.post "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.post_new
-  app.post  "/dashboard/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.post_settings
+  app.post "/dashboard/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.post_settings
   
   
   # Demo Routes

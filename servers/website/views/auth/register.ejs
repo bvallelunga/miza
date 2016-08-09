@@ -4,9 +4,9 @@
   <% include ../includes/logo %>
   <form class="form" method="POST" action="/register">
     <% include ../includes/csrf %>
-    <input class="name top" type="text" name="name" placeholder="Name" required/>
-    <input class="email" type="email" name="email" placeholder="Email address" required/>
-    <input class="password bottom" type="password" name="password" placeholder="Password" required/>
+    <input class="top" type="text" name="name" placeholder="Name" required/>
+    <input type="email" name="email" placeholder="Email address" required/>
+    <input class="bottom" type="password" name="password" placeholder="Password" required/>
     <button class="button" type="submit">Sign Up</button>
     <div class="error"></div>
   </form>

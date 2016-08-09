@@ -12,6 +12,15 @@
     padding-top: 130px;
   }
   
+  &.large-2 {
+    width: 800px;
+    .clearfix();
+    
+    .view {
+      width: 45%;
+    }
+  }
+  
   h1.logo {
     font-size: 3.5em;
     margin-bottom: 20px;
@@ -24,7 +33,7 @@
     font-weight: lighter;
   }
   
-   span {
+  span {
     color: @text;
     font-size: 1.2em;
     line-height: 1.5em;
@@ -45,15 +54,40 @@
     height: 200px;
   }
   
-  .select {
+  .split input {
+    width: 50%;
+    display: inline-block;
+    
+    &.left {
+      .border-radius(0 0 0 3px);
+      border-right: none;
+    }
+    
+    &.right {
+      .border-radius(0 0 3px 0);
+    }
+  }
+  
+  .group {
     position: relative;
     
-    .fa {
+    .fa, a {
       position: absolute;
       font-size: 1.5em;
       top: 15px;
       right: 15px;
       color: rgba(0,0,0,0.1);
+    }
+    
+    a {
+      font-size: 1em;
+      font-weight: bold;
+      color: @blue;
+      text-transform: uppercase;
+      
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
   

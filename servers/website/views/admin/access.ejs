@@ -7,7 +7,7 @@
     not</u> send them an invite email, we are doing things that don't
     scale. Please reach out to them individually with a link to the registration page 👍
   </span>
-  <form class="form" method="POST" action="/user/access">
+  <form class="form" method="POST" action="/admin/access">
     <% include ../includes/csrf %>
     <textarea class="textarea only" name="emails" placeholder="One email address per line" required></textarea>
     <button class="button" type="submit">Grant Access</button>

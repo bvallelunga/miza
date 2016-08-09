@@ -52,6 +52,14 @@ module.exports = (sequelize, DataTypes)->
         }).then (customer)=>
           this.stripe_id = customer.id
           return null
+          
+      stripe_set_card: (card)->
+        return LIBS.stripe.customers.update(this.stripe_id, {
+          source: card
+        }).then (customer)=>
+          return this.update {
+            stripe_card: card.number.slice(-4)
+          }
     
     }
     hooks: {
