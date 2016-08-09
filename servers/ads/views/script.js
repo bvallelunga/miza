@@ -185,8 +185,8 @@
       window.document.body.appendChild(test)
       
       window.setTimeout(function() {
-        test.remove()
         res(test.offsetHeight == 0)
+        test.remove()
       }, 100)
     })
   }

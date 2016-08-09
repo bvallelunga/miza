@@ -1,1 +1,16 @@
-<% include ../includes/start.html %>
+<div class="fixed-side-nav">
+  <% if(user && user.is_admin) { %>
+    <a class="inverse" href="/admin">Admin Center</a>
+  <% } else { %>
+    <a class="inverse" href="tel:<%= support_phone_clean %>"><%= support_phone %></a>
+  <% } %>
+  <% if(user) { %>
+    <a href="/dashboard">Dashboard</a>
+    <span>
+      <a class="main" href="/account">Account</a>
+      <a class="dropdown-item red" href="/logout">Sign Out</a>
+    </span>
+  <% } else { %>
+    <a href="mailto:<%= support_email %>">Contact Us</a>
+  <% } %>
+</div>

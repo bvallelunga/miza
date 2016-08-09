@@ -1,8 +1,5 @@
 <% include ../includes/start %>
-<div class="fixed-side-nav">
-  <a class="inverse" href="tel:<%= support_phone_clean %>"><%= support_phone %></a>
-  <a href="mailto:<%= support_email %>">Contact Us</a>
-</div>
+<% include ../includes/header %>
 <div class="hero">
   <div class="container">
     <div class="hero-image left">
@@ -25,8 +22,8 @@
         </form>
         <div class="login">
           <span>or</span>
-          <a href="/<%= user ? "dashboard" : "login" %>">
-            <button class="button"><%= user ? "Dashboard" : "Sign In" %></button>
+          <a href="/login">
+            <button class="button">Sign In</button>
           </a>
         </div>
       </div>

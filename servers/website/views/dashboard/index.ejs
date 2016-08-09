@@ -1,17 +1,10 @@
 <% include ../includes/start %>
+<% include ../includes/header %>
 <%  
   function isActive(a, b) {
     return a == b ? "active" : ""
   }
 %>
-<div class="fixed-side-nav">
-  <% if(user.is_admin) { %>
-    <a href="/user/access">Grant Access</a>
-  <% } else { %>
-    <a class="inverse" href="tel:<%= support_phone_clean %>"><%= support_phone %></a>
-  <% } %>
-  <a href="/logout">Sign Out</a>
-</div>
 <div class="container">
   <div class="sidebar left">
     <% include ../includes/logo %>

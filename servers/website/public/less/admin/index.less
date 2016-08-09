@@ -1,0 +1,54 @@
+@import '../compless/all';
+@import '../global/colors';
+
+.container {
+  width: 350px;
+  margin: 0 auto;
+  padding-top: 180px;
+  text-align: center;
+  
+  &.large {
+    width: 550px;
+    padding-top: 130px;
+  }
+  
+  h1.logo {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+  }
+  
+  .list {
+    margin-top: 50px;
+      
+    a {
+      position: relative;
+      cursor: pointer;
+      width: 180px;
+      padding: 15px 20px;
+      margin: 10px 20px;
+      text-align: center;
+      background: #FDFDFD;
+      border: solid 2px rgba(0,0,0,0.05);
+      display: inline-block;
+      .border-radius(4px);
+      
+      &:hover {
+        border-color: @blue;
+      }
+      
+      .fa {
+        margin: 30px 0;
+        font-size: 4em;
+        color: @blue;
+        text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+      }
+      
+      .name {
+        margin-top: 20px;
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+    }
+  }
+  
+}

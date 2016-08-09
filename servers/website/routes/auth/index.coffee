@@ -12,14 +12,6 @@ module.exports.get_register = (req, res, next)->
     css: req.css.renderTags "modal"
     title: "Sign Up"
   }
- 
- 
-module.exports.get_user_access = (req, res, next)->
-  res.render "auth/user_access", {
-    js: req.js.renderTags "modal"
-    css: req.css.renderTags "modal"
-    title: "Grant Access"
-  }
   
 
 module.exports.get_logout = (req, res, next)->
@@ -81,21 +73,6 @@ module.exports.post_register = (req, res, next)->
   .catch next
 
 
-module.exports.post_user_access = (req, res, next)->
-  emails = req.body.emails.toLowerCase().split("\n")
-
-  LIBS.models.UserAccess.bulkCreate(emails.map (email)->
-    return { email: email.trim() }
-  ).then ->
-    res.json {
-      success: true
-      message: "Users have been approved for registration!"
-      next: "/user/access"
-    }
-    
-  .catch next
-
-
 module.exports.load_user = (req, res, next)->
   if not req.session.user?
     return next()
@@ -114,7 +91,7 @@ module.exports.load_user = (req, res, next)->
 
 module.exports.not_authenticated = (req, res, next)->
   if req.user?
-    return res.redirect "/"
+    return res.redirect "/dashboard"
     
   next()
 

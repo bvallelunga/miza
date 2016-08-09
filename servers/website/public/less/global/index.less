@@ -98,23 +98,53 @@ body {
     top: 15px;
     right: 15px;
     min-width: 80px;
+    vertical-align: top;
+    
+    span {
+      display: inline-block;
+      
+      a {
+        float: none;
+      }
+      
+      .dropdown-item {
+        display: none;
+      }
+      
+      &:hover .dropdown-item {
+        display: block;
+      }
+    }
     
     a {
       background: #C6C9D0;
       color: white;
       padding: 8px 17px;
-      margin-bottom: 5px;
+      margin: 0 5px 5px 0;
       text-align: center;
-      display: inline-block;
+      display: block;
+      float: left;
+      min-width: 90px;
       .border-radius(2px);
       
       &:hover {
         background: @blue;
       }
       
+      &.red {
+        background: lighten(@red, 15%);
+        color: white;
+        
+        &:hover {
+          background: lighten(@red, 5%);
+        }
+      }
+      
       &.inverse {
-        background: transparent !important;
+        background: transparent;
         color: @blue;
+        font-size: 1.1em;
+        font-weight: bold;
         
         &:hover {
           text-decoration: underline;

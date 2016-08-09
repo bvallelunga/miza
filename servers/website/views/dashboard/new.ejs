@@ -1,20 +1,20 @@
 <% include ../includes/start %>
-<div class="fixed-side-nav">
-  <a class="inverse" href="tel:<%= support_phone_clean %>"><%= support_phone %></a>
-  <a href="/logout">Sign Out</a>
-</div>
+<% include ../includes/header %>
 <div class="container">
   <% include ../includes/logo %>
   <form class="form" method="POST" action="/dashboard/new">
     <% include ../includes/csrf %>
     <input class="name top" type="text" name="publisher_name" placeholder="Publisher Name" required/>
     <input class="email" type="url" name="publisher_domain" placeholder="http://publisher.com" required/>
-    <select class="input bottom" name="publisher_industry" required>
-      <option disabled="true" selected>Select Industry</option>
-      <% industries.forEach(function(industry) { %>
-        <option value="<%= industry.id %>"><%= industry.name %></option>
-      <% }) %>
-    </select>
+    <div class="select">
+      <div class="fa fa-sort"></div>
+      <select class="input bottom" name="publisher_industry" required>
+        <option disabled="true" selected>Select Industry</option>
+        <% industries.forEach(function(industry) { %>
+          <option value="<%= industry.id %>"><%= industry.name %></option>
+        <% }) %>
+      </select>
+    </div>
     <button class="button" type="submit">Create Publisher Account</button>
     <div class="error"></div>
   </form>

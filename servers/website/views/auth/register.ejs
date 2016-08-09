@@ -1,8 +1,5 @@
 <% include ../includes/start %>
-<div class="fixed-side-nav">
-  <a class="inverse" href="tel:<%= support_phone_clean %>"><%= support_phone %></a>
-  <a href="mailto:<%= support_email %>">Contact Us</a>
-</div>
+<% include ../includes/header %>
 <div class="container">
   <% include ../includes/logo %>
   <form class="form" method="POST" action="/register">

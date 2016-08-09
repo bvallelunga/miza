@@ -23,7 +23,6 @@ LIBS.queue.consume "event-created", (message, ack, nack)->
     device.cpu = agent.cpu
     
     # Clean up old information
-    browser.do_not_track = browser.do_not_track == "true"
     browser.demensions.width = Number(browser.demensions.width)
     browser.demensions.height = Number(browser.demensions.height)
     device.battery.charging = device.battery.charging == "true"

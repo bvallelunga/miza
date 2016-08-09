@@ -16,24 +16,32 @@ module.exports = (srv)->
   app.use require "./locals"
   
   
-  # Public
+  # Public Routes
   require("../assets")(app, srv,  __dirname + '/public')
   app.use "/test", express.static __dirname + '/public/test'
   app.use "/imgs", express.static __dirname + '/public/images'
   
   
-  # Routes
-  app.get  "/", routes.landing.get_root
-  app.post "/access/request", routes.landing.post_beta
+  # Landing Routes
+  app.get  "/", routes.auth.not_authenticated, routes.landing.get_root
+  app.post "/access/request", routes.auth.not_authenticated, routes.landing.post_beta
   
+  
+  # Auth Routes
   app.get  "/login", routes.auth.not_authenticated, routes.auth.get_login
   app.get  "/register", routes.auth.not_authenticated, routes.auth.get_register
-  app.get  "/user/access", routes.auth.is_admin, routes.auth.get_user_access
   app.get  "/logout", routes.auth.get_logout
   app.post "/login", routes.auth.not_authenticated, routes.auth.post_login
   app.post "/register", routes.auth.not_authenticated, routes.auth.post_register
-  app.post "/user/access", routes.auth.is_admin, routes.auth.post_user_access
   
+  
+  # Admin Routes
+  app.get  "/admin", routes.auth.is_admin, routes.admin.get_root
+  app.get  "/admin/access", routes.auth.is_admin, routes.admin.get_access
+  app.post "/admin/access", routes.auth.is_admin, routes.admin.post_access
+  
+  
+  # Dashboard Routes
   app.get  "/dashboard", routes.auth.is_authenticated, routes.dashboard.get_root
   app.get  "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.get_new
   app.get  "/dashboard/:publisher", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_dashboard
@@ -46,6 +54,7 @@ module.exports = (srv)->
   app.post  "/dashboard/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.post_settings
   
   
+  # Demo Routes
   if not CONFIG.isProd
     app.get "/demo", routes.demo.publisher, routes.demo.get_root
     app.get "/demo/:demo", routes.demo.publisher, routes.demo.get_root

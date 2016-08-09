@@ -4,5 +4,6 @@ module.exports = {
   auth:      require "./auth"
   dashboard: require "./dashboard"
   demo:      require "./demo"
+  admin:      require "./admin"
   
 }

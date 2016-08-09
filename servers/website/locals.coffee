@@ -25,7 +25,7 @@ module.exports = (req, res, next)->
   res.locals.company = CONFIG.general.company
   res.locals.logo = CONFIG.general.logo
   res.locals.config = {}
-  res.locals.user = req.user
+  res.locals.user = req.user or null
   res.locals.title_first = true
   res.locals.is_prod = CONFIG.isProd
   res.locals.random = "r=#{random_slug}"
