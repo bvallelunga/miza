@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes)->
     }
     name: DataTypes.STRING 
     stripe_id: DataTypes.STRING
-    stripe_card: DataTypes.STRING
+    stripe_card: DataTypes.JSONB
     is_admin: { 
       type: DataTypes.BOOLEAN
       defaultValue: false
@@ -51,22 +51,44 @@ module.exports = (sequelize, DataTypes)->
           }
         }).then (customer)=>
           this.stripe_id = customer.id
-          return null
+          return customer
           
       stripe_set_card: (card)->
         return LIBS.stripe.customers.update(this.stripe_id, {
           source: card
-        }).then (customer)=>
-          return this.update {
-            stripe_card: card.number.slice(-4)
+        }).then (customer)=>          
+          return this.update({
+            stripe_card: customer.sources.data[0]
+          })
+          
+      stripe_update: ->
+        return LIBS.stripe.customers.update(this.stripe_id, {
+          email: this.email
+          description: this.name
+          metadata: {
+            id: this.id
+            name: this.name
           }
+        })
     
     }
     hooks: {
-      beforeCreate: (publisher, options, callback)->
-        publisher.stripe_generate()
-          .then callback        
+      beforeCreate: (user, options, callback)->
+        user.stripe_generate().then ->
+          callback()        
+        
+        .catch callback
+       
+         
+      afterUpdate: (user, options, callback)->
+        if user.changed("name") or user.changed("email")
+          console.log "update stripe"
+          user.stripe_update().then ->
+            callback()        
+        
           .catch callback
+          
+        return callback()
         
     }
   }
