@@ -66,7 +66,7 @@ module.exports.post_industries = (req, res, next)->
     res.json {
       success: true
       message: "Industries have been updated!"
-      next: "/admin/industries"
+      next: "/admin"
     }
     
   .catch next

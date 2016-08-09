@@ -3,15 +3,14 @@ numeral = require "numeral"
 module.exports.get_logs = (req, res, next)->
   LIBS.stripe.charges.list({
     customer: req.user.stripe_id
-  }).then (list)->  
-    res.json list.data.map (charge)->
-      status = "pending"
-        
+  }).then (list)-> 
+  
+    res.json list.data.map (charge)->  
       if charge.refunded
         status = "refunded"
       
-      else if charge.paid
-        status = "paid"
+      else 
+        status = charge.status
          
       return {
         id: charge.id.slice(3)

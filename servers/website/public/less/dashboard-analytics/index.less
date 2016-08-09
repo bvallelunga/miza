@@ -15,7 +15,7 @@
   .logs-table {
     tr td, tr th {    
       &:nth-child(1) {
-        width: 35%
+        width: 30%
       }
       
       &:nth-child(2) {
@@ -28,7 +28,7 @@
       
       
       &:nth-child(4) {
-        width: 15%;
+        width: 20%;
       } 
       
       &:nth-child(5) {
@@ -41,9 +41,19 @@
     }
     
     tr td:nth-child(3) {
+      text-transform: capitalize; 
+    }
+    
+    tr.succeeded td:nth-child(3) {
       color: @blue;
-      text-transform: capitalize;
-      
+    }
+    
+    tr.failed td:nth-child(3) {
+      color: @red;
+    }
+    
+    tr.refunded td:nth-child(3) {
+      color: @orange;
     }
   }
 }
@@ -147,7 +157,7 @@
   
   td {
     font-size: 0.95em;
-    padding: 12px 8px;
+    padding: 12px 5px;
     font-weight: lighter;
     
     &:first-child, &:nth-child(2) {
