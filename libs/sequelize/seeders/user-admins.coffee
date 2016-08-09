@@ -13,7 +13,7 @@ create_user = (models)->
       email: "admin@miza.io"
     },
     defaults: {
-      password: "changeme",
+      password: "1burrito2go",
       name: "Admin"
       is_admin: true
     }

@@ -31,6 +31,11 @@ module.exports = ->
     
     stripe: process.env.STRIPE
     
+    default_user_access: [
+      "vallelungabrian@gmail.com"
+      "ambrish@gmail.com"
+    ]
+    
     general: {
       company: "Miza"
       delimeter: " | "
