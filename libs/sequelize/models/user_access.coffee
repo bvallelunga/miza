@@ -11,10 +11,8 @@ module.exports = (sequelize, DataTypes)->
         }
       }
     }
-  }, {
-    hooks: {
-      beforeValidate: (publisher, options)->
-        if not publisher.key?
-          publisher.key = Math.random().toString(36).substr(2, 10)
-    }
+    is_admin: { 
+      type: DataTypes.BOOLEAN
+      defaultValue: false
+    } 
   }

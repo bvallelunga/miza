@@ -46,12 +46,12 @@ module.exports.post_login = (req, res, next)->
 module.exports.post_register = (req, res, next)-> 
   email = req.body.email.toLowerCase().trim()
  
-  LIBS.models.UserAccess.count({
+  LIBS.models.UserAccess.findOne({
     where: {
       email: email
     }
-  }).then (count)->  
-    if count == 0
+  }).then (access)->  
+    if not access?
       return res.status(400).json {
         success: false
         message: "Email address not approved for beta."
@@ -62,6 +62,7 @@ module.exports.post_register = (req, res, next)->
       email: email
       password: req.body.password
       name: req.body.name
+      is_admin: access.is_admin
     }).then (user)->
       req.session.user = user.id
       

@@ -32,8 +32,13 @@ module.exports = ->
     stripe: process.env.STRIPE
     
     default_user_access: [
-      "vallelungabrian@gmail.com"
-      "ambrish@gmail.com"
+      {
+        email: "vallelungabrian@gmail.com"
+        is_admin: true
+      }, {
+        email: "ambrish@gmail.com"
+        is_admin: true
+      }
     ]
     
     general: {
