@@ -6,12 +6,9 @@ GLOBAL.LIBS = require("../libs")()
 
 # Check If First Day of the Month
 now = new Date()
-month_ago = new Date()
-month_ago.setUTCMonth month_ago.getUTCMonth() - 1
-month_ago.setUTCDate 1
-
-if now.getUTCDate() > 1
-  return process.exit()
+# 
+# if now.getUTCDate() > 1
+#   return process.exit()
   
  
 # Fetch All Customers
@@ -34,9 +31,7 @@ LIBS.models.User.findAll({
             publisher_id: publisher.id
             protected: true
             type: "impression"
-            created_at: {
-              $gte: month_ago
-            }
+            paid_at: null
           }
         })
         industry: publisher.getIndustry()
@@ -44,12 +39,27 @@ LIBS.models.User.findAll({
         amount = Math.floor(props.impressions/1000 * props.industry.cpm * props.industry.fee * 100)
         
         if amount <= 49
-          return Promise.resolve()
+          return Promise.resolve(false)
         
         LIBS.stripe.charges.create({
           amount: amount
           customer: user.stripe_id
           currency: "usd"
+        })
+      
+      .then (charged)->
+        if charged == false
+          return Promise.resolve()
+      
+        LIBS.models.Event.update({
+          paid_at: now
+        }, {
+          where: {
+            publisher_id: publisher.id
+            protected: true
+            type: "impression"
+            paid_at: null
+          }
         })
         
 .then ->

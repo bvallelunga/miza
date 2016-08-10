@@ -1,10 +1,6 @@
 numeral = require "numeral"
 
 module.exports.get_logs = (req, res, next)->
-  month_ago = new Date()
-  month_ago.setUTCMonth month_ago.getUTCMonth() - 1
-  month_ago.setUTCDate 1
-
   req.publisher.getEvents({ 
     limit: 100 
     attributes: [ 
@@ -14,9 +10,6 @@ module.exports.get_logs = (req, res, next)->
     where: {
       type: {
         $ne: "asset" 
-      }
-      created_at: {
-        $gte: month_ago
       }
     }
     order: [

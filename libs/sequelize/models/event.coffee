@@ -55,6 +55,7 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.JSONB
       defaultValue: {}
     }
+    paid_at: DataTypes.DATE
   }, {
     classMethods: {
       generate: (req, publisher, data)->                    

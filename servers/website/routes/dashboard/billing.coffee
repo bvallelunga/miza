@@ -27,19 +27,13 @@ module.exports.get_logs = (req, res, next)->
   
   
 module.exports.get_metrics = (req, res, next)->
-  month_ago = new Date()
-  month_ago.setUTCMonth month_ago.getUTCMonth() - 1
-  month_ago.setUTCDate 1
-  
   Promise.props({
     impressions: LIBS.models.Event.count({
       where: {
         publisher_id: req.publisher.id
         protected: true
         type: "impression"
-        created_at: {
-          $gte: month_ago
-        }
+        paid_at: null
       }
     })
     industry: req.publisher.getIndustry()
