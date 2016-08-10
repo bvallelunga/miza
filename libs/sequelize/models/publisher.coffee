@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes)->
         }
       }
       set: (value)->
+        value = @extract_domain value
         @setDataValue 'domain', value 
         @setDataValue 'endpoint', "#{@key}.#{value.split(".").slice(-2).join(".")}"
     }
@@ -58,12 +59,7 @@ module.exports = (sequelize, DataTypes)->
         
     }
   }, {    
-    classMethods: {
-      get_domain: (website)->
-        domain = url.parse website.toLowerCase()
-        hostname = (domain.hostname || domain.pathname)
-        return "#{hostname}#{if domain.port? then (":" + domain.port) else "" }"
-      
+    classMethods: {      
       associate: (models)->
         models.Publisher.belongsToMany models.User, {
           as: 'members'
@@ -80,6 +76,11 @@ module.exports = (sequelize, DataTypes)->
 
     }
     instanceMethods: {
+      extract_domain: (website)->
+        domain = url.parse website.toLowerCase()
+        hostname = (domain.hostname || domain.pathname).split(".").slice(-2).join(".")
+        return "#{hostname}#{if domain.port? then (":" + domain.port) else "" }"
+      
       heroku_add_domain: (domain)->
         LIBS.heroku.post "/apps/#{CONFIG.app_name}/domains", {
           body: { hostname: domain }
@@ -99,17 +100,17 @@ module.exports = (sequelize, DataTypes)->
           publisher.endpoint = "#{publisher.key}.#{publisher.domain}"
           
       
-      afterCreate: (publisher, options, callback)->
-        publisher.heroku_add_domain(publisher.endpoint).then ->
-          callback()
-        .catch console.warn
-
-        
-      afterUpdate: (publisher, options, callback)->
-        if publisher.endpoint != publisher.previous("endpoint")
-          publisher.heroku_add_domain(publisher.endpoint).then ->
-            callback()
-          .catch console.warn
+#       afterCreate: (publisher, options, callback)->
+#         publisher.heroku_add_domain(publisher.endpoint).then ->
+#           callback()
+#         .catch console.warn
+# 
+#         
+#       afterUpdate: (publisher, options, callback)->
+#         if publisher.endpoint != publisher.previous("endpoint")
+#           publisher.heroku_add_domain(publisher.endpoint).then ->
+#             callback()
+#           .catch console.warn
 
     }
   }

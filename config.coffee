@@ -29,6 +29,7 @@ module.exports = ->
       return logging_defaults.development
     )()
     
+    mixpanel: process.env.MIXPANEL
     stripe: process.env.STRIPE
     
     default_user_access: [

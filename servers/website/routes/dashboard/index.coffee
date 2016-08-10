@@ -27,7 +27,7 @@ module.exports.post_new = (req, res, next)->
     return next "Please select an industry."
 
   Publisher.create({
-    domain: Publisher.get_domain req.body.publisher_domain
+    domain: req.body.publisher_domain
     name: req.body.publisher_name
     industry_id: Number req.body.publisher_industry
   }).then (publisher)->
