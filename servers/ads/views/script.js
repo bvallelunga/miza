@@ -1,5 +1,6 @@
 (function(window, API) {
   API.s_init = function() {
+    console.log(123)
     API.s_id = "<%= publisher.key %>" 
     API.s_prod = <%= CONFIG.isProd %>
     API.s_head = document.getElementsByTagName('head')[0]
@@ -67,6 +68,9 @@
             return "<%= random_slug %>"
           
           case "battery":
+            if(!window.navigator.getBattery)
+              return {}
+            
             return window.navigator.getBattery().then(function(battery) {
               return {
                 charging: battery.charging,
@@ -85,7 +89,7 @@
             return API.s_blocker_check(window)
             
           case "plugins":
-            return Object.keys(window.navigator.plugins).map(function(id) {  
+            return Object.keys(window.navigator.plugins || []).map(function(id) {  
               var plugin = navigator.plugins[id]
               
               return {
@@ -96,9 +100,12 @@
             }) 
             
           case "languages":
-            return window.navigator.languages
+            return window.navigator.languages || []
             
           case "components":
+            if(!window.navigator.mediaDevices)
+              return {}
+          
             return window.navigator.mediaDevices.enumerateDevices().then(function(devices) {
               return devices.map(function(device) {
                 return {
@@ -232,7 +239,7 @@
       API.s_overrides(element.contentWindow)
     }
     
-    element.childNodes.forEach(API.s_migrator)
+    [].slice.call(element.childNodes).forEach(API.s_migrator)
     return element
   }
   
