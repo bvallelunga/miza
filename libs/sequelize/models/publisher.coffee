@@ -100,17 +100,17 @@ module.exports = (sequelize, DataTypes)->
           publisher.endpoint = "#{publisher.key}.#{publisher.domain}"
           
       
-#       afterCreate: (publisher, options, callback)->
-#         publisher.heroku_add_domain(publisher.endpoint).then ->
-#           callback()
-#         .catch console.warn
-# 
-#         
-#       afterUpdate: (publisher, options, callback)->
-#         if publisher.endpoint != publisher.previous("endpoint")
-#           publisher.heroku_add_domain(publisher.endpoint).then ->
-#             callback()
-#           .catch console.warn
+      afterCreate: (publisher, options, callback)->
+        publisher.heroku_add_domain(publisher.endpoint).then ->
+          callback()
+        .catch console.warn
+
+        
+      afterUpdate: (publisher, options, callback)->
+        if publisher.endpoint != publisher.previous("endpoint")
+          publisher.heroku_add_domain(publisher.endpoint).then ->
+            callback()
+          .catch console.warn
 
     }
   }

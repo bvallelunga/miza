@@ -29,6 +29,7 @@ module.exports.get_logs = (req, res, next)->
 module.exports.get_metrics = (req, res, next)->
   month_ago = new Date()
   month_ago.setMonth month_ago.getMonth() - 1
+  month_ago.setDate 1
   
   Promise.props({
     impressions: LIBS.models.Event.count({
