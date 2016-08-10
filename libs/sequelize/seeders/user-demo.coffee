@@ -1,3 +1,5 @@
+randomstring = require "randomstring"
+
 module.exports.up = (sequelize, models)->
   
   Promise.props({
@@ -13,7 +15,7 @@ create_user = (models)->
       email: "demo@miza.io"
     },
     defaults: {
-      password: "demo",
+      password: randomstring.generate(15)
       name: "Demo User"
     }
   })
