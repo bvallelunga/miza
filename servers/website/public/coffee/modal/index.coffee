@@ -1,4 +1,6 @@
 $ ->
+  title = document.title.split(" | ")[0].split(" ").join("_")
+
   $("form").on "submit", (e)->
     e.preventDefault()
     e.stopPropagation()
@@ -11,7 +13,10 @@ $ ->
       if response.message?
         alert response.message
       
-      window.location.href = response.next
+      mixpanel.track "WEB.Form.#{title}", {
+        success: true
+      }, ->
+        window.location.href = response.next
     
     ).fail (error)->
       json = error.responseJSON
@@ -19,3 +24,8 @@ $ ->
       form.find(".password").val ""
       form.find(".csrf").val json.csrf
       button.removeClass "loading"
+      
+      mixpanel.track "WEB.Form.#{title}", {
+        success: false
+        error: json.message
+      }
