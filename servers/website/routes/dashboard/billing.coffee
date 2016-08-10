@@ -42,11 +42,13 @@ module.exports.get_metrics = (req, res, next)->
       }
     })
     industry: req.publisher.getIndustry()
-  }).then (props)->
+  }).then (props)-> 
     next_month = new Date()
     next_month.setMonth next_month.getMonth() + 1
     next_month.setDate 1
-      
+    next_month.setMinutes 0
+    next_month.setSeconds 0
+   
     res.json {
       billed: next_month
       cpm: numeral(props.industry.cpm).format("$0.00a")
