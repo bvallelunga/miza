@@ -15,8 +15,9 @@ $ ->
       
       mixpanel.track "WEB.Form.#{title}", {
         success: true
-      }, ->
-        window.location.href = response.next
+      }
+      
+      window.location.href = response.next
     
     ).fail (error)->
       json = error.responseJSON
