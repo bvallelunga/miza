@@ -94,7 +94,7 @@ module.exports = (sequelize, DataTypes)->
       beforeValidate: (publisher, options)->
         if not publisher.key?
           publisher.key = randomstring.generate({
-            length: 15
+            length: Math.floor(Math.random() * 4) + 4
             charset: 'alphabetic'
           }).toLowerCase()
           publisher.endpoint = "#{publisher.key}.#{publisher.domain}"
