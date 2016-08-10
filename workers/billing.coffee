@@ -6,9 +6,9 @@ GLOBAL.LIBS = require("../libs")()
 
 # Check If First Day of the Month
 now = new Date()
-# 
-# if now.getUTCDate() > 1
-#   return process.exit()
+
+if now.getUTCDate() > 1
+  return process.exit()
   
  
 # Fetch All Customers

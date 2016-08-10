@@ -111,6 +111,8 @@ module.exports = (sequelize, DataTypes)->
           publisher.heroku_add_domain(publisher.endpoint).then ->
             callback()
           .catch console.warn
+          
+        callback()
 
     }
   }
