@@ -7,10 +7,10 @@ GLOBAL.LIBS = require("../libs")()
 # Check If First Day of the Month
 now = new Date()
 month_ago = new Date()
-month_ago.setMonth month_ago.getMonth() - 1
-month_ago.setDate 1
+month_ago.setUTCMonth month_ago.getUTCMonth() - 1
+month_ago.setUTCDate 1
 
-if now.getDate() > 1
+if now.getUTCDate() > 1
   return process.exit()
   
  

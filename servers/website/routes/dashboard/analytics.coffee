@@ -2,8 +2,8 @@ numeral = require "numeral"
 
 module.exports.get_logs = (req, res, next)->
   month_ago = new Date()
-  month_ago.setMonth month_ago.getMonth() - 1
-  month_ago.setDate 1
+  month_ago.setUTCMonth month_ago.getUTCMonth() - 1
+  month_ago.setUTCDate 1
 
   req.publisher.getEvents({ 
     limit: 100 
@@ -30,8 +30,8 @@ module.exports.get_logs = (req, res, next)->
   
 module.exports.get_metrics = (req, res, next)->
   month_ago = new Date()
-  month_ago.setMonth month_ago.getMonth() - 1
-  month_ago.setDate 1
+  month_ago.setUTCMonth month_ago.getUTCMonth() - 1
+  month_ago.setUTCDate 1
   
   Promise.props({
     all: LIBS.models.Event.count({

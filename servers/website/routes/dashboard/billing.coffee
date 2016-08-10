@@ -28,8 +28,8 @@ module.exports.get_logs = (req, res, next)->
   
 module.exports.get_metrics = (req, res, next)->
   month_ago = new Date()
-  month_ago.setMonth month_ago.getMonth() - 1
-  month_ago.setDate 1
+  month_ago.setUTCMonth month_ago.getUTCMonth() - 1
+  month_ago.setUTCDate 1
   
   Promise.props({
     impressions: LIBS.models.Event.count({
@@ -45,10 +45,8 @@ module.exports.get_metrics = (req, res, next)->
     industry: req.publisher.getIndustry()
   }).then (props)-> 
     next_month = new Date()
-    next_month.setMonth next_month.getMonth() + 1
-    next_month.setDate 1
-    next_month.setMinutes 0
-    next_month.setSeconds 0
+    next_month.setUTCMonth next_month.getUTCMonth() + 1
+    next_month.setUTCDate 1
    
     res.json {
       billed: next_month
