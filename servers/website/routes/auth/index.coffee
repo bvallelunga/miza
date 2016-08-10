@@ -45,6 +45,9 @@ module.exports.post_login = (req, res, next)->
     
 module.exports.post_register = (req, res, next)-> 
   email = req.body.email.toLowerCase().trim()
+  
+  if req.body.password != req.body.confirm_password
+    return next "Passwords do not match"
  
   LIBS.models.UserAccess.findOne({
     where: {
