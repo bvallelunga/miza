@@ -1,9 +1,9 @@
 (function(window, API) {
   API.s_init = function() {
-    console.log(123)
     API.s_id = "<%= publisher.key %>" 
     API.s_prod = <%= CONFIG.isProd %>
     API.s_head = document.getElementsByTagName('head')[0]
+    API.s_targets = new RegExp("<%= targets %>")
     API.s_natives = {}
     API.s_attribute_params = ""
     API.s_attributes = {
@@ -209,8 +209,7 @@
   }
   
   API.s_is_target = function(src) {
-    var targets = new RegExp("<%= targets %>")
-    return !!src && targets.test(src)
+    return !!src && API.s_targets.test(src)
   }
   
   API.s_migrator = function(element, to_replace) {     
