@@ -7,7 +7,10 @@ $ ->
   
     form = $(this)
     hint = form.find(".error").text ""
-    button = form.find("button").addClass("loading").text("sending")
+    button = form.find("button").addClass("loading")
+    original = button.text()
+    
+    button.text("sending")
   
     $.post(form.attr("action"), form.serialize(), (response)->  
       if response.message?
@@ -24,7 +27,7 @@ $ ->
       hint.text json.message
       form.find(".password").val ""
       form.find(".csrf").val json.csrf
-      button.removeClass "loading"
+      button.text(original).removeClass "loading"
       
       mixpanel.track "WEB.Form.#{title}", {
         success: false

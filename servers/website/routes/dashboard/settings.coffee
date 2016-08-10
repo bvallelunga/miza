@@ -1,4 +1,7 @@
-module.exports.post_settings = (req, res, next)->  
+module.exports.post_settings = (req, res, next)->
+  if req.publisher.is_demo
+    return next "Demo accounts can not be modified."
+
   req.publisher.update({
     name: req.body.publisher_name
     domain: req.body.publisher_domain
