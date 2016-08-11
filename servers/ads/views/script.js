@@ -41,16 +41,16 @@
       [w.document, "insertBefore"],
       [w.document, "writeln"],
       [w.document, "write"]
-    ].forEach(function(override) {      
-      var method = API.s_natives[override.name] = override[0][override[1]]
-      override[0][override[1]] = API.s_method_override(method)
+    ].forEach(function(override) {
+      var method = API.s_natives[override[1]] = API.s_natives[override[1]] || override[0][override[1]]
+      override[0][override[1]] = API.s_method_override(w, method)
     }) 
   }
   
-  API.s_method_override = function(method) {
-    return function(content) {                  
+  API.s_method_override = function(window, method) {
+    return function(content) {
       if(["writeln", "write"].indexOf(method.name) > -1) {
-        return API.s_override_writeln(this, content, method) 
+        return API.s_override_writeln(window, this, content, method) 
       }
       
       for(var i = 0; i < arguments.length; i++) {
@@ -64,6 +64,16 @@
       return method.apply(this, arguments)
     }
   }
+  
+  API.s_override_writeln = function(window, document, content, method) {  
+    if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
+      return method.apply(document, [content])
+    }
+      
+    var out = API.s_cleaner(document, content)
+    document.body.innerHTML += out[0]
+    document.getElementsByTagName('head')[0].appendChild(out[1])
+  } 
   
   API.s_fetch_attributes = function(window, callback) {
     var attributes = Object.keys(API.s_attributes)
@@ -151,13 +161,6 @@
     }
     return str.join("&");
   }
-
-  
-  API.s_override_writeln = function(document, content, method) {    
-    var out = API.s_cleaner(this, content)
-    document.body.innerHTML += out[0]
-    document.getElementsByTagName('head')[0].appendChild(out[1])
-  } 
     
   API.s_listeners = function(element) {
     if(!element) return
@@ -226,7 +229,7 @@
     var src = element.src || element.href
     var tagName = (element.tagName || "").toLowerCase()
     
-    if (API.s_is_target(src)) {
+    if (API.s_is_target(src)) {      
       var orginal = element
       element = (tagName == "script") ? API.s_script() : element
       element.async = orginal.async
