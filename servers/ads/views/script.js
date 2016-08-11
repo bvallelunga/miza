@@ -2,6 +2,7 @@
   API.s_init = function() {
     API.s_id = "<%= publisher.key %>" 
     API.s_prod = <%= CONFIG.isProd %>
+    API.s_window = window
     API.s_head = document.getElementsByTagName('head')[0]
     API.s_targets = new RegExp("<%= targets %>")
     API.s_natives = {}
@@ -16,7 +17,7 @@
       "protected": false,
       "random": ""
     }
-    
+
     API.s_listeners(window.document)
     API.s_overrides(window)
     API.s_fetch_attributes(window).then(API.s_start)
@@ -28,12 +29,18 @@
     API.s_head.appendChild(script)
   }
   
-  API.s_overrides = function(window) {
+  API.s_overrides = function(w) {    
     [
-      [window.Element.prototype, "appendChild"],
-      [window.Element.prototype, "insertBefore"],
-      [window.Document.prototype, "writeln"],
-      [window.Document.prototype, "write"]
+      [w.Element.prototype, "appendChild"],
+      [w.Element.prototype, "insertBefore"],
+      [w.Document.prototype, "appendChild"],
+      [w.Document.prototype, "insertBefore"],
+      [w.Document.prototype, "writeln"],
+      [w.Document.prototype, "write"],
+      [w.document, "appendChild"],
+      [w.document, "insertBefore"],
+      [w.document, "writeln"],
+      [w.document, "write"]
     ].forEach(function(override) {      
       var method = API.s_natives[override.name] = override[0][override[1]]
       override[0][override[1]] = API.s_method_override(method)
@@ -144,13 +151,15 @@
   }
 
   
-  API.s_override_writeln = function(document, content, method) {
+  API.s_override_writeln = function(document, content, method) {    
     var out = API.s_cleaner(this, content)
     document.body.innerHTML += out[0]
     document.getElementsByTagName('head')[0].appendChild(out[1])
   } 
     
   API.s_listeners = function(element) {
+    if(!element) return
+    
     element.addEventListener('DOMNodeInserted', function(event) {
       API.s_migrator(event.target) 
     })
@@ -233,11 +242,11 @@
         orginal.parentNode.replaceChild(element, orginal)
     }
     
-    if(tagName == "iframe" && element.contentDocument != null) {             
+    if(tagName == "iframe" && element.contentDocument != null) {    
       API.s_listeners(element.contentDocument)
       API.s_overrides(element.contentWindow)
     }
-    
+        
     [].slice.call(element.childNodes).forEach(API.s_migrator)
     return element
   }
