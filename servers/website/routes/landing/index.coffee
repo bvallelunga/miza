@@ -1,3 +1,6 @@
+request = require "request"
+
+
 module.exports.get_root = (req, res, next)-> 
   res.render "landing/index", {
     js: req.js.renderTags "landing", "code"
@@ -17,6 +20,14 @@ module.exports.post_beta = (req, res, next)->
       access_requested: true
       access_requested_at: new Date()
     }
+  }
+  
+  request.post CONFIG.slack.beta, {
+    form: {
+      payload: JSON.stringify {
+        text: "#{req.body.email} requested access."
+      }
+    }  
   }
   
 

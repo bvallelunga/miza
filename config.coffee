@@ -57,6 +57,10 @@ module.exports = ->
       }
     }
     
+    slack: {
+      beta: "https://hooks.slack.com/services/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"
+    }
+    
     intercom: {
       app_id: process.env.INTERCOM
     }
