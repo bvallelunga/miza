@@ -27,9 +27,10 @@ module.exports.get_metrics = (req, res, next)->
   month_ago.setUTCDate 1
   
   Promise.props({
-    all: LIBS.models.Event.count({
+    all_pings: LIBS.models.Event.count({
       where: {
         publisher_id: req.publisher.id
+        type: "ping"
         created_at: {
           $gte: month_ago
         }
@@ -53,9 +54,10 @@ module.exports.get_metrics = (req, res, next)->
         }
       }
     })
-    protected: LIBS.models.Event.count({
+    protected_pings: LIBS.models.Event.count({
       where: {
         publisher_id: req.publisher.id
+        type: "ping"
         protected: true
         created_at: {
           $gte: month_ago
@@ -97,7 +99,7 @@ module.exports.get_metrics = (req, res, next)->
       impressions: numeral(props.impressions).format("0a")
       clicks: numeral(props.clicks).format("0a")
       assets: numeral(props.assets).format("0a")
-      blocked: numeral(props.protected/(props.all or 1)).format("0[.]0%")
+      blocked: numeral(props.protected_pings/(props.all_pings or 1)).format("0[.]0%")
       ctr: numeral(props.all_clicks/(props.all_impressions or 1)).format("0[.]0%")
     }
     

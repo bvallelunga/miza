@@ -3,25 +3,36 @@ uglify = require "uglify-js"
 script = require "./script"
 proxy = require "./proxy"
 
+
+module.exports.ping = (req, res, next)->
+  res.end script.pixel_tracker
+  
+  LIBS.models.Event.generate req, {
+    type: "ping"
+    publisher: req.publisher
+  }
+  
 module.exports.impression = (req, res, next)->
   res.end script.pixel_tracker
   
-  LIBS.models.Event.generate req, req.publisher, {
+  LIBS.models.Event.generate req, {
     type: "impression"
-    ad_network: "double click"
+    publisher: req.publisher
+    network: req.network
   }
 
 
 module.exports.script = (req, res, next)->
-  if req.publisher.coverage_ratio <= Math.random() 
-    return res.redirect script.roots.double_click.raw
- 
   res.render "script", {
-    publisher: req.publisher
-    targets: script.targets
-    root_script: script.roots.double_click.encoded
+    enabled: req.publisher.coverage_ratio > Math.random() 
     random_slug: script.random_slug
+    publisher: req.publisher
+    networks: req.publisher.networks.filter (network)->
+      return network.is_enabled
   }, (error, code)->
+    if error?
+      console.error error
+    
     if not CONFIG.isProd
       return res.send code
   
@@ -54,8 +65,9 @@ module.exports.proxy = (req, res, next)->
       
   .then (data)->
     LIBS.redis.set data.key, JSON.stringify(data)
-    LIBS.models.Event.generate req, req.publisher, {
+    LIBS.models.Event.generate req, {
       type: if data.media == "link" then "click" else "asset" 
-      ad_network: "double click"
       asset_url: data.url
+      publisher: req.publisher
+      network: req.network
     }

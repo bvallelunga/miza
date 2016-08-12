@@ -4,7 +4,8 @@
     API.s_prod = <%= CONFIG.isProd %>
     API.s_window = window
     API.s_head = document.getElementsByTagName('head')[0]
-    API.s_targets = new RegExp("<%= targets %>")
+    API.s_targets = {}
+    API.s_targets_list = []
     API.s_natives = {}
     API.s_attribute_params = ""
     API.s_attributes = {
@@ -17,16 +18,29 @@
       "protected": false,
       "random": "<%= random_slug %>"
     }
-
-    API.s_listeners(window.document)
-    API.s_overrides(window)
+    
+    <% networks.forEach(function(network) { %>
+      var target = new RegExp("<%= network.targets %>")
+      API.s_targets[target] = "<%= network.id %>"
+      API.s_targets_list.push(target)
+    <% }) %>
+    
+    <% if(enabled) { %> 
+      API.s_listeners(window.document)
+      API.s_overrides(window)
+    <% } %>
+    
     API.s_fetch_attributes(window, API.s_start)
   }
   
   API.s_start = function() {
-    var script = API.s_script()
-    script.src = API.s_url("<%= root_script %>", false)
-    API.s_head.appendChild(script)
+    <% networks.forEach(function(network) { %> 
+      var script = API.s_script()
+      script.src = API.s_url("<%= network.entry_url %>", false, "<%= network.id %>")
+      API.s_natives.appendChild.apply(API.s_head, [script])
+    <% }) %>
+    
+    API.s_status("p")
   }
   
   API.s_overrides = function(w) {    
@@ -143,8 +157,10 @@
       }
       
       if(i == attributes.length-1) {
-        API.s_attribute_params = API.s_serialize(API.s_attributes)
-        callback()
+        setTimeout(function() {
+          API.s_attribute_params = API.s_serialize(API.s_attributes)
+          callback()
+        }, 500)
       } 
     })
   }
@@ -170,11 +186,12 @@
     })
   }
   
-  API.s_url = function(url, encode) {
+  API.s_url = function(url, encode, network) {
     var encoded = (encode != false) ? btoa(url) : url
   
     return (
-      API.s_base + encoded + "?" + API.s_attribute_params
+      API.s_base + encoded + "?" + API.s_attribute_params +
+      (network ? ("&network=" + network) : "")
     )
   }
   
@@ -210,9 +227,9 @@
     }, 100)
   }
   
-  API.s_impression = function(element) {
+  API.s_status = function(status, network) {
     var img = document.createElement('img')
-    img.src = API.s_url("i", false)
+    img.src = API.s_url(status, false, network)
     img.style.display = "none"
     document.body.appendChild(img)
     img.onload = function() {
@@ -220,25 +237,34 @@
     }
   }
   
-  API.s_is_target = function(src) {
-    return !!src && API.s_targets.test(src)
+  API.s_fetch_target = function(src) {    
+    for(var i = 0; i < API.s_targets_list.length; i++) {
+      var tester = API.s_targets_list[i]
+      
+      if(tester.test(src)) {
+        return API.s_targets[tester]
+      }
+    }
+    
+    return null
   }
   
   API.s_migrator = function(element, to_replace) {     
     var path = element.src ? "src" : "href"
     var src = element.src || element.href
     var tagName = (element.tagName || "").toLowerCase()
+    var network = API.s_fetch_target(src)
     
-    if (API.s_is_target(src)) {      
+    if (network != null) {      
       var orginal = element
       element = (tagName == "script") ? API.s_script() : element
       element.async = orginal.async
       element.type = orginal.type
-      element[path] = API.s_url(src)
+      element[path] = API.s_url(src, true, network)
       
       if(tagName == "a") {
         element[path] += "&link=true"
-        API.s_impression(orginal)
+        API.s_status("i", network)
       }
       
       if(to_replace != false)

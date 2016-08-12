@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes)->
     ad_id: DataTypes.STRING
     ad_network: DataTypes.STRING
     type: { 
-      type: DataTypes.ENUM("impression", "click", "asset")
+      type: DataTypes.ENUM("impression", "click", "asset", "ping")
       allowNull: false
     }
     ip_address: { 
@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes)->
       validate: {
         isIP: true
       }
-      set: (value)->
-        if value == "::1"
+      set: (value)->      
+        if value == "::1" or value == "::ffff:127.0.0.1" 
           value = "127.0.0.1"
       
         @setDataValue 'ip_address', value
@@ -58,14 +58,15 @@ module.exports = (sequelize, DataTypes)->
     paid_at: DataTypes.DATE
   }, {
     classMethods: {
-      generate: (req, publisher, data)->                    
+      generate: (req, data)->                               
         LIBS.models.Event.create({
           type: data.type 
           ip_address: req.ip or req.ips
           protected: req.query.protected == "true"
           asset_url: data.asset_url
-          publisher_id: publisher.id
-          ad_network: data.ad_network
+          publisher_id: data.publisher.id
+          network_id: if data.network then data.network.id else null
+          ad_network: if data.network then data.network.name else null
           referrer_url: req.get('referrer')
           cookies: req.cookies
           headers: req.headers

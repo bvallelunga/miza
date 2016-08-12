@@ -37,6 +37,7 @@ module.exports = (sequelize, DataTypes)->
           as: 'publishers'
           through: "UserPublisher"
         }
+
     }
     instanceMethods: {
       hash: hasher

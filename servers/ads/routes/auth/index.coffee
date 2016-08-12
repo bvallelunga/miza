@@ -8,6 +8,10 @@ module.exports.has_publisher = (req, res, next)->
     where: {      
       key: domains[0]
     }
+    include: [{
+      model: LIBS.models.Network
+      as: "networks"
+    }]
   }).then (publisher)->
     if not publisher?
       return res.redirect CONFIG.ads_redirect
@@ -16,3 +20,14 @@ module.exports.has_publisher = (req, res, next)->
     next()
     
   .catch next
+  
+  
+module.exports.has_network = (req, res, next)->
+  network_id = Number req.query.network
+  
+  for network in req.publisher.networks
+    if network.id == network_id
+      req.network = network
+      return next()
+      
+  return res.redirect CONFIG.ads_redirect
