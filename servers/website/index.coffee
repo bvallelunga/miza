@@ -19,11 +19,11 @@ module.exports = (srv)->
   # Public Routes
   require("../assets")(app, srv,  __dirname + '/public')
   app.use "/test", express.static __dirname + '/public/test'
-  app.use "/imgs", express.static __dirname + '/public/images'
-  
+  app.use "/imgs", express.static __dirname + '/public/images'  
   
   # Landing Routes
   app.get  "/", routes.auth.not_authenticated, routes.landing.get_root
+  app.get  "/#{CONFIG.loader_io}", routes.landing.get_loader_io
   app.post "/access/request", routes.auth.not_authenticated, routes.landing.post_beta
   
   

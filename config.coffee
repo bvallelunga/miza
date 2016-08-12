@@ -22,6 +22,8 @@ module.exports = ->
       consumer: process.env.RABBITMQ_BIGWIG_RX_URL
     }
     
+    loader_io: "loaderio-50f0c4b900e34529286d791538d42b45"
+    
     logger: (->  
       if isProd 
         return logging_defaults.production

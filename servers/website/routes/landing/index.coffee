@@ -3,6 +3,10 @@ module.exports.get_root = (req, res, next)->
     js: req.js.renderTags "landing", "code"
     css: req.css.renderTags "landing", "code"
   }
+  
+
+module.exports.get_loader_io = (req, res, next)->
+  res.send CONFIG.loader_io
 
 
 module.exports.post_beta = (req, res, next)->
