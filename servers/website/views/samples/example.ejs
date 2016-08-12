@@ -1,15 +1,16 @@
 <html>
   <head>
     <!-- START MIZA CODE -->
-    <script type='text/javascript'>         	
-      (function(w, id, base) {
-        var API = w[id] = w.googletag = w.googletag || {};
+    <script type='text/javascript'>   
+      var googletag = googletag || {};
+      googletag.cmd = googletag.cmd || [];
+              	
+      (function(window, base) {
         var script = document.createElement("script");
-        API.cmd = API.cmd || [];
         script.src = "//" + base + "?r=" + Math.random();
         script.async = true;
         document.getElementsByTagName('head')[0].appendChild(script);
-      })(window, "<MIZA KEY>", "<MIZA ENDPOINT>");
+      })(window, "<MIZA ENDPOINT>");
     </script>
     <!-- END MIZA CODE -->
   </head>
