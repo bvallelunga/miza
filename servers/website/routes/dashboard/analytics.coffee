@@ -9,7 +9,9 @@ module.exports.get_logs = (req, res, next)->
     ]
     where: {
       type: {
-        $ne: "asset" 
+        $notIn: [
+          "ping", "asset"
+        ]
       }
     }
     order: [
