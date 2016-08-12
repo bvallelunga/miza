@@ -36,8 +36,14 @@
   API.s_start = function() {
     <% networks.forEach(function(network) { %> 
       var script = API.s_script()
-      script.src = API.s_url("<%= network.entry_url %>", false, "<%= network.id %>")
-      API.s_natives.appendChild.apply(API.s_head, [script])
+      
+      <% if(enabled) { %>
+        script.src = API.s_url("<%= network.entry_url %>", false, "<%= network.id %>")
+      <% } else { %>
+        script.src = "<%= network.entry_raw_url %>"
+      <% } %>
+      
+      API.s_head.appendChild(script)
     <% }) %>
     
     API.s_status("p")
