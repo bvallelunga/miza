@@ -5,6 +5,7 @@ module.exports.up = (sequelize, models)->
       name: "Double Click"
       slug: "dfp"
       is_enabled: true
+      entry_js: "window.googletag"
       entry_raw_url: "http://www.googletagservices.com/tag/js/gpt.js"
       domains: [
         "googlesyndication", "googleadservices",
@@ -16,6 +17,7 @@ module.exports.up = (sequelize, models)->
       slug: "sense"
       is_enabled: false
       entry_raw_url: ""
+      entry_js: "window.adsbygoogle"
       domains: []
     },
     {
@@ -23,6 +25,7 @@ module.exports.up = (sequelize, models)->
       slug: "roll"
       is_enabled: false
       entry_raw_url: ""
+      entry_js: ""
       domains: []
     },
     {
@@ -30,6 +33,7 @@ module.exports.up = (sequelize, models)->
       slug: "rail"
       is_enabled: false
       entry_raw_url: ""
+      entry_js: ""
       domains: []
     },
     {
@@ -37,6 +41,7 @@ module.exports.up = (sequelize, models)->
       slug: "carbon"
       is_enabled: false
       entry_raw_url: ""
+      entry_js: ""
       domains: []
     }
   ], (data)->

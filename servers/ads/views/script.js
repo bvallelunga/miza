@@ -1,6 +1,13 @@
-(function(window, API) {
+(function(window) {
+  var API = {}
+  
+  <% networks.forEach(function(network) { %>
+    window["<%= publisher.key %>_<%= network.id %>"] = <%= network.entry_js %>
+  <% }) %>
+  
   API.s_init = function() {
     API.s_id = "<%= publisher.key %>" 
+    API.s_base = "//<%= publisher.endpoint %>/" 
     API.s_prod = <%= CONFIG.isProd %>
     API.s_window = window
     API.s_head = document.getElementsByTagName('head')[0]
@@ -287,4 +294,4 @@
   }
   
   API.s_init()
-})(window, <%= publisher.key %>)
+})(window)

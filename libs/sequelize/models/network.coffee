@@ -2,19 +2,23 @@ module.exports = (sequelize, DataTypes)->
 
   return sequelize.define "Network", {
     name: { 
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
       allowNull: false
     }
     slug: { 
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
       allowNull: false
     }
+    entry_js: { 
+      type: DataTypes.TEXT
+      defaultValue: ""
+    }
     domains: { 
-      type: DataTypes.ARRAY(DataTypes.TEXT),
+      type: DataTypes.ARRAY(DataTypes.TEXT)
       defaultValue: []
     }
     targets: { 
-      type: DataTypes.TEXT,
+      type: DataTypes.TEXT
       defaultValue: ""
     }
     entry_raw_url: {

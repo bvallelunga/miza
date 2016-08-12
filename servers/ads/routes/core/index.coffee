@@ -23,6 +23,9 @@ module.exports.impression = (req, res, next)->
 
 
 module.exports.script = (req, res, next)->
+  if req.publisher.is_demo
+    req.publisher.endpoint = req.get("host")
+
   res.render "script", {
     enabled: req.publisher.coverage_ratio > Math.random() 
     random_slug: script.random_slug
@@ -47,7 +50,7 @@ module.exports.proxy = (req, res, next)->
     
   .then (data)->  
     if data.media == "asset" and not data.cached
-      return proxy.modifier data, req.publisher
+      return proxy.modifier data, req.publisher, req.network
         
     return data
     
