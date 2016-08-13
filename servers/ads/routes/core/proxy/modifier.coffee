@@ -6,7 +6,7 @@ module.exports = (data, publisher, network)->
       [/google\_ads\_iframe/gi, "#{publisher.key}_#{network.id}_iframe"]
       [/google\_/gi, "#{publisher.key}_#{network.id}_"]
       [/img\_ad/gi, "#{publisher.key}_#{network.id}_img"]
-      [/google\-ad\-content-/gi, "#{publisher.key}_#{network.id}-content"]
+      [/google\-ad\-content-/gi, "#{publisher.key}-#{network.id}-content"]
     ]
     
     for replacer in replacers
