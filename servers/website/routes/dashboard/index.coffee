@@ -31,6 +31,7 @@ module.exports.post_new = (req, res, next)->
     name: req.body.publisher_name
     industry_id: Number req.body.publisher_industry
   }).then (publisher)->
+    publisher.addNetworks [ 1 ]
     req.user.addPublisher(publisher).then ->
       res.json {
         success: true
