@@ -9,7 +9,7 @@ module.exports = (data, publisher, network)->
       [/google\-ad\-content-/gi, "#{publisher.key}_#{network.id}-content"]
     ]
     
-#     for replacer in replacers
-#       data.content = data.content.replace replacer[0], replacer[1]
+    for replacer in replacers
+      data.content = data.content.replace replacer[0], replacer[1]
   
     return data
