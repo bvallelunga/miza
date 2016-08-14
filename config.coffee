@@ -36,10 +36,10 @@ module.exports = ->
     
     default_user_access: [
       {
-        email: "vallelungabrian@gmail.com"
+        email: "brian@miza.io"
         is_admin: true
       }, {
-        email: "ambrish@gmail.com"
+        email: "ambrish@miza.io"
         is_admin: true
       }
     ]
