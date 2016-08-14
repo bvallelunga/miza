@@ -2,8 +2,9 @@ request = require "request"
 
 
 fetchRedis = (key)->
-  new Promise (res, rej)->  
-    LIBS.redis.get key, (error, response)->                 
+  new Promise (res, rej)->
+    # TODO change "" with key  
+    LIBS.redis.get "", (error, response)->                 
       if error? or not response?
         return res null
       
