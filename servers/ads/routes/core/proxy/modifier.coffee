@@ -11,8 +11,8 @@ module.exports = (data, publisher, network)->
       [/adsbygoogle/gi, "#{publisher.key}_#{network.id}"]
       [/google\_ad\_/gi, "#{publisher.key}_#{network.id}_"]
     ]
-    
-    for replacer in replacers
-      data.content = data.content.replace replacer[0], replacer[1]
-  
+#     
+#     for replacer in replacers
+#       data.content = data.content.replace replacer[0], replacer[1]
+#   
     return data
