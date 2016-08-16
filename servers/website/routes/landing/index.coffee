@@ -2,14 +2,10 @@ request = require "request"
 
 
 module.exports.get_root = (req, res, next)->
-  LIBS.models.Industry.findAll({
-    order: "name ASC"
-  }).then (industries)-> 
-    res.render "landing/index", {
-      js: req.js.renderTags "landing"
-      css: req.css.renderTags "landing"
-      industries: industries
-    }
+  res.render "landing/index", {
+    js: req.js.renderTags "landing", "fa"
+    css: req.css.renderTags "landing", "fa"
+  }
   
 
 module.exports.get_loader_io = (req, res, next)->

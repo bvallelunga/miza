@@ -7,6 +7,70 @@
   .section {
     padding: 30px 0;
     
+    .actionable {
+      width: 65%;
+      margin: 0 auto;
+    }
+    
+    .hook {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+      color: @blue;
+      font-weight: bold;
+      font-size: 1.25em;
+      opacity: 0.7;
+    }
+    
+    .infographic {
+      width: 100%;
+      margin: 0 auto;
+      
+      h3 {
+        color: @blue;
+        font-size: 2em;
+        font-weight: lighter;
+        text-align: center;
+        
+        span {
+          background: lighten(@blue, 39%);
+          border: solid 1px lighten(@blue, 32%);
+          padding: 2px 5px;
+          .border-radius(3px);
+        }
+      }
+      
+      .graphics {
+        margin: 80px 0;
+        text-align: center;
+        
+        .graphic {
+          width: 250px;
+          margin: 0 30px;
+          display: inline-block;
+          
+          .fa {
+            font-size: 4em;
+            color: lighten(@red, 15%);
+          }
+          
+          .title {
+            font-weight: bold;
+            font-size: 1.25em;
+            color: lighten(@red, 15%);
+            margin-top: 5px;
+          }
+          
+          .description {
+            margin-top: 10px;
+            font-weight: lighter;
+            font-size: 1.2em;
+            color: @text;
+          }
+        }
+      }
+    }
+    
     .container {
       width: 1080px;
     }
