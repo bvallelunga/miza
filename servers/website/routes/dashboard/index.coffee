@@ -11,7 +11,9 @@ module.exports.get_root = (req, res, next)->
   
   
 module.exports.get_new = (req, res, next)->
-  LIBS.models.Industry.findAll().then (industries)->
+  LIBS.models.Industry.findAll({
+    order: "name ASC"
+  }).then (industries)->
     res.render "dashboard/new", {
       js: req.js.renderTags "modal"
       css: req.css.renderTags "modal", "fa"

@@ -58,16 +58,19 @@ module.exports.proxy = (req, res, next)->
     if data.media == "link"
       res.redirect data.href
       
-    else if data.media == "image"
-      res.end data.content, "binary"
-      
-    else
-      res.send data.content
+    else 
+      res.set "Content-Type", data.headers['content-type']
+
+      if data.media == "binary"
+        res.end data.content, "binary"
+        
+      else
+        res.send data.content
       
     return data
       
   .then (data)->
-    LIBS.redis.set data.key, JSON.stringify(data)
+    LIBS.redis.set data.key, JSON.stringify data
     LIBS.models.Event.generate req, {
       type: if data.media == "link" then "click" else "asset" 
       asset_url: data.url

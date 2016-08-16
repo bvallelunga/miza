@@ -3,12 +3,12 @@ request = require "request"
 
 fetchRedis = (key)->
   new Promise (res, rej)->  
-    LIBS.redis.get key, (error, response)->                 
+    LIBS.redis.get "", (error, response)->                 
       if error? or not response?
         return res null
       
       try
-        data = JSON.parse(response)
+        data = JSON.parse response
       catch error
         return res null
       
@@ -46,8 +46,8 @@ download = (url, query, headers)->
       data.media = "link"
       data.href = response.request.uri.href
     
-    else if data.headers['content-type'].indexOf("image") > -1
-      data.media = "image"
+    else if data.headers['content-type'].indexOf("text") == -1
+      data.media = "binary"
       data.content = response.body
     
     else 

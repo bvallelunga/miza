@@ -9,7 +9,7 @@
     	}
   	</style>
   
-		<% include ../samples/miza %>
+		<%- demo.indexOf("miza") > -1 ? include("../samples/miza") : "" %>
 		<%- include("../samples/" + demo + "/script") %>
 	</head>
 	<body>

@@ -66,12 +66,12 @@
             </div>
           </li>
           <li>
-            <strong>Retain non-paying users.</strong>
+            <strong>Realtime Analytics.</strong>
             <div>
-              Asking users to disable Ad Blockers only
-              pushes away the users you fought so hard to have. Retain
-              your non-paying users. Use them as an engine for word of mouth 
-              growth while still keeping the lights on.
+              View at-a-glance how <%= company %> is helping your
+              company. Impression and click events are streamed 
+              in realtime right to your dashboard. We will also show
+              you what percent of your users have Ad Blocker active.
             </div>
           </li>
           <li>
@@ -88,10 +88,63 @@
           </li>
         </ul>
       </div>
-      <div class="code right">
-        <div class="sample">
-          <pre><code><%= include("../samples/example") %></code></pre>
-        </div>
+      <div class="display right">
+        <img src="/imgs/dashboard.png"/>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="information left">
+        <h3>Simple pricing.</h3>
+        <ul>
+          <li>
+            <strong>No upfront cost!</strong>
+            <div>
+              You will incur no upfront costs when
+              using <%= company %>. We make our money
+              when you do by taking a fee from <u>only</u> 
+              the revenue we protected. You can only benefit
+              from using <%= company %>!
+            </div>
+          </li>
+          <li>
+            <strong>Fixed CPM rates.</strong>
+            <div>
+              Every month we update our CPM rates with the 
+              industry average. We use these rates when calculating
+              your estimated monthly protected revenue.
+            </div>
+          </li>
+          <li>
+            <strong>Start slow, gain trust.</strong>
+            <div>
+              After installing <%= company %> in your website you
+              can adjust the percentage of <%= company %>'s coverage.
+              Say you wanted to start small, set the coverage
+              to 10% so only a small portion of your user base will see
+              ads protected by <%= company %>.
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="display right">
+        <table cellpadding="0" cellspacing="0">
+          <thead>
+            <th width="50%"></th>
+            <th width="25%"><span>Fixed CPM</span></th>
+            <th width="25%"><span>Protection Fee</span></th>
+          </thead>
+          <tbody>
+            <% industries.forEach(function(industry) { %>
+              <tr>
+                <td><%= industry.name %></td>
+                <td>$<%= industry.cpm %></td>
+                <td><%= industry.fee * 100 %>%</td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
