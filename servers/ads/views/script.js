@@ -1,5 +1,5 @@
 (function(window) {
-  var API = window["<%= publisher.key %>"] = {}
+  var API = {}
   
   <% networks.forEach(function(network) { %>
     window["<%= publisher.key %>_<%= network.id %>"] = <%= network.entry_js %>
@@ -10,7 +10,7 @@
     API.s_base = "//<%= publisher.endpoint %>/" 
     API.s_prod = <%= CONFIG.isProd %>
     API.s_window = window
-    API.s_head = document.head
+    API.s_head = document.getElementsByTagName('head')[0]
     API.s_targets = {}
     API.s_targets_list = []
     API.s_natives = {}
@@ -56,7 +56,7 @@
     API.s_status("p")
   }
   
-  API.s_overrides = function(w) {       
+  API.s_overrides = function(w) {    
     [
       [w.Element.prototype, "appendChild"],
       [w.Element.prototype, "insertBefore"],
@@ -75,7 +75,7 @@
   }
   
   API.s_method_override = function(window, method) {
-    return function(content) {      
+    return function(content) {
       if(["writeln", "write"].indexOf(method.name) > -1) {
         return API.s_override_writeln(window, this, content, method) 
       }
@@ -84,7 +84,7 @@
         node = arguments[i]
         
         if(node instanceof Element) {
-          arguments[i] = API.s_migrator(window.document, node, false)
+          arguments[i] = API.s_migrator(node, false)
         }
       }
     
@@ -96,20 +96,10 @@
     if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
       return method.apply(document, [content])
     }
-    
-    if(method.name == "write") {
-      API.s_natives.write.apply(document, [""])
-      API.s_listeners(document)
-      API.s_overrides(window)
-    }
       
     var out = API.s_cleaner(document, content)
-    API.s_natives.writeln.apply(document, [out[0]])
-    document.head.appendChild(out[1])
-    
-    API.s_children(document).forEach(function(element) {
-      API.s_migrator(document, element)
-    })
+    document.body.innerHTML += out[0]
+    document.getElementsByTagName('head')[0].appendChild(out[1])
   } 
   
   API.s_fetch_attributes = function(window, callback) {
@@ -201,15 +191,15 @@
     return str.join("&");
   }
     
-  API.s_listeners = function(document) {
-    if(!document) return
+  API.s_listeners = function(element) {
+    if(!element) return
     
-    document.addEventListener('DOMNodeInserted', function(event) {
-      API.s_migrator(document, event.target) 
+    element.addEventListener('DOMNodeInserted', function(event) {
+      API.s_migrator(event.target) 
     })
   }
   
-  API.s_url = function(url, encode, network) {    
+  API.s_url = function(url, encode, network) {
     var encoded = (encode != false) ? btoa(url) : url
   
     return (
@@ -260,9 +250,7 @@
     }
   }
   
-  API.s_fetch_target = function(src) {  
-    if(!src) return null
-      
+  API.s_fetch_target = function(src) {    
     for(var i = 0; i < API.s_targets_list.length; i++) {
       var tester = API.s_targets_list[i]
       
@@ -274,11 +262,7 @@
     return null
   }
   
-  API.s_children = function(element) {
-    return Array().slice.call(element.getElementsByTagName("*"))
-  } 
-  
-  API.s_migrator = function(document, element, to_replace) {     
+  API.s_migrator = function(element, to_replace) {     
     var path = element.src ? "src" : "href"
     var src = element.src || element.href
     var tagName = (element.tagName || "").toLowerCase()
@@ -296,28 +280,16 @@
         API.s_status("i", network)
       }
       
-      if(to_replace != false) {
-        if(orginal.parentNode) {
-          orginal.parentNode.replaceChild(element, orginal)
-        } else {
-          API.s_natives.appendChild.apply(document.body, [element])
-          
-          if(tagName == "script") {
-            orginal.remove()
-          }
-        } 
-      }
+      if(to_replace != false)
+        orginal.parentNode.replaceChild(element, orginal)
     }
     
     if(tagName == "iframe" && element.contentDocument != null) {    
       API.s_listeners(element.contentDocument)
       API.s_overrides(element.contentWindow)
     }
-    
-    API.s_children(element).forEach(function(element) {
-      API.s_migrator(document, element)
-    })
-    
+        
+    [].slice.call(element.childNodes).forEach(API.s_migrator)
     return element
   }
   
