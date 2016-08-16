@@ -39,7 +39,7 @@ module.exports.script = (req, res, next)->
     if not CONFIG.isProd
       return res.send code
   
-    res.send uglify.minify(code, {
+    res.end uglify.minify(code, {
       fromString: true
     }).code
     
