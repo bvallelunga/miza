@@ -54,6 +54,39 @@
 <div class="sections">
   <div class="section">
     <div class="container">
+      <div class="infographic">
+        <h3>Publishers have <span>limited and ineffective</span> options.</h3>
+        <div class="graphics">
+          <div class="graphic">
+            <div class="fa fa-money"></div>
+            <div class="title">Pay Ransom</div>
+            <div class="description">
+              Pay Ad Blockers so some<br>
+              of your ads are whitelisted.
+            </div>
+          </div>
+          <div class="graphic">
+            <div class="fa fa-area-chart"></div>
+            <div class="title">Lose Revenue</div>
+            <div class="description">
+              Adopt suboptimal solutions<br>
+              which provide limited protection.
+            </div>
+          </div>
+          <div class="graphic">
+            <div class="fa fa-users"></div>
+            <div class="title">Churn Users</div>
+            <div class="description">
+              Move to payment models<br>
+              and risk losing loyal users.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
       <div class="information left">
         <h3>Start making money again!</h3>
         <ul>
@@ -91,52 +124,20 @@
     </div>
   </div>
   <div class="section">
-    <div class="container">
-      <div class="infographic">
-        <h3>Publishers are under <span>increasing pressure</span></h3>
-        <div class="graphics">
-          <div class="graphic">
-            <div class="fa fa-money"></div>
-            <div class="title">Ransom</div>
-            <div class="description">
-              Paying ransom to Ad<br>
-              Blockers to get whitelisted
-            </div>
-          </div>
-          <div class="graphic">
-            <div class="fa fa-area-chart"></div>
-            <div class="title">Lost Revenue</div>
-            <div class="description">
-              Adopting suboptimal solutions<br>
-              which provide limited protection
-            </div>
-          </div>
-          <div class="graphic">
-            <div class="fa fa-users"></div>
-            <div class="title">Lost Users</div>
-            <div class="description">
-              Moving to payment models<br>
-              and risk losing loyal users
-            </div>
-          </div>
-        </div>
-      </div>      
-      <div class="hook">
-        Feeling the pressure? Recapture your lost ad 
-        revenue <%= company %>!
-      </div>
-      <div class="actionable">
-        <form class="form" method="POST" action="/access/request">
-          <% include ../includes/csrf %>
-          <input name="email" type="email" placeholder="Enter your email" required/>
-          <button class="button">Request Access</button>
-        </form>
-        <div class="login">
-          <span>or</span>
-          <a href="/login">
-            <button class="button">Sign In</button>
-          </a>
-        </div>
+    <div class="hook">
+      Start capturing lost ad revenue with <%= company %>!
+    </div>
+    <div class="actionable">
+      <form class="form" method="POST" action="/access/request">
+        <% include ../includes/csrf %>
+        <input name="email" type="email" placeholder="Enter your email" required/>
+        <button class="button">Request Access</button>
+      </form>
+      <div class="login">
+        <span>or</span>
+        <a href="/login">
+          <button class="button">Sign In</button>
+        </a>
       </div>
     </div>
   </div>
