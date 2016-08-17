@@ -170,12 +170,9 @@ body {
     }
   }
 
-  .disabled {
+  *:disabled, .disabled {
     opacity: .8;
-  }
-
-  *:disabled {
-    opacity: .8;
+    cursor: not-allowed;
   }
   
   input, .input,
@@ -189,6 +186,10 @@ body {
     margin: 0;
     .box-shadow(0 0 0px 1000px #fafbfc inset);
     .border-radius(5px);
+    
+    &:disabled, &.disabled {
+      color: rgba(0,0,0,0.5);
+    }
   }
             
   button, .button {
