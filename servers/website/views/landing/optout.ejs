@@ -1,0 +1,18 @@
+<% include ../includes/start %>
+<% include ../includes/header %>
+<div class="container medium">
+  <% include ../includes/logo %>
+  <span>
+    Opting out of Miza Ads will disable the ability for Ad Networks
+    to deliver ads while Ad Blockers are enabled <strong>only this IP Address</strong>. 
+  </span>
+  <form class="form" method="POST" action="/optout">
+    <% include ../includes/csrf %>
+    <input class="top" type="email" name="email" placeholder="Email address" required/>
+    <input class="bottom" type="text" placeholder="IP Address" value="Your IP: <%= ip_address %>" disabled/>
+    <button class="button" type="submit">Opt Out of Miza</button>
+    <div class="error"></div>
+  </form>
+</div>
+<% include ../includes/footer %>
+<% include ../includes/end %>
