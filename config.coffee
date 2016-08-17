@@ -61,6 +61,11 @@ module.exports = ->
       beta: "https://hooks.slack.com/services/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"
     }
     
+    legal: {
+      privacy: "https://docs.google.com/document/d/15y4HGnX2mcNhq3wtd8WvYZMISyrmNrIxub_wCxzT1TA/pub?embedded=true"
+      terms: "https://docs.google.com/document/d/1707xqsMKnh8tOGI584KSWPp87OCIZkeAf8mNXfnrsyQ/pub?embedded=true"
+    }
+    
     intercom: {
       app_id: process.env.INTERCOM
     }
