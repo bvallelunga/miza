@@ -173,7 +173,6 @@ body {
 
   *:disabled, .disabled {
     opacity: .8;
-    cursor: not-allowed;
   }
   
   input, .input,
@@ -190,6 +189,7 @@ body {
     
     &:disabled, &.disabled {
       color: rgba(0,0,0,0.5);
+      cursor: not-allowed;
     }
   }
             
@@ -214,6 +214,10 @@ body {
     
     &.loading {
       background: #C6C9D0 !important; 
+    }
+    
+    &:disabled, &.disabled {
+      cursor: not-allowed;
     }
   }
 
