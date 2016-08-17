@@ -2,8 +2,11 @@ request = require "request"
 
 
 fetchRedis = (key)->
-  new Promise (res, rej)->  
-    LIBS.redis.get "", (error, response)->                 
+  new Promise (res, rej)-> 
+    if CONFIG.debug.ads_server.downloader
+      return res null
+   
+    LIBS.redis.get key, (error, response)->                 
       if error? or not response?
         return res null
       

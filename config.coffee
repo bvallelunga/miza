@@ -44,6 +44,13 @@ module.exports = ->
       }
     ]
     
+    debug: {
+      ads_server: {
+        downloader: true
+        modifier: true
+      }
+    }
+    
     general: {
       company: "Miza"
       delimeter: " | "
