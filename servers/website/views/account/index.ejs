@@ -12,7 +12,7 @@
     </div>
     <div class="group">
       <a href="/account/card"><%= user.stripe_card ? "Change" : "Add Card" %></a>
-      <input class="bottom" type="text" placeholder="Card's Last 4"
+      <input class="bottom" type="text" placeholder="Card's Last 4" disabled
         value="<%= user.stripe_card ? (user.stripe_card.brand + " " + user.stripe_card.last4) : "" %>" />
     </div>
     <button class="button" type="submit">Update Profile</button>
