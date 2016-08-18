@@ -7,7 +7,10 @@
 %>
 <% if (!publisher.is_demo || user.is_admin) { %>
   <div class="publishers_list">
-    <div class="current"><%= publisher.name %></div>
+    <div class="current">
+      <%= publisher.name %>
+      <span class="fa fa-sort"></span>
+    </div>
     <div class="publishers">
       <% user.publishers.forEach(function(pub) { %>
         <% if (pub.id != publisher.id) { %>

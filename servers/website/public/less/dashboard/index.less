@@ -38,11 +38,19 @@
   .border-radius(3px);
   
   .current {
-    padding: 8px 12px;
+    position: relative;
+    padding: 8px 30px 8px 12px;
     color: @blue;
     font-weight: bold;
     font-size: 1.2em;
     .ellipsis();
+    
+    span {
+      position: absolute;
+      top: 12px; 
+      right: 12px;
+      color: rgba(0,0,0,0.1);
+    }
   }
   
   &:hover .publishers {
