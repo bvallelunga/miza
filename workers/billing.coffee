@@ -9,7 +9,7 @@ now = new Date()
 
 if now.getUTCDate() > 1
   return process.exit()
-  
+
  
 # Fetch All Customers
 LIBS.models.User.findAll({
@@ -36,13 +36,16 @@ LIBS.models.User.findAll({
         })
         industry: publisher.getIndustry()
       }).then (props)-> 
-        amount = Math.floor(props.impressions/1000 * props.industry.cpm * props.industry.fee * 100)
+        amount = props.impressions/1000 * props.industry.cpm * props.industry.fee * 1000
+        amount_stripe = Math.floor(amount * 100)
         
-        if amount <= 49
+        if amount_stripe <= 49
           return Promise.resolve(false)
         
+        LIBS.mixpanel.people.track_charge(user.id, amount)
+        
         LIBS.stripe.charges.create({
-          amount: amount
+          amount: amount_stripe
           customer: user.stripe_id
           currency: "usd"
         })
