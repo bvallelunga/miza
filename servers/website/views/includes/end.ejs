@@ -65,7 +65,10 @@
       <% } %>
       
       mixpanel.track("WEB.Page")
-      mixpanel.track("WEB.Page.<%= title.split(" ").join("_") %>")
+      
+      <% if(title.length > 0) { %>
+        mixpanel.track("WEB.Page.<%= title.split(" ").join("_") %>")
+      <% } %>
     </script>
     
     <!-- Javascript -->
