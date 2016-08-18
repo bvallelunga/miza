@@ -4,6 +4,9 @@ settings = require "./settings"
 billing = require "./billing"
 
 module.exports.get_root = (req, res, next)->
+  if req.query.dashboard?
+    return res.redirect "/dashboard/#{req.query.dashboard}/analytics"
+
   if req.user.publishers.length == 0
     res.redirect "/dashboard/new"
     
