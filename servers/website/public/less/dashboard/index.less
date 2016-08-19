@@ -4,7 +4,7 @@
 .container {
   width: 1000px;
   margin: 0 auto;
-  padding: 50px 0;
+  padding: 65px 0;
   .clearfix();
 }
 
@@ -31,30 +31,40 @@
 
 .publishers_list {
   position: absolute;
-  top: 15px;
-  left: 15px;
+  top: 10px;
+  left: 10px;
   width: 150px;
   border: solid 2px rgba(0,0,0,0.05);
+  background: white;
+  z-index: 2;
   .border-radius(3px);
+  
+  .fa {
+    color: rgba(0,0,0,0.2);
+  }
   
   .current {
     position: relative;
     padding: 8px 30px 8px 12px;
     color: @blue;
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1.1em;
     .ellipsis();
     
     span {
       position: absolute;
-      top: 12px; 
-      right: 12px;
+      top: 11px; 
+      right: 11px;
       color: rgba(0,0,0,0.1);
     }
   }
   
-  &:hover .publishers {
-    display: block;
+  &:hover {
+    .box-shadow(30px 30px 20px white);
+     
+    .publishers {
+      display: block;
+    }
   }
   
   .publishers {
