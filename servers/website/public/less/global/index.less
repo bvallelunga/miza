@@ -93,12 +93,30 @@ body {
     }
   }
   
+  footer {
+    padding: 30px;
+    text-align: center;
+    color: @blue;
+    font-size: 1.05em;
+    width: 100%;
+    
+    ul li {
+      display: inline-block;
+      margin: 0 15px;
+      
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  
   .fixed-side-nav {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 10px;
+    right: 10px;
     min-width: 80px;
     vertical-align: top;
+    z-index: 10000;
     
     span {
       display: inline-block;
@@ -153,11 +171,7 @@ body {
     }
   }
 
-  .disabled {
-    opacity: .8;
-  }
-
-  *:disabled {
+  *:disabled, .disabled {
     opacity: .8;
   }
   
@@ -172,6 +186,11 @@ body {
     margin: 0;
     .box-shadow(0 0 0px 1000px #fafbfc inset);
     .border-radius(5px);
+    
+    &:disabled, &.disabled {
+      color: rgba(0,0,0,0.5);
+      cursor: not-allowed;
+    }
   }
             
   button, .button {
@@ -195,6 +214,10 @@ body {
     
     &.loading {
       background: #C6C9D0 !important; 
+    }
+    
+    &:disabled, &.disabled {
+      cursor: not-allowed;
     }
   }
 

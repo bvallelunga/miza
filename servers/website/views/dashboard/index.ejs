@@ -5,6 +5,31 @@
     return a == b ? "active" : ""
   }
 %>
+<% if (!publisher.is_demo || user.is_admin) { %>
+  <div class="publishers_list">
+    <div class="current">
+      <%= publisher.name %>
+      <span class="fa fa-sort"></span>
+    </div>
+    <div class="publishers">
+      <% user.publishers.forEach(function(pub) { %>
+        <% if (pub.id != publisher.id) { %>
+          <a href="/dashboard/<%= pub.key %>/<%= dashboard %>"><%= pub.name %></a>
+        <% } %>
+      <% }) %>
+      <a href="/dashboard/new">
+        <span class="fa fa-plus"></span>
+        Add Publisher
+      </a>
+      <% if (user.is_admin) { %>
+        <form method="GET" action="/dashboard">
+          <span class="fa fa-search"></span>
+          <input name="dashboard" placeholder="Publisher ID">
+        </form>
+      <% } %>
+    </div>
+  </div>
+<% } %>
 <div class="container">
   <% if(user.stripe_card == null && !publisher.is_demo && moment().diff(user.created_at, "days") > 15) { %>
     <div class="warning">

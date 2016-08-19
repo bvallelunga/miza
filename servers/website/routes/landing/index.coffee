@@ -10,6 +10,39 @@ module.exports.get_root = (req, res, next)->
 
 module.exports.get_loader_io = (req, res, next)->
   res.send CONFIG.loader_io
+  
+
+module.exports.get_legal = (req, res, next)->
+  document_url = CONFIG.legal[req.params.document]
+
+  if not document_url?
+    return res.redirect "/"
+
+  res.render "landing/legal", {
+    js: req.js.renderTags "landing"
+    css: req.css.renderTags "landing"
+    document_url: document_url
+  }
+  
+
+module.exports.get_optout = (req, res, next)->
+  res.render "landing/optout", {
+    js: req.js.renderTags "modal"
+    css: req.css.renderTags "modal"
+    ip_address: req.ip or req.ips
+  }
+
+
+module.exports.post_optout = (req, res, next)->
+  LIBS.models.OptOut.create({
+    email: req.body.email.toLowerCase().trim()
+    ip_address: req.ip or req.ips
+  }).then ->
+    res.json {
+      success: true
+      message: "We have disabled Miza protected ads for your IP address"
+      next: "/"
+    }
 
 
 module.exports.post_beta = (req, res, next)->

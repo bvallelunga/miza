@@ -4,7 +4,7 @@
 .container {
   width: 1000px;
   margin: 0 auto;
-  padding: 50px 0;
+  padding: 65px 0;
   .clearfix();
 }
 
@@ -25,6 +25,88 @@
     
     &:hover {
       text-decoration: underline;
+    }
+  }
+}
+
+.publishers_list {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 150px;
+  border: solid 2px rgba(0,0,0,0.05);
+  background: white;
+  z-index: 2;
+  .border-radius(3px);
+  
+  .fa {
+    color: rgba(0,0,0,0.2);
+  }
+  
+  .current {
+    position: relative;
+    padding: 8px 30px 8px 12px;
+    color: @blue;
+    font-weight: bold;
+    font-size: 1.1em;
+    .ellipsis();
+    
+    span {
+      position: absolute;
+      top: 11px; 
+      right: 11px;
+      color: rgba(0,0,0,0.1);
+    }
+  }
+  
+  &:hover {
+    .box-shadow(30px 30px 20px white);
+     
+    .publishers {
+      display: block;
+    }
+  }
+  
+  .publishers {
+    border-top: solid 2px rgba(0,0,0,0.05);
+    display: none;
+    
+    a {
+      padding: 10px 12px;
+      display: block;
+      font-weight: lighter;
+      border-bottom: solid 1px #F3F3F3;
+      .ellipsis();
+      
+      &:hover {
+        background: lighten(@blue, 40%);
+      }
+      
+      span {
+        font-size: 0.8em;
+        margin-right: 5px;
+      }
+    }
+    
+    form {
+      position: relative;
+      
+      span {
+        position: absolute;
+        top: 14px;
+        left: 10px;
+        font-size: 0.8em;
+      }
+      
+      input {
+        border-top: solid 1px rgba(0,0,0,0.5);
+        background: rgba(0,0,0,0.025);
+        border: none;
+        padding: 10px 12px 10px 30px;
+        font-size: 1em;
+        .box-shadow(none);
+        .border-radius(0);
+      }
     }
   }
 }

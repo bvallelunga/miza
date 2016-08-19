@@ -1,11 +1,21 @@
 @import '../compless/all';
 @import '../global/colors';
 
+footer {
+  position: fixed;
+  bottom: 0;
+}
+
 .container {
   width: 350px;
   margin: 0 auto;
   padding-top: 180px;
   text-align: center;
+  
+  &.medium {
+    width: 380px;
+    padding-top: 130px;
+  }
   
   &.large {
     width: 550px;
@@ -108,6 +118,7 @@
       top: 15px;
       right: 15px;
       color: rgba(0,0,0,0.1);
+      z-index: 1;
     }
     
     a {
@@ -153,5 +164,9 @@
     color: #C50000;
     font-size: 1.2em;
     font-weight: lighter;
+  }
+  
+  .jp-card .jp-card-front .jp-card-logo {
+    .border-radius(2px);
   }
 }

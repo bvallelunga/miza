@@ -64,7 +64,11 @@
         mixpanel.identify('<%= user.id %>');
       <% } %>
       
-      mixpanel.track("WEB.Page.<%= title.split(" ").join("_") %>")
+      mixpanel.track("WEB.Page")
+      
+      <% if(title.length > 0) { %>
+        mixpanel.track("WEB.Page.<%= title.split(" ").join("_") %>")
+      <% } %>
     </script>
     
     <!-- Javascript -->
