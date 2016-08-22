@@ -5,11 +5,17 @@
   API.id = "<%= publisher.key %>" 
   API.base = "//<%= publisher.endpoint %>/"
   API.window = window
+  API.document = window.document
+  API.head = API.document.head
   
   
   // Init Method
   API.init = function() {
-    
+    API.fetch_attributes(function() {
+      API.overrides(API.window)
+      //API.listeners(API.document)
+      API.networks_activate()
+    })
   }
   
   

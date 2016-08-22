@@ -1,7 +1,7 @@
-API.listeners = function(document) {
-  if(!document) return
-  
-  document.addEventListener('DOMNodeInserted', function(event) {
-    API.migrator(document, event.target) 
+API.listeners = function(element, network) {  
+  element.addEventListener('DOMNodeInserted', function(event) {
+    event.stopImmediatePropagation()
+    if(event.target == element) return 
+    API.migrator(element, event.target, network)
   })
 }

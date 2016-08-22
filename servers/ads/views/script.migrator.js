@@ -1,10 +1,14 @@
-API.migrator = function(document, element, to_replace) {     
+API.migrator = function(parent, element, network, to_replace) {     
   var path = element.src ? "src" : "href"
   var src = element.src || element.href
   var tagName = (element.tagName || "").toLowerCase()
-  var network = API.fetch_target(src)
+  var network = network || API.fetch_network(src)
   
-  if (network != null) {      
+  console.log(network, src, element)
+  
+  if (!network) return element
+    
+  if(!!src && API.is_url(src)) {    
     var orginal = element
     element = (tagName == "script") ? API.script() : element
     element.async = orginal.async
@@ -20,7 +24,7 @@ API.migrator = function(document, element, to_replace) {
       if(orginal.parentNode) {
         orginal.parentNode.replaceChild(element, orginal)
       } else {
-        API.natives.appendChild.apply(document.body, [element])
+        API.natives.appendChild.apply(parent, [element])
         
         if(tagName == "script") {
           orginal.remove()
@@ -29,14 +33,19 @@ API.migrator = function(document, element, to_replace) {
     }
   }
   
-  if(tagName == "iframe" && element.contentDocument != null) {  
-    API.listeners(element.contentDocument)
-    API.overrides(element.contentWindow)
+  if(tagName == "iframe" && element.contentDocument != null) {    
+    API.listeners(element.contentDocument, network)
+    API.overrides(element.contentWindow, network)
+    
+    element.onload = function() {
+      API.listeners(element.contentDocument, network)
+    }
   }
   
-  API.children(element).forEach(function(element) {
-    API.migrator(document, element)
-  })
+  API.listeners(element, network)
+  API.children(element).forEach(function(child) {
+    API.migrator(element, child, network)
+  }) 
   
   return element
 }

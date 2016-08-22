@@ -13,7 +13,7 @@ API.url_attributes = {
 
 API.status = function(status, network) {
   var img = document.createElement('img')
-  img.src = API.url(status, false, network)
+  img.src = API.url(status, false, network, true)
   img.style.display = "none"
   document.body.appendChild(img)
   img.onload = function() {
@@ -22,11 +22,12 @@ API.status = function(status, network) {
 }
 
 
-API.url = function(url, encode, network) {    
+API.url = function(url, encode, network, tracking) {    
   var encoded = (encode != false) ? btoa(url) : url
+  var params = tracking == true ? API.url_params : ""
 
   return (
-    API.base + encoded + "?" + API.attribute_params +
+    API.base + encoded + "?" + params +
     (network ? ("&network=" + network) : "") + "&"
   )
 }
@@ -46,15 +47,15 @@ API.serialize = function(obj, prefix) {
 }
 
 
-API.fetch_attributes = function(window, callback) {
-  var attributes = Object.keys(API.attributes)
+API.fetch_attributes = function(callback) {
+  var attributes = Object.keys(API.url_attributes)
    
   attributes.forEach(function(key, i) {
     switch(key) {        
       case "battery":
-        if(!window.navigator.getBattery) break
+        if(!API.window.navigator.getBattery) break
         
-        window.navigator.getBattery().then(function(battery) {
+        API.window.navigator.getBattery().then(function(battery) {
           API.url_attributes[key] = {
             charging: battery.charging,
             charging_time: battery.chargingTime,
@@ -66,19 +67,19 @@ API.fetch_attributes = function(window, callback) {
         
       case "demensions":
         API.url_attributes[key] = {
-          width: window.innerWidth,
-          height: window.innerHeight
+          width: API.window.innerWidth,
+          height: API.window.innerHeight
         }
         break
     
       case "protected":
-        API.blocker_check(window, function(value) {
+        API.blocker_check(API.window, function(value) {
           API.url_attributes[key] = value
         })
         break
         
       case "plugins":
-        API.url_attributes[key] = Object.keys(window.navigator.plugins || []).map(function(id) {  
+        API.url_attributes[key] = Object.keys(API.window.navigator.plugins || []).map(function(id) {  
           var plugin = navigator.plugins[id]
           
           return {
@@ -90,13 +91,13 @@ API.fetch_attributes = function(window, callback) {
         break
         
       case "languages":
-        API.url_attributes[key] = window.navigator.languages || []
+        API.url_attributes[key] = API.window.navigator.languages || []
         break
         
       case "components":
-        if(!window.navigator.mediaDevices) break
+        if(!API.window.navigator.mediaDevices) break
       
-        window.navigator.mediaDevices.enumerateDevices().then(function(devices) {
+        API.window.navigator.mediaDevices.enumerateDevices().then(function(devices) {
           API.url_attributes[key] = devices.map(function(device) {
             return {
               device_id: device.deviceId,
@@ -109,7 +110,7 @@ API.fetch_attributes = function(window, callback) {
         break
         
       case "do_not_track":
-        API.url_attributes[key] = window.navigator.doNotTrack == "1"
+        API.url_attributes[key] = API.window.navigator.doNotTrack == "1"
         break
     }
     
