@@ -1,8 +1,7 @@
 module.exports = (sequelize, DataTypes)->
 
   return sequelize.define "Event", {
-    ad_id: DataTypes.STRING
-    ad_network: DataTypes.STRING
+    network_name: DataTypes.STRING
     type: { 
       type: DataTypes.ENUM("impression", "click", "asset", "ping")
       allowNull: false
@@ -66,7 +65,7 @@ module.exports = (sequelize, DataTypes)->
           asset_url: data.asset_url
           publisher_id: data.publisher.id
           network_id: if data.network then data.network.id else null
-          ad_network: if data.network then data.network.name else null
+          network_name: if data.network then data.network.name else null
           referrer_url: req.get('referrer')
           cookies: req.cookies
           headers: req.headers
