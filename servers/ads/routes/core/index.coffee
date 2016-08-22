@@ -41,7 +41,7 @@ module.exports.script = (req, res, next)->
       if error?
         console.error error
       
-      if not CONFIG.isProd
+      if not CONFIG.is_prod
         return res.send code
     
       res.end uglify.minify(code, {

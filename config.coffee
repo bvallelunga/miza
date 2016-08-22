@@ -1,5 +1,5 @@
 module.exports = ->
-  isProd = process.env.NODE_ENV == "production"
+  is_prod = process.env.NODE_ENV == "production"
   logging_defaults = {
     development: ":method :url :status :response-time ms"
     production: ':method :req[host]:url :status :response-time ms :remote-addr ":user-agent" ":referrer" :res[content-length] HTTP/:http-version [:date[clf]]'
@@ -7,7 +7,7 @@ module.exports = ->
 
   return {
     env: process.env
-    isProd: isProd
+    is_prod: is_prod
     port: process.env.PORT
     
     postgres_url: process.env.DATABASE_URL
@@ -25,7 +25,7 @@ module.exports = ->
     loader_io: "loaderio-6c81ca8de1cc26156be3836bb74e6a05"
     
     logger: (->  
-      if isProd 
+      if is_prod 
         return logging_defaults.production
         
       return logging_defaults.development

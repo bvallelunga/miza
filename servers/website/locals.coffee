@@ -27,7 +27,7 @@ module.exports = (req, res, next)->
   res.locals.config = {}
   res.locals.user = req.user or null
   res.locals.title_first = true
-  res.locals.is_prod = CONFIG.isProd
+  res.locals.is_prod = CONFIG.is_prod
   res.locals.random = "r=#{random_slug}"
   res.locals.mixpanel = CONFIG.mixpanel
   res.locals.intercom = ((user)-> 
