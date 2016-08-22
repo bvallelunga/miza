@@ -5,6 +5,7 @@ module.exports.get_root = (req, res, next)->
   res.render "landing/index", {
     js: req.js.renderTags "landing", "fa"
     css: req.css.renderTags "landing", "fa"
+    
   }
   
 
@@ -22,6 +23,7 @@ module.exports.get_legal = (req, res, next)->
     js: req.js.renderTags "landing"
     css: req.css.renderTags "landing"
     document_url: document_url
+    title: "Legal"
   }
   
 
@@ -30,6 +32,7 @@ module.exports.get_optout = (req, res, next)->
     js: req.js.renderTags "modal"
     css: req.css.renderTags "modal"
     ip_address: req.ip or req.ips
+    title: "OptOut"
   }
 
 

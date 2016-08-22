@@ -68,6 +68,8 @@
       
       <% if(title.length > 0) { %>
         mixpanel.track("WEB.Page.<%= title.split(" ").join("_") %>")
+      <% } else if(path == "/") { %>
+        mixpanel.track("WEB.Page.Home")
       <% } %>
     </script>
     
