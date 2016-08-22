@@ -50,6 +50,7 @@ module.exports.post_optout = (req, res, next)->
 
 module.exports.post_beta = (req, res, next)->
   res.render "landing/access_requested", {
+    title: "Access Requested"
     css: req.css.renderTags "modal"
     intercom: {
       email: req.body.email
