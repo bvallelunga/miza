@@ -54,6 +54,7 @@ module.exports.get_dashboard = (req, res, next)->
   dashboards = [
     "setup", "analytics", "billing", "settings"
   ]
+  dashboard_title = (dashboard.split(' ').map (word) -> word[0].toUpperCase() + word[1..-1].toLowerCase()).join ' '
 
   if dashboard not in dashboards
     return res.redirect "#{dashboard_path}/analytics"
@@ -81,7 +82,7 @@ module.exports.get_dashboard = (req, res, next)->
     res.render "dashboard/index", {
       js: req.js.renderTags.apply(req.js, js)
       css: req.css.renderTags.apply(req.css, css)
-      title: "Dashboard"
+      title: "#{dashboard_title} Dashboard"
       dashboard_path: dashboard_path
       dashboard: dashboard
       industry: industry
