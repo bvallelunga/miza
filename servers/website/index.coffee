@@ -69,11 +69,10 @@ module.exports = (srv)->
   
   
   # Demo Routes
-  app.get "/demo", routes.demo.set_user
-  app.get "/demo/select", routes.auth.is_authenticated, routes.demo.get_root
+  app.get "/demo", routes.demo.set_user, routes.demo.get_root
   app.get "/demo/wordpress", routes.demo.get_wordpress
-  app.get "/demo/miza", routes.auth.is_authenticated, routes.demo.set_publisher, routes.demo.get_miza
-  app.get "/demo/miza/:demo", routes.auth.is_authenticated, routes.demo.set_publisher, routes.demo.get_miza
+  app.get "/demo/miza", routes.demo.set_user, routes.demo.get_miza
+  app.get "/demo/miza/:demo", routes.demo.set_user, routes.demo.get_miza
   
   
   # Error Handlers
