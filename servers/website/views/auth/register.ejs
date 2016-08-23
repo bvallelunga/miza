@@ -4,10 +4,18 @@
   <% include ../includes/logo %>
   <form class="form" method="POST" action="/register">
     <% include ../includes/csrf %>
-    <input class="top" type="text" name="name" placeholder="Name" required/>
-    <input type="email" name="email" placeholder="Email address" required/>
-    <input type="password" name="password" placeholder="Password" required/>
-    <input class="bottom" type="password" name="confirm_password" placeholder="Confirm Password" required/>
+    <div>
+      <input class="top" type="text" name="name" placeholder="Name" required/>
+      <input type="email" name="email" placeholder="Email address" required/>
+      <input type="password" name="password" placeholder="Password" required/>
+      <input class="bottom" type="password" name="confirm_password" placeholder="Confirm Password" required/>
+    </div>
+    <div class="checkbox-group">
+      <input type="checkbox" name="tos" required/>
+      <div>
+        Please check the box to agree to our <a target="_blank" href="/legal/terms">Terms of Service</a>.
+      </div>
+    </div>
     <button class="button" type="submit">Sign Up</button>
     <div class="error"></div>
   </form>
