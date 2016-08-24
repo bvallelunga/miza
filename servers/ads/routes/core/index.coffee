@@ -55,7 +55,7 @@ module.exports.proxy = (req, res, next)->
     
   .then (data)->  
     if data.media == "asset" and not data.cached
-      return proxy.modifier data, req.publisher, req.network
+      return proxy.modifier data, req.publisher, req.network, req.query
         
     return data
     

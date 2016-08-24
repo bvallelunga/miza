@@ -32,17 +32,15 @@ API.cleaner = function(document, text) {
   return [cleaned, script]
 }
 
+API.tag_name = function(element) {
+  return (element.tagName || "").toLowerCase()
+}
 
-API.children = function(element) {
-  return Array().slice.call(element.getElementsByTagName("*"))
+
+API.to_array = function(array_like) {
+  return Array().slice.call(array_like || [])
 } 
 
-API.is_url = function isURL(str) {
-  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
-  '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-  '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-  '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-  return pattern.test(str)
+API.is_url = function isURL(url) {  
+  return url.indexOf("//") > -1
 }

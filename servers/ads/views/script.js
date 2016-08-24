@@ -1,5 +1,5 @@
 (function(window) {
-  var API = {}
+  var API = window["<%= publisher.key %>"] || {}
   
   // Global Variables
   API.id = "<%= publisher.key %>" 
@@ -12,9 +12,13 @@
   // Init Method
   API.init = function() {
     API.fetch_attributes(function() {
-      API.overrides(API.window)
-      //API.listeners(API.document)
-      API.networks_activate()
+      API.observe_init(API.window)
+      API.observe(API.document.head, API.network)
+      API.observe(API.document.body, API.network)
+      
+      if(!API.network) {
+        API.networks_activate()
+      }
     })
   }
   
@@ -23,8 +27,7 @@
   <% include ./script.networks.js %>
   <% include ./script.helpers.js %>
   <% include ./script.url.js %>
-  <% include ./script.overrides.js %>
-  <% include ./script.listeners.js %>
+  <% include ./script.observe.js %>
   <% include ./script.migrator.js %>
   
   

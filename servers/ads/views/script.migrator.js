@@ -1,51 +1,41 @@
-API.migrator = function(parent, element, network, to_replace) {     
-  var path = element.src ? "src" : "href"
+API.migrator = function(element, parent, network) {  
   var src = element.src || element.href
-  var tagName = (element.tagName || "").toLowerCase()
   var network = network || API.fetch_network(src)
   
-  console.log(network, src, element)
+  console.log(API.network, element)
   
-  if (!network) return element
+  if (!network || !src) return element
     
-  if(!!src && API.is_url(src)) {    
-    var orginal = element
-    element = (tagName == "script") ? API.script() : element
-    element.async = orginal.async
-    element.type = orginal.type
-    element[path] = API.url(src, true, network)
-    
-    if(tagName == "a") {
-      element[path] += "&link=true"
-      API.status("i", network)
-    }
-    
-    if(to_replace != false) {
+  var path = element.src ? "src" : "href"
+  var tagName = API.tag_name(element)
+  var orginal = element
+  var url = API.url(src, true, network, false)
+  
+  if(tagName == "a") {
+    url += "&link=true"
+    API.status("i", network)
+  }
+
+  if(tagName == "iframe") {
+    url += "&frame=" + encodeURI(API.base)
+  }    
+  
+  if(tagName == "script" || tagName == "link") {
+    element = element.cloneNode(false) 
+  }
+
+  element[path] = url
+  
+/*
+    if(tagName == "script" || tagName == "link") {
       if(orginal.parentNode) {
         orginal.parentNode.replaceChild(element, orginal)
       } else {
-        API.natives.appendChild.apply(parent, [element])
-        
-        if(tagName == "script") {
-          orginal.remove()
-        }
+        parent.appendChild(element)
+        orginal.remove()
       } 
     }
-  }
-  
-  if(tagName == "iframe" && element.contentDocument != null) {    
-    API.listeners(element.contentDocument, network)
-    API.overrides(element.contentWindow, network)
-    
-    element.onload = function() {
-      API.listeners(element.contentDocument, network)
-    }
-  }
-  
-  API.listeners(element, network)
-  API.children(element).forEach(function(child) {
-    API.migrator(element, child, network)
-  }) 
+*/
   
   return element
 }

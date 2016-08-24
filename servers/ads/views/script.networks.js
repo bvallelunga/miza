@@ -13,7 +13,7 @@ API.networks = [
 API.networks_activate = function() {
   API.networks.forEach(function(network) {
     API.window[API.id + "_" + network.id] = network.entry_js
-    API.network_listner(network)
+    API.network_init(network)
     API.network_script(network)
   })
 }
@@ -31,9 +31,9 @@ API.network_script = function(network) {
 }
 
 
-API.network_listner = function(network) {
+API.network_init = function(network) {
   var elements = API.window.document.querySelectorAll(network.entry_css)
-  var elements_array = Array.prototype.slice.call(elements)
+  var elements_array = API.to_array(elements)
   
   elements_array.forEach(function(original) {
     var element = original.cloneNode(true);  
@@ -41,13 +41,13 @@ API.network_listner = function(network) {
     //element.id = "" 
     //element.className = API.id + "_" + network.id
     
-    API.listeners(element, network.id)
+    API.observe(element, network.id)
     original.parentNode.replaceChild(element, original)
   })
 }
 
 
-API.fetch_network = function(src) {  
+API.fetch_network = function(src) {    
   if(!src) return null
     
   for(var i = 0; i < API.networks.length; i++) {
