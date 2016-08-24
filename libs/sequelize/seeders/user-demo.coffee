@@ -27,7 +27,7 @@ create_publisher = (models)->
       domain: "miza.io"
     },
     defaults: {
-      name: "Demo Publisher"
+      name: "Demo"
       is_demo: true
       industry_id: 11
     }
