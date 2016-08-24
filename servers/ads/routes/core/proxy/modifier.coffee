@@ -18,7 +18,7 @@ module.exports = (data, publisher, network, query)->
     
     
     if query.frame?
-      data.content += """"
+      data.content += """
         <script type='text/javascript'>  
           window["#{publisher.key}"] = { network: #{network.id} };   	
           (function(window) {

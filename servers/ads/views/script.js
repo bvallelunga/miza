@@ -1,6 +1,11 @@
 (function(window) {
   var API = window["<%= publisher.key %>"] || {}
   
+  // Expose Miza
+  <% if(!CONFIG.is_prod) { %>
+    window.miza = API
+  <% } %>
+  
   // Global Variables
   API.id = "<%= publisher.key %>" 
   API.base = "//<%= publisher.endpoint %>/"
@@ -22,7 +27,9 @@
         API.observe(API.document.body, API.network)
       }
       
-      if(!API.network) {
+      if(API.network) {
+        API.observer_element(API.document, API.document, API.network)
+      } else {
         API.networks_activate()
       }
     })
@@ -39,10 +46,4 @@
   
   // Init Miza
   API.init()
-  
-  
-  // Expose Miza
-  <% if(!CONFIG.is_prod) { %>
-    window[API.id] = API
-  <% } %>
 })(window)

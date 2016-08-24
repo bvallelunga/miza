@@ -2,9 +2,9 @@ API.migrator = function(element, parent, network) {
   var src = element.src || element.href
   var network = network || API.fetch_network(src)
   
-  console.log(API.network, element)
+  console.debug(API.network, "migrator", element.m_handled, element) 
   
-  if (!network || !src) return element
+  if (!network || !src || tagName != "iframe") return element
     
   var path = element.src ? "src" : "href"
   var tagName = API.tag_name(element)

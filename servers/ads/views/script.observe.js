@@ -26,15 +26,17 @@ API.observer = function(parent, network) {
   })
 }
 
-API.observer_iframe = function(element, network) {
-  if(!API.is_url(element.src)) return
+API.observer_iframe = function(element, network) {  
+  if(API.is_url(element.src)) return
  
   API.observe_init(element.contentWindow)
   API.observe(element.contentDocument, network)
-  API.observer_element(element.contentDocument, element, network, false) 
+  API.observer_element(element.contentDocument, element, network, false)
+  
+  console.debug(API.network, "iframe", element) 
   
   element.addEventListener('load', function() {
-    console.log(element)
+    console.debug(API.network, "loaded", element)
     API.observer_iframe(element, network)
   })
 } 
@@ -42,8 +44,10 @@ API.observer_iframe = function(element, network) {
 API.observer_element = function(element, parent, network, from_observer) {
   if(element.m_handled) return
   
-  if(from_observer != true && API.tag_name(element) == "iframe") {  
-    API.observer_iframe(element, network)
+  if(API.tag_name(element) == "iframe") { 
+    if(from_observer != true) { 
+      API.observer_iframe(element, network)
+    }
   } else {
     element.m_handled = true
   }
