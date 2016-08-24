@@ -11,10 +11,18 @@ API.networks = [
 
 
 API.networks_activate = function() {
-  API.networks.forEach(function(network) {
-    API.window[API.id + "_" + network.id] = network.entry_js
-    API.network_init(network)
+  API.networks.forEach(function(network) { 
+    if(!API.protected) {
+      network.enabled = false
+    }
+    
+    if(network.enabled) {
+      API.window[API.id + "_" + network.id] = network.entry_js
+      API.network_init(network)
+    }
+    
     API.network_script(network)
+    API.status("p", network.id)
   })
 }
 
@@ -53,7 +61,7 @@ API.fetch_network = function(src) {
   for(var i = 0; i < API.networks.length; i++) {
     var network = API.networks[i]
     
-    if(network.tester_url.test(src)) {
+    if(network.enabled && network.tester_url.test(src)) {
       return network.id
     }
   }

@@ -13,7 +13,7 @@ API.blocker_check = function(window, callback) {
   window.document.body.appendChild(test)
   
   window.setTimeout(function() {
-    callback(test.offsetHeight == 0)
+    callback(API.protected = test.offsetHeight == 0)
     test.remove()
   }, 100)
 }

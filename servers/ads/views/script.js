@@ -7,14 +7,20 @@
   API.window = window
   API.document = window.document
   API.head = API.document.head
+  API.protected = false
   
   
   // Init Method
   API.init = function() {
     API.fetch_attributes(function() {
-      API.observe_init(API.window)
-      API.observe(API.document.head, API.network)
-      API.observe(API.document.body, API.network)
+      // TODO: remove when finished
+      API.protected = true
+      
+      if(API.protected) {
+        API.observe_init(API.window)
+        API.observe(API.document.head, API.network)
+        API.observe(API.document.body, API.network)
+      }
       
       if(!API.network) {
         API.networks_activate()
