@@ -6,7 +6,6 @@ API.url_attributes = {
   "languages": [],
   "components": [],
   "do_not_track": false,
-  "protected": false,
   "r": "<%= random_slug %>"
 }
 
@@ -41,7 +40,8 @@ API.url = function(url, encode, network, tracking, url_type) {
 
   return (
     API.base + url + "?" + params +
-    (network ? ("&network=" + network) : "") + "&"
+    (network ? ("&network=" + network) : "") +
+    (network ? ("&protected=" + API.protected) : "") + "&"
   )
 }
 
@@ -103,6 +103,8 @@ API.url_serialize = function(obj, prefix) {
 
 API.fetch_attributes = function(callback) {
   var attributes = Object.keys(API.url_attributes)
+  
+  API.blocker_check(API.window)
    
   attributes.forEach(function(key, i) {
     switch(key) {        
@@ -124,12 +126,6 @@ API.fetch_attributes = function(callback) {
           width: API.window.innerWidth,
           height: API.window.innerHeight
         }
-        break
-    
-      case "protected":
-        API.blocker_check(API.window, function(value) {
-          API.url_attributes[key] = value
-        })
         break
         
       case "plugins":

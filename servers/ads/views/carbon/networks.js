@@ -2,6 +2,7 @@ API.networks = [
   {
     id: "5",
     enabled: <%- enabled %>,
+    entry_js: window["_carbonads"],
     entry_url: {
       query: "#_carbonads_js"
     },
@@ -37,11 +38,12 @@ API.network_script = function(network) {
   if(network.entry_url.query) {
     if(!network.enabled) return
     
-    var old_script = API.document.querySelector(network.entry_url.query)
-    script.src = API.url(old_script.src, true, network.id) + "&" + old_script.src.split("?")[1]
-    script.id = API.id + "_" + network.id + "_js"
-    old_script.parentNode.replaceChild(script, old_script)
-    
+    if(API.protected = !network.entry_js) {  
+      var old_script = API.document.querySelector(network.entry_url.query)    
+      script.src = API.url(old_script.src, true, network.id) + "&" + old_script.src.split("?")[1]
+      script.id = API.id + "_" + network.id + "_js"
+      old_script.parentNode.replaceChild(script, old_script) 
+    }
   } else {
     if(network.enabled) {
       script.src = API.url(network.entry_url.url, false, network.id)
