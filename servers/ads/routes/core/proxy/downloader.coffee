@@ -45,11 +45,13 @@ download = (url, query, headers)->
       cached: false
     }
     
+    content_type = data.headers['content-type'] or "text"
+    
     if query.link?
       data.media = "link"
       data.href = response.request.uri.href
     
-    else if (data.headers['content-type'] or "text").indexOf("text") == -1
+    else if content_type.indexOf("text") == -1 and content_type.indexOf("javascript") == -1
       data.media = "binary"
       data.content = response.body
     

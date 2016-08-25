@@ -38,8 +38,10 @@ API.observer_iframe = function(element, network) {
   })
 } 
 
-API.observer_element = function(element, parent, network, from_observer) {
+API.observer_element = function(element, parent, network, from_observer) {  
   if(element.m_handled) return
+  
+  console.log(element)
   
   if(API.tag_name(element) == "iframe") {     
     if(from_observer != true) { 

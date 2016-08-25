@@ -1,10 +1,11 @@
 modifiers = {
   dfp: require "./dfp"
   adsense: require "./adsense"
+  carbon: require "./carbon"
 }
 
 module.exports = (data, publisher, network, query)->  
-  Promise.resolve().then ->  
+  Promise.resolve().then ->    
     if not CONFIG.disable.ads_server.modifier
       replacers = []
     

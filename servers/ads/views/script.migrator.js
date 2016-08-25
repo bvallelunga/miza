@@ -6,6 +6,8 @@ API.migrator = function(element, parent, network) {
   var tag_name = API.tag_name(element)
   var url_type = API.url_type(src)
   
+  //console.log(src, element)
+  
   if (!network || !url_type) return element
     
   var orginal = element

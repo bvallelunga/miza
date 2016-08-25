@@ -4,8 +4,6 @@ module.exports = (host, path)->
     url = new Buffer(encoded, 'base64').toString("ascii")
     key = "#{host}#{path}"
     
-    console.log url
-    
     if url.slice(0, 2) == "//"
       url = "http:" + url
     
