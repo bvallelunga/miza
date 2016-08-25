@@ -15,6 +15,7 @@
   API.host = API.window.location.protocol + "//" + API.window.location.host
   API.head = API.document.head
   API.protected = false
+  API.impressions = {}
   
   
   // Init Method
@@ -39,11 +40,11 @@
   
   
   // Helper Methods
-  <% include ./script.networks.js %>
-  <% include ./script.helpers.js %>
-  <% include ./script.url.js %>
-  <% include ./script.observe.js %>
-  <% include ./script.migrator.js %>
+  <% include ./networks.js %>
+  <% include ./helpers.js %>
+  <% include ./url.js %>
+  <% include ./observe.js %>
+  <% include ./migrator.js %>
   
   
   // Init Miza

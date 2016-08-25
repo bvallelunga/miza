@@ -1,12 +1,15 @@
 request = require "request"
 
 
-fetchRedis = (key)->
+fetchRedis = (path)->
   new Promise (res, rej)-> 
     if CONFIG.disable.ads_server.downloader
       return res null
+      
+    if path.url.indexOf(".json") > -1
+      return res null
    
-    LIBS.redis.get key, (error, response)->                 
+    LIBS.redis.get path.key, (error, response)->                 
       if error? or not response?
         return res null
       
@@ -43,6 +46,7 @@ download = (url, query, headers)->
       media: "asset"
       headers: response.headers or {}
       cached: false
+      url: url
     }
     
     content_type = data.headers['content-type'] or "text"
@@ -62,7 +66,7 @@ download = (url, query, headers)->
 
 
 module.exports = (path, query, headers)->
-  fetchRedis(path.key).then (data)->  
+  fetchRedis(path).then (data)->  
     if data?
       return data
       

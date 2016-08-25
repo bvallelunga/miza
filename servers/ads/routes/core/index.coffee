@@ -24,11 +24,13 @@ module.exports.impression = (req, res, next)->
 
 
 module.exports.carbon = (req, res, next)->
-  req.script_view = "carbon"
+  req.script = "carbon"
   next()
 
 
 module.exports.script = (req, res, next)->
+  script = req.script or "v1"
+
   if req.publisher.is_demo
     req.publisher.endpoint = req.get("host")
 
@@ -37,7 +39,7 @@ module.exports.script = (req, res, next)->
       ip_address: req.ip or req.ips
     }
   }).then (count)->
-    res.render (req.script_view or "script"), {
+    res.render "#{script}/script", {
       enabled: req.publisher.coverage_ratio > Math.random() and count == 0
       random_slug: script.random_slug
       publisher: req.publisher

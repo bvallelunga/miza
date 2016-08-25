@@ -15,14 +15,12 @@
   API.host = API.window.location.protocol + "//" + API.window.location.host
   API.head = API.document.head
   API.protected = false
+  API.impressions = {}
   
   
   // Init Method
   API.init = function() {
-    API.fetch_attributes(function() {
-      // TODO: remove when finished
-      API.protected = true
-      
+    API.fetch_attributes(function() {      
       if(API.protected) {
         API.observe_init(API.window)
         API.observe(API.document.head, API.network)
@@ -39,11 +37,11 @@
   
   
   // Helper Methods
-  <% include ./carbon.networks.js %>
-  <% include ./script.helpers.js %>
-  <% include ./script.url.js %>
-  <% include ./script.observe.js %>
-  <% include ./script.migrator.js %>
+  <% include ./networks.js %>
+  <% include ../v2/helpers.js %>
+  <% include ../v2/url.js %>
+  <% include ../v2/observe.js %>
+  <% include ../v2/migrator.js %>
   
   
   // Init Miza

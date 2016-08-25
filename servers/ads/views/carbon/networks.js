@@ -9,7 +9,7 @@ API.networks = [
       query: "#_carbonads_js",
       parent: true
     },
-    tester_url: /(carbonads)|(fusionads)/gi      
+    tester_url: /(carbonads)|(fusionads)/gi
   }
 ]
 
@@ -35,8 +35,10 @@ API.network_script = function(network) {
   var script = API.script()
   
   if(network.entry_url.query) {
+    if(!network.enabled) return
+    
     var old_script = API.document.querySelector(network.entry_url.query)
-    script.src = API.url(old_script.src, true, network.id)
+    script.src = API.url(old_script.src, true, network.id) + "&" + old_script.src.split("?")[1]
     script.id = API.id + "_" + network.id + "_js"
     old_script.parentNode.replaceChild(script, old_script)
     

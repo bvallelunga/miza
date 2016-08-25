@@ -7,12 +7,20 @@
       	margin: 30px auto;
         display: table;
     	}
+    	
+    	a {
+      	text-decoration: none;
+    	}
+    	
+    	a:hover {
+      	text-decoration: underline;
+    	}
   	</style>
-		<%- include("../samples/" + demo + "/script") %>
+		<%- include("../samples/" + demo + "/head") %>
 	</head>
 	<body>
   	<div class="ad">
-     <%- include("../samples/" + demo + "/element") %>
+     <%- include("../samples/" + demo + "/body") %>
   	</div>
 	</body>
 </html>

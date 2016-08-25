@@ -5,36 +5,47 @@ API.migrator = function(element, parent, network) {
   var network = network || API.fetch_network(src)
   var tag_name = API.tag_name(element)
   var url_type = API.url_type(src)
-  
-  //console.log(src, element)
+  var replace_element = false
   
   if (!network || !url_type) return element
     
-  var orginal = element
+  var original = element
   var url = API.url(src, true, network, false, url_type)
   
   if(tag_name == "a") {
     url += "&link=true"
-    API.status("i", network)
+    
+    if(!API.impressions[parent]) {
+      API.status("i", network)
+      API.impressions[parent] = true
+    }
   }
 
   if(tag_name == "iframe") {
     url += "&frame=" + encodeURI(API.raw_base)
-  }    
-  
-  if(tag_name == "script" || tag_name == "link") {
-    element = element.cloneNode(false) 
   }
-
+  
+  if(tag_name == "script") {
+    element = API.script()
+    element.type = original.type
+    element.id = original.id
+    replace_element = true
+  } 
+  
+  if(tag_name == "link") {
+    element = element.cloneNode(false) 
+    replace_element = true
+  }
+  
   element[path] = url
   
-  if(tag_name == "link" || tag_name == "script") {
-    if(orginal.parentNode) {
-      orginal.parentNode.replaceChild(element, orginal)
+  if(replace_element) {
+    if(original.parentNode) {
+      original.parentNode.replaceChild(element, original)
     } else {
       parent.appendChild(element)
-      orginal.remove()
-    } 
+      original.remove()
+    }
   }
   
   return element
