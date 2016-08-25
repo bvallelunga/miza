@@ -19,10 +19,10 @@ module.exports.up = (sequelize, models)->
 create_industry = (models, id, name, cpm, cpc)->
   models.Industry.findOrCreate({
     where: {
-      id: id
+      name: name
     },
     defaults: {
-      name: name
+      id: id
       cpm: cpm
       cpc: cpc
       fee: 0.3
