@@ -46,11 +46,11 @@ module.exports = ->
     
     disable: {
       express: {
-        logger: false
+        logger: false and not is_prod
       }
       ads_server: {
-        downloader: false
-        modifier: false
+        downloader: false and not is_prod
+        modifier: false and not is_prod
       }
     }
     
