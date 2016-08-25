@@ -1,6 +1,6 @@
 API.networks = [
   {
-    id: "1",
+    id: "2",
     enabled: <%- enabled %>,
     entry_js: API.window["adsbygoogle"],
     entry_url: "aHR0cDovL3BhZ2VhZDIuZ29vZ2xlc3luZGljYXRpb24uY29tL3BhZ2VhZC9qcy9hZHNieWdvb2dsZS5qcw==",
@@ -46,8 +46,8 @@ API.network_init = function(network) {
   elements_array.forEach(function(original) {
     var element = original.cloneNode(true);  
     
-    //element.id = "" 
-    //element.className = API.id + "_" + network.id
+    element.id = "" 
+    element.className = API.id + "_" + network.id
     
     API.observe(element, network.id)
     original.parentNode.replaceChild(element, original)

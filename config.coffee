@@ -50,7 +50,7 @@ module.exports = ->
       }
       ads_server: {
         downloader: true
-        modifier: true
+        modifier: false
       }
     }
     

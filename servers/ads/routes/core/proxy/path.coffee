@@ -12,8 +12,6 @@ module.exports = (host, path)->
     else if url.indexOf("://") == -1
       url = "http://" + url
     
-    console.log url
-    
     return {
       url: url
       key: key
