@@ -26,17 +26,13 @@
     }
   },
   "formation": {
-    "billing_worker": {
-      "quantity": 1,
-      "size": "Standard-1X"
-    },
     "tracking_worker": {
       "quantity": 1,
-      "size": "Standard-1X"
+      "size": "free"
     },
     "web": {
       "quantity": 1,
-      "size": "Standard-1X"
+      "size": "free"
     }
   },
   "addons": [
