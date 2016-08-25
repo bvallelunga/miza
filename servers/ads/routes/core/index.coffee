@@ -11,6 +11,7 @@ module.exports.ping = (req, res, next)->
     type: "ping"
     publisher: req.publisher
   }
+
   
 module.exports.impression = (req, res, next)->
   res.end script.pixel_tracker
@@ -22,7 +23,14 @@ module.exports.impression = (req, res, next)->
   }
 
 
+module.exports.carbon = (req, res, next)->
+  req.script = "carbon"
+  next()
+
+
 module.exports.script = (req, res, next)->
+  script = req.script or "v1"
+
   if req.publisher.is_demo
     req.publisher.endpoint = req.get("host")
 
@@ -31,7 +39,7 @@ module.exports.script = (req, res, next)->
       ip_address: req.ip or req.ips
     }
   }).then (count)->
-    res.render "script", {
+    res.render "#{script}/script", {
       enabled: req.publisher.coverage_ratio > Math.random() and count == 0
       random_slug: script.random_slug
       publisher: req.publisher
@@ -41,7 +49,7 @@ module.exports.script = (req, res, next)->
       if error?
         console.error error
       
-      if not CONFIG.isProd
+      if not CONFIG.is_prod
         return res.send code
     
       res.end uglify.minify(code, {
@@ -53,9 +61,9 @@ module.exports.proxy = (req, res, next)->
   proxy.path(req.get('host'), req.path).then (path)->
     return proxy.downloader path, req.query, req.headers
     
-  .then (data)->  
+  .then (data)->   
     if data.media == "asset" and not data.cached
-      return proxy.modifier data, req.publisher, req.network
+      return proxy.modifier data, req.publisher, req.network, req.query
         
     return data
     

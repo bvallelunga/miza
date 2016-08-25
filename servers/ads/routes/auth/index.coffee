@@ -12,7 +12,7 @@ module.exports.has_publisher = (req, res, next)->
       model: LIBS.models.Network
       as: "networks"
     }]
-  }).then (publisher)->
+  }).then (publisher)->  
     if not publisher?
       return res.end CONFIG.ads_denied_message
     
@@ -29,5 +29,5 @@ module.exports.has_network = (req, res, next)->
     if network.id == network_id
       req.network = network
       return next()
-      
+  
   return res.end CONFIG.ads_denied_message

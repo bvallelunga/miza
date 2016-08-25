@@ -1,0 +1,38 @@
+<style type="text/css">
+  #carbonads .carbon-img,
+  #<%= publisher.key %>_5 .<%= publisher.key %>_5-img {
+    clear: both;
+    float: left
+  }
+  
+  #carbonads .carbon-img img,
+  #<%= publisher.key %>_5 .<%= publisher.key %>_5-img img {
+    display: block
+  }
+  
+  #carbonads .carbon-text,
+  #<%= publisher.key %>_5 .<%= publisher.key %>_5-text {
+    clear: both;
+    display: block;
+    padding: 10px 0 0;
+    color: #424249;
+    font-size: 12px;
+    line-height: 1.5em
+  }
+  
+  #carbonads .carbon-poweredby,
+  #<%= publisher.key %>_5 .<%= publisher.key %>_5-poweredby {
+    display: block;
+    color: #ADB0BA;
+    font-size: .9em;
+    padding: 10px 0 0
+  }
+</style>
+<script type='text/javascript'>           	
+  (function(window, base) {
+    var script = document.createElement("script");
+    script.src = "//" + base + "/c?r=" + Math.random();
+    script.async = true;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  })(window, "<%= publisher.endpoint %>");
+</script>

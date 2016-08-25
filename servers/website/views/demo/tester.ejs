@@ -7,14 +7,20 @@
       	margin: 30px auto;
         display: table;
     	}
+    	
+    	a {
+      	text-decoration: none;
+    	}
+    	
+    	a:hover {
+      	text-decoration: underline;
+    	}
   	</style>
-  
-		<%- demo.indexOf("miza") > -1 ? include("../samples/miza") : "" %>
-		<%- include("../samples/" + demo + "/script") %>
+		<%- include("../samples/" + demo + "/head") %>
 	</head>
 	<body>
   	<div class="ad">
-     <%- include("../samples/" + demo + "/element") %>
+     <%- include("../samples/" + demo + "/body") %>
   	</div>
 	</body>
 </html>

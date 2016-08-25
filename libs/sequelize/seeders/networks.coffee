@@ -13,8 +13,8 @@ module.exports.up = (sequelize, models)->
       ]
     },
     {
-      name: "Google Adsense"
-      slug: "sense"
+      name: "AdSense"
+      slug: "adsense"
       is_enabled: false
       entry_raw_url: ""
       entry_js: "window.adsbygoogle"
