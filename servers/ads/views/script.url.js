@@ -14,6 +14,7 @@ API.url_attributes = {
 API.status = function(status, network) {
   var img = document.createElement('img')
   img.src = API.url(status, false, network, true)
+  img.m_handled = true
   img.style.display = "none"
   document.body.appendChild(img)
   img.onload = function() {
@@ -22,24 +23,77 @@ API.status = function(status, network) {
 }
 
 
-API.url = function(url, encode, network, tracking) {    
-  var encoded = (encode != false) ? btoa(url) : url
+API.url = function(url, encode, network, tracking, url_type) {  
   var params = tracking == true ? API.url_params : ""
+   
+  if(encode != false) {
+    url_type = url_type || API.url_type(url)
+    
+    if(url_type == "path") {
+      url = API.url_append(url)
+    }
+    
+    url = btoa(url)
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/\=+$/, '')
+  }
 
   return (
-    API.base + encoded + "?" + params +
+    API.base + url + "?" + params +
     (network ? ("&network=" + network) : "") + "&"
   )
 }
 
 
-API.serialize = function(obj, prefix) {
+API.url_append = function(path) {
+  var site = atob(window.location.pathname.slice(1)).split("?")[0]
+  
+  if(path[0] == "/") {
+    site = "//" + API.extract_domain(site)
+  } else {
+    var splits = site.split("/")
+    var steps = splits.length - (path.match(/\.\.\//g) || []).length
+    
+    site = site.split("/").slice(0, steps).join("/")
+  }
+  
+  return site + "/" + path.replace(/(\.)?\.\//g, "")
+}
+
+
+API.extract_domain = function(url) {
+  var domain = url
+
+  if (url.indexOf("//") > -1) {
+    domain = url.split('//')[1]
+  }
+  
+  return domain.split('/')[0].split("?")[0]
+} 
+
+
+API.url_type = function(url) {  
+  if(!url || url.length == 0 || 
+    API.extract_domain(url) == API.raw_base) return null
+  
+  if(url.indexOf("//") > -1) {
+    return "external"
+  } else if(url.indexOf(":") == -1) {
+    return "path"
+  }
+  
+  return null
+}
+
+
+API.url_serialize = function(obj, prefix) {
   var str = [];
   for(var p in obj) {
     if (obj.hasOwnProperty(p)) {
       var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
       str.push(typeof v == "object" ?
-        API.serialize(v, k) :
+        API.url_serialize(v, k) :
         encodeURIComponent(k) + "=" + encodeURIComponent(v));
     }
   }
@@ -116,7 +170,7 @@ API.fetch_attributes = function(callback) {
     
     if(i == attributes.length-1) {
       setTimeout(function() {
-        API.url_params = API.serialize(API.url_attributes)
+        API.url_params = API.url_serialize(API.url_attributes)
         callback()
       }, 500)
     } 

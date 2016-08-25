@@ -1,15 +1,16 @@
 API.migrator = function(element, parent, network) {  
   var src = element.src || element.href
   var network = network || API.fetch_network(src)
-  
-  console.debug(API.network, "migrator", element.m_handled, element) 
-  
-  if (!network || !src || tagName != "iframe") return element
-    
   var path = element.src ? "src" : "href"
   var tagName = API.tag_name(element)
+  var url_type = API.url_type(src)
+  
+  console.debug(API.network, "migrator", src, url_type, element) 
+  
+  if (!network || !url_type) return element
+    
   var orginal = element
-  var url = API.url(src, true, network, false)
+  var url = API.url(src, true, network, false, url_type)
   
   if(tagName == "a") {
     url += "&link=true"
@@ -17,7 +18,7 @@ API.migrator = function(element, parent, network) {
   }
 
   if(tagName == "iframe") {
-    url += "&frame=" + encodeURI(API.base)
+    url += "&frame=" + encodeURI(API.raw_base)
   }    
   
   if(tagName == "script" || tagName == "link") {
@@ -26,16 +27,14 @@ API.migrator = function(element, parent, network) {
 
   element[path] = url
   
-/*
-    if(tagName == "script" || tagName == "link") {
-      if(orginal.parentNode) {
-        orginal.parentNode.replaceChild(element, orginal)
-      } else {
-        parent.appendChild(element)
-        orginal.remove()
-      } 
-    }
-*/
+  if(tagName == "link" || tagName == "script") {
+    if(orginal.parentNode) {
+      orginal.parentNode.replaceChild(element, orginal)
+    } else {
+      parent.appendChild(element)
+      orginal.remove()
+    } 
+  }
   
   return element
 }

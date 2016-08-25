@@ -12,21 +12,21 @@ module.exports = (data, publisher, network, query)->
       [/google\_ad\_/gi, "#{publisher.key}_#{network.id}_"]
     ]
     
-    if not CONFIG.debug.ads_server.modifier
+    if not CONFIG.disable.ads_server.modifier
       for replacer in replacers
         data.content = data.content.replace replacer[0], replacer[1]
     
     
     if query.frame?
       data.content += """
-        <script type='text/javascript'>  
-          window["#{publisher.key}"] = { network: #{network.id} };   	
-          (function(window) {
+        <script type='text/javascript'>           	
+          window["#{publisher.key}"] = { network: #{network.id} };   
+          (function(window, base) {
             var script = document.createElement("script");
-            script.src = "#{query.frame}?r=" + Math.random();
+            script.src = "//" + base + "?r=" + Math.random();
             script.async = true;
             document.getElementsByTagName('head')[0].appendChild(script);
-          })(window);
+          })(window, "#{query.frame}");
         </script>
       """
   

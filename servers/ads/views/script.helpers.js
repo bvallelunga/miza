@@ -40,7 +40,3 @@ API.tag_name = function(element) {
 API.to_array = function(array_like) {
   return Array().slice.call(array_like || [])
 } 
-
-API.is_url = function isURL(url) {  
-  return url.indexOf("//") > -1
-}

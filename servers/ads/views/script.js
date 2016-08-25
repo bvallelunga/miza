@@ -8,6 +8,7 @@
   
   // Global Variables
   API.id = "<%= publisher.key %>" 
+  API.raw_base = "<%= publisher.endpoint %>"
   API.base = "//<%= publisher.endpoint %>/"
   API.window = window
   API.document = window.document

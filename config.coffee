@@ -44,7 +44,10 @@ module.exports = ->
       }
     ]
     
-    debug: {
+    disable: {
+      express: {
+        logger: true
+      }
       ads_server: {
         downloader: true
         modifier: true

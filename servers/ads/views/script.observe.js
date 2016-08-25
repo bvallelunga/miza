@@ -27,7 +27,7 @@ API.observer = function(parent, network) {
 }
 
 API.observer_iframe = function(element, network) {  
-  if(API.is_url(element.src)) return
+  if(API.url_type(element.src)) return
  
   API.observe_init(element.contentWindow)
   API.observe(element.contentDocument, network)
@@ -44,7 +44,7 @@ API.observer_iframe = function(element, network) {
 API.observer_element = function(element, parent, network, from_observer) {
   if(element.m_handled) return
   
-  if(API.tag_name(element) == "iframe") { 
+  if(API.tag_name(element) == "iframe") {     
     if(from_observer != true) { 
       API.observer_iframe(element, network)
     }

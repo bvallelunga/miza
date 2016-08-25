@@ -13,7 +13,9 @@ GLOBAL.LIBS = require("../libs")()
 
 
 # Express Setup
-app.use morgan CONFIG.logger
+if not CONFIG.disable.express.logger
+  app.use morgan CONFIG.logger
+
 app.enable 'trust proxy'
 app.use bodyParser.json()
 app.use bodyParser.urlencoded({ extended: true })

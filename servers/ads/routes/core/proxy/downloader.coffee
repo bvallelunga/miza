@@ -3,7 +3,7 @@ request = require "request"
 
 fetchRedis = (key)->
   new Promise (res, rej)-> 
-    if CONFIG.debug.ads_server.downloader
+    if CONFIG.disable.ads_server.downloader
       return res null
    
     LIBS.redis.get key, (error, response)->                 
@@ -49,7 +49,7 @@ download = (url, query, headers)->
       data.media = "link"
       data.href = response.request.uri.href
     
-    else if data.headers['content-type'].indexOf("text") == -1
+    else if (data.headers['content-type'] or "text").indexOf("text") == -1
       data.media = "binary"
       data.content = response.body
     
