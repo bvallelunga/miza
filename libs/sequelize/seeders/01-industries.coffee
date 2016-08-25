@@ -16,7 +16,7 @@ module.exports.up = (sequelize, models)->
   ]
     
   
-create_industry = (models, id, name, cpm, cpc)->
+create_industry = (models, name, id, cpm, cpc)->
   models.Industry.findOrCreate({
     where: {
       name: name
