@@ -2,6 +2,7 @@ module.exports.up = (sequelize, models)->
   
   Promise.map [
     {
+      id: 1
       name: "Double Click"
       slug: "dfp"
       is_enabled: true
@@ -13,6 +14,7 @@ module.exports.up = (sequelize, models)->
       ]
     },
     {
+      id: 2
       name: "AdSense"
       slug: "adsense"
       is_enabled: false
@@ -21,6 +23,7 @@ module.exports.up = (sequelize, models)->
       domains: []
     },
     {
+      id: 3
       name: "Ad Roll"
       slug: "roll"
       is_enabled: false
@@ -29,6 +32,7 @@ module.exports.up = (sequelize, models)->
       domains: []
     },
     {
+      id: 4
       name: "Live Rail"
       slug: "rail"
       is_enabled: false
@@ -37,6 +41,7 @@ module.exports.up = (sequelize, models)->
       domains: []
     },
     {
+      id: 5
       name: "Carbon"
       slug: "carbon"
       is_enabled: false
