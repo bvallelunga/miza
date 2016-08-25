@@ -56,5 +56,4 @@ module.exports.up = (sequelize, models)->
         slug: data.slug
       }
       defaults: data
-    }).then (networks)->
-      networks[0].addPublishers [ 1 ]
+    })
