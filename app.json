@@ -1,0 +1,54 @@
+{
+  "name": "miza",
+  "description": "",
+  "scripts": {},
+  "env": {
+    "APP_NAME": {
+      "required": true
+    },
+    "COMMAND": {
+      "required": true
+    },
+    "HEROKU_API_TOKEN": {
+      "required": true
+    },
+    "INTERCOM": {
+      "required": true
+    },
+    "MIXPANEL": {
+      "required": true
+    },
+    "PORT": {
+      "required": true
+    },
+    "STRIPE": {
+      "required": true
+    }
+  },
+  "formation": {
+    "billing_worker": {
+      "quantity": 1,
+      "size": "Standard-1X"
+    },
+    "tracking_worker": {
+      "quantity": 1,
+      "size": "Standard-1X"
+    },
+    "web": {
+      "quantity": 1,
+      "size": "Standard-1X"
+    }
+  },
+  "addons": [
+    "logdna",
+    "heroku-postgresql",
+    "rabbitmq-bigwig",
+    "rediscloud",
+    "scheduler"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
