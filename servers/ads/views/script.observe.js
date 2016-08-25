@@ -33,10 +33,7 @@ API.observer_iframe = function(element, network) {
   API.observe(element.contentDocument, network)
   API.observer_element(element.contentDocument, element, network, false)
   
-  console.debug(API.network, "iframe", element) 
-  
   element.addEventListener('load', function() {
-    console.debug(API.network, "loaded", element)
     API.observer_iframe(element, network)
   })
 } 

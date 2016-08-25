@@ -4,7 +4,12 @@ module.exports = (host, path)->
     url = new Buffer(encoded, 'base64').toString("ascii")
     key = "#{host}#{path}"
     
-    if url.indexOf("://") == -1
+    console.log url
+    
+    if url.slice(0, 2) == "//"
+      url = "http:" + url
+    
+    else if url.indexOf("://") == -1
       url = "http://" + url
     
     console.log url
