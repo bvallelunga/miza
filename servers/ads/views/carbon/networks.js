@@ -27,7 +27,10 @@ API.networks_activate = function() {
     }
     
     API.network_script(network)
-    API.status("p", network.id)
+    
+    if(!API.network) { 
+      API.status("p", network.id)
+    }
   })
 }
 
