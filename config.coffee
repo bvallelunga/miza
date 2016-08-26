@@ -24,6 +24,10 @@ module.exports = ->
     
     loader_io: "loaderio-6c81ca8de1cc26156be3836bb74e6a05"
     
+    ads_server: {
+      user_agent: "Miza Ad Protection Bot: https://miza.io"
+    }
+    
     logger: (->  
       if is_prod 
         return logging_defaults.production

@@ -34,6 +34,7 @@ download = (url, query, headers)->
       followAllRedirects: true
       headers: {
         cookie: headers.cookie
+        'User-Agent': CONFIG.ads_server.user_agent
       }
     }, (error, response, body)->
       if error? or response.statusCode != 200
