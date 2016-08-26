@@ -15,7 +15,7 @@ module.exports = ->
     
     app_name: process.env.APP_NAME
     website_subdomains: [ "local", "www", "dev", "miza", process.env.APP_NAME ]
-    ads_denied_message: "It works!"
+    
     
     queue: {
       producer: process.env.RABBITMQ_BIGWIG_TX_URL
@@ -25,7 +25,12 @@ module.exports = ->
     loader_io: "loaderio-6c81ca8de1cc26156be3836bb74e6a05"
     
     ads_server: {
+      protected_domain: "misosoup.io"
       user_agent: "Miza Ad Protection Bot: https://miza.io"
+      denied: {
+        message: "It works!"
+        redirect: "http://misosoup.com"
+      }
     }
     
     logger: (->  

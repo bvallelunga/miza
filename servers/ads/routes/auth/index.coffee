@@ -2,7 +2,7 @@ module.exports.has_publisher = (req, res, next)->
   domains = req.host.split(".").slice(0, -1)
   
   if domains.length == 0
-    return res.end CONFIG.ads_denied_message
+    return res.end CONFIG.ads_server.denied.message
   
   LIBS.models.Publisher.findOne({
     where: {      
@@ -14,7 +14,7 @@ module.exports.has_publisher = (req, res, next)->
     }]
   }).then (publisher)->  
     if not publisher?
-      return res.end CONFIG.ads_denied_message
+      return res.end CONFIG.ads_server.denied.message
     
     req.publisher = publisher
     next()
@@ -30,4 +30,4 @@ module.exports.has_network = (req, res, next)->
       req.network = network
       return next()
   
-  return res.end CONFIG.ads_denied_message
+  return res.end CONFIG.ads_server.denied.message

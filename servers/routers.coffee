@@ -11,6 +11,9 @@ module.exports = (srv)->
     }
     
     engine: (req, res, next)->
+      if req.host.indexOf(CONFIG.ads_server.protected_domain) > -1
+        return res.redirect CONFIG.ads_server.denied.redirect
+    
       subdomains = req.host.split(".")
     
       if subdomains.length >= 2 and subdomains[0] not in CONFIG.website_subdomains
