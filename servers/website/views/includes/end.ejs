@@ -64,12 +64,12 @@
         mixpanel.identify('<%= user.id %>');
       <% } %>
       
-      mixpanel.track("WEB.Page")
+      mixpanel.track("WEB.PAGE")
       
       <% if(title.length > 0) { %>
-        mixpanel.track("WEB.Page.<%= title.split(" ").join("_") %>")
+        mixpanel.track("WEB.PAGE.<%= title.split(" ").join("_") %>")
       <% } else if(path == "/") { %>
-        mixpanel.track("WEB.Page.Home")
+        mixpanel.track("WEB.PAGE.Home")
       <% } %>
     </script>
     
