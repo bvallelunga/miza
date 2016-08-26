@@ -25,6 +25,7 @@ module.exports = ->
     loader_io: "loaderio-6c81ca8de1cc26156be3836bb74e6a05"
     
     ads_server: {
+      domain: process.env.ADS_DOMAIN
       protected_domain: "misosoup.io"
       user_agent: "Miza Ad Protection Bot: https://miza.io"
       denied: {

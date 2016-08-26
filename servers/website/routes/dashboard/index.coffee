@@ -55,9 +55,14 @@ module.exports.get_dashboard = (req, res, next)->
     "setup", "analytics", "billing", "settings"
   ]
   dashboard_title = (dashboard.split(' ').map (word) -> word[0].toUpperCase() + word[1..-1].toLowerCase()).join ' '
+  ads_domain = CONFIG.ads_server.domain
 
   if dashboard not in dashboards
-    return res.redirect "#{dashboard_path}/analytics"
+    return res.redirect "#{dashboard_path}/analytics"  
+  
+  if req.publisher.is_demo
+    ads_domain = req.get("host")
+  
     
   switch dashboard
     when "setup"
@@ -72,11 +77,12 @@ module.exports.get_dashboard = (req, res, next)->
       js.push "dashboard-analytics"
       css.push "dashboard-analytics"
   
+  
   Promise.resolve().then ->
-    if dashboard != "settings"
-      return null
+    if dashboard == "settings"
+      return req.publisher.getIndustry()
       
-    return req.publisher.getIndustry()
+    return null
     
   .then (industry)-> 
     res.render "dashboard/index", {
@@ -86,6 +92,7 @@ module.exports.get_dashboard = (req, res, next)->
       dashboard_path: dashboard_path
       dashboard: dashboard
       industry: industry
+      ads_domain: ads_domain
     }
   
   
