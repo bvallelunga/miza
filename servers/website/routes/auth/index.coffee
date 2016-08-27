@@ -138,10 +138,12 @@ module.exports.has_publisher = (req, res, next)->
     
     req.publisher = publisher
     res.locals.publisher = publisher
-    res.locals.intercom.company = {
-      id: publisher.id
-      name: publisher.name
-    }
+    
+    if not publisher.is_demo
+      res.locals.intercom.company = {
+        id: publisher.id
+        name: publisher.name
+      }
     
     next()
     
