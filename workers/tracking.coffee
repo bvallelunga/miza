@@ -23,6 +23,7 @@ LIBS.queue.consume "event-created", (event, ack, nack)->
     browser.engine = agent.engine
     device.os = agent.os
     device.cpu = agent.cpu
+
     
     # Clean up old information
     browser.demensions = browser.demensions or {}

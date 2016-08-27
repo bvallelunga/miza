@@ -4,8 +4,8 @@ module.exports.get_logs = (req, res, next)->
   req.publisher.getEvents({ 
     limit: 100 
     attributes: [ 
-      "browser", "network_name"
-      "created_at", "type", "ip_address"
+      "browser", "device", "network_name",
+      "created_at", "type"
     ]
     where: {
       protected: true
@@ -19,7 +19,14 @@ module.exports.get_logs = (req, res, next)->
       ['created_at', 'DESC'],
     ]
   }).then (events)->
-    res.json(events)
+    res.json events.map (event)->
+      return {
+        network_name: event.network_name
+        browser: event.browser.name or "Unknown"
+        os: event.device.os.name or "Unknown"
+        created_at: event.created_at
+        type: event.type
+      }
     
   .catch next
   
