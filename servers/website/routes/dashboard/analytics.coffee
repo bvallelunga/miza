@@ -4,13 +4,14 @@ module.exports.get_logs = (req, res, next)->
   req.publisher.getEvents({ 
     limit: 100 
     attributes: [ 
-      "ip_address", "protected", "network_name"
-      "created_at", "type" 
+      "browser", "network_name"
+      "created_at", "type", "ip_address"
     ]
     where: {
+      protected: true
       type: {
-        $notIn: [
-          "ping", "asset"
+        $in: [
+          "impression", "click"
         ]
       }
     }

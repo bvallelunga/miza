@@ -60,10 +60,10 @@ analyticsLogs = ->
       created = new Date log.created_at
           
       return $("""
-        <tr class="#{ if log.protected then "protected" else "normal" }">
+        <tr>
           <td>#{log.type}</td>
           <td>#{log.network_name or ""}</td>
-          <td>#{log.protected}</td>
+          <td>#{log.browser.name or "Unknown"}</td>
           <td>#{log.ip_address}</td>
           <td>#{moment.duration(created - now).humanize(true)}</td>
         </tr>
