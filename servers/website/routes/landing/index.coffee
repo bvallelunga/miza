@@ -59,12 +59,8 @@ module.exports.post_beta = (req, res, next)->
     }
   }
   
-  request.post CONFIG.slack.beta, {
-    form: {
-      payload: JSON.stringify {
-        text: "#{req.body.email} requested access."
-      }
-    }  
+  LIBS.slack.message {
+    text: "#{req.body.email} requested access."
   }
   
 

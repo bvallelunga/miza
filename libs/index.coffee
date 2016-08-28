@@ -6,4 +6,5 @@ module.exports = ->
     stripe: require("./stripe")()
     mixpanel: require("./mixpanel")()
     queue: require "./queue"
+    slack: require "./slack"
   }

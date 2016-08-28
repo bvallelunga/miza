@@ -83,6 +83,13 @@ module.exports = (sequelize, DataTypes)->
           callback()        
         
         .catch callback
+        
+        
+      afterCreate: (user, options)->
+        if not user.is_demo and not user.is_admin
+          LIBS.slack.message {
+            text: "#{user.name} created an account with email #{user.email}"
+          }
        
          
       afterUpdate: (user, options, callback)->
