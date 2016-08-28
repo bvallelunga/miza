@@ -18,7 +18,7 @@ module.exports.get_register = (req, res, next)->
 
 module.exports.get_logout = (req, res, next)->
   req.session.destroy()
-  res.redirect "/"
+  res.redirect req.query.next or "/"
   
   
 module.exports.post_login = (req, res, next)->  
@@ -96,10 +96,13 @@ module.exports.load_user = (req, res, next)->
      
 
 module.exports.not_authenticated = (req, res, next)->
-  if req.user?
-    return res.redirect "/dashboard"
+  if not req.user?
+    return next()
     
-  next()
+  if req.user.is_demo
+    return res.redirect "/logout?next=#{req.originalUrl}"
+    
+  res.redirect "/dashboard"
 
 
 module.exports.is_authenticated = (req, res, next)->
