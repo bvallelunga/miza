@@ -1,5 +1,5 @@
 module.exports.post_settings = (req, res, next)->
-  if req.publisher.is_demo and not req.user.is_admin
+  if req.user.is_demo
     return next "Demo accounts can not be modified."
 
   req.publisher.update({
