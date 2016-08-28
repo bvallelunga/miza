@@ -11,7 +11,22 @@
   of ads being delivered on your website. Feel free to <a href="mailto:<%= support_email %>">contact us</a> 
   if you don't know how, our team can walk you through it over the phone.
 </p>
-<pre><code><%= publisher.endpoint %>.	  300	IN	CNAME	<%= ads_domain %>.</code></pre>
+<div class="dns">
+  <table cellpadding="0" cellspacing="0">
+    <thead>
+      <th><span>Record Type</span></th>
+      <th><span>Name</span></th>
+      <th><span>Value</span></th>
+    </thead>
+    <body>
+      <tr>
+        <td>CNAME</td>
+        <td><%= publisher.endpoint %></td>
+        <td><%= ads_domain %></td>
+      </tr>
+    </body>
+  </table>
+</div>
 <h3>2) Select an Ad Network</h3>
 <div class="networks">
   <div class="network left active" data-guide="carbon">
