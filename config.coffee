@@ -1,5 +1,6 @@
 module.exports = ->
   is_prod = process.env.NODE_ENV == "production"
+  is_dev = not is_prod
   logging_defaults = {
     development: ":method :url :status :response-time ms"
     production: ':method :req[host]:url :status :response-time ms :remote-addr ":user-agent" ":referrer" :res[content-length] HTTP/:http-version [:date[clf]]'
@@ -8,6 +9,7 @@ module.exports = ->
   return {
     env: process.env
     is_prod: is_prod
+    is_dev: is_dev
     port: process.env.PORT
     
     postgres_url: process.env.DATABASE_URL
@@ -56,11 +58,11 @@ module.exports = ->
     
     disable: {
       express: {
-        logger: false and not is_prod
+        logger: false and is_dev
       }
       ads_server: {
-        downloader: false and not is_prod
-        modifier: false and not is_prod
+        downloader: false and is_dev
+        modifier: false and is_dev
       }
     }
     

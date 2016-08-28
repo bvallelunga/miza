@@ -2,7 +2,7 @@
   var API = window["<%= publisher.key %>"] || {}
   
   // Expose Miza
-  <% if(!CONFIG.is_prod) { %>
+  <% if(CONFIG.is_dev) { %>
     window.miza = API
   <% } %>
   

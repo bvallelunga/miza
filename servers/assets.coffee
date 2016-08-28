@@ -43,6 +43,6 @@ module.exports = (app, srv, root)->
                 else
                   piler.addFile directory, filePath
                   
-  if not CONFIG.is_prod
+  if CONFIG.is_dev
     io = require('socket.io').listen(srv)
     pilers.coffee.piler.liveUpdate(pilers.less.piler, io)
