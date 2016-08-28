@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes)->
     name: DataTypes.STRING 
     stripe_id: DataTypes.STRING
     stripe_card: DataTypes.JSONB
+    is_demo: { 
+      type: DataTypes.BOOLEAN
+      defaultValue: false
+    }
     is_admin: { 
       type: DataTypes.BOOLEAN
       defaultValue: false

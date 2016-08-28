@@ -18,6 +18,7 @@ create_user = (models)->
     defaults: {
       password: randomstring.generate(15)
       name: "Demo User"
+      is_demo: true
     }
   })
   
