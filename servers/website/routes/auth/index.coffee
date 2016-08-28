@@ -11,6 +11,8 @@ module.exports.get_register = (req, res, next)->
     js: req.js.renderTags "modal"
     css: req.css.renderTags "modal"
     title: "Sign Up"
+    name: req.query.name or ""
+    email: req.query.email or ""
   }
   
 

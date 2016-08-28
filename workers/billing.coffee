@@ -7,7 +7,7 @@ GLOBAL.LIBS = require("../libs")()
 # Check If First Day of the Month
 now = new Date()
 
-if now.getUTCDate() > 1
+if CONFIG.is_prod and now.getUTCDate() > 1
   return process.exit()
 
  
