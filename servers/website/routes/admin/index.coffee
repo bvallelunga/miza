@@ -9,7 +9,7 @@ module.exports.get_access = (req, res, next)->
   res.render "admin/access", {
     js: req.js.renderTags "modal"
     css: req.css.renderTags "modal"
-    title: "Grant Access"
+    title: "Admin Grant Access"
   }
 
 
@@ -32,6 +32,24 @@ module.exports.post_access = (req, res, next)->
     
   .catch next
   
+
+module.exports.get_publishers = (req, res, next)->
+  LIBS.models.Publisher.findAll({
+    order: [
+      ['name', 'ASC']
+    ]
+    include: [{
+      model: LIBS.models.Industry
+      as: "industry"
+    }]
+  }).then (publishers)->
+    res.render "admin/publishers", {
+      js: req.js.renderTags "modal"
+      css: req.css.renderTags "modal", "fa"
+      title: "Admin Publishers"
+      publishers: publishers
+    }
+  
   
 module.exports.get_industries = (req, res, next)->
   LIBS.models.Industry.findAll({
@@ -42,7 +60,7 @@ module.exports.get_industries = (req, res, next)->
     res.render "admin/industries", {
       js: req.js.renderTags "modal"
       css: req.css.renderTags "modal", "fa"
-      title: "Update Industries"
+      title: "Admin Industries"
       industries: industries
     }
 

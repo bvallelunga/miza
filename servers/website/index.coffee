@@ -51,6 +51,7 @@ module.exports = (srv)->
   app.get  "/admin", routes.auth.is_admin, routes.admin.get_root
   app.get  "/admin/access", routes.auth.is_admin, routes.admin.get_access
   app.get  "/admin/industries", routes.auth.is_admin, routes.admin.get_industries
+  app.get  "/admin/publishers", routes.auth.is_admin, routes.admin.get_publishers
   app.post "/admin/access", routes.auth.is_admin, routes.admin.post_access
   app.post "/admin/industries", routes.auth.is_admin, routes.admin.post_industries
   
@@ -58,7 +59,7 @@ module.exports = (srv)->
   # Dashboard Routes
   app.get  "/dashboard", routes.auth.is_authenticated, routes.dashboard.get_root
   app.get  "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.get_new
-  app.get  "/dashboard/:publisher", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_dashboard
+  app.get  "/dashboard/:publisher", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_root
   app.get  "/dashboard/:publisher/:dashboard", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_dashboard
   app.get  "/dashboard/:publisher/billing/logs", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_billing_logs
   app.get  "/dashboard/:publisher/billing/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_billing_metrics
