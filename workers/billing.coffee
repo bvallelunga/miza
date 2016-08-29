@@ -12,58 +12,62 @@ if CONFIG.is_prod and now.getUTCDate() > 1
 
  
 # Fetch All Customers
-LIBS.models.User.findAll({
+LIBS.models.Publisher.findAll({
   where: {
-    stripe_card: {
-      $ne: null 
-    }
+    is_demo: false
   }
   include: [{
-    model: LIBS.models.Publisher
-    as: "publishers"
+    model: LIBS.models.User
+    as: "owner"
+    where: {
+      is_demo: false
+      is_admin: false
+      stripe_card: {
+        $ne: null 
+      }
+    }
+  }, {
+    model: LIBS.models.Industry
+    as: "industry"
   }]
-}).then (users)->
-  Promise.all users.map (user)->
-    Promise.all user.publishers.map (publisher)->
-      Promise.props({
-        impressions: LIBS.models.Event.count({
-          where: {
-            publisher_id: publisher.id
-            protected: true
-            type: "impression"
-            paid_at: null
-          }
-        })
-        industry: publisher.getIndustry()
-      }).then (props)-> 
-        amount = props.impressions/1000 * props.industry.cpm * props.industry.fee * 1000
-        amount_stripe = Math.floor(amount * 100)
-        
-        if amount_stripe <= 49
-          return Promise.resolve(false)
-        
-        LIBS.mixpanel.people.track_charge(user.id, amount)
-        
-        LIBS.stripe.charges.create({
-          amount: amount_stripe
-          customer: user.stripe_id
-          currency: "usd"
-        })
+}).then (publishers)->
+  Promise.all publishers.map (publisher)->
+    LIBS.models.Event.count({
+      where: {
+        publisher_id: publisher.id
+        protected: true
+        type: "impression"
+        paid_at: null
+      }
+    }).then (impressions)-> 
+      amount = impressions/1000 * publisher.industry.cpm * publisher.industry.fee * 1000
+      amount_stripe = Math.floor amount * 100
       
-      .then (charged)->
-        if charged == false
-          return Promise.resolve()
+      if amount_stripe <= 49
+        return Promise.resolve false
       
-        LIBS.models.Event.update({
-          paid_at: now
-        }, {
-          where: {
-            publisher_id: publisher.id
-            protected: true
-            type: "impression"
-            paid_at: null
-          }
-        })
+      LIBS.mixpanel.people.track_charge publisher.owner.id, amount
+      
+      LIBS.stripe.charges.create {
+        amount: amount_stripe
+        customer: publisher.owner.stripe_id
+        currency: "usd"
+      }
+    
+    .then (charged)->    
+      if charged == false
+        return Promise.resolve()
+    
+      LIBS.models.Event.update {
+        paid_at: now
+      }, {
+        where: {
+          publisher_id: publisher.id
+          protected: true
+          type: "impression"
+          paid_at: null
+        }
+      }
         
 .then ->
   return process.exit()

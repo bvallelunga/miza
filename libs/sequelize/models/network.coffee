@@ -39,9 +39,9 @@ module.exports = (sequelize, DataTypes)->
           through: "NetworkPublisher"
         }
         
-        models.Network.hasMany(models.Event, { 
+        models.Network.hasMany models.Event, { 
           as: 'events' 
-        })
+        }
 
     }
     hooks: {

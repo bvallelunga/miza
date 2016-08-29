@@ -7,6 +7,7 @@ module.exports.up = (sequelize, models)->
     publisher: create_publisher models
   }).then (result)->
     result.user[0].addPublisher result.publisher[0]
+    result.publisher[0].addOwner result.user[0]
     result.publisher[0].addNetworks [ 1, 2, 3, 4, 5 ]
     
   

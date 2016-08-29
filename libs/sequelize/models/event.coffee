@@ -58,7 +58,7 @@ module.exports = (sequelize, DataTypes)->
   }, {
     classMethods: {
       generate: (req, data)->                               
-        LIBS.models.Event.create({
+        LIBS.models.Event.create {
           type: data.type 
           ip_address: req.ip or req.ips
           protected: req.query.protected == "true"
@@ -79,7 +79,7 @@ module.exports = (sequelize, DataTypes)->
             components: req.query.components or []
             battery: req.query.battery or {}
           }
-        })
+        }
        
     }
     hooks: {

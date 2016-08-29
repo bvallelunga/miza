@@ -36,6 +36,7 @@ module.exports.post_new = (req, res, next)->
     name: req.body.publisher_name
     industry_id: Number req.body.publisher_industry
   }).then (publisher)->
+    publisher.setOwner req.user
     publisher.addNetworks [ 1 ]
     req.user.addPublisher(publisher).then ->
       res.json {
@@ -63,7 +64,6 @@ module.exports.get_dashboard = (req, res, next)->
   if req.publisher.is_demo
     ads_domain = req.get("host")
   
-    
   switch dashboard
     when "setup"
       js.push "code"

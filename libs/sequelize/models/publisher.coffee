@@ -66,18 +66,22 @@ module.exports = (sequelize, DataTypes)->
           through: "UserPublisher"
         }
         
+        models.Publisher.belongsTo models.User, { 
+          as: 'owner' 
+        }
+        
         models.Publisher.belongsToMany models.Network, {
           as: 'networks'
           through: "NetworkPublisher"
         }
         
-        models.Publisher.hasMany(models.Event, { 
+        models.Publisher.hasMany models.Event, { 
           as: 'events' 
-        })
+        }
         
-        models.Publisher.belongsTo(models.Industry, { 
+        models.Publisher.belongsTo models.Industry, { 
           as: 'industry' 
-        })
+        }
 
     }
     instanceMethods: {
