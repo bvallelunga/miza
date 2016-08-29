@@ -37,7 +37,7 @@ module.exports.post_new = (req, res, next)->
     industry_id: Number req.body.publisher_industry
   }).then (publisher)->
     publisher.setOwner req.user
-    publisher.addNetworks [ 1 ]
+    publisher.addNetworks [ 1, 5 ]
     req.user.addPublisher(publisher).then ->
       res.json {
         success: true
