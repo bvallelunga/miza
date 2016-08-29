@@ -70,7 +70,13 @@ module.exports.post_register = (req, res, next)->
       is_admin: access.is_admin
     }).then (user)->
       req.session.user = user.id
+    
+      if not access.publisher_id
+        return user
+          
+      return user.addPublisher access.publisher_id
       
+    .then ->
       res.json {
         success: true
         next: "/dashboard"

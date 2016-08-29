@@ -57,6 +57,7 @@ module.exports = ->
     ]
     
     disable: {
+      slack: true and is_dev
       express: {
         logger: false and is_dev
       }

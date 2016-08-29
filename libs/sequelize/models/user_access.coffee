@@ -15,4 +15,12 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.BOOLEAN
       defaultValue: false
     } 
+  }, {    
+    classMethods: {      
+      associate: (models)->
+        models.UserAccess.belongsTo models.Publisher, { 
+          as: 'publisher' 
+        }
+        
+    }
   }
