@@ -5,9 +5,8 @@ module.exports = {
       if not exists then return 
 
       knex.schema.table "Publisher", (table)->
-        table.integer('owner_id')
-          .unsigned()
-          .foreign("owner_id")
+        table.integer('owner_id').unsigned()
+        table.foreign("owner_id")
           .references("id")
           .inTable("User")
           .onUpdate("CASCADE")
