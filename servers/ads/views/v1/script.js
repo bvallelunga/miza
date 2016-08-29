@@ -38,23 +38,28 @@
       API.s_targets_list.push(target)
     <% }) %>
     
-    <% if(enabled) { %> 
-      API.s_listeners(window.document)
-      API.s_overrides(window)
-    <% } %>
-    
     API.s_fetch_attributes(window, API.s_start)
   }
   
   API.s_start = function() {
+    var enabled = <%- enabled %> && API.s_attributes["protected"]
+    
+    if(enabled) {
+      API.s_listeners(window.document)
+      API.s_overrides(window)
+    }
+    
     <% networks.forEach(function(network) { %> 
       var script = API.s_script()
+      var url = "<%= network.entry_url %>"
+      var network_id = "<%= network.id %>"
       
-      <% if(enabled) { %>
-        script.src = API.s_url("<%= network.entry_url %>", false, "<%= network.id %>")
-      <% } else { %>
-        script.src = "<%= network.entry_raw_url %>"
-      <% } %>
+      if(enabled) {
+        script.src = API.s_url(url, false, network_id)
+        script.src += "&script=true"
+      } else {
+        script.src = atob(url)
+      }
       
       API.s_head.appendChild(script)
     <% }) %>
@@ -205,11 +210,12 @@
     })
   }
   
-  API.s_url = function(url, encode, network) {
+  API.s_url = function(url, encode, network, tracking) {
+    var params = tracking == true ? API.s_attribute_params : ""
     var encoded = (encode != false) ? btoa(url) : url
   
     return (
-      API.s_base + encoded + "?" + API.s_attribute_params +
+      API.s_base + encoded + "?" + params +
       (network ? ("&network=" + network) : "")
     )
   }
@@ -248,7 +254,7 @@
   
   API.s_status = function(status, network) {
     var img = document.createElement('img')
-    img.src = API.s_url(status, false, network)
+    img.src = API.s_url(status, false, network, true)
     img.style.display = "none"
     document.body.appendChild(img)
     img.onload = function() {

@@ -1,6 +1,5 @@
 request = require "request"
 
-
 fetchRedis = (path)->
   new Promise (res, rej)-> 
     if CONFIG.disable.ads_server.downloader
