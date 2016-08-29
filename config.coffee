@@ -59,7 +59,7 @@ module.exports = ->
     disable: {
       slack: true and is_dev
       express: {
-        logger: false and is_dev
+        logger: true and is_dev
       }
       ads_server: {
         downloader: false and is_dev

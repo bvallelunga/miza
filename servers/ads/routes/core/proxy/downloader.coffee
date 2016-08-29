@@ -22,6 +22,7 @@ fetchRedis = (path)->
         data.content = new Buffer(data.content.data)
       
       data.cached = true
+      data.to_cache = false
       res data
       
       
@@ -47,6 +48,7 @@ download = (url, query, headers)->
       media: "asset"
       headers: response.headers or {}
       cached: false
+      to_cache: url.indexOf(".json") == -1 and url.indexOf("callback=") == -1
       url: url
     }
     
