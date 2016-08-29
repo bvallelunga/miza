@@ -35,6 +35,7 @@ LIBS.queue.consume "event-created", (event, ack, nack)->
     
     # Mixpanel tracking
     mixpanel_payload = {
+      distinct_id: "ads.#{event.ip_address}"
       $browser: browser.name
       $browser_version: browser.version
       $referrer: event.referrer_url
