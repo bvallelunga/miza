@@ -1,6 +1,12 @@
 (function(window) {
   var API = {}
   
+  <% 
+    networks = networks.filter(function(network) {
+      return network.slug == "dfp"
+    })
+  %>
+  
   <% networks.forEach(function(network) { %>
     window["<%= publisher.key %>_<%= network.id %>"] = <%= network.entry_js %>
   <% }) %>
