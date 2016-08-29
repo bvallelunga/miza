@@ -52,13 +52,13 @@ download = (url, query, headers)->
       url: url
     }
     
-    content_type = data.headers['content-type'] or "text"
+    data.content_type = data.headers['content-type'] or "text"
     
     if query.link?
       data.media = "link"
       data.href = response.request.uri.href
     
-    else if content_type.indexOf("text") == -1 and content_type.indexOf("javascript") == -1
+    else if data.content_type.indexOf("text") == -1 and data.content_type.indexOf("javascript") == -1
       data.media = "binary"
       data.content = response.body
     

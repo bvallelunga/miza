@@ -286,6 +286,10 @@
         API.s_status("i", network)
       }
       
+      if(tagName == "script") {
+        element[path] += "&script=true"
+      }
+      
       if(to_replace != false)
         orginal.parentNode.replaceChild(element, orginal)
     }

@@ -1,3 +1,5 @@
+obfuscator = require "js-obfuscator"
+script = require "../../script"
 modifiers = {
   dfp: require "./dfp"
   adsense: require "./adsense"
@@ -14,7 +16,11 @@ module.exports = (data, publisher, network, query)->
     
       for replacer in replacers
         data.content = data.content.replace replacer[0], replacer[1]
-    
+        
+      if query.script?
+        return obfuscator(data.content, script.obfuscator).then (code)->
+          data.content = code
+          return data
     
     if query.frame?
       data.content += """

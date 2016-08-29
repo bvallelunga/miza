@@ -43,7 +43,7 @@ API.network_script = function(network) {
     
     if(API.protected = !network.entry_js) {  
       var old_script = API.document.querySelector(network.entry_url.query)    
-      script.src = API.url(old_script.src, true, network.id) + "&" + old_script.src.split("?")[1]
+      script.src = API.url(old_script.src, true, network.id) + "&script=true&" + old_script.src.split("?")[1]
       script.id = API.id + "_" + network.id + "_js"
       old_script.parentNode.replaceChild(script, old_script) 
     }

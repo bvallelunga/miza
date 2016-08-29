@@ -78,11 +78,11 @@ module.exports.proxy = (req, res, next)->
       res.redirect data.href
       
     else 
-      res.set "Content-Type", data.headers['content-type']
+      res.set "Content-Type", data.content_type
 
       if data.media == "binary"
         res.end data.content, "binary"
-        
+      
       else
         res.send data.content
       

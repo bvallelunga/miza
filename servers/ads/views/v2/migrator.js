@@ -30,6 +30,7 @@ API.migrator = function(element, parent, network) {
     element.type = original.type
     element.id = original.id
     replace_element = true
+    url += "&=script=true"
   } 
   
   if(tag_name == "link") {
