@@ -77,23 +77,14 @@ module.exports.get_dashboard = (req, res, next)->
       js.push "dashboard-analytics"
       css.push "dashboard-analytics"
   
-  
-  Promise.resolve().then ->
-    if dashboard == "settings"
-      return req.publisher.getIndustry()
-      
-    return null
-    
-  .then (industry)-> 
-    res.render "dashboard/index", {
-      js: req.js.renderTags.apply(req.js, js)
-      css: req.css.renderTags.apply(req.css, css)
-      title: "#{dashboard_title} Dashboard"
-      dashboard_path: dashboard_path
-      dashboard: dashboard
-      industry: industry
-      ads_domain: ads_domain
-    }
+  res.render "dashboard/index", {
+    js: req.js.renderTags.apply(req.js, js)
+    css: req.css.renderTags.apply(req.css, css)
+    title: "#{dashboard_title} Dashboard"
+    dashboard_path: dashboard_path
+    dashboard: dashboard
+    ads_domain: ads_domain
+  }
   
   
 module.exports.post_settings = settings.post_settings

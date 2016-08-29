@@ -14,17 +14,14 @@ if CONFIG.is_prod and now.getUTCDate() > 1
 # Fetch All Customers
 LIBS.models.Publisher.findAll({
   where: {
-    is_demo: false
+    #is_demo: false
   }
   include: [{
     model: LIBS.models.User
     as: "owner"
     where: {
-      is_demo: false
-      is_admin: false
-      stripe_card: {
-        $ne: null 
-      }
+      #is_demo: false
+      #is_admin: false
     }
   }, {
     model: LIBS.models.Industry
@@ -32,16 +29,22 @@ LIBS.models.Publisher.findAll({
   }]
 }).then (publishers)->
   Promise.all publishers.map (publisher)->
+    event_query = {
+      publisher_id: publisher.id
+      protected: true
+      type: "impression"
+      paid_at: null
+    }
+  
+  
     LIBS.models.Event.count({
-      where: {
-        publisher_id: publisher.id
-        protected: true
-        type: "impression"
-        paid_at: null
-      }
+      where: event_query
     }).then (impressions)-> 
-      amount = impressions/1000 * publisher.industry.cpm * publisher.industry.fee * 1000
+      amount = impressions/1000 * publisher.industry.cpm * publisher.industry.fee
       amount_stripe = Math.floor amount * 100
+      
+      if not publisher.owner.stripe_card? and publisher.industry.fee == 0
+        return Promise.resolve true
       
       if amount_stripe <= 49
         return Promise.resolve false
@@ -61,12 +64,7 @@ LIBS.models.Publisher.findAll({
       LIBS.models.Event.update {
         paid_at: now
       }, {
-        where: {
-          publisher_id: publisher.id
-          protected: true
-          type: "impression"
-          paid_at: null
-        }
+        where: event_query
       }
         
 .then ->

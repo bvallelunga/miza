@@ -36,18 +36,18 @@ module.exports.get_metrics = (req, res, next)->
         paid_at: null
       }
     })
-    industry: req.publisher.getIndustry()
   }).then (props)-> 
+    industry = req.publisher.industry
     next_month = new Date()
     next_month.setUTCMonth next_month.getUTCMonth() + 1
     next_month.setUTCDate 1
    
     res.json {
       billed: next_month
-      cpm: numeral(props.industry.cpm).format("$0.00a")
-      owe: numeral(props.impressions/1000 * props.industry.cpm * props.industry.fee).format("$0[,]000[.]00a")
-      fee: numeral(props.industry.fee).format("0[.]0%")
-      revenue: numeral(props.impressions/1000 * props.industry.cpm).format("$0[,]000.00a")
+      cpm: numeral(industry.cpm).format("$0.00a")
+      owe: numeral(props.impressions/1000 * industry.cpm * industry.fee).format("$0[,]000[.]00a")
+      fee: numeral(industry.fee).format("0[.]0%")
+      revenue: numeral(props.impressions/1000 * industry.cpm).format("$0[,]000.00a")
     }
     
   .catch next

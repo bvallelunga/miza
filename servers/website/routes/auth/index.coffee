@@ -143,6 +143,11 @@ module.exports.has_publisher = (req, res, next)->
       
     return null
   
+  .then (publisher)->  
+    return publisher.getIndustry().then (industry)->
+      publisher.industry = industry
+      return publisher
+  
   .then (publisher)->
     if not publisher?
       return res.redirect "/dashboard"
@@ -155,7 +160,7 @@ module.exports.has_publisher = (req, res, next)->
         id: publisher.id
         name: publisher.name
       }
-    
+      
     next()
     
   .catch (error)->
