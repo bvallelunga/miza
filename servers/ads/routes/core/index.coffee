@@ -1,5 +1,5 @@
 request = require "request"
-uglify = require "uglify-js"
+obfuscator = require "js-obfuscator"
 script = require "./script"
 proxy = require "./proxy"
 
@@ -52,13 +52,15 @@ module.exports.script = (req, res, next)->
     }, (error, code)->
       if error?
         console.error error
+        code = ""
       
       if CONFIG.is_dev
         return res.send code
     
-      res.end uglify.minify(code, {
-        fromString: true
-      }).code
+      obfuscator(code, script.obfuscator).then (code)->
+        res.send code
+      
+  
     
 
 module.exports.proxy = (req, res, next)->
