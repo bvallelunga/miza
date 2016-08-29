@@ -35,9 +35,6 @@ module.exports.post_access = (req, res, next)->
 
 module.exports.get_publishers = (req, res, next)->
   LIBS.models.Publisher.findAll({
-    where: {
-      is_demo: false
-    }
     order: [
       ['name', 'ASC']
     ]
