@@ -14,14 +14,14 @@ if CONFIG.is_prod and now.getUTCDate() > 1
 # Fetch All Customers
 LIBS.models.Publisher.findAll({
   where: {
-    #is_demo: false
+    is_demo: false
   }
   include: [{
     model: LIBS.models.User
     as: "owner"
     where: {
-      #is_demo: false
-      #is_admin: false
+      is_demo: false
+      is_admin: false
     }
   }, {
     model: LIBS.models.Industry

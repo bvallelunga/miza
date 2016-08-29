@@ -15,6 +15,7 @@ module.exports = (srv)->
   # Routes
   app.get "/", routes.auth.has_publisher, routes.core.script
   app.get "/c", routes.auth.has_publisher, routes.core.carbon, routes.core.script
+  app.get "/check", routes.auth.has_publisher, routes.core.check
   app.get "/p", routes.auth.has_publisher, routes.core.ping
   app.get "/i", routes.auth.has_publisher, routes.auth.has_network, routes.core.impression
   app.get "*", routes.auth.has_publisher, routes.auth.has_network, routes.core.proxy

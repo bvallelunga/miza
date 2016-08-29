@@ -4,6 +4,10 @@ script = require "./script"
 proxy = require "./proxy"
 
 
+module.exports.check = (req, res, next)->
+  res.end req.publisher.key
+
+
 module.exports.ping = (req, res, next)->
   res.end script.pixel_tracker
   
