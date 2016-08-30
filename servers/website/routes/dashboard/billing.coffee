@@ -27,16 +27,14 @@ module.exports.get_logs = (req, res, next)->
   
   
 module.exports.get_metrics = (req, res, next)->
-  Promise.props({
-    impressions: LIBS.models.Event.count({
-      where: {
-        publisher_id: req.publisher.id
-        protected: true
-        type: "impression"
-        paid_at: null
-      }
-    })
-  }).then (props)-> 
+  LIBS.models.Event.count({
+    where: {
+      publisher_id: req.publisher.id
+      protected: true
+      type: "impression"
+      paid_at: null
+    }
+  }).then (impressions)-> 
     industry = req.publisher.industry
     next_month = new Date()
     next_month.setUTCMonth next_month.getUTCMonth() + 1
@@ -45,9 +43,9 @@ module.exports.get_metrics = (req, res, next)->
     res.json {
       billed: next_month
       cpm: numeral(industry.cpm).format("$0.00a")
-      owe: numeral(props.impressions/1000 * industry.cpm * industry.fee).format("$0[,]000[.]00a")
+      owe: numeral(impressions/1000 * industry.cpm * industry.fee).format("$0[,]000[.]00a")
       fee: numeral(industry.fee).format("0[.]0%")
-      revenue: numeral(props.impressions/1000 * industry.cpm).format("$0[,]000.00a")
+      revenue: numeral(impressions/1000 * industry.cpm).format("$0[,]000.00a")
     }
     
   .catch next
