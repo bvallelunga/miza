@@ -51,7 +51,7 @@ LIBS.queue.consume "event-created", (event, ack, nack)->
     }
       
     if ["impression", "click", "ping"].indexOf(event.type) > -1
-      LIBS.mixpanel.track("ADS.EVENT.#{asset_type}", mixpanel_payload)
+      LIBS.mixpanel.track "ADS.EVENT.#{asset_type}", mixpanel_payload
     
     
     # Save Event Data
