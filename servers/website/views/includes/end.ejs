@@ -51,7 +51,8 @@
     <script>
       mixpanel.init("<%= mixpanel %>")      
       
-      <% if(user) { %> 
+      <% if(user) { %>
+        mixpanel.identify('<%= user.id %>'); 
         mixpanel.people.set({ 
           "$name": "<%= user.name %>",
           "$email": "<%= user.email %>",
@@ -60,8 +61,6 @@
           "Publishers": <%- user.publishers.length %>,
           "Created On": "<%= user.created_at.toISOString() %>"
         });
-
-        mixpanel.identify('<%= user.id %>');
       <% } %>
       
       <% if(title.length > 0) { %>
