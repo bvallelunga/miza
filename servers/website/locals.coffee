@@ -32,7 +32,7 @@ module.exports = (req, res, next)->
   res.locals.random = "r=#{random_slug}"
   res.locals.mixpanel = CONFIG.mixpanel
   res.locals.intercom = ((user)-> 
-    if not user?
+    if not user? or user.is_demo
       return {}
       
     return { 

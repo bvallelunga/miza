@@ -159,6 +159,10 @@ module.exports.has_publisher = (req, res, next)->
       res.locals.intercom.company = {
         id: publisher.id
         name: publisher.name
+        industry: publisher.industry.name
+        "industry id": publisher.industry.id
+        "industry cpm": publisher.industry.cpm
+        "industry fee": publisher.industry.fee * 100
       }
       
     next()
