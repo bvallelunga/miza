@@ -106,9 +106,9 @@ module.exports.get_metrics = (req, res, next)->
     })
   }).then (props)->  
     res.json {
-      impressions: numeral(props.impressions).format("0a")
-      clicks: numeral(props.clicks).format("0a")
-      assets: numeral(props.assets).format("0a")
+      impressions: numeral(props.impressions).format("0[.]00a")
+      clicks: numeral(props.clicks).format("0[.]00a")
+      assets: numeral(props.assets).format("0[.]00a")
       blocked: numeral(props.protected_pings/(props.all_pings or 1)).format("0[.]0%")
       ctr: numeral(props.all_clicks/(props.all_impressions or 1)).format("0[.]0%")
     }
