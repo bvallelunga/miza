@@ -44,7 +44,6 @@ LIBS.queue.consume "event-created", (event, ack, nack)->
       $os: device.os.name
       $city: geo_location.city
       "Protected": event.protected
-      "Asset URL": event.asset_url
       "Asset Type": event.type
       "Network": event.network_name
       "Network ID": event.network_id
@@ -52,7 +51,6 @@ LIBS.queue.consume "event-created", (event, ack, nack)->
     }
       
     if ["impression", "click", "ping"].indexOf(event.type) > -1
-      LIBS.mixpanel.track("ADS.EVENT", mixpanel_payload)
       LIBS.mixpanel.track("ADS.EVENT.#{asset_type}", mixpanel_payload)
     
     
