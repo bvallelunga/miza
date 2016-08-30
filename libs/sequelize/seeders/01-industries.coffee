@@ -13,6 +13,9 @@ module.exports.up = (sequelize, models)->
     create_industry models, "Retail", 10, 5.21, 0.25
     create_industry models, "Technology", 11, 10.8, 0.67
     create_industry models, "Travel", 12, 9.66, 0.4
+    create_industry models, "Carbon: Business Circle", 13, 5, 0
+    create_industry models, "Carbon: Dev Circle", 14, 3.5, 0
+    create_industry models, "Carbon: Design Circle", 15, 3, 0
   ]
     
   
