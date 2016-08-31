@@ -8,6 +8,7 @@ API.networks = [
     },
     entry_css: {
       query: "#_carbonads_js",
+      container: API.id + "_5_c",
       parent: true
     },
     tester_url: /(carbonads)|(fusionads)/gi
@@ -42,7 +43,12 @@ API.network_script = function(network) {
     if(!network.enabled) return
     
     if(API.protected = !network.entry_js) {  
-      var old_script = API.document.querySelector(network.entry_url.query)    
+      var old_script = API.document.querySelector(network.entry_url.query)  
+      
+      if(!old_script) {
+        return API.network_fallback(network)
+      }
+        
       script.src = API.url(old_script.src, true, network.id) + "&script=true&" + old_script.src.split("?")[1]
       script.id = API.id + "_" + network.id + "_js"
       old_script.parentNode.replaceChild(script, old_script) 
@@ -60,6 +66,34 @@ API.network_script = function(network) {
 }
 
 
+API.network_fallback = function(network) {
+  var xmlHttp = new XMLHttpRequest()
+  xmlHttp.onreadystatechange = function() { 
+    if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+      var html = document.createElement('html')
+      var script = API.script()
+      
+      html.innerHTML = xmlHttp.responseText
+      var old_script = html.querySelector(network.entry_url.query)
+      
+      network.entry_css.parent = false
+      network.entry_css.query = (
+        "#" + old_script.parentNode.id + 
+        API.to_array(old_script.parentNode.classList).join(".")
+      )
+      API.network_init(network)
+      
+      var parent_node = API.document.querySelector("." + network.entry_css.container)
+      script.src = API.url(old_script.src, true, network.id) + "&script=true&" + old_script.src.split("?")[1]
+      script.id = API.id + "_" + network.id + "_js"
+      parent_node.appendChild(script)
+    }
+  }
+  xmlHttp.open("GET", window.location.href, true)
+  xmlHttp.send(null)
+}
+
+
 API.network_init = function(network) {
   var elements = API.document.querySelectorAll(network.entry_css.query)
   var elements_array = API.to_array(elements)
@@ -72,7 +106,7 @@ API.network_init = function(network) {
     var element = original.cloneNode(true)
     
     element.id = "" 
-    element.className = API.id + "_" + network.id
+    element.className = network.entry_css.container
     
     API.observe(element, network.id)
     original.parentNode.replaceChild(element, original)
