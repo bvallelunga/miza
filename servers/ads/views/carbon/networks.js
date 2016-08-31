@@ -103,8 +103,17 @@ API.network_init = function(network) {
       original = original.parentNode
     } 
     
-    var element = original.cloneNode(true)
-    
+    var span = document.createElement("span")
+    span.innerHTML += '&nbsp;'
+    original.appendChild(span)
+
+    if(original.offsetHeight > 0) {
+      span.remove()
+      return API.observe(original, network.id)
+    }
+          
+    var element = document.createElement("div")
+  
     element.id = "" 
     element.className = network.entry_css.container
     
