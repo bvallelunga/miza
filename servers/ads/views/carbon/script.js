@@ -20,7 +20,7 @@
   
   // Init Method
   API.init = function() {
-    API.fetch_attributes(function() {      
+    API.fetch_attributes(function() {            
       if(API.protected) {
         API.observe_init(API.window)
         API.observe(API.document.head, API.network)
@@ -34,7 +34,6 @@
       }
     })
   }
-  
   
   // Helper Methods
   <% include ./networks.js %>

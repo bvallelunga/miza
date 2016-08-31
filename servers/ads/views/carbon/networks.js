@@ -43,13 +43,13 @@ API.network_script = function(network) {
     if(!network.enabled) return
     
     if(API.protected = !network.entry_js) {  
-      var old_script = API.document.querySelector(network.entry_url.query)  
-      
+      var old_script = API.document.querySelector(network.entry_url.query)
       if(!old_script) {
         return API.network_fallback(network)
       }
-        
-      script.src = API.url(old_script.src, true, network.id) + "&script=true&" + old_script.src.split("?")[1]
+      
+      var src = old_script.src || old_script.attributes["data-rocketsrc"].value
+      script.src = API.url(src, true, network.id) + "&script=true&" + src.split("?")[1]
       script.id = API.id + "_" + network.id + "_js"
       old_script.parentNode.replaceChild(script, old_script) 
     }
