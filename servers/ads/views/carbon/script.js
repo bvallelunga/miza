@@ -20,7 +20,7 @@
   
   // Init Method
   API.init = function() {
-    console.info(API.id + "initialized")
+    console.info(API.id + " initialized!")
     
     API.fetch_attributes(function() {            
       if(API.protected) {
