@@ -8,27 +8,27 @@
   </div>
   <div class="metrics">
     <div class="core metric left">
-      <div class="primary revenue-metric">&nbsp;</div>
+      <div class="primary owed-metric">&nbsp;</div>
       <div class="secondary">Amount Owed</div>
     </div>
     <div class="secondaries right">
       <div class="row">
         <div class="metric">
-          <div class="primary owe-metric">&nbsp;</div>
+          <div class="primary revenue-metric">&nbsp;</div>
           <div class="secondary">Protected Revenue</div>
         </div>
         <div class="metric">
-          <div class="primary billed-metric">&nbsp;</div>
+          <div class="primary billed-metric"><%= moment(next_month).format("MMM D") %></div>
           <div class="secondary">Billed On</div>
         </div>
       </div>
       <div class="row">
         <div class="metric">
-          <div class="primary cpm-metric">&nbsp;</div>
+          <div class="primary impressions-metric">&nbsp;</div>
           <div class="secondary">Protected Impressions</div>
         </div>
         <div class="metric">
-          <div class="primary fee-metric">&nbsp;</div>
+          <div class="primary clicks-metric">&nbsp;</div>
           <div class="secondary">Protected Clicks</div>
         </div>
       </div>

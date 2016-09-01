@@ -36,7 +36,6 @@ LIBS.models.Publisher.findAll({
       paid_at: null
     }
   
-  
     LIBS.models.Event.count({
       where: event_query
     }).then (impressions)-> 

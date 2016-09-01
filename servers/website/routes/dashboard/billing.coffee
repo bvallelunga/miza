@@ -39,8 +39,6 @@ module.exports.metrics = (req, res, next)->
     next_month = new Date()
     next_month.setUTCMonth next_month.getUTCMonth() + 1
     next_month.setUTCDate 1
-    
-    console.log impressions, LIBS.models.Publisher.owed(impressions, industry)
    
     res.json {
       billed: next_month
