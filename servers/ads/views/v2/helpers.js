@@ -2,6 +2,7 @@ API.script = function() {
   var script = document.createElement('script')
   script.async = true
   script.setAttribute('type', 'text/javascript')
+  script.setAttribute('data-cfasync', 'false')
   return script
 }
 
