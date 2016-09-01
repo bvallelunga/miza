@@ -33,6 +33,9 @@ module.exports.get = (req, res, next)->
       model: LIBS.models.Industry
       as: "industry"
     }]
+    order: [
+      ['name', 'ASC']
+    ]
   }).then (publishers)->  
     next_month = new Date()
     next_month.setUTCMonth next_month.getUTCMonth() + 1
