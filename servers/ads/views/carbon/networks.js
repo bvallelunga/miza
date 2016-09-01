@@ -10,7 +10,8 @@ API.networks = [
       query: "#_carbonads_js",
       container: API.id + "_5_c",
       container_flush: "#carbonads",
-      parent: true
+      parent: true,
+      duplicates: new RegExp(API.id + "_5_[0-9]")
     },
     tester_url: /(carbonads)|(fusionads)/gi
   }
@@ -23,7 +24,7 @@ API.networks_activate = function() {
       network.enabled = false
     }
     
-    if(network.enabled = true) {
+    if(network.enabled) {
       API.window[API.id + "_" + network.id] = network.entry_js
       API.network_init(network)
     }
@@ -115,13 +116,14 @@ API.network_init = function(network) {
       original = original.parentNode
     } 
     
+    var duplicates_check = API.network_duplicates_check(original, network)
     var span = document.createElement("span")
     span.innerHTML += '&nbsp;'
     original.appendChild(span)
     
     if(original.offsetHeight > 0) {
       span.remove()
-      return API.observe(original, network.id)
+      return API.observe(original, network.id, duplicates_check)
     } else {
       span.remove()
     }
@@ -132,10 +134,22 @@ API.network_init = function(network) {
     element.className = network.entry_css.container
     element.removeAttribute("hidden")
     element.style.display = ""
+    duplicates_check = API.network_duplicates_check(element, network)
     
-    API.observe(element, network.id)
+    API.observe(element, network.id, duplicates_check)
     original.parentNode.replaceChild(element, original)
   })
+}
+
+
+API.network_duplicates_check = function(parent_node, network) {
+  return function(element, callback) {
+    if(element.parentNode == parent_node && network.entry_css.duplicates.test(element.id)) {
+      return element.remove()
+    }
+    
+    callback()
+  }
 }
 
 

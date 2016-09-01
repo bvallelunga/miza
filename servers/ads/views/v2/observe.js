@@ -1,9 +1,9 @@
 API.observers = {}
 
-API.observe = function(element, network) {
+API.observe = function(element, network, callback) {
   element = element.isProxyNode ? element.proxiedNode : element
   
-  var observer = API.observers[network] || API.observer(element, network)
+  var observer = API.observers[network] || API.observer(element, network, callback)
   API.observers[network] = observer
     
   observer.observe(element, { 
@@ -18,10 +18,16 @@ API.observe_init = function(window) {
   window.Element.prototype.m_handled = false
 }
 
-API.observer = function(parent, network) {
+API.observer = function(parent, network, callback) {
   return new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {      
       API.to_array(mutation.addedNodes).forEach(function(element) {
+        if(!!callback) {
+          return callback(element, function() {
+            API.observer_element(element, parent, network)
+          })
+        }
+
         API.observer_element(element, parent, network)
       })
     })
