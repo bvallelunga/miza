@@ -40,19 +40,19 @@ API.network_script = function(network) {
   var script = API.script()
   
   if(network.entry_url.query) {
-    if(!network.enabled) return
+    if(!network.enabled || !!network.entry_js) return
+    API.protected = true
     
-    if(API.protected = !network.entry_js) {  
-      var old_script = API.document.querySelector(network.entry_url.query)
-      if(!old_script) {
-        return API.network_fallback(network)
-      }
-      
-      var src = old_script.src || old_script.attributes["data-rocketsrc"].value
-      script.src = API.url(src, true, network.id) + "&script=true&" + src.split("?")[1]
-      script.id = API.id + "_" + network.id + "_js"
-      old_script.parentNode.replaceChild(script, old_script) 
+    var old_script = API.document.querySelector(network.entry_url.query)
+    
+    if(!old_script) {
+      return API.network_fallback(network)
     }
+    
+    var src = old_script.src || old_script.attributes["data-rocketsrc"].value
+    script.src = API.url(src, true, network.id) + "&script=true&" + src.split("?")[1]
+    script.id = API.id + "_" + network.id + "_js"
+    old_script.parentNode.replaceChild(script, old_script) 
   } else {
     if(network.enabled) {
       script.src = API.url(network.entry_url.url, false, network.id)

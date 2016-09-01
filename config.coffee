@@ -10,7 +10,7 @@ module.exports = ->
     env: process.env
     is_prod: is_prod
     is_dev: is_dev
-    port: process.env.PORT
+    port: process.env.PORT or 3030
     
     postgres_url: process.env.DATABASE_URL
     redis_url: process.env.REDISCLOUD_URL
@@ -65,6 +65,21 @@ module.exports = ->
         downloader: true and is_dev
         modifier: false and is_dev
       }
+    }
+    
+    ssl_server: {
+      server: (->
+        if is_prod 
+          return "https://acme-v01.api.letsencrypt.org/directory"
+        
+        return "staging"
+      )()
+      domains: [
+        #"miza.io"
+        "dev.miza.io"
+        #"misosoup.io"
+        "dev.misosoup.io"
+      ]
     }
     
     general: {
