@@ -1,0 +1,79 @@
+@import '../compless/all';
+@import '../global/colors';
+
+.reports {
+  padding: 100px 0;
+  width: 1000px;
+  margin: 0 auto;
+  
+  .range-toggle {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: white;
+    z-index: 2;
+    
+    div {
+      cursor: pointer;
+      display: inline-block;
+      padding: 8px 12px;
+      width: 80px;
+      text-align: center;
+      border: solid 2px rgba(0,0,0,0.05);
+      float: left;
+      
+      &:first-child {
+        .border-radius(3px 0 0 3px);
+      }
+      
+      &:last-child {
+        .border-radius(0 3px 3px 0);
+      }
+      
+      &.active {
+        background: @blue;
+        color: white;
+      }
+    }
+  }
+   
+  a {
+    color: @blue;
+    
+    &:not(.fa):hover {
+      text-decoration: underline;
+    }
+  }
+  
+  table {
+    width: 100%;
+    text-align: left;
+    font-size: 1.25em;
+    border-spacing: 0;
+    
+    th {
+      padding: 10px 8px;
+      border-bottom: solid 1px #EDF1F5;
+    }
+    
+    td {
+      font-size: 0.95em;
+      padding: 12px 8px;
+      vertical-align: text-top;
+      font-weight: lighter;
+      text-transform: none !important;
+    }
+    
+    td.protected {
+      color: @blue;
+    }
+    
+    td.owed {
+      color: @green;
+    }
+    
+    tr:last-child td {
+      border: none;
+    }
+  }
+}

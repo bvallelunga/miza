@@ -1,0 +1,60 @@
+<% include ../includes/start %>
+<% include ../includes/header %>
+<div class="reports">
+  <div class="range-toggle">
+    <div data-range="today" class="active">Today</div>
+    <div data-range="week">Week</div>
+    <div data-range="month">Month</div>
+  </div>
+  <div class="metrics">
+    <div class="core metric left">
+      <div class="primary revenue-metric">&nbsp;</div>
+      <div class="secondary">Amount Owed</div>
+    </div>
+    <div class="secondaries right">
+      <div class="row">
+        <div class="metric">
+          <div class="primary owe-metric">&nbsp;</div>
+          <div class="secondary">Protected Revenue</div>
+        </div>
+        <div class="metric">
+          <div class="primary billed-metric">&nbsp;</div>
+          <div class="secondary">Billed On</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="metric">
+          <div class="primary cpm-metric">&nbsp;</div>
+          <div class="secondary">Protected Impressions</div>
+        </div>
+        <div class="metric">
+          <div class="primary fee-metric">&nbsp;</div>
+          <div class="secondary">Protected Clicks</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <table class="logs-table">
+    <thead>
+      <tr>
+        <th>Publisher</th>
+        <th>Domain</th>
+        <th>Industry</th>
+        <th>Protected</th>
+        <th>Owed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% publishers.forEach(function(publisher) { %>
+        <tr class="publisher" data-key="<%= publisher.key %>">
+          <td><%= publisher.name %></td>
+          <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
+          <td><%= publisher.industry.name %></td>
+          <td class="protected"></td>
+          <td class="owed"></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<% include ../includes/end %>

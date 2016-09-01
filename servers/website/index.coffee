@@ -49,24 +49,26 @@ module.exports = (srv)->
   
   # Admin Routes
   app.get  "/admin", routes.auth.is_admin, routes.admin.get_root
-  app.get  "/admin/access", routes.auth.is_admin, routes.admin.get_access
-  app.get  "/admin/industries", routes.auth.is_admin, routes.admin.get_industries
-  app.get  "/admin/publishers", routes.auth.is_admin, routes.admin.get_publishers
-  app.post "/admin/access", routes.auth.is_admin, routes.admin.post_access
-  app.post "/admin/industries", routes.auth.is_admin, routes.admin.post_industries
+  app.get  "/admin/access", routes.auth.is_admin, routes.admin.access.get
+  app.get  "/admin/reports", routes.auth.is_admin, routes.admin.reports.get
+  app.get  "/admin/reports/metrics", routes.auth.is_admin, routes.admin.reports.metrics
+  app.get  "/admin/reports/:publisher", routes.auth.is_admin, routes.auth.has_publisher, routes.admin.reports.publisher_metrics
+  app.get  "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.get
+  app.post "/admin/access", routes.auth.is_admin, routes.admin.access.post
+  app.post "/admin/industries", routes.auth.is_admin, routes.admin.industries.post
   
   
   # Dashboard Routes
   app.get  "/dashboard", routes.auth.is_authenticated, routes.dashboard.get_root
-  app.get  "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.get_new
+  app.get  "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.create.get
   app.get  "/dashboard/:publisher", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_root
   app.get  "/dashboard/:publisher/:dashboard", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_dashboard
-  app.get  "/dashboard/:publisher/billing/logs", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_billing_logs
-  app.get  "/dashboard/:publisher/billing/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_billing_metrics
-  app.get  "/dashboard/:publisher/analytics/logs", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_analytics_logs
-  app.get  "/dashboard/:publisher/analytics/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_analytics_metrics
-  app.post "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.post_new
-  app.post "/dashboard/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.post_settings
+  app.get  "/dashboard/:publisher/billing/logs", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.billing.logs
+  app.get  "/dashboard/:publisher/billing/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.billing.metrics
+  app.get  "/dashboard/:publisher/analytics/logs", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.analytics.logs
+  app.get  "/dashboard/:publisher/analytics/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.analytics.metrics
+  app.post "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.create.post
+  app.post "/dashboard/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.settings.post
   
   
   # Demo Routes

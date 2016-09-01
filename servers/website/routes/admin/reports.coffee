@@ -1,35 +1,24 @@
-numeral = require "numeral"
+module.exports.get = (req, res, next)->
+  LIBS.models.Publisher.findAll({
+    where: {
+      is_demo: false
+    }
+    include: [{
+      model: LIBS.models.Industry
+      as: "industry"
+    }]
+  }).then (publishers)->  
+    res.render "admin/reports", {
+      js: req.js.renderTags "admin-reports"
+      css: req.css.renderTags "admin", "dashboard-analytics", "fa"
+      title: "Admin Reporting"
+      publishers: publishers
+    }
 
-module.exports.logs = (req, res, next)->
-  LIBS.stripe.charges.list({
-    customer: req.user.stripe_id
-  }).then (list)-> 
-  
-    res.json list.data.map (charge)->  
-      if charge.refunded
-        status = "refunded"
-      
-      else 
-        status = charge.status
-         
-      return {
-        id: charge.id.slice(3)
-        amount: numeral(charge.amount/100).format("$0[,]000.00a")
-        card: {
-          brand: charge.source.brand
-          last4: charge.source.last4
-        }
-        status: status
-        created: charge.created * 1000
-      }
-  
-  .catch next
-  
-  
+
 module.exports.metrics = (req, res, next)->
   LIBS.models.Event.count({
     where: {
-      publisher_id: req.publisher.id
       protected: true
       type: "impression"
       paid_at: null
@@ -47,5 +36,8 @@ module.exports.metrics = (req, res, next)->
       fee: numeral(industry.fee).format("0[.]0%")
       revenue: numeral(LIBS.models.Publisher.owed(impressions, industry)).format("$0[,]000.00a")
     }
-    
-  .catch next
+  
+  
+module.exports.publisher_metrics = (req, res, next)->
+  console.log req.publisher
+  res.json {}

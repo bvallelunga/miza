@@ -1,6 +1,6 @@
 numeral = require "numeral"
 
-module.exports.get_logs = (req, res, next)->
+module.exports.logs = (req, res, next)->
   req.publisher.getEvents({ 
     limit: 100 
     attributes: [ 
@@ -31,7 +31,7 @@ module.exports.get_logs = (req, res, next)->
   .catch next
   
   
-module.exports.get_metrics = (req, res, next)->
+module.exports.metrics = (req, res, next)->
   month_ago = new Date()
   month_ago.setUTCMonth month_ago.getUTCMonth() - 1
   month_ago.setUTCDate 1

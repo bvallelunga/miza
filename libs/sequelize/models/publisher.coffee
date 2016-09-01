@@ -82,6 +82,15 @@ module.exports = (sequelize, DataTypes)->
         models.Publisher.belongsTo models.Industry, { 
           as: 'industry' 
         }
+        
+      
+      revenue: (impressions, industry)->
+        return impressions/1000 * industry.cpm
+        
+      
+      owed: (impressions, industry)->
+        revenue = LIBS.models.Publisher.revenue(impressions, industry)
+        return revenue * industry.fee
 
     }
     instanceMethods: {

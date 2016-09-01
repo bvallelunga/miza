@@ -1,4 +1,4 @@
-module.exports.post_settings = (req, res, next)->
+module.exports.post = (req, res, next)->
   if req.user.is_demo
     return next "Demo accounts can not be modified."
 

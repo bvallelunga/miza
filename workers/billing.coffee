@@ -40,7 +40,7 @@ LIBS.models.Publisher.findAll({
     LIBS.models.Event.count({
       where: event_query
     }).then (impressions)-> 
-      amount = impressions/1000 * publisher.industry.cpm * publisher.industry.fee
+      amount = LIBS.models.Publisher.owed(impressions, publisher.industry)
       amount_stripe = Math.floor amount * 100
       
       if not publisher.owner.stripe_card? and publisher.industry.fee == 0

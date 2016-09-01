@@ -1,0 +1,38 @@
+@import '../compless/all';
+@import '../global/colors';
+
+.publishers {
+  padding: 100px 0;
+  width: 1000px;
+   
+  a {
+    color: @blue;
+    
+    &:not(.fa):hover {
+      text-decoration: underline;
+    }
+  }
+  
+  table {
+    width: 100%;
+    text-align: left;
+    font-size: 1.25em;
+    border-spacing: 0;
+    
+    th {
+      padding: 10px 8px;
+      border-bottom: solid 1px #EDF1F5;
+    }
+    
+    td {
+      font-size: 0.95em;
+      padding: 12px 8px;
+      vertical-align: text-top;
+      font-weight: lighter;
+    }
+    
+    tr:last-child td {
+      border: none;
+    }
+  }
+}
