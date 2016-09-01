@@ -1,6 +1,8 @@
 API.observers = {}
 
 API.observe = function(element, network) {
+  element = element.isProxyNode ? element.proxiedNode : element
+  
   var observer = API.observers[network] || API.observer(element, network)
   API.observers[network] = observer
     

@@ -9,6 +9,7 @@ API.networks = [
     entry_css: {
       query: "#_carbonads_js",
       container: API.id + "_5_c",
+      container_flush: "#carbonads",
       parent: true
     },
     tester_url: /(carbonads)|(fusionads)/gi
@@ -17,12 +18,12 @@ API.networks = [
 
 
 API.networks_activate = function() {
-  API.networks.forEach(function(network) { 
+  API.networks.forEach(function(network) {    
     if(!API.protected) {
       network.enabled = false
     }
     
-    if(network.enabled) {
+    if(network.enabled = true) {
       API.window[API.id + "_" + network.id] = network.entry_js
       API.network_init(network)
     }
@@ -40,8 +41,19 @@ API.network_script = function(network) {
   var script = API.script()
   
   if(network.entry_url.query) {
-    if(!network.enabled || !!network.entry_js) return
+    var is_shadow_blocking = document.querySelector(network.entry_css.query)
+      .parentNode.querySelector("[hidden]")
+    
+    if(!network.enabled || (!!network.entry_js && !is_shadow_blocking)) return
     API.protected = true
+    
+    if(is_shadow_blocking) {
+      var to_flush = document.querySelector(network.entry_css.container_flush)
+    
+      if(!!to_flush) {
+        to_flush.remove()
+      }
+    }
     
     var old_script = API.document.querySelector(network.entry_url.query)
     
@@ -106,16 +118,20 @@ API.network_init = function(network) {
     var span = document.createElement("span")
     span.innerHTML += '&nbsp;'
     original.appendChild(span)
-
+    
     if(original.offsetHeight > 0) {
       span.remove()
       return API.observe(original, network.id)
+    } else {
+      span.remove()
     }
           
-    var element = document.createElement("div")
+    var element = original.cloneNode(true)
   
     element.id = "" 
     element.className = network.entry_css.container
+    element.removeAttribute("hidden")
+    element.style.display = ""
     
     API.observe(element, network.id)
     original.parentNode.replaceChild(element, original)
