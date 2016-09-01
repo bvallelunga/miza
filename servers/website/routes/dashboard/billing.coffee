@@ -39,13 +39,15 @@ module.exports.metrics = (req, res, next)->
     next_month = new Date()
     next_month.setUTCMonth next_month.getUTCMonth() + 1
     next_month.setUTCDate 1
+    
+    console.log impressions, LIBS.models.Publisher.owed(impressions, industry)
    
     res.json {
       billed: next_month
       cpm: numeral(industry.cpm).format("$0.00a")
-      owe: numeral(LIBS.models.Publisher.revenue(impressions, industry)).format("$0[,]000[.]00a")
+      owe: numeral(LIBS.models.Publisher.owed(impressions, industry)).format("$0[,]000[.]00a")
       fee: numeral(industry.fee).format("0[.]0%")
-      revenue: numeral(LIBS.models.Publisher.owed(impressions, industry)).format("$0[,]000.00a")
+      revenue: numeral(LIBS.models.Publisher.revenue(impressions, industry)).format("$0[,]000.00a")
     }
     
   .catch next
