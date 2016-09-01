@@ -14,6 +14,9 @@ module.exports.logs = (req, res, next)->
           "impression", "click"
         ]
       }
+      created_at: {
+        $gte: LIBS.helpers.past_date "month"
+      }
     }
     order: [
       ['created_at', 'DESC'],
@@ -32,9 +35,7 @@ module.exports.logs = (req, res, next)->
   
   
 module.exports.metrics = (req, res, next)->
-  month_ago = new Date()
-  month_ago.setUTCMonth month_ago.getUTCMonth() - 1
-  month_ago.setUTCDate 1
+  month_ago = LIBS.helpers.past_date "month"
   
   Promise.props({
     all_pings: LIBS.models.Event.count({

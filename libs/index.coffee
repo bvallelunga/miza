@@ -7,4 +7,5 @@ module.exports = ->
     mixpanel: require("./mixpanel")()
     queue: require "./queue"
     slack: require "./slack"
+    helpers: require "./helpers"
   }

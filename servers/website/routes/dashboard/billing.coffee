@@ -27,25 +27,35 @@ module.exports.logs = (req, res, next)->
   
   
 module.exports.metrics = (req, res, next)->
-  LIBS.models.Event.count({
-    where: {
-      publisher_id: req.publisher.id
-      protected: true
-      type: "impression"
-      paid_at: null
-    }
-  }).then (impressions)-> 
+  Promise.props({
+    owed_impressions: LIBS.models.Event.count({
+      where: {
+        publisher_id: req.publisher.id
+        protected: true
+        type: "impression"
+        paid_at: null
+      }
+    })
+    impressions: LIBS.models.Event.count({
+      where: {
+        publisher_id: req.publisher.id
+        protected: true
+        type: "impression"
+        created_at: {
+          $gte: LIBS.helpers.past_date "month"
+        }
+      }
+    })
+  }).then (props)-> 
     industry = req.publisher.industry
-    next_month = new Date()
-    next_month.setUTCMonth next_month.getUTCMonth() + 1
-    next_month.setUTCDate 1
+    next_month = LIBS.helpers.past_date "month+1"
    
     res.json {
       billed: next_month
       cpm: numeral(industry.cpm).format("$0.00a")
-      owe: numeral(LIBS.models.Publisher.owed(impressions, industry)).format("$0[,]000[.]00a")
+      owe: numeral(LIBS.models.Publisher.owed(props.owed_impressions, industry)).format("$0[,]000[.]00a")
       fee: numeral(industry.fee).format("0[.]0%")
-      revenue: numeral(LIBS.models.Publisher.revenue(impressions, industry)).format("$0[,]000.00a")
+      revenue: numeral(LIBS.models.Publisher.revenue(props.impressions, industry)).format("$0[,]000.00a")
     }
     
   .catch next

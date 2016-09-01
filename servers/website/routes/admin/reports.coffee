@@ -1,18 +1,4 @@
 numeral = require "numeral"
-
-
-date_creator = (range)->
-  range_at = new Date()
-  
-  if range == "month"
-    range_at.setUTCMonth range_at.getUTCMonth() - 1
-    range_at.setUTCDate 1
-    
-  else if range == "week"
-    range_at = new Date(range_at.getFullYear(), range_at.getMonth(), range_at.getDate() - range_at.getDay()+1)
-  
-  range_at.setUTCHours 0, 0, 0, 0
-  return range_at
   
 
 module.exports.get = (req, res, next)->
@@ -27,22 +13,20 @@ module.exports.get = (req, res, next)->
     order: [
       ['name', 'ASC']
     ]
-  }).then (publishers)->  
-    next_month = new Date()
-    next_month.setUTCMonth next_month.getUTCMonth() + 1
-    next_month.setUTCDate 1
-  
+  }).then (publishers)->      
     res.render "admin/reports", {
       js: req.js.renderTags "admin-reports"
       css: req.css.renderTags "admin", "dashboard-analytics"
       title: "Admin Reporting"
       publishers: publishers
-      next_month: next_month
+      next_month: LIBS.helpers.past_date "month+1"
     }
+    
+  .catch next
 
 
 module.exports.metrics = (req, res, next)->
-  date = date_creator req.query.range
+  date = LIBS.helpers.past_date req.query.range
 
   LIBS.models.Publisher.findAll({
     where: {
@@ -55,12 +39,19 @@ module.exports.metrics = (req, res, next)->
   }).then (publishers)->
     Promise.all publishers.map (publisher)->
       Promise.props({
-        impressions: LIBS.models.Event.count({
+        owed_impressions: LIBS.models.Event.count({
           where: {
             publisher_id: publisher.id
             protected: true
             type: "impression"
             paid_at: null
+          }
+        })
+        impressions: LIBS.models.Event.count({
+          where: {
+            publisher_id: publisher.id
+            protected: true
+            type: "impression"
             created_at: {
               $gte: date
             }
@@ -71,7 +62,6 @@ module.exports.metrics = (req, res, next)->
             publisher_id: publisher.id
             protected: true
             type: "click"
-            paid_at: null
             created_at: {
               $gte: date
             }
@@ -81,7 +71,7 @@ module.exports.metrics = (req, res, next)->
         return {
           clicks: props.clicks
           impressions: props.impressions
-          owe: LIBS.models.Publisher.owed(props.impressions, publisher.industry)
+          owe: LIBS.models.Publisher.owed(props.owed_impressions, publisher.industry)
           revenue: LIBS.models.Publisher.revenue(props.impressions, publisher.industry)
         }
   
@@ -117,7 +107,7 @@ module.exports.publisher_metrics = (req, res, next)->
       type: "impression"
       paid_at: null
       created_at: {
-        $gte: date_creator req.query.range
+        $gte: LIBS.helpers.past_date req.query.range
       }
     }
   }).then (impressions)-> 

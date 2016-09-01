@@ -1,4 +1,7 @@
 module.exports = ->
+  # Set Timezone to PDT
+  process.env.TZ = 'America/Los_Angeles' 
+
   is_prod = process.env.NODE_ENV == "production"
   is_dev = not is_prod
   logging_defaults = {
