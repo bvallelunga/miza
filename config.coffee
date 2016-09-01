@@ -67,21 +67,6 @@ module.exports = ->
       }
     }
     
-    ssl_server: {
-      server: (->
-        if is_prod 
-          return "https://acme-v01.api.letsencrypt.org/directory"
-        
-        return "staging"
-      )()
-      domains: [
-        #"miza.io"
-        "dev.miza.io"
-        #"misosoup.io"
-        "dev.misosoup.io"
-      ]
-    }
-    
     general: {
       company: "Miza"
       delimeter: " | "
