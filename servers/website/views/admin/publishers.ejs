@@ -9,18 +9,16 @@
         <th>API Key</th>
         <th>Coverage</th>
         <th>Industry</th>
-        <th></th>
       </tr>
     </head>
     <tbody>
       <% publishers.forEach(function(publisher) { %>
         <tr>
-          <td><%= publisher.name %></td>
+          <td><a target="_blank" href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.name %></a></td>
           <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
           <td><%= publisher.key %></td>
           <td><%= publisher.coverage_ratio * 100 %>%</td>
           <td><%= publisher.industry.name %></td>
-          <td><a target="_blank" class="fa fa-external-link" href="/dashboard/<%= publisher.key %>/analytics"></a></td>
         </tr>
       <% }) %>
     </tbody>

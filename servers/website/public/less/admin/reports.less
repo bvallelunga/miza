@@ -6,6 +6,17 @@
   width: 1000px;
   margin: 0 auto;
   
+  .metrics .metric {
+    .owed-metric {
+      color: @green;
+    }
+    
+    .revenue-metric,
+    .billed-metric {
+      color: darken(@green, 15%) !important;
+    } 
+  }
+  
   .range-toggle {
     position: absolute;
     top: 10px;
@@ -64,11 +75,11 @@
       text-transform: none !important;
     }
     
-    td.protected {
-      color: @blue;
+    td.red {
+      color: @red;
     }
     
-    td.owed {
+    td.green {
       color: @green;
     }
     

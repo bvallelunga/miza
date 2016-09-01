@@ -9,7 +9,7 @@ module.exports.get = (req, res, next)->
     }]
   }).then (publishers)->
     res.render "admin/publishers", {
-      css: req.css.renderTags "admin", "fa"
+      css: req.css.renderTags "admin"
       title: "Admin Publishers"
       publishers: publishers
     }

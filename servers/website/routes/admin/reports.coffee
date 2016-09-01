@@ -43,7 +43,7 @@ module.exports.get = (req, res, next)->
   
     res.render "admin/reports", {
       js: req.js.renderTags "admin-reports"
-      css: req.css.renderTags "admin", "dashboard-analytics", "fa"
+      css: req.css.renderTags "admin", "dashboard-analytics"
       title: "Admin Reporting"
       publishers: publishers
       next_month: next_month
