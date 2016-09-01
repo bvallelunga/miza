@@ -9,19 +9,10 @@ date_creator = (range)->
     range_at.setUTCDate 1
     
   else if range == "week"
-    range_at = get_monday range_at
-    
-  else # day
-    range_at.setUTCHours 0, 0, 0, 0
-    
+    range_at = new Date(range_at.getFullYear(), range_at.getMonth(), range_at.getDate() - range_at.getDay()+1)
+  
+  range_at.setUTCHours 0, 0, 0, 0
   return range_at
-
-
-get_monday = (date)->
-  d = new Date date
-  day = d.getDay()
-  diff = d.getDate() - day + (day == 0 ? -6:1)
-  return new Date(d.setDate(diff))
   
 
 module.exports.get = (req, res, next)->
@@ -51,6 +42,8 @@ module.exports.get = (req, res, next)->
 
 
 module.exports.metrics = (req, res, next)->
+  date = date_creator req.query.range
+
   LIBS.models.Publisher.findAll({
     where: {
       is_demo: false
@@ -69,7 +62,7 @@ module.exports.metrics = (req, res, next)->
             type: "impression"
             paid_at: null
             created_at: {
-              $gte: date_creator req.query.range
+              $gte: date
             }
           }
         })
@@ -80,7 +73,7 @@ module.exports.metrics = (req, res, next)->
             type: "click"
             paid_at: null
             created_at: {
-              $gte: date_creator req.query.range
+              $gte: date
             }
           }
         })

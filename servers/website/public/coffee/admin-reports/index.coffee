@@ -2,6 +2,7 @@ $ ->
   $(".range-toggle div").click ->
     $(".range-toggle div").removeClass "active"
     $(this).addClass "active"
+    
     publisher_metrics()
     total_metrics()
     
@@ -29,7 +30,9 @@ total_metrics = ->
   $(".owed-metric").html "&nbsp;"
   $(".revenue-metric").html "&nbsp;"
 
-  $.get("#{location.pathname}/metrics").done (metrics)->
+  $.get("#{location.pathname}/metrics", {
+    range: $(".range-toggle .active").data("range")
+  }).done (metrics)->
     $(".impressions-metric").text metrics.impressions
     $(".clicks-metric").text metrics.clicks
     $(".owed-metric").text metrics.owe
