@@ -15,11 +15,7 @@ module.exports = (data, publisher, network, query)->
     
       for replacer in replacers
         data.content = data.content.replace replacer[0], replacer[1]
-        
-      if query.script?
-        #data.content = obfuscator.obfuscate(data.content).getObfuscatedCode()
-        return data
-    
+
     if query.frame?
       data.content += """
         <script type='text/javascript'>           	
