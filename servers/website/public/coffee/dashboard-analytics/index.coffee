@@ -9,7 +9,9 @@ $ ->
 
 
 billingMetrics = ->
-  $.get("#{location.pathname}/metrics").done (metrics)->
+  $.get("#{location.pathname}/metrics", {
+    date: new Date()
+  }).done (metrics)->
     $(".revenue-metric").text metrics.revenue
     $(".billed-metric").text moment(metrics.billed).format("MMM D")
     $(".cpm-metric").text metrics.cpm
@@ -18,7 +20,9 @@ billingMetrics = ->
   
 
 billingLogs = ->
-  $.get("#{location.pathname}/logs").done (logs)->
+  $.get("#{location.pathname}/logs", {
+    date: new Date()
+  }).done (logs)->
     now = new Date()
     
     $(".logs-table-message")
@@ -38,7 +42,9 @@ billingLogs = ->
 
 
 analyticsMetrics = ->
-  $.get("#{location.pathname}/metrics").done (metrics)->
+  $.get("#{location.pathname}/metrics", {
+    date: new Date()
+  }).done (metrics)->
     $(".ctr-metric").text metrics.ctr
     $(".impressions-metric").text metrics.impressions
     $(".clicks-metric").text metrics.clicks
@@ -48,7 +54,9 @@ analyticsMetrics = ->
   
 
 analyticsLogs = ->
-  $.get("#{location.pathname}/logs").done (logs)->
+  $.get("#{location.pathname}/logs", {
+    date: new Date()
+  }).done (logs)->
     now = new Date()
     setTimeout analyticsLogs, 5000
     

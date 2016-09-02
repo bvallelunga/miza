@@ -42,7 +42,7 @@ module.exports.metrics = (req, res, next)->
         protected: true
         type: "impression"
         created_at: {
-          $gte: LIBS.helpers.past_date "month"
+          $gte: LIBS.helpers.past_date "month", req.query.date
         }
       }
     })

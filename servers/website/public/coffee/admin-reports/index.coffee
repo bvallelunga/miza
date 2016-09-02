@@ -19,6 +19,7 @@ publisher_metrics = ->
     
     $.get("#{location.pathname}/#{tr.data("key")}", {
       range: $(".range-toggle .active").data("range")
+      date: new Date()
     }).done (metrics)->      
       tr.find(".protected").text metrics.revenue
       tr.find(".owed").text metrics.owe
@@ -32,6 +33,7 @@ total_metrics = ->
 
   $.get("#{location.pathname}/metrics", {
     range: $(".range-toggle .active").data("range")
+    date: new Date()
   }).done (metrics)->
     $(".impressions-metric").text metrics.impressions
     $(".clicks-metric").text metrics.clicks

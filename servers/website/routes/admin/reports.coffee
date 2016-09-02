@@ -26,7 +26,7 @@ module.exports.get = (req, res, next)->
 
 
 module.exports.metrics = (req, res, next)->
-  date = LIBS.helpers.past_date req.query.range
+  date = LIBS.helpers.past_date req.query.range, req.query.date
 
   LIBS.models.Publisher.findAll({
     where: {
@@ -115,7 +115,7 @@ module.exports.publisher_metrics = (req, res, next)->
         protected: true
         type: "impression"
         created_at: {
-          $gte: LIBS.helpers.past_date req.query.range
+          $gte: LIBS.helpers.past_date req.query.range, req.query.date
         }
       }
     })

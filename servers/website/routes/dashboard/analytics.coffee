@@ -15,7 +15,7 @@ module.exports.logs = (req, res, next)->
         ]
       }
       created_at: {
-        $gte: LIBS.helpers.past_date "month"
+        $gte: LIBS.helpers.past_date "month", req.query.date
       }
     }
     order: [
@@ -35,7 +35,7 @@ module.exports.logs = (req, res, next)->
   
   
 module.exports.metrics = (req, res, next)->
-  month_ago = LIBS.helpers.past_date "month"
+  month_ago = LIBS.helpers.past_date "month", req.query.date
   
   Promise.props({
     all_pings: LIBS.models.Event.count({
