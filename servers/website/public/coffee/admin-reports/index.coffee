@@ -16,6 +16,7 @@ publisher_metrics = ->
     
     tr.find(".protected").text ""
     tr.find(".owed").text ""
+    tr.find(".protected").text ""
     
     $.get("#{location.pathname}/#{tr.data("key")}", {
       range: $(".range-toggle .active").data("range")
