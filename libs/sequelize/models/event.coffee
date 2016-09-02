@@ -57,8 +57,8 @@ module.exports = (sequelize, DataTypes)->
     paid_at: DataTypes.DATE
   }, {
     classMethods: {
-      generate: (req, data)->                               
-        LIBS.models.Event.create {
+      queue: (req, data)->                               
+        LIBS.queue.publish "event-queued", {
           type: data.type 
           ip_address: req.ip or req.ips
           protected: req.query.protected == "true"
@@ -80,10 +80,5 @@ module.exports = (sequelize, DataTypes)->
             battery: req.query.battery or {}
           }
         }
-       
-    }
-    hooks: {
-      afterCreate: (publisher)->
-        LIBS.queue.publish "event-created", publisher
     }
   }

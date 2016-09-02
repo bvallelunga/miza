@@ -18,7 +18,7 @@ geoip.startWatchingDataUpdate()
 
 
 # Handle Queue Messges
-LIBS.queue.consume "event-created", (event, ack, nack)->
+LIBS.queue.consume "event-queued", (event, ack, nack)->
   Promise.resolve().then ->
     geo_location = geoip.lookup(event.ip_address) or {}
     agent = useragent event.headers['user-agent']  
@@ -60,17 +60,12 @@ LIBS.queue.consume "event-created", (event, ack, nack)->
     if ["impression", "click", "ping"].indexOf(event.type) > -1
       LIBS.mixpanel.track "ADS.EVENT.#{asset_type}", mixpanel_payload
     
+    event.geo_location = geo_location
+    event.browser = browser
+    event.device = device
     
     # Save Event Data
-    return LIBS.models.Event.update({
-      geo_location: geo_location
-      browser: browser
-      device: device
-    }, {
-      where: {
-        id: event.id
-      }
-    })
+    return LIBS.models.Event.create event
   
   .then(ack).catch (error)->
     console.error error

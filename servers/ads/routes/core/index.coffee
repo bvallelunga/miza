@@ -11,7 +11,7 @@ module.exports.check = (req, res, next)->
 module.exports.ping = (req, res, next)->
   res.end script.pixel_tracker
   
-  LIBS.models.Event.generate req, {
+  LIBS.models.Event.queue req, {
     type: "ping"
     publisher: req.publisher
   }
@@ -20,7 +20,7 @@ module.exports.ping = (req, res, next)->
 module.exports.impression = (req, res, next)->
   res.end script.pixel_tracker
   
-  LIBS.models.Event.generate req, {
+  LIBS.models.Event.queue req, {
     type: "impression"
     publisher: req.publisher
     network: req.network
@@ -91,10 +91,10 @@ module.exports.proxy = (req, res, next)->
     if data.to_cache
       LIBS.redis.set data.key, JSON.stringify data
     
-#     LIBS.models.Event.generate(req, {
-#       type: if data.media == "link" then "click" else "asset" 
-#       asset_url: data.url
-#       publisher: req.publisher
-#       network: req.network
-#     })
+    LIBS.models.Event.queue(req, {
+      type: if data.media == "link" then "click" else "asset" 
+      asset_url: data.url
+      publisher: req.publisher
+      network: req.network
+    })
       
