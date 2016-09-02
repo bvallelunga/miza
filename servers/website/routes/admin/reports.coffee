@@ -19,7 +19,6 @@ module.exports.get = (req, res, next)->
       css: req.css.renderTags "admin", "dashboard-analytics"
       title: "Admin Reporting"
       publishers: publishers
-      next_month: LIBS.helpers.past_date "month+1"
     }
     
   .catch next
@@ -39,6 +38,25 @@ module.exports.metrics = (req, res, next)->
   }).then (publishers)->
     Promise.all publishers.map (publisher)->
       Promise.props({
+        all_pings: LIBS.models.Event.count({
+          where: {
+            publisher_id: publisher.id
+            type: "ping"
+            created_at: {
+              $gte: date
+            }
+          }
+        })
+        protected_pings: LIBS.models.Event.count({
+          where: {
+            publisher_id: publisher.id
+            type: "ping"
+            protected: true
+            created_at: {
+              $gte: date
+            }
+          }
+        })
         owed_impressions: LIBS.models.Event.count({
           where: {
             publisher_id: publisher.id
@@ -69,6 +87,8 @@ module.exports.metrics = (req, res, next)->
         })
       }).then (props)->
         return {
+          all_pings: props.all_pings
+          protected_pings: props.protected_pings
           clicks: props.clicks
           impressions: props.impressions
           owe: LIBS.models.Publisher.owed(props.owed_impressions, publisher.industry)
@@ -81,6 +101,8 @@ module.exports.metrics = (req, res, next)->
       impressions: 0
       owe: 0
       revenue: 0
+      protected_pings: 0
+      all_pings: 0
     }
     
     for publisher in publishers
@@ -88,12 +110,15 @@ module.exports.metrics = (req, res, next)->
       totals.impressions += publisher.impressions
       totals.owe += publisher.owe
       totals.revenue += publisher.revenue
+      totals.all_pings += publisher.all_pings
+      totals.protected_pings += publisher.protected_pings
       
     return res.json {
       owe: numeral(totals.owe).format("$0[,]000[.]00a")
       revenue: numeral(totals.revenue).format("$0[,]000.00a")
       impressions: numeral(totals.impressions).format("0[.]00a")
       clicks: numeral(totals.clicks).format("0[.]00a")
+      protected: numeral(totals.protected_pings/(totals.all_pings or 1)).format("0[.]0%")
     }
     
   .catch next

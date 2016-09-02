@@ -31,11 +31,13 @@ total_metrics = ->
   $(".clicks-metric").html "&nbsp;"
   $(".owed-metric").html "&nbsp;"
   $(".revenue-metric").html "&nbsp;"
+  $(".protected-metric").html "&nbsp;"
 
   $.get("#{location.pathname}/metrics", {
     range: $(".range-toggle .active").data("range")
     date: new Date()
   }).done (metrics)->
+    $(".protected-metric").html metrics.protected
     $(".impressions-metric").text metrics.impressions
     $(".clicks-metric").text metrics.clicks
     $(".owed-metric").text metrics.owe
