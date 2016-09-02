@@ -1,3 +1,7 @@
+# New Relic
+require("newrelic")
+
+
 # Globals
 GLOBAL.CONFIG = require("../config")()
 GLOBAL.Promise = require "bluebird"

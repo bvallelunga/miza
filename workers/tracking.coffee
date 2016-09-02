@@ -1,5 +1,5 @@
-geoip = require 'geoip-lite'
-useragent = require 'user-agent-parser'
+# New Relic
+require("newrelic")
 
 # Globals
 GLOBAL.CONFIG = require("../config")()
@@ -7,8 +7,15 @@ GLOBAL.Promise = require "bluebird"
 Promise.config CONFIG.promises
 GLOBAL.LIBS = require("../libs")()
 
+
+# Imports
+geoip = require 'geoip-lite'
+useragent = require 'user-agent-parser'
+
+
 # Download New Data
 geoip.startWatchingDataUpdate()
+
 
 # Handle Queue Messges
 LIBS.queue.consume "event-created", (event, ack, nack)->
