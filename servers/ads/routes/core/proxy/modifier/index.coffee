@@ -1,4 +1,3 @@
-obfuscator = require 'javascript-obfuscator'
 modifiers = {
   dfp: require "./dfp"
   adsense: require "./adsense"
