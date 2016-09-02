@@ -100,20 +100,29 @@ module.exports.metrics = (req, res, next)->
   
   
 module.exports.publisher_metrics = (req, res, next)->
-  LIBS.models.Event.count({
-    where: {
-      publisher_id: req.publisher.id
-      protected: true
-      type: "impression"
-      paid_at: null
-      created_at: {
-        $gte: LIBS.helpers.past_date req.query.range
+  Promise.props({
+    owed_impressions: LIBS.models.Event.count({
+      where: {
+        publisher_id: req.publisher.id
+        protected: true
+        type: "impression"
+        paid_at: null
       }
-    }
-  }).then (impressions)-> 
+    })
+    impressions: LIBS.models.Event.count({
+      where: {
+        publisher_id: req.publisher.id
+        protected: true
+        type: "impression"
+        created_at: {
+          $gte: LIBS.helpers.past_date req.query.range
+        }
+      }
+    })
+  }).then (props)-> 
     industry = req.publisher.industry
-    owe_raw = LIBS.models.Publisher.owed(impressions, industry)
-    revenue_raw = LIBS.models.Publisher.revenue(impressions, industry)
+    owe_raw = LIBS.models.Publisher.owed(props.owed_impressions, industry)
+    revenue_raw = LIBS.models.Publisher.revenue(props.impressions, industry)
    
     res.json {
       owe_raw: owe_raw
