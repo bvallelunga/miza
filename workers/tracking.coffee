@@ -69,4 +69,4 @@ LIBS.queue.consume "event-queued", (event, ack, nack)->
   
   .then(ack).catch (error)->
     console.error error
-    nack error
+    ack error
