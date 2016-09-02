@@ -54,7 +54,7 @@ module.exports.script = (req, res, next)->
         console.error error
         code = ""
       
-      if CONFIG.is_dev
+      if true or CONFIG.is_dev
         return res.send code
     
       res.send obfuscator.obfuscate(code).getObfuscatedCode()
