@@ -23,7 +23,7 @@
     "geoip-lite": "^1.1.8",
     "heroku-client": "^3.0.0-beta3",
     "jackrabbit": "^4.3.0",
-    "js-obfuscator": "^0.1.1",
+    "javascript-obfuscator": "^0.7.1",
     "knex": "^0.11.9",
     "less": "^2.7.1",
     "mixpanel": "^0.4.0",

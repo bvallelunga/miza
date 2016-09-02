@@ -1,5 +1,5 @@
 request = require "request"
-obfuscator = require "js-obfuscator"
+obfuscator = require 'javascript-obfuscator'
 script = require "./script"
 proxy = require "./proxy"
 
@@ -57,10 +57,7 @@ module.exports.script = (req, res, next)->
       if CONFIG.is_dev
         return res.send code
     
-      obfuscator(code, script.obfuscator).then (code)->
-        res.send code
-      
-  
+      res.send obfuscator.obfuscate(code).getObfuscatedCode()
     
 
 module.exports.proxy = (req, res, next)->
