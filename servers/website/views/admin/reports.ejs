@@ -41,6 +41,7 @@
         <th>Domain</th>
         <th>Industry</th>
         <th>CPM</th>
+        <th>Revenue</th>
         <th>Protected</th>
         <th>Fee</th>
         <th>Owed</th>
@@ -53,7 +54,8 @@
           <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
           <td><%= publisher.industry.name %></td>
           <td class="red"><%= numeral(publisher.industry.cpm).format("$0.00a") %></td>
-          <td class="red protected"></td>
+          <td class="red revenue"></td>
+          <td class="green protected"></td>
           <td class="green"><%= numeral(publisher.industry.fee).format("0[.]0%") %></td>
           <td class="green owed"></td>
         </tr>

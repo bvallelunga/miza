@@ -21,7 +21,8 @@ publisher_metrics = ->
       range: $(".range-toggle .active").data("range")
       date: new Date()
     }).done (metrics)->      
-      tr.find(".protected").text metrics.revenue
+      tr.find(".protected").text metrics.protected
+      tr.find(".revenue").text metrics.revenue
       tr.find(".owed").text metrics.owe
       
       

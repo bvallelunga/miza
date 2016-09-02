@@ -100,7 +100,28 @@ module.exports.metrics = (req, res, next)->
   
   
 module.exports.publisher_metrics = (req, res, next)->
+  date = LIBS.helpers.past_date req.query.range, req.query.date
+  
   Promise.props({
+    all_pings: LIBS.models.Event.count({
+      where: {
+        publisher_id: req.publisher.id
+        type: "ping"
+        created_at: {
+          $gte: date
+        }
+      }
+    })
+    protected_pings: LIBS.models.Event.count({
+      where: {
+        publisher_id: req.publisher.id
+        type: "ping"
+        protected: true
+        created_at: {
+          $gte: date
+        }
+      }
+    })
     owed_impressions: LIBS.models.Event.count({
       where: {
         publisher_id: req.publisher.id
@@ -115,7 +136,7 @@ module.exports.publisher_metrics = (req, res, next)->
         protected: true
         type: "impression"
         created_at: {
-          $gte: LIBS.helpers.past_date req.query.range, req.query.date
+          $gte: date
         }
       }
     })
@@ -125,10 +146,10 @@ module.exports.publisher_metrics = (req, res, next)->
     revenue_raw = LIBS.models.Publisher.revenue(props.impressions, industry)
    
     res.json {
-      owe_raw: owe_raw
+      protected: numeral(props.protected_pings/(props.all_pings or 1)).format("0[.]0%")
       owe: numeral(owe_raw).format("$0[,]000[.]00a")
-      revenue_raw: revenue_raw
       revenue: numeral(revenue_raw).format("$0[,]000.00a")
+      
     }
     
   .catch next
