@@ -87,10 +87,10 @@ module.exports.proxy = (req, res, next)->
       
     return data
       
-#   .then (data)->
-#     if data.to_cache
-#       LIBS.redis.set data.key, JSON.stringify data
-#     
+  .then (data)->
+    if data.to_cache
+      LIBS.redis.set data.key, JSON.stringify data
+    
 #     LIBS.models.Event.generate(req, {
 #       type: if data.media == "link" then "click" else "asset" 
 #       asset_url: data.url
