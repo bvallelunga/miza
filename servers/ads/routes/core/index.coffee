@@ -54,7 +54,7 @@ module.exports.script = (req, res, next)->
         console.error error
         code = ""
       
-      if true or CONFIG.is_dev
+      if CONFIG.is_dev
         return res.send code
     
       res.send uglifyJS.minify(code, {
