@@ -18,6 +18,9 @@
     "MIXPANEL": {
       "required": true
     },
+    "MIXPANEL_SECRET": {
+      "required": true
+    },
     "PORT": {
       "required": true
     },
