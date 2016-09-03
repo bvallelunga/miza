@@ -22,7 +22,7 @@ require("throng") CONFIG.concurrency, ->
   
   # Handle Queue Messges
   LIBS.queue.consume "event-queued", (event, ack, nack)->
-    Promise.resolve().then ->
+    Promise.resolve().then ->    
       geo_location = geoip.lookup(event.ip_address) or {}
       agent = useragent event.headers['user-agent']  
       browser = Object.assign event.browser, agent.browser
@@ -71,6 +71,9 @@ require("throng") CONFIG.concurrency, ->
       # Save Event Data
       return LIBS.models.Event.create event
     
-    .then(ack).catch (error)->
+    .then ->
+      setTimeout ack, 100
+    
+    .catch (error)->
       console.error error
       ack error
