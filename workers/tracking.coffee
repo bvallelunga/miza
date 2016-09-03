@@ -55,6 +55,7 @@ LIBS.queue.consume "event-queued", (event, ack, nack)->
       "Network": event.network_name
       "Network ID": event.network_id
       "Publisher ID": event.publisher_id
+      "Publisher Name": event.publisher_name
     }
       
     if ["impression", "click", "ping"].indexOf(event.type) > -1
