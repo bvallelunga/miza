@@ -48,6 +48,7 @@ module.exports = ->
     )()
     
     mixpanel: process.env.MIXPANEL
+    mixpanel_secret: process.env.MIXPANEL_SECRET
     stripe: process.env.STRIPE
     
     default_user_access: [

@@ -1,1 +1,3 @@
-//cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js
+//cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js
+//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.5.3/numeral.min.js
+//cdnjs.cloudflare.com/ajax/libs/bluebird/3.4.6/bluebird.min.js

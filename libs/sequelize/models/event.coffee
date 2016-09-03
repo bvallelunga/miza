@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes)->
           ip_address: req.ip or req.ips
           protected: req.query.protected == "true"
           asset_url: data.asset_url
-          publisher_name: data.publisher.name
+          publisher: data.publisher
           publisher_id: data.publisher.id
           network_id: if data.network then data.network.id else null
           network_name: if data.network then data.network.name else null

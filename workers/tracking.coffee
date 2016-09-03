@@ -57,7 +57,8 @@ require("throng") CONFIG.concurrency, ->
         "Network": event.network_name
         "Network ID": event.network_id
         "Publisher ID": event.publisher_id
-        "Publisher Name": event.publisher_name
+        "Publisher Name": event.publisher.name
+        "Publisher Key": event.publisher.key
       }
         
       if ["impression", "click", "ping"].indexOf(event.type) > -1
