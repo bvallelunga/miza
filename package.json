@@ -38,6 +38,7 @@
     "request": "^2.73.0",
     "sequelize": "^3.23.6",
     "stripe": "^4.9.0",
+    "throng": "^4.0.0",
     "uglify-js": "^2.7.0",
     "umzug": "^1.11.0",
     "user-agent-parser": "^0.6.0"
