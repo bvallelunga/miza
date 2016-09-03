@@ -1,5 +1,6 @@
 module.exports = (err, req, res, next)->
   message = err.message or err
+  console.error message
   
   if err.code == 'EBADCSRFTOKEN'
     message = "Invalid CSRF token!"

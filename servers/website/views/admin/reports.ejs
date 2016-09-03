@@ -49,15 +49,15 @@
     </thead>
     <tbody>
       <% publishers.forEach(function(publisher) { %>
-        <tr class="publisher" data-key="<%= publisher.key %>">
+        <tr class="publisher <%= publisher.key %>" data-key="<%= publisher.key %>">
           <td><a target="_blank" href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.name %></a></td>
           <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
           <td><%= publisher.industry.name %></td>
           <td class="red"><%= numeral(publisher.industry.cpm).format("$0.00a") %></td>
-          <td class="red revenue"></td>
-          <td class="green protected"></td>
+          <td class="red revenue data"></td>
+          <td class="green protected data"></td>
           <td class="green"><%= numeral(publisher.industry.fee).format("0[.]0%") %></td>
-          <td class="green owed"></td>
+          <td class="green owed data"></td>
         </tr>
       <% }) %>
     </tbody>

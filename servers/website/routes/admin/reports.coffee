@@ -87,6 +87,7 @@ module.exports.metrics = (req, res, next)->
         })
       }).then (props)->
         return {
+          key: publisher.key
           all_pings: props.all_pings
           protected_pings: props.protected_pings
           clicks: props.clicks
@@ -105,7 +106,7 @@ module.exports.metrics = (req, res, next)->
       all_pings: 0
     }
     
-    for publisher in publishers
+    for publisher in publishers    
       totals.clicks += publisher.clicks
       totals.impressions += publisher.impressions
       totals.owe += publisher.owe
@@ -113,68 +114,20 @@ module.exports.metrics = (req, res, next)->
       totals.all_pings += publisher.all_pings
       totals.protected_pings += publisher.protected_pings
       
-    return res.json {
-      owe: numeral(totals.owe).format("$0[,]000[.]00a")
-      revenue: numeral(totals.revenue).format("$0[,]000.00a")
-      impressions: numeral(totals.impressions).format("0[.]00a")
-      clicks: numeral(totals.clicks).format("0[.]00a")
-      protected: numeral(totals.protected_pings/(totals.all_pings or 1)).format("0[.]0%")
-    }
-    
-  .catch next
-  
-  
-module.exports.publisher_metrics = (req, res, next)->
-  date = LIBS.helpers.past_date req.query.range, req.query.date
-  
-  Promise.props({
-    all_pings: LIBS.models.Event.count({
-      where: {
-        publisher_id: req.publisher.id
-        type: "ping"
-        created_at: {
-          $gte: date
-        }
-      }
-    })
-    protected_pings: LIBS.models.Event.count({
-      where: {
-        publisher_id: req.publisher.id
-        type: "ping"
-        protected: true
-        created_at: {
-          $gte: date
-        }
-      }
-    })
-    owed_impressions: LIBS.models.Event.count({
-      where: {
-        publisher_id: req.publisher.id
-        protected: true
-        type: "impression"
-        paid_at: null
-      }
-    })
-    impressions: LIBS.models.Event.count({
-      where: {
-        publisher_id: req.publisher.id
-        protected: true
-        type: "impression"
-        created_at: {
-          $gte: date
-        }
-      }
-    })
-  }).then (props)-> 
-    industry = req.publisher.industry
-    owe_raw = LIBS.models.Publisher.owed(props.owed_impressions, industry)
-    revenue_raw = LIBS.models.Publisher.revenue(props.impressions, industry)
-   
-    res.json {
-      protected: numeral(props.protected_pings/(props.all_pings or 1)).format("0[.]0%")
-      owe: numeral(owe_raw).format("$0[,]000[.]00a")
-      revenue: numeral(revenue_raw).format("$0[,]000.00a")
+      publisher.protected = numeral(publisher.protected_pings/(publisher.all_pings or 1)).format("0%")
+      publisher.owe = numeral(publisher.owe).format("$0[,]000a")
+      publisher.revenue = numeral(publisher.revenue).format("$0[,]000a")
       
+    return res.json {
+      totals: {
+        owe: numeral(totals.owe).format("$0[,]000[.]00a")
+        revenue: numeral(totals.revenue).format("$0[,]000.00a")
+        impressions: numeral(totals.impressions).format("0[.]0a")
+        clicks: numeral(totals.clicks).format("0[.]0a")
+        protected: numeral(totals.protected_pings/(totals.all_pings or 1)).format("0%")
+      }
+      publishers: publishers
     }
     
   .catch next
+  
