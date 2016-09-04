@@ -69,7 +69,10 @@ require("throng") CONFIG.concurrency, ->
       event.device = device
       
       # Save Event Data
-      return LIBS.models.Event.create event
+      return LIBS.models.Event.create event, {
+        benchmark: false
+        logging: false
+      }
     
     .then ->
       setTimeout ack, 100
