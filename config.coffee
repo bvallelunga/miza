@@ -98,10 +98,9 @@ module.exports = ->
       app_id: process.env.INTERCOM
     }
     
-    mailgun: {
-      domain: "miza.io"
-      api_key: "key-e723e81c5bc7e8c2ed264a641564629d"
-      from: "Brian <brian@miza.io>"
+    sendgrid: {
+      api_key: "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"
+      from: "Support <support@miza.io>"
     }
     
     promises: {

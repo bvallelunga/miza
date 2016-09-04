@@ -27,7 +27,7 @@ module.exports.post = (req, res, next)->
     })
     
     LIBS.redis.set "user.reset.#{random}", user.id
-    LIBS.mailgun.send {
+    LIBS.sendgrid.send {
       to: "#{user.name} <#{user.email}>"
       subject: 'Reset Password'
       text: """
@@ -36,7 +36,7 @@ module.exports.post = (req, res, next)->
       It looks like you requested a password reset. Please use this
       link: http://#{req.get("host")}/reset/#{random}
       
-      -- Brian
+      -- Support
       """
     }
     
