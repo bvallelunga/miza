@@ -98,6 +98,12 @@ module.exports = ->
       app_id: process.env.INTERCOM
     }
     
+    mailgun: {
+      domain: "miza.io"
+      api_key: "key-e723e81c5bc7e8c2ed264a641564629d"
+      from: "Brian <brian@miza.io>"
+    }
+    
     promises: {
       warnings: false
       longStackTraces: true
@@ -105,7 +111,7 @@ module.exports = ->
       monitoring: true
     }
     
-    heroku_token: process.env.HEROKU_API_TOKEN
+    heroku_token: "bfc62d15-e97d-45e3-b502-0ae2abd7fcdf"
     
     cookies: {
       session: (session, redis)->

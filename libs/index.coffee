@@ -5,6 +5,7 @@ module.exports = ->
     heroku: require("./heroku")()
     stripe: require("./stripe")()
     mixpanel: require("./mixpanel")()
+    mailgun: require("./mailgun")()
     queue: require "./queue"
     slack: require "./slack"
     helpers: require "./helpers"

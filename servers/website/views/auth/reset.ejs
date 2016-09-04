@@ -1,0 +1,17 @@
+<% include ../includes/start %>
+<% include ../includes/header %>
+<div class="container">
+  <% include ../includes/logo %>
+  <span>
+    Please set your new password
+  </span>
+  <form class="form" method="POST" action="<%= path %>">
+    <% include ../includes/csrf %>
+    <input class="top" type="password" name="new_password" placeholder="New Password" required/>
+    <input class="bottom" type="password" name="confirm_password" placeholder="Confirm Password" required/>
+    <button class="button" type="submit">Set Password</button>
+    <div class="error"></div>
+  </form>
+</div>
+<% include ../includes/footer %>
+<% include ../includes/end %>

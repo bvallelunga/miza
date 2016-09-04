@@ -2,11 +2,8 @@
 require("newrelic")
 
 
-# Globals
+# Config
 GLOBAL.CONFIG = require("../config")()
-GLOBAL.Promise = require "bluebird"
-Promise.config CONFIG.promises
-GLOBAL.LIBS = require("../libs")()
 
 
 # Check If First Day of the Month
@@ -18,6 +15,11 @@ if CONFIG.is_prod and now.getUTCDate() > 1
  
 # Enable Concurrency
 require("throng") CONFIG.concurrency, ->
+  
+  # Globals
+  GLOBAL.Promise = require "bluebird"
+  Promise.config CONFIG.promises
+  GLOBAL.LIBS = require("../libs")()
    
   # Fetch All Customers
   LIBS.models.Publisher.findAll({

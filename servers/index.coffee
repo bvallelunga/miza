@@ -2,15 +2,17 @@
 require("newrelic")
 
 
-# Globals
+# Config
 GLOBAL.CONFIG = require("../config")()
-GLOBAL.Promise = require "bluebird"
-Promise.config CONFIG.promises
-GLOBAL.LIBS = require("../libs")()
 
 
 # Enable Concurrency
 require("throng") CONFIG.concurrency, ->
+
+  # Globals
+  GLOBAL.Promise = require "bluebird"
+  Promise.config CONFIG.promises
+  GLOBAL.LIBS = require("../libs")()
   
   # Express
   express = require 'express'

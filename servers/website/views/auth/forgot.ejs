@@ -1,0 +1,16 @@
+<% include ../includes/start %>
+<% include ../includes/header %>
+<div class="container">
+  <% include ../includes/logo %>
+  <span>
+    Enter in your email to reset your password.
+  </span>
+  <form class="form" method="POST" action="/forgot">
+    <% include ../includes/csrf %>
+    <input class="only" type="email" name="email" placeholder="Email address" required/>
+    <button class="button" type="submit">Reset Password</button>
+    <div class="error"></div>
+  </form>
+</div>
+<% include ../includes/footer %>
+<% include ../includes/end %>

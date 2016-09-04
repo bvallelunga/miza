@@ -1,11 +1,8 @@
 # New Relic
 require("newrelic")
 
-# Globals
+# Config
 GLOBAL.CONFIG = require("../config")()
-GLOBAL.Promise = require "bluebird"
-Promise.config CONFIG.promises
-GLOBAL.LIBS = require("../libs")()
 
 
 # Imports
@@ -19,6 +16,12 @@ geoip.startWatchingDataUpdate()
 
 # Enable Concurrency
 require("throng") CONFIG.concurrency, ->
+  
+  # Globals
+  GLOBAL.Promise = require "bluebird"
+  Promise.config CONFIG.promises
+  GLOBAL.LIBS = require("../libs")()
+
   
   # Handle Queue Messges
   LIBS.queue.consume "event-queued", (event, ack, nack)->

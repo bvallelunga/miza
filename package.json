@@ -25,6 +25,7 @@
     "jackrabbit": "^4.3.0",
     "knex": "^0.11.9",
     "less": "^2.7.1",
+    "mailgun-js": "^0.7.12",
     "mixpanel": "^0.4.0",
     "moment": "^2.14.1",
     "morgan": "^1.7.0",

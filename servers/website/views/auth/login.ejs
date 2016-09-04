@@ -5,7 +5,10 @@
   <form class="form" method="POST" action="/login">
     <% include ../includes/csrf %>
     <input class="top" type="email" name="email" placeholder="Email address" required/>
-    <input class="bottom" type="password" name="password" placeholder="Password" required/>
+    <div class="group">
+      <a href="/forgot">Forgot</a>
+      <input class="bottom" type="password" name="password" placeholder="Password" required/>
+    </div>
     <button class="button" type="submit">Sign In</button>
     <div class="error"></div>
   </form>

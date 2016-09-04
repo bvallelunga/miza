@@ -31,11 +31,15 @@ module.exports = (srv)->
   
   
   # Auth Routes
-  app.get  "/login", routes.auth.not_authenticated, routes.auth.get_login
-  app.get  "/register", routes.auth.not_authenticated, routes.auth.get_register
-  app.get  "/logout", routes.auth.get_logout
-  app.post "/login", routes.auth.not_authenticated, routes.auth.post_login
-  app.post "/register", routes.auth.not_authenticated, routes.auth.post_register
+  app.get  "/login", routes.auth.not_authenticated, routes.auth.login.get
+  app.get  "/register", routes.auth.not_authenticated, routes.auth.register.get
+  app.get  "/logout", routes.auth.logout.get
+  app.get  "/forgot", routes.auth.not_authenticated, routes.auth.forgot.get
+  app.get  "/reset/:key", routes.auth.not_authenticated, routes.auth.forgot.reset_get
+  app.post "/login", routes.auth.not_authenticated, routes.auth.login.post
+  app.post "/register", routes.auth.not_authenticated, routes.auth.register.post
+  app.post "/forgot", routes.auth.not_authenticated, routes.auth.forgot.post
+  app.post "/reset/:key", routes.auth.not_authenticated, routes.auth.forgot.reset_post
   
 
   # Account Routes
