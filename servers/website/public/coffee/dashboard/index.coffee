@@ -6,5 +6,5 @@ $ ->
     
   
   $(".miza_guide .completed").click ->
-    $(".miza_guide").remove()
+    $(".miza_guide").fadeOut 250
     window.history.pushState null, "", window.location.pathname
