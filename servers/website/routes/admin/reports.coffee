@@ -21,7 +21,7 @@ module.exports.get = (req, res, next)->
       publishers: publishers
       config: {
         publishers: publishers
-        mixpanel_secret: CONFIG.mixpanel_secret
+        mixpanel_secret: CONFIG.mixpanel.secret
       }
     }
     

@@ -47,8 +47,11 @@ module.exports = ->
       return logging_defaults.development
     )()
     
-    mixpanel: process.env.MIXPANEL
-    mixpanel_secret: process.env.MIXPANEL_SECRET
+    mixpanel: {
+      key: process.env.MIXPANEL
+      secret: process.env.MIXPANEL_SECRET
+    }
+    
     stripe: process.env.STRIPE
     
     default_user_access: [

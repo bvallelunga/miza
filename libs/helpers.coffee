@@ -1,16 +1,24 @@
+moment = require "moment"
+
+module.exports.date_string = (date)->
+  return [
+    date.getFullYear()
+    date.getMonth()+1
+    date.getDate()
+  ].join "-"
+
+
 module.exports.past_date = (range, date)->
   range_at = if date? then new Date(date) else new Date()
+  moment_ob = moment(range_at)
   
-  if range == "month"
-    range_at.setMonth range_at.getMonth() - 1
-    range_at.setDate 1
+  if range == "week"
+    moment_ob = moment_ob.isoWeekday(1).startOf('isoweek')
     
-  if range == "month+1"
-    range_at.setMonth range_at.getMonth() + 1
-    range_at.setDate 1
+  else if range == "month+1"
+    moment_ob = moment_ob.startOf("month").add(1, "month")
     
-  else if range == "week"
-    range_at = new Date(range_at.getFullYear(), range_at.getMonth(), range_at.getDate() - range_at.getDay()+1)
+  else
+    moment_ob = moment_ob.startOf(range)
   
-  range_at.setHours 0, 0, 0, 0
-  return range_at
+  return moment_ob.toDate()

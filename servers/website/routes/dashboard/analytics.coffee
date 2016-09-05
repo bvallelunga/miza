@@ -2,7 +2,7 @@ numeral = require "numeral"
 
 module.exports.logs = (req, res, next)->
   req.publisher.getEvents({ 
-    limit: 100 
+    limit: 50 
     attributes: [ 
       "browser", "device", "network_name",
       "created_at", "type"
@@ -36,82 +36,50 @@ module.exports.logs = (req, res, next)->
   
 module.exports.metrics = (req, res, next)->
   month_ago = LIBS.helpers.past_date "month", req.query.date
-  
+  from_date = LIBS.helpers.date_string month_ago
+  to_date = LIBS.helpers.date_string new Date()
+  where_query = 'properties["Protected"] == true and properties["Publisher ID"] == ' + req.publisher.id
+
   Promise.props({
-    all_pings: LIBS.models.Event.count({
-      where: {
-        publisher_id: req.publisher.id
-        type: "ping"
-        created_at: {
-          $gte: month_ago
-        }
-      }
-    })
-    all_clicks: LIBS.models.Event.count({
-      where: {
-        publisher_id: req.publisher.id
-        type: "click"
-        created_at: {
-          $gte: month_ago
-        }
-      }
-    })
-    all_impressions: LIBS.models.Event.count({
-      where: {
-        publisher_id: req.publisher.id
-        type: "impression"
-        created_at: {
-          $gte: month_ago
-        }
-      }
-    })
-    protected_pings: LIBS.models.Event.count({
-      where: {
-        publisher_id: req.publisher.id
-        type: "ping"
-        protected: true
-        created_at: {
-          $gte: month_ago
-        }
-      }
-    })
-    impressions: LIBS.models.Event.count({
-      where: {
-        publisher_id: req.publisher.id
-        protected: true
-        type: "impression"
-        created_at: {
-          $gte: month_ago
-        }
-      }
-    })
-    clicks: LIBS.models.Event.count({
-      where: {
-        publisher_id: req.publisher.id
-        protected: true
-        type: "click"
-        created_at: {
-          $gte: month_ago
-        }
-      }
-    })
-    assets: LIBS.models.Event.count({
-      where: {
-        publisher_id: req.publisher.id
-        protected: true
-        type: "asset"
-        created_at: {
-          $gte: month_ago
-        }
-      }
-    })
+    impressions: LIBS.mixpanel.export.segmentation({
+      event: "ADS.EVENT.Impression"
+      from_date: from_date
+      to_date: to_date
+      unit: "month"
+      method: "numeric"
+      where: where_query
+    }).then(LIBS.mixpanel.export.sum_segments)
+    clicks: LIBS.mixpanel.export.segmentation({
+      event: "ADS.EVENT.Click"
+      from_date: from_date
+      to_date: to_date
+      unit: "month"
+      method: "numeric"
+      where: where_query
+    }).then(LIBS.mixpanel.export.sum_segments)
+    all_pings: LIBS.mixpanel.export.segmentation({
+      event: "ADS.EVENT.Ping"
+      from_date: from_date
+      to_date: to_date
+      unit: "month"
+      method: "numeric"
+      where: 'properties["Publisher ID"] == ' + req.publisher.id
+    }).then(LIBS.mixpanel.export.sum_segments)
+    protected_pings: LIBS.mixpanel.export.segmentation({
+      event: "ADS.EVENT.Ping"
+      from_date: from_date
+      to_date: to_date
+      unit: "month"
+      method: "numeric"
+      where: where_query
+    }).then(LIBS.mixpanel.export.sum_segments)
   }).then (props)->  
     res.json {
       impressions: numeral(props.impressions).format("0[.]0a")
       clicks: numeral(props.clicks).format("0a")
-      assets: numeral(props.assets).format("0a")
+      views: numeral(props.all_pings).format("0[.]0a")
       blocked: numeral(props.protected_pings/(props.all_pings or 1)).format("0[.]0%")
-      ctr: numeral(props.all_clicks/(props.all_impressions or 1)).format("0[.]0%")
+      ctr: numeral(props.clicks/(props.impressions or 1)).format("0[.]0%")
     }
     
   .catch next

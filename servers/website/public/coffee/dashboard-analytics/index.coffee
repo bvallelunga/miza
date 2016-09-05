@@ -48,7 +48,7 @@ analyticsMetrics = ->
     $(".ctr-metric").text metrics.ctr
     $(".impressions-metric").text metrics.impressions
     $(".clicks-metric").text metrics.clicks
-    $(".assets-metric").text metrics.assets
+    $(".views-metric").text metrics.views
     $(".blocked-metric").text metrics.blocked
   
 

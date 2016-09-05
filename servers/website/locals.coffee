@@ -30,7 +30,7 @@ module.exports = (req, res, next)->
   res.locals.title_first = true
   res.locals.is_prod = CONFIG.is_prod
   res.locals.random = "r=#{random_slug}"
-  res.locals.mixpanel = CONFIG.mixpanel
+  res.locals.mixpanel = CONFIG.mixpanel.key
   res.locals.intercom = ((user)-> 
     if not user? or user.is_demo
       return {}
