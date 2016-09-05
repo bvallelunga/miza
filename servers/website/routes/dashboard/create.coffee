@@ -26,7 +26,7 @@ module.exports.post = (req, res, next)->
     req.user.addPublisher(publisher).then ->
       res.json {
         success: true
-        next: "/dashboard/#{publisher.key}/setup"
+        next: "/dashboard/#{publisher.key}/setup?new_publisher"
       }
     
   .catch next

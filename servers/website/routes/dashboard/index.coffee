@@ -1,6 +1,3 @@
-url     = require "url"
-
-
 module.exports.get_root = (req, res, next)->
   if req.query.dashboard?
     return res.redirect "/dashboard/#{req.query.dashboard}/analytics"
@@ -49,6 +46,7 @@ module.exports.get_dashboard = (req, res, next)->
     dashboard_path: dashboard_path
     dashboard: dashboard
     ads_domain: ads_domain
+    guide: req.query.new_publisher?
   }
   
   

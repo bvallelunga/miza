@@ -30,6 +30,9 @@
     </div>
   </div>
 <% } %>
+<% if(guide) { %>
+  <% include guide %>
+<% } %>
 <div class="container">
   <% if(user.stripe_card == null && !publisher.is_demo && publisher.industry.fee > 0 && moment().diff(user.created_at, "days") > 15) { %>
     <div class="warning">

@@ -1,0 +1,48 @@
+@import '../compless/all';
+@import '../global/colors';
+
+.miza_guide {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, .98);
+  z-index: 10;
+  min-width: 1000px;
+  text-align: center;
+  
+  .guide_steps {
+    margin-top: 160px;
+    
+    .completed {
+      width: 300px;
+      display: block;
+      margin: 60px auto 20px;
+    }
+    
+    .guide_step {
+      width: 250px;
+      display: inline-block;
+      margin: 0 30px;
+      text-align: left;
+      
+      img {
+        width: 100%;
+        margin-bottom: 30px;
+      }
+      
+      .title {
+        color: black;
+        font-size: 1.25em;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      
+      .description {
+        font-size: 1.2em;
+      }
+    }
+  }
+  
+}
