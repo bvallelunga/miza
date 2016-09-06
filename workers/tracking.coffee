@@ -66,6 +66,27 @@ require("throng") CONFIG.concurrency, ->
         
       if ["impression", "click", "ping"].indexOf(event.type) > -1
         LIBS.mixpanel.track "ADS.EVENT.#{asset_type}", mixpanel_payload
+        
+      
+      if event.protected and ["impression", "click"].indexOf(event.type) > -1
+        redis_key = "#{event.publisher.key}.events"
+      
+        LIBS.redis.get redis_key, (error, response)->  
+          try
+            events = JSON.parse(response) or []
+          catch error
+            events = []
+            
+          events.push {
+            type: event.type
+            network_name: event.network_name
+            browser: browser.name or "Unknown"
+            os: device.os.name or "Unknown"
+            created_at: new Date()
+          }
+          
+          LIBS.redis.set redis_key, JSON.stringify events.slice(0, 50)
+        
       
       event.geo_location = geo_location
       event.browser = browser

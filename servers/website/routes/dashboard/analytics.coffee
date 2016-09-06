@@ -1,37 +1,18 @@
 numeral = require "numeral"
 
 module.exports.logs = (req, res, next)->
-  req.publisher.getEvents({ 
-    limit: 50 
-    attributes: [ 
-      "browser", "device", "network_name",
-      "created_at", "type"
-    ]
-    where: {
-      protected: true
-      type: {
-        $in: [
-          "impression", "click"
-        ]
-      }
-      created_at: {
-        $gte: LIBS.helpers.past_date "month", req.query.date
-      }
-    }
-    order: [
-      ['created_at', 'DESC'],
-    ]
-  }).then (events)->
-    res.json events.map (event)->
-      return {
-        network_name: event.network_name
-        browser: event.browser.name or "Unknown"
-        os: event.device.os.name or "Unknown"
-        created_at: event.created_at
-        type: event.type
-      }
+  redis_key = "#{req.publisher.key}.events"
+      
+  LIBS.redis.get redis_key, (error, response)->
+    if error?
+      return next error
+      
+    try
+      events = JSON.parse(response) or []
+    catch error
+      events = []
     
-  .catch next
+    res.json events
   
   
 module.exports.metrics = (req, res, next)->
