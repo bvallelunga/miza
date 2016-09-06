@@ -77,7 +77,7 @@ require("throng") CONFIG.concurrency, ->
           catch error
             events = []
             
-          events.push {
+          events.unshift {
             type: event.type
             network_name: event.network_name
             browser: browser.name or "Unknown"

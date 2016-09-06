@@ -27,6 +27,8 @@ module.exports.logs = (req, res, next)->
   
   
 module.exports.metrics = (req, res, next)->
+  month_ago = LIBS.helpers.past_date "month", req.query.date
+
   Promise.props({
     owed_impressions: LIBS.models.Event.count({
       where: {
@@ -36,16 +38,14 @@ module.exports.metrics = (req, res, next)->
         paid_at: null
       }
     })
-    impressions: LIBS.models.Event.count({
-      where: {
-        publisher_id: req.publisher.id
-        protected: true
-        type: "impression"
-        created_at: {
-          $gte: LIBS.helpers.past_date "month", req.query.date
-        }
-      }
-    })
+    impressions: LIBS.mixpanel.export.segmentation({
+      event: "ADS.EVENT.Impression"
+      from_date: LIBS.helpers.date_string month_ago
+      to_date: LIBS.helpers.date_string new Date()
+      unit: "month"
+      method: "numeric"
+      where: 'properties["Protected"] == true and properties["Publisher ID"] == ' + req.publisher.id
+    }).then(LIBS.mixpanel.export.sum_segments)
   }).then (props)-> 
     industry = req.publisher.industry
     next_month = LIBS.helpers.past_date "month+1"
