@@ -12,7 +12,10 @@ module.exports.logs = (req, res, next)->
     catch error
       events = []
     
-    res.json events
+    res.json events.sort (a, b)->
+      a_date = new Date a.created_at
+      b_date = new Date b.created_at
+      return b_date - a_date
   
   
 module.exports.metrics = (req, res, next)->
