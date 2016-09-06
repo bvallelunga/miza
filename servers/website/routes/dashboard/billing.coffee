@@ -30,14 +30,14 @@ module.exports.metrics = (req, res, next)->
   month_ago = LIBS.helpers.past_date "month", req.query.date
 
   Promise.props({
-    owed_impressions: LIBS.models.Event.count({
-      where: {
-        publisher_id: req.publisher.id
-        protected: true
-        type: "impression"
-        paid_at: null
-      }
-    })
+#     owed_impressions: LIBS.models.Event.count({
+#       where: {
+#         publisher_id: req.publisher.id
+#         protected: true
+#         type: "impression"
+#         paid_at: null
+#       }
+#     })
     impressions: LIBS.mixpanel.export.segmentation({
       event: "ADS.EVENT.Impression"
       from_date: LIBS.helpers.date_string month_ago
@@ -53,7 +53,7 @@ module.exports.metrics = (req, res, next)->
     res.json {
       billed: next_month
       cpm: numeral(industry.cpm).format("$0.00a")
-      owe: numeral(LIBS.models.Publisher.owed(props.owed_impressions, industry)).format("$0[,]000[.]00a")
+      owe: numeral(LIBS.models.Publisher.owed(props.impressions, industry)).format("$0[,]000[.]00a")
       fee: numeral(industry.fee).format("0[.]0%")
       revenue: numeral(LIBS.models.Publisher.revenue(props.impressions, industry)).format("$0[,]000.00a")
     }
