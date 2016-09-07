@@ -41,7 +41,7 @@ module.exports = ->
     }
     
     reporting_worker: {
-      interval: 5 * 60 * 1000 # 5 minutes
+      interval: 1 * 60 * 1000 # 1 minute
     }
     
     logger: (->  
