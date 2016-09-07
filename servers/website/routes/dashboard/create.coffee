@@ -1,6 +1,9 @@
 module.exports.get = (req, res, next)->
   LIBS.models.Industry.findAll({
     order: "name ASC"
+    where: {
+      private: false
+    }
   }).then (industries)->
     res.render "dashboard/new", {
       js: req.js.renderTags "modal"

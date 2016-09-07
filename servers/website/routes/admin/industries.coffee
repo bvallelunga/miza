@@ -6,7 +6,7 @@ module.exports.get = (req, res, next)->
   }).then (industries)->
     res.render "admin/industries", {
       js: req.js.renderTags "modal"
-      css: req.css.renderTags "admin", "fa"
+      css: req.css.renderTags "modal", "admin", "fa"
       title: "Admin Industries"
       industries: industries
     }
@@ -17,7 +17,7 @@ module.exports.post = (req, res, next)->
     return LIBS.models.Industry.update({
       name: industry.name
       cpm: Number industry.cpm
-      cpc: Number industry.cpc
+      private: industry.private == "true"
       fee: Number(industry.fee)/100
     }, {
       returning: false
@@ -31,7 +31,7 @@ module.exports.post = (req, res, next)->
     res.json {
       success: true
       message: "Industries have been updated!"
-      next: "/admin"
+      next: "/admin/industries"
     }
     
   .catch next

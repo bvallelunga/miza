@@ -9,18 +9,15 @@ module.exports = (sequelize, DataTypes)->
         return Number @getDataValue("fee")
         
     }
-    cpc: {
-      type: DataTypes.DECIMAL(6,3)
-      allowNull: false
-      get: ->      
-        return Number @getDataValue("cpc")
-    
-    }
     cpm: {
       type: DataTypes.DECIMAL(6,3)
       allowNull: false
       get: ->      
         return Number @getDataValue("cpm")
         
+    }
+    private: { 
+      type: DataTypes.BOOLEAN
+      defaultValue: false
     }
   }

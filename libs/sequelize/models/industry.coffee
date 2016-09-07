@@ -30,20 +30,10 @@ module.exports = (sequelize, DataTypes)->
       }
       get: ->      
         return Number @getDataValue("cpm")
-
-    }  
-    cpc: {
-      type: DataTypes.DECIMAL(6,3)
-      defaultValue: 0
-      validate: {
-        min: {
-          args: [ 0 ]
-          msg: "CPC must be greater than or equal to 0"
-        }
-      }
-      get: ->      
-        return Number @getDataValue("cpc")
-        
+    }
+    private: { 
+      type: DataTypes.BOOLEAN
+      defaultValue: false
     }
   }, {
     hooks: {            
@@ -51,8 +41,8 @@ module.exports = (sequelize, DataTypes)->
         LIBS.models.IndustryAudit.create({
           name: industry.previous "name"
           cpm: industry.previous "cpm"
-          cpc: industry.previous "cpc"
           fee: industry.previous "fee"
+          private: industry.previous "private"
         }).then ->
           callback()
           
