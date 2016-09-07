@@ -12,7 +12,7 @@ class ReportsDashboard
    
   
   display_publisher = (publisher)->
-    $publisher = $("tr.#{publisher.id}")
+    $publisher = $("tr.#{publisher.id}").toggleClass "inactive", not publisher.active
     $publisher.find(".protected").text publisher.protected
     $publisher.find(".revenue").text publisher.revenue
     $publisher.find(".owed").text publisher.owed

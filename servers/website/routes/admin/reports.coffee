@@ -52,6 +52,7 @@ module.exports.metrics = (req, res, next)->
   
 format_report = (report)->
   report = report.toJSON()
+  report.active = report.cpm > 0
   report.cpm = numeral(report.cpm).format("$0.00a")
   report.cpc = numeral(report.cpc).format("$0.00a")
   report.ctr = numeral(report.ctr).format("0[.]0%")
