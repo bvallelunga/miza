@@ -55,6 +55,7 @@ module.exports = (srv)->
   app.get  "/admin", routes.auth.is_admin, routes.admin.get_root
   app.get  "/admin/access", routes.auth.is_admin, routes.admin.access.get
   app.get  "/admin/reports", routes.auth.is_admin, routes.admin.reports.get
+  app.get  "/admin/reports/metrics", routes.auth.is_admin, routes.admin.reports.metrics
   app.get  "/admin/industries", routes.auth.is_admin, routes.admin.industries.get
   app.get  "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.get
   app.post "/admin/access", routes.auth.is_admin, routes.admin.access.post

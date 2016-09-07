@@ -49,7 +49,7 @@ module.exports.metrics = (req, res, next)->
       cpm: numeral(props.owe.cpm).format("$0.00a")
       fee: numeral(props.owe.fee).format("0[.]0%")
       owe: numeral(props.owe.owed).format("$0[,]000[.]00a")
-      revenue: numeral(props.all.revenue).format("$0[,]000.00a")
+      revenue: numeral(props.all.revenue).format("$0[,]000[.]00a")
     }
     
   .catch next

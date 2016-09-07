@@ -82,6 +82,38 @@ module.exports = (sequelize, DataTypes)->
         models.Publisher.belongsTo models.Industry, { 
           as: 'industry' 
         }
+      
+      
+      merge_reports: (reports)->
+        report_totals = LIBS.models.PublisherReport.build()
+        reports_length = 0
+        
+        Promise.each reports, (report)->  
+          if report.pings_all == 0
+            return
+                
+          report_totals.fee += report.fee
+          report_totals.cpm += report.cpm
+          report_totals.cpc += report.cpc
+          report_totals.protected += report.protected
+          report_totals.revenue += report.revenue
+          report_totals.owed += report.owed
+          report_totals.pings_all += report.pings_all
+          report_totals.pings += report.pings
+          report_totals.impressions += report.impressions
+          report_totals.clicks += report.clicks
+          reports_length++
+          
+        .then ->
+          reports_length = Math.max 1, reports_length
+        
+          report_totals.fee = report_totals.fee / reports_length
+          report_totals.cpm = report_totals.cpm / reports_length
+          report_totals.cpc = report_totals.cpc / reports_length
+          report_totals.ctr = report_totals.clicks / (report_totals.impressions or 1)
+          report_totals.protected = report_totals.pings / (report_totals.pings_all or 1)
+          
+          return report_totals
 
     }
     instanceMethods: {
@@ -106,36 +138,7 @@ module.exports = (sequelize, DataTypes)->
         
         LIBS.models.PublisherReport.findAll({
           where: query
-        }).then (reports)->
-          report_totals = LIBS.models.PublisherReport.build()
-          reports_length = 0
-          
-          Promise.each reports, (report)->  
-            if report.pings_all == 0
-              return
-                  
-            report_totals.fee += report.fee
-            report_totals.cpm += report.cpm
-            report_totals.cpc += report.cpc
-            report_totals.protected += report.protected
-            report_totals.revenue += report.revenue
-            report_totals.owed += report.owed
-            report_totals.pings_all += report.pings_all
-            report_totals.pings += report.pings
-            report_totals.impressions += report.impressions
-            report_totals.clicks += report.clicks
-            reports_length++
-            
-          .then ->
-            reports_length = Math.max 1, reports_length
-          
-            report_totals.fee = report_totals.fee / reports_length
-            report_totals.cpm = report_totals.cpm / reports_length
-            report_totals.cpc = report_totals.cpc / reports_length
-            report_totals.ctr = report_totals.clicks / (report_totals.impressions or 1)
-            report_totals.protected = report_totals.pings / (report_totals.pings_all or 1)
-            
-            return report_totals
+        }).then LIBS.models.Publisher.merge_reports
             
        
       pending_events: ->
