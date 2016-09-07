@@ -216,7 +216,14 @@
   
     return (
       API.s_base + encoded + "?" + params +
-      (network ? ("&network=" + network) : "")
+      (network ? ("&network=" + network) : "") + 
+      "&protected=" + API.protected + "&"
+    )
+    
+    return (
+      API.base + url + "?" + params +
+      (network ? ("&network=" + network) : "") +
+      (network ? ("&protected=" + API.s_attributes.protected) : "") + "&"
     )
   }
   

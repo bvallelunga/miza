@@ -48,31 +48,31 @@ module.exports = (sequelize, DataTypes)->
       
       stripe_generate: ->      
         return LIBS.stripe.customers.create({
-          email: this.email
-          description: this.name
+          email: @email
+          description: @name
           metadata: {
-            id: this.id
-            name: this.name
+            id: @id
+            name: @name
           }
         }).then (customer)=>
-          this.stripe_id = customer.id
+          @stripe_id = customer.id
           return customer
           
       stripe_set_card: (card)->
-        return LIBS.stripe.customers.update(this.stripe_id, {
+        return LIBS.stripe.customers.update(@stripe_id, {
           source: card
         }).then (customer)=>          
-          return this.update({
+          return @update({
             stripe_card: customer.sources.data[0]
           })
           
       stripe_update: ->
-        return LIBS.stripe.customers.update(this.stripe_id, {
-          email: this.email
-          description: this.name
+        return LIBS.stripe.customers.update(@stripe_id, {
+          email: @email
+          description: @name
           metadata: {
-            id: this.id
-            name: this.name
+            id: @id
+            name: @name
           }
         })
     

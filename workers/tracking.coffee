@@ -1,10 +1,3 @@
-# New Relic
-require("newrelic")
-
-# Config
-GLOBAL.CONFIG = require("../config")()
-
-
 # Imports
 geoip = require 'geoip-lite'
 useragent = require 'user-agent-parser'
@@ -14,16 +7,9 @@ useragent = require 'user-agent-parser'
 geoip.startWatchingDataUpdate()
 
 
-# Enable Concurrency
-require("throng") CONFIG.concurrency, ->
-  
-  # Globals
-  GLOBAL.Promise = require "bluebird"
-  Promise.config CONFIG.promises
-  GLOBAL.LIBS = require("../libs")()
+# Startup & Configure
+require("../startup") true, ->
 
-  
-  # Handle Queue Messges
   LIBS.queue.consume "event-queued", (event, ack, nack)->
     Promise.resolve().then ->    
       geo_location = geoip.lookup(event.ip_address) or {}
@@ -46,7 +32,7 @@ require("throng") CONFIG.concurrency, ->
       device.battery.level = Number(device.battery.level)
       
       # Mixpanel tracking
-      mixpanel_payload = {
+      LIBS.mixpanel.track "ADS.EVENT.#{asset_type}", {
         distinct_id: "ads.#{event.ip_address}"
         $browser: browser.name
         $browser_version: browser.version
@@ -63,12 +49,8 @@ require("throng") CONFIG.concurrency, ->
         "Publisher Name": event.publisher.name
         "Publisher Key": event.publisher.key
       }
-        
-      if ["impression", "click", "ping"].indexOf(event.type) > -1
-        LIBS.mixpanel.track "ADS.EVENT.#{asset_type}", mixpanel_payload
-        
       
-      if event.protected and ["impression", "click"].indexOf(event.type) > -1
+      if event.protected and event.type != "ping"
         redis_key = "#{event.publisher.key}.events"
       
         LIBS.redis.get redis_key, (error, response)->  
@@ -93,11 +75,7 @@ require("throng") CONFIG.concurrency, ->
       event.device = device
       
       # Save Event Data
-      return LIBS.models.Event.create event, {
-        benchmark: false
-        logging: false
-      }
-    
+      return LIBS.models.Event.create event
     .then ->
       setTimeout ack, 100
     

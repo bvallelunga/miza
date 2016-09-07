@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes)->
       }
       get: ->      
         return Number @getDataValue("coverage_ratio")
-        
+   
     }
   }, {    
     classMethods: {      
@@ -82,15 +82,6 @@ module.exports = (sequelize, DataTypes)->
         models.Publisher.belongsTo models.Industry, { 
           as: 'industry' 
         }
-        
-      
-      revenue: (impressions, industry)->
-        return impressions/1000 * industry.cpm
-        
-      
-      owed: (impressions, industry)->
-        revenue = LIBS.models.Publisher.revenue(impressions, industry)
-        return revenue * industry.fee
 
     }
     instanceMethods: {
@@ -99,14 +90,88 @@ module.exports = (sequelize, DataTypes)->
         hostname = (domain.hostname || domain.pathname).split(".").slice(-2).join(".")
         return "#{hostname}#{if domain.port? then (":" + domain.port) else "" }"
       
+      
       heroku_add_domain: (domain)->
         LIBS.heroku.post "/apps/#{CONFIG.app_name}/domains", {
           body: { hostname: domain }
         } 
-        
+       
+       
       heroku_remove_domain: (domain)->
         LIBS.heroku.delete "/apps/#{CONFIG.app_name}/domains/#{domain}"
- 
+      
+      
+      reports: (query)->
+        query.publisher_id = @id
+        
+        LIBS.models.PublisherReport.findAll({
+          where: query
+        }).then (reports)->
+          report_totals = LIBS.models.PublisherReport.build()
+          reports_length = 0
+          
+          Promise.each reports, (report)->  
+            if report.pings_all == 0
+              return
+                  
+            report_totals.fee += report.fee
+            report_totals.cpm += report.cpm
+            report_totals.cpc += report.cpc
+            report_totals.protected += report.protected
+            report_totals.revenue += report.revenue
+            report_totals.owed += report.owed
+            report_totals.pings_all += report.pings_all
+            report_totals.pings += report.pings
+            report_totals.impressions += report.impressions
+            report_totals.clicks += report.clicks
+            reports_length++
+            
+          .then ->
+            reports_length = Math.max 1, reports_length
+          
+            report_totals.fee = report_totals.fee / reports_length
+            report_totals.cpm = report_totals.cpm / reports_length
+            report_totals.cpc = report_totals.cpc / reports_length
+            report_totals.ctr = report_totals.clicks / (report_totals.impressions or 1)
+            report_totals.protected = report_totals.pings / (report_totals.pings_all or 1)
+            
+            return report_totals
+            
+       
+      pending_events: ->
+        Promise.props({
+          impressions: LIBS.models.Event.count({
+            where: {
+              publisher_id: @id
+              protected: true
+              type: "impression"
+              reported_at: null
+            }
+          })
+          clicks: LIBS.models.Event.count({
+            where: {
+              publisher_id: @id
+              protected: true
+              type: "click"
+              reported_at: null
+            }
+          })
+          pings: LIBS.models.Event.count({
+            where: {
+              publisher_id: @id
+              protected: true
+              type: "ping"
+              reported_at: null
+            }
+          })
+          pings_all: LIBS.models.Event.count({
+            where: {
+              publisher_id: @id
+              type: "ping"
+              reported_at: null
+            }
+          })
+        })         
     }
     hooks: {
       beforeValidate: (publisher, options)->

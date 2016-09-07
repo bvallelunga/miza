@@ -40,6 +40,10 @@ module.exports = ->
       }
     }
     
+    reporting_worker: {
+      interval: 5 * 60 * 1000 # 5 minutes
+    }
+    
     logger: (->  
       if is_prod 
         return logging_defaults.production

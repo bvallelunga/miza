@@ -31,4 +31,5 @@ module.exports = ->
   .then ->
     require("./seeders")(sequelize, models)
   
-  return Object.assign(database, models)
+  .then ->
+    return Object.assign(database, models)

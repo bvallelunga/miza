@@ -54,8 +54,27 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.JSONB
       defaultValue: {}
     }
-    paid_at: DataTypes.DATE
+    reported_at: DataTypes.DATE
   }, {
+    indexes: [
+      {
+        fields: [
+          'type', 'publisher_id'
+        ]
+        where: {
+          reported_at: null
+          deleted_at: null
+        }
+      },
+      {
+        fields: [
+          'reported_at'
+        ]
+        where: {
+          deleted_at: null
+        }
+      }
+    ] 
     classMethods: {
       queue: (req, data)->                               
         LIBS.queue.publish "event-queued", {

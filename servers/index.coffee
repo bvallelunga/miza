@@ -1,18 +1,4 @@
-# New Relic
-require("newrelic")
-
-
-# Config
-GLOBAL.CONFIG = require("../config")()
-
-
-# Enable Concurrency
-require("throng") CONFIG.concurrency, ->
-
-  # Globals
-  GLOBAL.Promise = require "bluebird"
-  Promise.config CONFIG.promises
-  GLOBAL.LIBS = require("../libs")()
+require("../startup") true, ->
   
   # Express
   express = require 'express'

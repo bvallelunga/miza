@@ -20,50 +20,18 @@ module.exports.logs = (req, res, next)->
   
 module.exports.metrics = (req, res, next)->
   month_ago = LIBS.helpers.past_date "month", req.query.date
-  from_date = LIBS.helpers.date_string month_ago
-  to_date = LIBS.helpers.date_string new Date()
-  where_query = 'properties["Protected"] == true and properties["Publisher ID"] == ' + req.publisher.id
-
-  Promise.props({
-    impressions: LIBS.mixpanel.export.segmentation({
-      event: "ADS.EVENT.Impression"
-      from_date: from_date
-      to_date: to_date
-      unit: "month"
-      method: "numeric"
-      where: where_query
-    }).then(LIBS.mixpanel.export.sum_segments)
-    clicks: LIBS.mixpanel.export.segmentation({
-      event: "ADS.EVENT.Click"
-      from_date: from_date
-      to_date: to_date
-      unit: "month"
-      method: "numeric"
-      where: where_query
-    }).then(LIBS.mixpanel.export.sum_segments)
-    all_pings: LIBS.mixpanel.export.segmentation({
-      event: "ADS.EVENT.Ping"
-      from_date: from_date
-      to_date: to_date
-      unit: "month"
-      method: "numeric"
-      where: 'properties["Publisher ID"] == ' + req.publisher.id
-    }).then(LIBS.mixpanel.export.sum_segments)
-    protected_pings: LIBS.mixpanel.export.segmentation({
-      event: "ADS.EVENT.Ping"
-      from_date: from_date
-      to_date: to_date
-      unit: "month"
-      method: "numeric"
-      where: where_query
-    }).then(LIBS.mixpanel.export.sum_segments)
-  }).then (props)->  
+  
+  req.publisher.reports({
+    created_at: {
+      $gte: month_ago
+    }
+  }).then (report)->  
     res.json {
-      impressions: numeral(props.impressions).format("0[.]0a")
-      clicks: numeral(props.clicks).format("0a")
-      views: numeral(props.all_pings).format("0[.]0a")
-      blocked: numeral(props.protected_pings/(props.all_pings or 1)).format("0[.]0%")
-      ctr: numeral(props.clicks/(props.impressions or 1)).format("0[.]0%")
+      impressions: numeral(report.impressions).format("0[.]0a")
+      clicks: numeral(report.clicks).format("0a")
+      views: numeral(report.pings_all).format("0[.]0a")
+      blocked: numeral(report.protected).format("0[.]0%")
+      ctr: numeral(report.ctr).format("0[.]0%")
     }
     
   .catch next

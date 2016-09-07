@@ -50,7 +50,6 @@ analyticsMetrics = ->
     $(".clicks-metric").text metrics.clicks
     $(".views-metric").text metrics.views
     $(".blocked-metric").text metrics.blocked
-    setTimeout analyticsMetrics, 5000
   
 
 analyticsLogs = ->
@@ -58,7 +57,6 @@ analyticsLogs = ->
     date: new Date()
   }).done (logs)->
     now = new Date()
-    setTimeout analyticsLogs, 5000
     
     $(".logs-table-message")
       .toggle(logs.length == 0)
