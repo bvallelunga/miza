@@ -5,7 +5,7 @@ module.exports.get = (req, res, next)->
       private: false
     }
   }).then (industries)->
-    res.render "dashboard/new", {
+    res.render "dashboard/create", {
       js: req.js.renderTags "modal"
       css: req.css.renderTags "modal", "fa"
       title: "Create Publisher"
