@@ -3,10 +3,6 @@ geoip = require 'geoip-lite'
 useragent = require 'user-agent-parser'
 
 
-# Download New Data
-geoip.startWatchingDataUpdate()
-
-
 # Startup & Configure
 require("../startup") true, ->
 
