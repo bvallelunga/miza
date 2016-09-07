@@ -53,13 +53,13 @@ module.exports.metrics = (req, res, next)->
 format_report = (report)->
   report = report.toJSON()
   report.cpm = numeral(report.cpm).format("$0.00a")
-  report.cpc = numeral(report.cpm).format("$0.00a")
+  report.cpc = numeral(report.cpc).format("$0.00a")
+  report.ctr = numeral(report.ctr).format("0[.]0%")
   report.fee = numeral(report.fee).format("0[.]0%")
   report.owed = numeral(report.owed).format("$0[,]000[.]00a")
   report.revenue = numeral(report.revenue).format("$0[,]000[.]00a")
   report.impressions = numeral(report.impressions).format("0[.]0a")
   report.clicks = numeral(report.clicks).format("0a")
   report.protected = numeral(report.protected).format("0[.]0%")
-  report.ctr = numeral(report.ctr).format("0[.]0%")
   return report
   
