@@ -111,6 +111,7 @@ module.exports = (sequelize, DataTypes)->
        
       pending_events: ->
         Promise.props({
+          publisher_id: @id
           events: LIBS.models.Event.findAll({
             attributes: [ "id" ]
             where: {

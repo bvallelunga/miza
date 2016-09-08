@@ -18,41 +18,6 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.DECIMAL(6,3)
       get: ->      
         return Number @getDataValue("cpm")
-    }  
-    cpc: {
-      defaultValue: 0
-      allowNull: false
-      type: DataTypes.DECIMAL(6,3)
-      get: ->      
-        return Number @getDataValue("cpc")
-    }
-    ctr: {
-      defaultValue: 0
-      allowNull: false
-      type: DataTypes.DECIMAL(4,3)
-      get: ->      
-        return Number @getDataValue("ctr")
-    }
-    revenue: {
-      defaultValue: 0
-      allowNull: false
-      type: DataTypes.DECIMAL(13,2)
-      get: ->      
-        return Number @getDataValue("revenue")
-    }
-    protected: {
-      defaultValue: 0
-      allowNull: false
-      type: DataTypes.DECIMAL(4,3)
-      get: ->      
-        return Number @getDataValue("protected")
-    }
-    owed: {
-      defaultValue: 0
-      allowNull: false
-      type: DataTypes.DECIMAL(13,2)
-      get: ->      
-        return Number @getDataValue("owed")
     }
     pings_all: {
       defaultValue: 0
@@ -91,7 +56,7 @@ module.exports = (sequelize, DataTypes)->
         }
       
       merge: (reports)->      
-        totals = LIBS.models.PublisherReport.build()
+        totals = LIBS.models.PublisherReport.build().toJSON()
         
         Promise.each reports, (report)->        
           totals.fee += report.fee
@@ -109,10 +74,10 @@ module.exports = (sequelize, DataTypes)->
           totals.cpm = totals.cpm / length
           totals.protected = totals.pings / (totals.pings_all or 1)
           totals.ctr = totals.clicks / (totals.impressions or 1)
-          totals.cpc = totals.cpm / ((1000 * totals.ctr) or 1)
           totals.impressions_revenue = totals.impressions/1000 * totals.cpm
-          totals.clicks_revenue = totals.clicks * totals.cpc
-          totals.revenue = totals.impressions_revenue + totals.clicks_revenue
+          #totals.cpc = totals.cpm / ((1000 * totals.ctr) or 1)
+          #totals.clicks_revenue = totals.clicks * totals.cpc
+          totals.revenue = totals.impressions_revenue # + totals.clicks_revenue
           totals.owed = totals.revenue * totals.fee
                     
           return totals

@@ -9,15 +9,8 @@ require("../startup") false, ->
     }).then (publishers)->           
       Promise.all publishers.map (publisher)->
         publisher.pending_events().then (props)->
-          props.publisher_id = publisher.id
           props.fee = publisher.industry.fee
-          props.cpm = publisher.industry.cpm
-          props.ctr = props.clicks / (props.impressions or 1)
-          props.cpc = props.cpm / ((1000 * props.ctr) or 1)
-          props.protected = props.pings / (props.pings_all or 1)
-          props.revenue = (props.impressions/1000 * props.cpm) + (props.clicks * props.cpc)
-          props.owed = props.revenue * props.fee
-          
+          props.cpm = publisher.industry.cpm          
           return props
           
     .then (reports)->
@@ -31,6 +24,7 @@ require("../startup") false, ->
       LIBS.models.PublisherReport.bulkCreate(reports.filtered, {
         hooks: false
         individualHooks: false
+        returning: false
       }).then ->
         return reports.all
       

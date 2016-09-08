@@ -19,6 +19,7 @@ require("../startup") true, ->
       LIBS.models.Event.bulkCreate(list, {
         hooks: false
         individualHooks: false
+        returning: false
       })
     
     .then (reports)->   

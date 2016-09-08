@@ -33,7 +33,7 @@ module.exports.metrics = (req, res, next)->
         created_at: {
           $gte: date_ago
         }
-      }).then (report)->      
+      }).then (report)->       
         report.id = publisher.key
         return report
 
@@ -51,7 +51,6 @@ module.exports.metrics = (req, res, next)->
   
   
 format_report = (report)->
-  report = report.toJSON()
   report.active = report.cpm > 0
   report.cpm = numeral(report.cpm).format("$0.00a")
   report.cpc = numeral(report.cpc).format("$0.00a")
