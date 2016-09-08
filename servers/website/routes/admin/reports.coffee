@@ -4,7 +4,7 @@ numeral = require "numeral"
 module.exports.get = (req, res, next)->
   LIBS.models.Publisher.findAll({
     where: {
-      is_demo: false
+     is_demo: false
     }
     order: [
       ['name', 'ASC']
@@ -25,7 +25,7 @@ module.exports.metrics = (req, res, next)->
 
   LIBS.models.Publisher.findAll({
     where: {
-      is_demo: false
+     is_demo: false
     }
   }).then (publishers)->    
     return Promise.map publishers, (publisher)->
@@ -37,8 +37,8 @@ module.exports.metrics = (req, res, next)->
         report.id = publisher.key
         return report
 
-  .then (reports)->  
-    LIBS.models.Publisher.merge_reports(reports).then (totals)->      
+  .then (reports)->    
+    LIBS.models.PublisherReport.merge(reports).then (totals)->      
       return {
         publishers: reports.map format_report
         totals: format_report totals

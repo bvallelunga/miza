@@ -36,8 +36,8 @@ module.exports.get_dashboard = (req, res, next)->
       css.push "range-slider"
 
     when "analytics", "billing"
-      js.push "dashboard-analytics"
-      css.push "dashboard-analytics"
+      js.push "dashboard-analytics", "tooltip"
+      css.push "dashboard-analytics", "tooltip"
   
   res.render "dashboard/index", {
     js: req.js.renderTags.apply(req.js, js)

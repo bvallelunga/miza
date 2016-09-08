@@ -43,13 +43,19 @@ module.exports.metrics = (req, res, next)->
     owe: req.publisher.reports({
       paid_at: null
     })
-  }).then (props)->      
+  }).then (props)->            
     res.json {
       billed: LIBS.helpers.past_date "month+1"
-      cpm: numeral(props.owe.cpm).format("$0.00a")
-      fee: numeral(props.owe.fee).format("0[.]0%")
+      cpm: numeral(props.owe.cpm or req.publisher.industry.cpm).format("$0.00a")
+      cpc: numeral(props.owe.cpc).format("$0.00[0]a")
+      fee: numeral(props.owe.fee or req.publisher.industry.fee).format("0[.]0%")
       owe: numeral(props.owe.owed).format("$0[,]000[.]00a")
       revenue: numeral(props.all.revenue).format("$0[,]000[.]00a")
+      owed_revenue: numeral(props.owe.revenue).format("$0[,]000.00a")
+      impressions_revenue: numeral(props.owe.impressions_revenue).format("$0[,]000.00a")
+      clicks_revenue: numeral(props.owe.clicks_revenue).format("$0[,]000.00a")
+      impressions: numeral(props.owe.impressions).format("0[.]00a")
+      clicks: numeral(props.owe.clicks).format("0[.]00a")
     }
     
   .catch next

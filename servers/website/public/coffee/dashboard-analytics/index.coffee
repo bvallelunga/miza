@@ -15,8 +15,14 @@ billingMetrics = ->
     $(".revenue-metric").text metrics.revenue
     $(".billed-metric").text moment(metrics.billed).format("MMM D")
     $(".cpm-metric").text metrics.cpm
+    $(".cpc-metric").text metrics.cpc
     $(".owe-metric").text metrics.owe
     $(".fee-metric").text metrics.fee
+    $(".impression-metric").text metrics.impressions
+    $(".click-metric").text metrics.clicks
+    $(".impression-revenue").text metrics.impressions_revenue
+    $(".click-revenue").text metrics.clicks_revenue
+    $(".revenue-owed-metric").text metrics.owed_revenue
   
 
 billingLogs = ->
