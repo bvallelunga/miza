@@ -5,6 +5,31 @@ useragent = require 'user-agent-parser'
 
 # Startup & Configure
 require("../startup") true, ->
+  
+  # Bulk Creator
+  to_save = []
+    
+  bulk_create = ->
+    Promise.resolve().then ->
+      list = to_save.splice 0, to_save.length
+      
+      if list.length == 0
+        return Promise.resolve()
+  
+      LIBS.models.Event.bulkCreate(list, {
+        hooks: false
+        individualHooks: false
+      })
+    
+    .then (reports)->   
+      setTimeout bulk_create, CONFIG.tracking_worker.interval
+      
+    .catch console.error
+    
+  
+  # Start Timer
+  setTimeout bulk_create, CONFIG.tracking_worker.interval
+      
 
   LIBS.queue.consume "event-queued", (event, ack, nack)->
     Promise.resolve().then ->    
@@ -70,11 +95,9 @@ require("../startup") true, ->
       event.browser = browser
       event.device = device
       
-      # Save Event Data
-      return LIBS.models.Event.create event
-    .then ->
-      setTimeout ack, 100
+      # Add to Save List
+      to_save.push event
     
-    .catch (error)->
+    .then(ack).catch (error)->
       console.error error
       ack error

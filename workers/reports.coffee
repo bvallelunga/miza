@@ -25,7 +25,10 @@ require("../startup") false, ->
         return report.pings_all > 0
   
     .then (reports)->
-      LIBS.models.PublisherReport.bulkCreate reports
+      LIBS.models.PublisherReport.bulkCreate reports, {
+        hooks: false
+        individualHooks: false
+      }
       
     .then (reports)->
       LIBS.models.Event.update {

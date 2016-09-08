@@ -44,6 +44,10 @@ module.exports = ->
       interval: 1 * 60 * 1000 # 1 minute
     }
     
+    tracking_worker: {
+      interval: 0.5 * 60 * 1000 # 30 seconds
+    }
+    
     logger: (->  
       if is_prod 
         return logging_defaults.production
