@@ -45,7 +45,7 @@ module.exports = ->
     }
     
     tracking_worker: {
-      interval: 0.5 * 60 * 1000 # 30 seconds
+      interval: 10 * 1000 # 10 seconds
     }
     
     logger: (->  

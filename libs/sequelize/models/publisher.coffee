@@ -140,6 +140,13 @@ module.exports = (sequelize, DataTypes)->
        
       pending_events: ->
         Promise.props({
+          events: LIBS.models.Event.findAll({
+            attributes: [ "id" ]
+            where: {
+              publisher_id: @id
+              reported_at: null
+            }
+          })
           impressions: LIBS.models.Event.count({
             where: {
               publisher_id: @id

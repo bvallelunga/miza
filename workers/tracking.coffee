@@ -96,7 +96,6 @@ require("../startup") true, ->
       event.device = device
       
       # Add to Save List
-      console.log event.type
       to_save.push event
     
     .then(ack).catch (error)->
