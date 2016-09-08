@@ -13,8 +13,6 @@ require("../startup") true, ->
     Promise.resolve().then ->
       list = to_save.splice 0, to_save.length
       
-      console.log list
-      
       if list.length == 0
         return Promise.resolve()
   
