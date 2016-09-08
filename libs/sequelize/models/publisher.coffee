@@ -88,10 +88,7 @@ module.exports = (sequelize, DataTypes)->
         report_totals = LIBS.models.PublisherReport.build()
         reports_length = 0
         
-        Promise.each reports, (report)->  
-          if report.pings_all == 0
-            return
-                
+        Promise.each reports, (report)->
           report_totals.fee += report.fee
           report_totals.cpm += report.cpm
           report_totals.cpc += report.cpc

@@ -22,7 +22,7 @@ require("../startup") false, ->
           
     .then (reports)->
       return reports.filter (report)->
-        return report.pings_all > 0
+        return report.pings_all > 0 or report.revenue > 0
   
     .then (reports)->
       LIBS.models.PublisherReport.bulkCreate reports, {
