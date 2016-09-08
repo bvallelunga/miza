@@ -94,7 +94,7 @@ module.exports.proxy = (req, res, next)->
     if data.media == "link"
       LIBS.models.Event.queue(req, {
         type: "click"
-        asset_url: data.url
+        asset_url: data.href
         publisher: req.publisher
         network: req.network
       })

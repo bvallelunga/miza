@@ -28,8 +28,8 @@ require("../startup") true, ->
     
   
   # Start Timer
-  setTimeout bulk_create, CONFIG.tracking_worker.interval
-      
+  bulk_create()
+
 
   LIBS.queue.consume "event-queued", (event, ack, nack)->
     Promise.resolve().then ->    
@@ -96,6 +96,7 @@ require("../startup") true, ->
       event.device = device
       
       # Add to Save List
+      console.log event.type
       to_save.push event
     
     .then(ack).catch (error)->
