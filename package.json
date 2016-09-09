@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.coffee",
   "scripts": {
-    "start": "coffee server.coffee"
+    "start": "coffee server.coffee",
+    "production": "git checkout master;git merge develop;git push;git checkout develop"
   },
   "author": "",
   "license": "",

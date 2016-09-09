@@ -4,7 +4,7 @@ useragent = require 'user-agent-parser'
 
 
 # Startup & Configure
-require("../startup") true, ->
+require("../../startup") true, ->
   
   # Bulk Creator
   to_save = []

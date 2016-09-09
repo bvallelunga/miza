@@ -1,5 +1,5 @@
 # Config
-GLOBAL.CONFIG = require("../config")()
+GLOBAL.CONFIG = require("../../config")()
 
 
 # Check If First Day of the Month
@@ -14,7 +14,7 @@ moment = require "moment"
 
  
 # Startup & Configure
-require("../startup") false, ->
+require("../../startup") false, ->
   invoice_description = "Invoice for #{moment().format("MMMM YYYY")}"
    
   LIBS.models.Publisher.findAll({

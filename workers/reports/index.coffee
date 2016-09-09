@@ -1,4 +1,4 @@
-require("../startup") false, ->  
+require("../../startup") false, ->  
   
   create_reports = ->  
     LIBS.models.Publisher.findAll({
