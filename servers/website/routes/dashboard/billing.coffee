@@ -51,7 +51,7 @@ module.exports.metrics = (req, res, next)->
       fee: numeral(props.owe.fee or req.publisher.industry.fee).format("0[.]0%")
       owe_short: numeral(props.owe.owed).format("$0[,]000[.]00a")
       owe_long: numeral(props.owe.owed).format("$0[,]000.00")
-      revenue: numeral(props.all.revenue).format("$0[,]000.00")
+      revenue: numeral(props.all.revenue).format("$0[,]000a")
       revenue_protected: numeral(props.owe.revenue).format("$0[,]000.00a")
       clicks_revenue: numeral(props.owe.clicks_revenue).format("$0[,]000.00")
       impressions_revenue: numeral(props.owe.impressions_revenue).format("$0[,]000.00")
