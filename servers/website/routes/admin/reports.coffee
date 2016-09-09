@@ -37,7 +37,8 @@ module.exports.metrics = (req, res, next)->
         report.id = publisher.key
         return report
 
-  .then (reports)->    
+  .then (reports)->  
+    console.log reports  
     LIBS.models.PublisherReport.merge(reports).then (totals)->      
       return {
         publishers: reports.map format_report

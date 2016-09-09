@@ -57,14 +57,6 @@ module.exports = (sequelize, DataTypes)->
         where: {
           deleted_at: null
         }
-      },
-      {
-        fields: [
-          'created_at', 'paid_at'
-        ]
-        where: {
-          deleted_at: null
-        }
       }
     ] 
     classMethods: {      
@@ -78,6 +70,7 @@ module.exports = (sequelize, DataTypes)->
         totals.impressions_revenue = 0
         totals.clicks_revenue = 0
         totals.cpc = 0
+        totals.empty = true
         
         Promise.each reports, (report)->        
           totals.fee += report.fee
@@ -89,6 +82,7 @@ module.exports = (sequelize, DataTypes)->
           totals.clicks_revenue += report.clicks * totals.cpc
           totals.impressions_revenue += report.impressions/1000 * report.cpm
           totals.clicks += report.clicks
+          totals.empty = false
           
         .then ->    
           length = Math.max reports.length, 1

@@ -1,6 +1,6 @@
 require("../../startup") false, -> 
   interval =  CONFIG.args[0] or "day"
-  time =  (-1 * CONFIG.args[1]) or -1
+  time =  if CONFIG.args[1]? then (CONFIG.args[1] * -1) else -1
   start_date = LIBS.helpers.past_date interval, null, time
   end_date = LIBS.helpers.past_date interval, null, time, "end"
   
@@ -20,6 +20,9 @@ require("../../startup") false, ->
           report.publisher_id = publisher.id
           report.created_at = end_date
           
+          if report.empty
+            return Promise.reject "is_empty"
+          
           LIBS.models.PublisherReport.create(report)
           
         .then ->
@@ -31,6 +34,10 @@ require("../../startup") false, ->
               }
             }
           })
+
+        .catch (error)->
+          if error != "is_empty"
+            return Promise.reject error
   
   .then ->
     process.exit()
