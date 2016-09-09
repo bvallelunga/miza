@@ -60,6 +60,8 @@ module.exports.script = (req, res, next)->
       res.send uglifyJS.minify(code, {
         fromString: true
       }).code
+      
+  .catch next
     
 
 module.exports.proxy = (req, res, next)->
@@ -98,4 +100,7 @@ module.exports.proxy = (req, res, next)->
         publisher: req.publisher
         network: req.network
       })
+      
+  
+  .catch next
       

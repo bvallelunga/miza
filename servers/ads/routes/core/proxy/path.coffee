@@ -1,8 +1,15 @@
+is_url_test = /\/\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/
+
 module.exports = (host, path)->  
   Promise.resolve().then ->
     encoded = url_safe_decoder path.slice(1).split(".")[0]
     url = new Buffer(encoded, 'base64').toString("ascii")
     key = "#{host}#{path}"
+    
+    console.log url
+    
+    if not is_url_test.test(url)
+      return Promise.reject "Invalid url"
     
     if url.slice(0, 2) == "//"
       url = "http:" + url
