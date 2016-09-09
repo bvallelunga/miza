@@ -8,17 +8,14 @@ module.exports.date_string = (date)->
   ].join "-"
 
 
-module.exports.past_date = (range, date)->
+module.exports.past_date = (range, date, increment=0, time="start")->
   range_at = if date? then new Date(date) else new Date()
-  moment_ob = moment(range_at)
+  moment_ob = moment(range_at).add(increment, range)
   
   if range == "week"
-    moment_ob = moment_ob.isoWeekday(1).startOf('isoweek')
-    
-  else if range == "month+1"
-    moment_ob = moment_ob.startOf("month").add(1, "month")
+    moment_ob = moment_ob.isoWeekday(1)["#{time}Of"]('isoweek')
     
   else
-    moment_ob = moment_ob.startOf(range)
+    moment_ob = moment_ob["#{time}Of"](range)
   
   return moment_ob.toDate()

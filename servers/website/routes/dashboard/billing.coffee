@@ -45,7 +45,7 @@ module.exports.metrics = (req, res, next)->
     })
   }).then (props)->            
     res.json {
-      billed: LIBS.helpers.past_date "month+1"
+      billed: LIBS.helpers.past_date "month", null, 1
       cpm: numeral(props.owe.cpm or req.publisher.industry.cpm).format("$0.00a")
       cpc: numeral(props.owe.cpc).format("$0.00[0]a")
       fee: numeral(props.owe.fee or req.publisher.industry.fee).format("0[.]0%")

@@ -15,6 +15,7 @@ module.exports = ->
     is_dev: is_dev
     port: process.env.PORT or 3030
     concurrency: process.env.WEB_CONCURRENCY or 1
+    args: process.argv.slice(2)
     
     postgres_url: process.env.DATABASE_URL
     redis_url: process.env.REDISCLOUD_URL

@@ -64,3 +64,5 @@ require("../../startup") false, ->
         
   .then ->
     process.exit()
+
+  .catch console.error
