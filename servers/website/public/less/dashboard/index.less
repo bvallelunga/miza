@@ -221,11 +221,39 @@
         color: white;
         min-width: 150px;
         .border-radius(3px);
-      }
+      } 
       
       tbody tr {  
         &:first-child td {
           border-top: solid 1px rgba(0,0,0,0.05);
+          
+          &:first-child {
+            .border-radius(3px 0 0 0);
+          }
+          
+          &:last-child {
+            .border-radius(0 3px 0 0);
+          }
+        }
+        
+        &:last-child td {          
+          &:first-child {
+            .border-radius(0 0 0 3px);
+          }
+          
+          &:last-child {
+            .border-radius(0 0 3px 0);
+          }
+        }
+        
+        &:only-child td {
+          &:first-child {
+            .border-radius(3px 0 0 3px);
+          }
+          
+          &:last-child {
+            .border-radius(0 3px 3px 0);
+          }
         }
                   
         td {
@@ -235,13 +263,8 @@
           font-weight: bold;
           background: rgba(0, 0, 0, 0.01);
           
-          &:first-child {
-            .border-radius(3px 0 0 3px);
-          }
-          
           &:last-child {
             border-right: solid 1px rgba(0,0,0,0.05);
-            .border-radius(0 3px 3px 0);
           }
         }
       }

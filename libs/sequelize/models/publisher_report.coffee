@@ -75,8 +75,8 @@ module.exports = (sequelize, DataTypes)->
           totals.protected = totals.pings / (totals.pings_all or 1)
           totals.ctr = totals.clicks / (totals.impressions or 1)
           totals.impressions_revenue = totals.impressions/1000 * totals.cpm
-          #totals.cpc = totals.cpm / ((1000 * totals.ctr) or 1)
-          #totals.clicks_revenue = totals.clicks * totals.cpc
+          totals.cpc = 0
+          totals.clicks_revenue = totals.clicks * totals.cpc
           totals.revenue = totals.impressions_revenue # + totals.clicks_revenue
           totals.owed = totals.revenue * totals.fee
                     

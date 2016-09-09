@@ -17,7 +17,6 @@ class ReportsDashboard
     $publisher.find(".revenue").text publisher.revenue
     $publisher.find(".owed").text publisher.owed
     $publisher.find(".cpm").text publisher.cpm
-    $publisher.find(".cpc").text publisher.cpc
     $publisher.find(".fee").text publisher.fee
         
         
