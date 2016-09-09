@@ -47,6 +47,7 @@ module.exports.get_dashboard = (req, res, next)->
     dashboard: dashboard
     ads_domain: ads_domain
     guide: req.query.new_publisher?
+    changelog: true
   }
   
   

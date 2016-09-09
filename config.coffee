@@ -62,6 +62,7 @@ module.exports = ->
     }
     
     stripe: process.env.STRIPE
+    changelog: "ypg6GJ"
     
     default_user_access: [
       {
