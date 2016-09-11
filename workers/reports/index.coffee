@@ -25,6 +25,7 @@ require("../../startup") false, ->
         hooks: false
         individualHooks: false
         returning: false
+        raw: true
       }).then ->
         return reports.all
       

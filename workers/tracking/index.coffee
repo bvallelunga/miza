@@ -20,9 +20,10 @@ require("../../startup") true, ->
         hooks: false
         individualHooks: false
         returning: false
+        raw: true
       })
     
-    .then (reports)->   
+    .then (reports)->
       setTimeout bulk_create, CONFIG.tracking_worker.interval
       
     .catch console.error
@@ -32,7 +33,7 @@ require("../../startup") true, ->
   bulk_create()
 
 
-  LIBS.queue.consume "event-queued", (event, ack, nack)->
+  LIBS.queue.consume "event-queued", (event, ack, nack)->  
     Promise.resolve().then ->    
       geo_location = geoip.lookup(event.ip_address) or {}
       agent = useragent event.headers['user-agent']  

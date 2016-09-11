@@ -4,7 +4,7 @@ SendGrid = require 'sendgrid'
 module.exports = ->
 
   sendgrid = SendGrid(CONFIG.sendgrid.api_key)
-  helper = sendgrid.mail
+  helper = SendGrid.mail  
   from_email = new helper.Email(CONFIG.sendgrid.from)
   
   send = (data)->  
