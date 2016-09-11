@@ -1,0 +1,7 @@
+<% if(user.stripe_card == null && !publisher.is_demo && publisher.industry.fee > 0 && moment().diff(user.created_at, "days") > 15) { %>
+  <div class="warning">
+    Thank you for using <%= company %>! If you are happy using us, please enter in your credit information.<br>
+    We will <u>NOT</u> charge you immediately, only at the start of the next billing cycle. 
+    <a href="/account/card">Add credit card</a>
+  </div>
+<% } %>
