@@ -8,6 +8,7 @@ module.exports = ->
       stripe: require("./stripe")()
       mixpanel: require("./mixpanel")()
       sendgrid: require("./sendgrid")()
+      agenda: require("./agenda")()
       queue: require "./queue"
       slack: require "./slack"
       helpers: require "./helpers"

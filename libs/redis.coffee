@@ -3,4 +3,4 @@ redis = null
 
 # Exports
 module.exports = ->
-  return redis = redis or Redis.createClient(CONFIG.redis_url)
+  return redis = redis or Redis.createClient CONFIG.redis_url

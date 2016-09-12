@@ -1,6 +1,7 @@
 express = require 'express'
 session = require 'express-session'
 routes = require "./routes"
+Agendash = require "agendash"
 app = express()
 
 
@@ -15,11 +16,12 @@ module.exports = (srv)->
   app.use routes.auth.load_user
   app.use require "./locals"
   
-  
+
   # Public Routes
   require("../assets")(app, srv,  __dirname + '/public')
   app.use "/test", express.static __dirname + '/public/test'
   app.use "/imgs", express.static __dirname + '/public/images'  
+  
   
   # Landing Routes
   app.get  "/", routes.auth.not_authenticated, routes.landing.get_root
@@ -51,6 +53,11 @@ module.exports = (srv)->
   app.post "/account/card", routes.auth.is_authenticated, routes.account.post_card
   
   
+  # Admin 3rd Party Dashboards
+  admin_router = express.Router()
+  admin_router.use "/scheduler", routes.auth.is_admin, Agendash(LIBS.agenda, { title: "Scheduler" })
+  
+  
   # Admin Routes
   app.get  "/admin", routes.auth.is_admin, routes.admin.get_root
   app.get  "/admin/access", routes.auth.is_admin, routes.admin.access.get
@@ -60,6 +67,7 @@ module.exports = (srv)->
   app.get  "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.get
   app.post "/admin/access", routes.auth.is_admin, routes.admin.access.post
   app.post "/admin/industries", routes.auth.is_admin, routes.admin.industries.post
+  app.use  "/admin", admin_router
   
   
   # Dashboard Routes
@@ -83,7 +91,7 @@ module.exports = (srv)->
   
   
   # Error Handlers
-  app.get  "*", routes.landing.get_not_found
+  #app.get  "*", routes.landing.get_not_found
   app.use  require("./error")
   
   

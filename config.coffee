@@ -17,6 +17,7 @@ module.exports = ->
     concurrency: process.env.WEB_CONCURRENCY or 1
     args: process.argv.slice(2)
     
+    mongo_url: process.env.MONGODB_URI
     postgres_url: process.env.DATABASE_URL
     redis_url: process.env.REDISCLOUD_URL
     

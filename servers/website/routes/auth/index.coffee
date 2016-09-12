@@ -40,7 +40,7 @@ module.exports.is_authenticated = (req, res, next)->
 module.exports.is_admin = (req, res, next)->
   if not req.user? or not req.user.is_admin
     return res.redirect "/"
-    
+  
   next()
     
 
