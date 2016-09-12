@@ -1,6 +1,10 @@
 module.exports = (err, req, res, next)->
+  console.error err.stack or err
   message = err.message or err
-  console.error message
+  csrf_token = ""
+  
+  if req.csrfToken?
+    csrf_token = req.csrfToken()
   
   if err.code == 'EBADCSRFTOKEN'
     message = "Invalid CSRF token!"
@@ -17,5 +21,5 @@ module.exports = (err, req, res, next)->
   res.status(403).json {
     success: false
     message: message
-    csrf: req.csrfToken()
+    csrf: csrf_token
   }

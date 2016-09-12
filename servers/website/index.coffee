@@ -6,15 +6,19 @@ app = express()
 
 
 module.exports = (srv)->
+  # 3rd Party Ignore Routes
+  scheduler_regex = /^((?!\/admin\/scheduler)[\s\S])*$/
+
+
   # Express Setup
   app.set 'views', __dirname + '/views'
   app.set 'view engine', 'ejs'
   app.use require("compression")()
   app.use require("cookie-parser")()
-  app.use require("csurf")({ cookie: true })
+  app.use scheduler_regex, require("csurf")({ cookie: true })
   app.use require('express-session')(CONFIG.cookies.session session, LIBS.redis)
   app.use routes.auth.load_user
-  app.use require "./locals"
+  app.use scheduler_regex, require "./locals"
   
 
   # Public Routes
@@ -91,7 +95,7 @@ module.exports = (srv)->
   
   
   # Error Handlers
-  #app.get  "*", routes.landing.get_not_found
+  app.get  "*", routes.landing.get_not_found
   app.use  require("./error")
   
   

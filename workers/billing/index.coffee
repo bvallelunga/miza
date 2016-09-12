@@ -1,21 +1,12 @@
-# Config
-GLOBAL.CONFIG = require("../../config")()
-
-
-# Check If First Day of the Month
-now = new Date()
-
-if CONFIG.is_prod and now.getUTCDate() > 1
-  return process.exit()
-  
-  
-# Imports
 moment = require "moment"
 
- 
-# Startup & Configure
-require("../../startup") false, ->
-  invoice_description = "Invoice for #{moment().format("MMMM YYYY")}"
+
+module.exports = (job, done)->
+  date = moment()
+  invoice_description = "Invoice for #{date.format("MMMM YYYY")}"
+  
+  if CONFIG.is_prod and date.date() != 1
+    return done "Not the first of the month!"
    
   LIBS.models.Publisher.findAll({
     include: [{
@@ -61,8 +52,5 @@ require("../../startup") false, ->
             paid_at: null
           }
         }
-        
-  .then ->
-    process.exit()
 
-  .catch console.error
+  .then(-> done()).catch(done)
