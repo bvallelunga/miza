@@ -7,7 +7,7 @@ app = express()
 
 module.exports = (srv)->
   # 3rd Party Ignore Routes
-  scheduler_regex = /^((?!\/admin\/scheduler)[\s\S])*$/
+  scheduler_regex = /^((?!\/admin\/vendor)[\s\S])*$/
 
 
   # Express Setup
@@ -69,9 +69,10 @@ module.exports = (srv)->
   app.get  "/admin/reports/metrics", routes.auth.is_admin, routes.admin.reports.metrics
   app.get  "/admin/industries", routes.auth.is_admin, routes.admin.industries.get
   app.get  "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.get
+  app.get  "/admin/scheduler", routes.auth.is_admin, routes.admin.scheduler.get
   app.post "/admin/access", routes.auth.is_admin, routes.admin.access.post
   app.post "/admin/industries", routes.auth.is_admin, routes.admin.industries.post
-  app.use  "/admin", admin_router
+  app.use  "/admin/vendor", admin_router
   
   
   # Dashboard Routes
