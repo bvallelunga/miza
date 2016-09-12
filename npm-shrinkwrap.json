@@ -17,6 +17,11 @@
       "from": "agenda@>=0.9.0 <0.10.0",
       "resolved": "https://registry.npmjs.org/agenda/-/agenda-0.9.0.tgz"
     },
+    "agendash": {
+      "version": "0.3.2",
+      "from": "agendash@latest",
+      "resolved": "https://registry.npmjs.org/agendash/-/agendash-0.3.2.tgz"
+    },
     "align-text": {
       "version": "0.1.4",
       "from": "align-text@>=0.1.3 <0.2.0",

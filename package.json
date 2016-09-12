@@ -12,6 +12,7 @@
   "license": "",
   "dependencies": {
     "agenda": "^0.9.0",
+    "agendash": "^0.3.2",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.4.1",
     "body-parser": "^1.14.2",
