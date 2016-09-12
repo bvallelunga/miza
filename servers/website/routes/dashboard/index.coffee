@@ -3,7 +3,7 @@ module.exports.get_root = (req, res, next)->
     return res.redirect "/dashboard/#{req.query.dashboard}/analytics"
 
   if req.user.publishers.length == 0
-    res.redirect "/dashboard/new"
+    return res.redirect "/dashboard/new"
     
   res.redirect "/dashboard/#{req.user.publishers[0].key}/analytics"
   

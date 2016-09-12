@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes)->
           }
         }).then (customer)=>
           @stripe_id = customer.id
-          return customer
+          return @save()
           
       stripe_set_card: (card)->
         return LIBS.stripe.customers.update(@stripe_id, {
@@ -77,15 +77,10 @@ module.exports = (sequelize, DataTypes)->
         })
     
     }
-    hooks: {
-      beforeCreate: (user, options, callback)->
-        user.stripe_generate().then ->
-          callback()        
-        
-        .catch callback
-        
-        
+    hooks: {        
       afterCreate: (user, options)->
+        LIBS.agenda.now "stripe.register", { user: user.id }
+      
         if not user.is_demo and not user.is_admin
           LIBS.slack.message {
             text: "#{user.name} created an account with email #{user.email}"
@@ -94,7 +89,6 @@ module.exports = (sequelize, DataTypes)->
          
       afterUpdate: (user, options, callback)->
         if user.changed("name") or user.changed("email")
-          console.log "update stripe"
           user.stripe_update().then ->
             callback()        
         

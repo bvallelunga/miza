@@ -2,14 +2,19 @@ require("../startup") true, ->
   agenda = LIBS.agenda
 
   # Define Jobs
-  agenda.define "billing", {
+  agenda.define "stripe.charge", {
     concurrency: 1
     priority: "highest"
-  }, require("./billing")
+  }, require("./stripe/charge")
+  
+  agenda.define "stripe.register", {
+    concurrency: 1
+    priority: "high"
+  }, require("./stripe/register")
   
   agenda.define "reports.builder", {
     priority: "medium"
-  }, require("./reports")
+  }, require("./reports/builder")
   
   agenda.define "reports.reducer.hourly", {
     priority: "low"
@@ -22,10 +27,11 @@ require("../startup") true, ->
   
   # Set Job Schedules
   agenda.on "ready", ->
-    agenda.every '1st of the month', 'billing'
+    agenda.every '1st of the month', 'stripe.charge'
     agenda.every 'minute', 'reports.builder'
     agenda.every 'hour', 'reports.reducer.hourly'
     agenda.every 'day', 'reports.reducer.daily'
+    agenda.every 'day', 'stripe.register'
     agenda.start()
   
   
