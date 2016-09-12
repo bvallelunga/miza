@@ -1,5 +1,5 @@
 module.exports.has_publisher = (req, res, next)->
-  domains = req.host.split(".").slice(0, -1)
+  domains = req.hostname.split(".").slice(0, -1)
   
   if domains.length == 0
     return res.end CONFIG.ads_server.denied.message

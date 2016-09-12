@@ -76,7 +76,7 @@ module.exports = (sequelize, DataTypes)->
       }
     ] 
     classMethods: {
-      queue: (req, data)->        
+      queue: (req, data)->              
         LIBS.queue.publish "event-queued", {
           type: data.type 
           ip_address: req.ip or req.ips

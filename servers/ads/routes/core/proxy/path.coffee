@@ -6,8 +6,6 @@ module.exports = (host, path)->
     url = new Buffer(encoded, 'base64').toString("ascii")
     key = "#{host}#{path}"
     
-    console.log url
-    
     if not is_url_test.test(url)
       return Promise.reject "Invalid url"
     

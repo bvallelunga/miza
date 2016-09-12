@@ -5,35 +5,8 @@ useragent = require 'user-agent-parser'
 
 # Startup & Configure
 require("../../startup") true, ->
-  
-  # Bulk Creator
-  to_save = []
-    
-  bulk_create = ->
-    Promise.resolve().then ->
-      list = to_save.splice 0, to_save.length
-      
-      if list.length == 0
-        return Promise.resolve()
-  
-      LIBS.models.Event.bulkCreate(list, {
-        hooks: false
-        individualHooks: false
-        returning: false
-        raw: true
-      })
-    
-    .then (reports)->
-      setTimeout bulk_create, CONFIG.tracking_worker.interval
-      
-    .catch console.error
-    
-  
-  # Start Timer
-  bulk_create()
 
-
-  LIBS.queue.consume "event-queued", (event, ack, nack)->  
+  LIBS.queue.consume "event-queued", (event, ack, nack)->    
     Promise.resolve().then ->    
       geo_location = geoip.lookup(event.ip_address) or {}
       agent = useragent event.headers['user-agent']  
@@ -97,8 +70,8 @@ require("../../startup") true, ->
       event.browser = browser
       event.device = device
       
-      # Add to Save List
-      to_save.push event
+      # Save Event
+      return LIBS.models.Event.create event
     
     .then(ack).catch (error)->
       console.error error
