@@ -13,7 +13,7 @@ API.networks = [
       parent: true,
       duplicates: new RegExp(API.id + "_5_[0-9]")
     },
-    tester_url: /(carbonads)|(fusionads)/gi
+    tester_url: /(carbon)|(fusionads)|(buysellads)|(adsafeprotected)/gi
   }
 ]
 
