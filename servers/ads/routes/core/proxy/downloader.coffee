@@ -26,17 +26,15 @@ fetchRedis = (path)->
       
       
 download = (url, query, headers)->
-  new Promise (res, rej)->
-    user_agent = headers["user-agent"] + "; " + CONFIG.ads_server.user_agent
-  
+  new Promise (res, rej)->  
     request {
       method: "GET"
       encoding: null
       url: url
       followAllRedirects: true
       headers: {
-        cookie: headers.cookie
-        'User-Agent': user_agent
+        'User-Agent': headers["user-agent"]
+        #CONFIG.ads_server.user_agent: ""
       }
     }, (error, response, body)->
       if error? or response.statusCode != 200
