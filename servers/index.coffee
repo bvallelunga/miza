@@ -13,6 +13,7 @@ require("../startup") true, ->
     app.use morgan CONFIG.logger
   
   app.enable 'trust proxy'
+  app.disable 'x-powered-by'
   app.use bodyParser.json()
   app.use bodyParser.urlencoded({ extended: true })
   
