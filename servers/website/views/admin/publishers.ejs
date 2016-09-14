@@ -14,7 +14,7 @@
     <tbody>
       <% publishers.forEach(function(publisher) { %>
         <tr>
-          <td><a target="_blank" href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.name %></a></td>
+          <td><a href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.name %></a></td>
           <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
           <td><%= publisher.key %></td>
           <td><%= publisher.coverage_ratio * 100 %>%</td>
