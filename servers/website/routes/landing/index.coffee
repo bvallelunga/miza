@@ -5,7 +5,6 @@ module.exports.get_root = (req, res, next)->
   res.render "landing/index", {
     js: req.js.renderTags "landing", "fa"
     css: req.css.renderTags "landing", "fa"
-    
   }
   
 
