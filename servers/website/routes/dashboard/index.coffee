@@ -1,3 +1,5 @@
+moment = require "moment"
+
 module.exports.get_root = (req, res, next)->
   if req.query.dashboard?
     return res.redirect "/dashboard/#{req.query.dashboard}/analytics"
@@ -19,12 +21,17 @@ module.exports.get_dashboard = (req, res, next)->
   ]
   dashboard_title = (dashboard.split(' ').map (word) -> word[0].toUpperCase() + word[1..-1].toLowerCase()).join ' '
   ads_domain = CONFIG.ads_server.domain
+  billed_on = ""
 
   if dashboard not in dashboards
     return res.redirect "#{dashboard_path}/analytics"  
   
   if req.publisher.is_demo
     ads_domain = req.get("host")
+    
+    
+  if dashboard == "billing"
+    billed_on = moment(LIBS.helpers.past_date "month", null, 1).format("MMM D")  
   
   switch dashboard
     when "setup"
@@ -48,6 +55,7 @@ module.exports.get_dashboard = (req, res, next)->
     ads_domain: ads_domain
     guide: req.query.new_publisher?
     changelog: true
+    billed_on: billed_on
   }
   
   

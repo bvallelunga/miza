@@ -2,13 +2,16 @@
 @import '../global/colors';
 
 .billing-dashboard {
-  .metrics {
-    .metric .primary {
-      color: @green;
-    }
+  .metrics {    
+    width: 100%;
+    text-align: center;
     
-    .secondaries .row .metric .primary {
-      color: darken(@green, 15%);
+    .metric.core {
+      width: 100%;
+      
+      .primary {
+        color: @green;
+      }
     }
   }
   
@@ -29,7 +32,7 @@
       font-weight: bold;
     }
     
-    .owe-long-metric {
+    .owed-metric {
       color: darken(@green, 15%);
     }
     

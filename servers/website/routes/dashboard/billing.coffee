@@ -34,29 +34,17 @@ module.exports.logs = (req, res, next)->
 module.exports.metrics = (req, res, next)->
   month_ago = LIBS.helpers.past_date "month", req.query.date
 
-  Promise.props({
-    all: req.publisher.reports({
-      created_at: {
-        $gte: month_ago
-      }
-    })
-    owe: req.publisher.reports({
+  req.publisher.reports({
       paid_at: null
-    })
   }).then (props)->            
     res.json {
-      billed: LIBS.helpers.past_date "month", null, 1
-      cpm: numeral(props.owe.cpm or req.publisher.industry.cpm).format("$0.00a")
-      cpc: numeral(props.owe.cpc).format("$0.00[0]a")
-      fee: numeral(props.owe.fee or req.publisher.industry.fee).format("0[.]0%")
-      owe_short: numeral(props.owe.owed).format("$0[,]000[.]00a")
-      owe_long: numeral(props.owe.owed).format("$0[,]000.00")
-      revenue: numeral(props.all.revenue).format("$0[,]000a")
-      revenue_protected: numeral(props.owe.revenue).format("$0[,]000.00a")
-      clicks_revenue: numeral(props.owe.clicks_revenue).format("$0[,]000.00")
-      impressions_revenue: numeral(props.owe.impressions_revenue).format("$0[,]000.00")
-      impressions: numeral(props.owe.impressions).format("0[,]000")
-      clicks: numeral(props.owe.clicks).format("0[,]000")
+      cpm: numeral(props.cpm or req.publisher.industry.cpm).format("$0.00a")
+      owed: numeral(props.owed).format("$0[,]000.00")
+      impressions_owed: numeral(props.impressions_owed).format("$0[,]000.00")
+      impressions: numeral(props.impressions).format("0[,]000")
+      clicks: numeral(props.clicks).format("0[,]000")
+      clicks_owed: numeral(props.clicks_owed).format("$0[,]000.00")
+      cpc: numeral(props.cpc).format("$0.00a")
     }
     
   .catch next

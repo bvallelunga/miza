@@ -23,7 +23,7 @@ module.exports = (job, done)->
       publisher.reports({
         paid_at: null
       }).then (report)->
-        amount_owed = Math.floor report.owed * 100 * 1000
+        amount_owed = Math.floor report.owed * 100
 
         if amount_owed <= 49
           return Promise.resolve false

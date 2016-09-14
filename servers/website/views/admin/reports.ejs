@@ -10,27 +10,27 @@
   <div class="metrics">
     <div class="core metric left">
       <div class="primary owed-metric">&nbsp;</div>
-      <div class="secondary">Amount Owed (est)</div>
+      <div class="secondary">Amount Owed</div>
     </div>
     <div class="secondaries right">
       <div class="row">
         <div class="metric">
-          <div class="primary revenue-metric">&nbsp;</div>
-          <div class="secondary">Protected Revenue (est)</div>
+          <div class="primary protected-metric"></div>
+          <div class="secondary">Miza Protection (MP)</div>
         </div>
         <div class="metric">
-          <div class="primary protected-metric"></div>
-          <div class="secondary">Protection Active</div>
+          <div class="primary ctr-metric">&nbsp;</div>
+          <div class="secondary">Click Through Rate (CTR)</div>
         </div>
       </div>
       <div class="row">
         <div class="metric">
           <div class="primary impressions-metric">&nbsp;</div>
-          <div class="secondary">Protected Impressions</div>
+          <div class="secondary">Protected Impressions (PI)</div>
         </div>
         <div class="metric">
           <div class="primary clicks-metric">&nbsp;</div>
-          <div class="secondary">Protected Clicks</div>
+          <div class="secondary">Protected Clicks (PC)</div>
         </div>
       </div>
     </div>
@@ -41,9 +41,9 @@
         <th>Publisher</th>
         <th>Domain</th>
         <th>CPM</th>
-        <th>Revenue</th>
-        <th>Protected</th>
-        <th>Fee</th>
+        <th>Impressions</th>
+        <th>Clicks</th>
+        <th>Protection</th>
         <th>Owed</th>
       </tr>
     </thead>
@@ -53,9 +53,9 @@
           <td><a target="_blank" href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.name %></a></td>
           <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
           <td class="red cpm data"></td>
-          <td class="red revenue data"></td>
+          <td class="green impressions data"></td>
+          <td class="green clicks data"></td>
           <td class="green protected data"></td>
-          <td class="green fee data"></td>
           <td class="green owed data"></td>
         </tr>
       <% }) %>

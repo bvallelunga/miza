@@ -9,7 +9,6 @@
           <th>Industry</th>
           <th>Listing</th>
           <th>CPM ($)</th>
-          <th>Fee (%)</th>
         </tr>
       </head>
       <tbody>
@@ -26,8 +25,7 @@
                 </select>
               </div>
             </td>
-            <td><input class="only" type="number" name="industries[<%= i %>][cpm]" value="<%= industry.cpm %>" placeholder="CPM" min="0" step="0.01" required></td>
-            <td><input class="only" type="number" name="industries[<%= i %>][fee]" value="<%= industry.fee * 100 %>" placeholder="Fee" min="0" max="100" step="1" required></td>
+            <td><input class="only number" type="number" name="industries[<%= i %>][cpm]" value="<%= industry.cpm %>" placeholder="CPM" min="0" step="0.01" required></td>
           </tr>
         <% }) %>
       </tbody>

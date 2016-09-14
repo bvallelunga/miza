@@ -12,19 +12,13 @@ billingMetrics = ->
   $.get("#{location.pathname}/metrics", {
     date: new Date()
   }).done (metrics)->
-    $(".revenue-metric").text metrics.revenue
-    $(".billed-metric").text moment(metrics.billed).format("MMM D")
     $(".cpm-metric").text metrics.cpm
-    $(".cpc-metric").text metrics.cpm
-    $(".cpc-metric").text metrics.cpc
-    $(".owe-short-metric").text metrics.owe_short
-    $(".owe-long-metric").text metrics.owe_long
-    $(".fee-metric").text metrics.fee
+    $(".owed-metric").text metrics.owed
     $(".impression-metric").text metrics.impressions
-    $(".impression-revenue").text metrics.impressions_revenue
+    $(".impression-owed").text metrics.impressions_owed
+    $(".cpc-metric").text metrics.cpc
     $(".click-metric").text metrics.clicks
-    $(".click-revenue").text metrics.clicks_revenue
-    $(".revenue-protected-metric").text metrics.revenue_protected
+    $(".click-owed").text metrics.clicks_owed
   
 
 billingLogs = ->
