@@ -18,7 +18,6 @@ module.exports.post = (req, res, next)->
       name: industry.name
       cpm: Number industry.cpm
       private: industry.private == "true"
-      fee: Number(industry.fee)/100
     }, {
       returning: false
       individualHooks: true
