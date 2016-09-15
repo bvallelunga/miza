@@ -9,6 +9,10 @@ module.exports.get = (req, res, next)->
     order: [
       ['name', 'ASC']
     ]
+    include: [{
+      model: LIBS.models.User
+      as: "owner"
+    }]
   }).then (publishers)->      
     res.render "admin/reports", {
       js: req.js.renderTags "admin-reports"
