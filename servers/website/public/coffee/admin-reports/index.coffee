@@ -29,12 +29,12 @@ class ReportsDashboard
 
 
   clear_metrics: ->
-    $(".impressions-metric").html "&nbsp;"
-    $(".clicks-metric").html "&nbsp;"
-    $(".owed-metric").html "&nbsp;"
-    $(".revenue-metric").html "&nbsp;"
-    $(".protected-metric").html "&nbsp;"
-    $("tr.publisher .data").text ""
+    $(".impressions-metric").html "---"
+    $(".clicks-metric").html "---"
+    $(".owed-metric").html "---"
+    $(".ctr-metric").html "---"
+    $(".protected-metric").html "---"
+    $("tr.publisher .data").html "---"
 
   
 $ ->
