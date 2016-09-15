@@ -32,7 +32,7 @@ create_publisher = (models)->
     defaults: {
       name: "Demo"
       is_demo: true
-      industry_id: 11
+      industry_id: 2
     }
   })
 

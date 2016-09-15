@@ -21,15 +21,12 @@ module.exports = (concurrency, callback)->
     process.exit()
     
     
-startup = (callback)->
+startup = (done)->
   # Globals
   GLOBAL.Promise = require "bluebird"
   Promise.config CONFIG.promises
-  
-  require("./libs")().then (LIBS)->
-    GLOBAL.LIBS = LIBS
-    callback()
+  GLOBAL.LIBS = require("./libs")
     
-  .catch (error)->
-    console.error error
+  LIBS.init().then(done).catch (error)->
+    console.error error.stack
     process.exit()

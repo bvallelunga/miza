@@ -18,8 +18,12 @@ module.exports = ->
     args: process.argv.slice(2)
     
     mongo_url: process.env.MONGODB_URI
-    postgres_url: process.env.DATABASE_URL
     redis_url: process.env.REDISCLOUD_URL
+    postgres: {
+      url: process.env.DATABASE_URL
+      ssl: process.env.DATABASE_URL.indexOf("locahost") > -1
+      flush: false and is_dev
+    }
     
     app_name: process.env.APP_NAME
     website_subdomains: [ "local", "www", "dev", "miza", process.env.APP_NAME ]

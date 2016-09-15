@@ -1,15 +1,11 @@
 Sequelize = require "sequelize"
-database  = null
 
 # Exports
 module.exports = ->
-  if database?
-    return database
-
-  sequelize  = new Sequelize(CONFIG.postgres_url, { 
+  sequelize  = new Sequelize(CONFIG.postgres.url, { 
     logging: false
     dialectOptions: {
-      ssl: true
+      ssl: CONFIG.postgres.ssl
     }
     define: {
       paranoid: true

@@ -3,7 +3,7 @@ Knex  = require 'knex'
 URL   = require 'url'
 
 module.exports = (sequelize, models)->
-  pg_server = URL.parse CONFIG.postgres_url
+  pg_server = URL.parse CONFIG.postgres.url
   knex = Knex({
     client: "postgresql"
     connection: {
@@ -12,7 +12,7 @@ module.exports = (sequelize, models)->
       user: pg_server.auth.split(':')[0]
       password: pg_server.auth.split(':')[1]
       database: pg_server.path.substring(1)
-      ssl: true
+      ssl: CONFIG.postgres.ssl
     }
   })
 
