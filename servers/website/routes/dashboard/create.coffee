@@ -23,13 +23,13 @@ module.exports.post = (req, res, next)->
     publisher: Publisher.create({
       domain: req.body.publisher_domain
       name: req.body.publisher_name
+      owner_id: req.user.id
       industry_id: Number req.body.publisher_industry
     })
     networks: LIBS.models.Network.findAll({
-      include: [ "id" ]
+      attributes: [ "id" ]
     })
-  }).then (props)->
-    props.publisher.setOwner req.user
+  }).then (props)->  
     props.publisher.addNetworks props.networks
     req.user.addPublisher(props.publisher).then ->
       res.json {

@@ -15,13 +15,13 @@ module.exports = ->
   }
   
   add_domain = (domain)->
-    LIBS.heroku.post "/apps/#{CONFIG.app_name}/domains", {
+    heroku.post "/apps/#{CONFIG.app_name}/domains", {
       body: { hostname: domain }
     } 
    
    
   remove_domain = (domain)->
-    LIBS.heroku.delete "/apps/#{CONFIG.app_name}/domains/#{domain}"
+    heroku.delete "/apps/#{CONFIG.app_name}/domains/#{domain}"
   
   
   return {
