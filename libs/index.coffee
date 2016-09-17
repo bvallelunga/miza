@@ -1,5 +1,4 @@
 module.exports = {
-  models: null
   sequelize: require("./sequelize")
   redis: require("./redis")()
   heroku: require("./heroku")()

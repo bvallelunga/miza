@@ -26,7 +26,7 @@ startup = (done)->
   GLOBAL.Promise = require "bluebird"
   Promise.config CONFIG.promises
   GLOBAL.LIBS = require("./libs")
-    
+
   LIBS.init().then(done).catch (error)->
     console.error error.stack
     process.exit()

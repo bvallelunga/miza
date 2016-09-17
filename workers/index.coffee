@@ -1,7 +1,5 @@
 require("../startup") true, ->
   agenda = LIBS.agenda
-  
-  console.log agenda
 
   # Define Jobs
   agenda.define "stripe.charge", {
@@ -27,20 +25,13 @@ require("../startup") true, ->
   }, require("./reports/reducer")("day")
   
   # Set Job Schedules
-  agenda.on "ready", ->
-    console.log agenda
-    agenda.every '1st of the month', 'stripe.charge'
-    agenda.every 'minute', 'reports.builder'
-    agenda.every 'hour', 'reports.reducer.hourly'
-    agenda.every 'day', 'reports.reducer.daily'
-    agenda.every 'day', 'stripe.register'
-    agenda.start()
+  agenda.every '1st of the month', 'stripe.charge'
+  agenda.every 'minute', 'reports.builder'
+  agenda.every 'hour', 'reports.reducer.hourly'
+  agenda.every 'day', 'reports.reducer.daily'
+  agenda.every 'day', 'stripe.register'
+  agenda.start()
     
-    
-  agenda.on "error", (error)->
-    console.error error.stack
-    graceful()
-  
   
   # Graceful Shutdown
   graceful = ->
