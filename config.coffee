@@ -25,8 +25,14 @@ module.exports = ->
       flush: false and is_dev
     }
     
+    protected: process.env.APP_NAME.indexOf("dev") > -1
     app_name: process.env.APP_NAME
     website_subdomains: [ "local", "www", "dev", "miza", process.env.APP_NAME ]
+    
+    basic_auth: {
+      username: "admin@miza.io"
+      password: "1Burrito2Go"
+    }
     
     queue: {
       producer: process.env.RABBITMQ_BIGWIG_TX_URL
@@ -85,6 +91,7 @@ module.exports = ->
       queue: false and is_dev
       slack: true and is_dev
       express: {
+        protected: true and is_dev
         logger: true and is_dev
       }
       ads_server: {
