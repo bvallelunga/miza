@@ -21,13 +21,12 @@ module.exports = ->
     redis_url: process.env.REDISCLOUD_URL
     postgres: {
       url: process.env.DATABASE_URL
-      ssl: process.env.DATABASE_URL.indexOf("locahost") > -1
+      ssl: process.env.DATABASE_URL.indexOf("localhost") == -1
       flush: false and is_dev
     }
     
     app_name: process.env.APP_NAME
     website_subdomains: [ "local", "www", "dev", "miza", process.env.APP_NAME ]
-    
     
     queue: {
       producer: process.env.RABBITMQ_BIGWIG_TX_URL
@@ -73,13 +72,17 @@ module.exports = ->
       {
         email: "brian@miza.io"
         is_admin: true
+        publisher: 1
       }, {
         email: "ambrish@miza.io"
         is_admin: true
+        publisher: 1
       }
     ]
     
     disable: {
+      heroku: false and is_dev
+      queue: false and is_dev
       slack: true and is_dev
       express: {
         logger: true and is_dev

@@ -21,7 +21,6 @@ module.exports = ->
 
   models = require("./models")(sequelize)  
   require("./migrations")(sequelize).then ->
-    console.log "Sequelize Sync: #{ Object.keys(models).join(", ") }"
     return sequelize.sync({ force: false })
     
   .then ->

@@ -21,8 +21,5 @@ module.exports.up = (sequelize, models)->
       where: {
         name: data.name
       },
-      defaults: {
-        id: data.id
-        cpm: data.cpm
-      }
+      defaults: data
     })

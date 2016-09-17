@@ -13,7 +13,7 @@ module.exports = (srv)->
   
   
   # Routes  
-  app.get "/", routes.auth.has_publisher, routes.core.script
+  app.get "/", routes.auth.has_publisher, routes.core.dfp, routes.core.script
   app.get "/c", routes.auth.has_publisher, routes.core.carbon, routes.core.script
   app.get "/check", routes.auth.has_publisher, routes.core.check
   app.get "/p", routes.auth.has_publisher, routes.core.ping

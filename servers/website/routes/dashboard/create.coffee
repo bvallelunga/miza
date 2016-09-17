@@ -19,17 +19,22 @@ module.exports.post = (req, res, next)->
   if not req.body.publisher_industry?
     return next "Please select an industry."
 
-  Publisher.create({
-    domain: req.body.publisher_domain
-    name: req.body.publisher_name
-    industry_id: Number req.body.publisher_industry
-  }).then (publisher)->
-    publisher.setOwner req.user
-    publisher.addNetworks [ 1, 5 ]
-    req.user.addPublisher(publisher).then ->
+  Promise.props({
+    publisher: Publisher.create({
+      domain: req.body.publisher_domain
+      name: req.body.publisher_name
+      industry_id: Number req.body.publisher_industry
+    })
+    networks: LIBS.models.Network.findAll({
+      include: [ "id" ]
+    })
+  }).then (props)->
+    props.publisher.setOwner req.user
+    props.publisher.addNetworks props.networks
+    req.user.addPublisher(props.publisher).then ->
       res.json {
         success: true
-        next: "/dashboard/#{publisher.key}/setup?new_publisher"
+        next: "/dashboard/#{props.publisher.key}/setup?new_publisher"
       }
     
   .catch next

@@ -1,15 +1,7 @@
 (function(window) {
   var API = {}
   
-  <% 
-    networks = networks.filter(function(network) {
-      return network.slug == "dfp"
-    })
-  %>
-  
-  <% networks.forEach(function(network) { %>
-    window["<%= publisher.key %>_<%= network.id %>"] = <%= network.entry_js %>
-  <% }) %>
+  window["<%= publisher.key %>_1"] = window.googletag
   
   API.s_init = function() {
     API.s_id = "<%= publisher.key %>" 
@@ -32,11 +24,9 @@
       "random": "<%= random_slug %>"
     }
     
-    <% networks.forEach(function(network) { %>
-      var target = new RegExp("<%= network.targets %>")
-      API.s_targets[target] = "<%= network.id %>"
-      API.s_targets_list.push(target)
-    <% }) %>
+    var target = new RegExp("(googlesyndication)|(googleadservices)|(doubleclick)|(googleads.g.doubleclick.net)")
+    API.s_targets[target] = "<%= network.id %>"
+    API.s_targets_list.push(target)
     
     API.s_fetch_attributes(window, API.s_start)
   }
@@ -49,21 +39,18 @@
       API.s_overrides(window)
     }
     
-    <% networks.forEach(function(network) { %> 
-      var script = API.s_script()
-      var url = "<%= network.entry_url %>"
-      var network_id = "<%= network.id %>"
-      
-      if(enabled) {
-        script.src = API.s_url(url, false, network_id)
-        script.src += "&script=true"
-      } else {
-        script.src = atob(url)
-      }
-      
-      API.s_head.appendChild(script)
-    <% }) %>
+    var script = API.s_script()
+    var url = "aHR0cDovL3d3dy5nb29nbGV0YWdzZXJ2aWNlcy5jb20vdGFnL2pzL2dwdC5qcw=="
+    var network_id = "<%= network.id %>"
     
+    if(enabled) {
+      script.src = API.s_url(url, false, network_id)
+      script.src += "&script=true"
+    } else {
+      script.src = atob(url)
+    }
+    
+    API.s_head.appendChild(script)    
     API.s_status("p")
   }
   

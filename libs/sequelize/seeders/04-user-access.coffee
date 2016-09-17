@@ -11,5 +11,6 @@ create_user_access = (models, access)->
     }
     defaults: {
       is_admin: access.is_admin
+      publisher_id: access.publisher
     }
   })

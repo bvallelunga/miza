@@ -9,24 +9,6 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
       allowNull: false
     }
-    entry_js: { 
-      type: DataTypes.TEXT
-      defaultValue: ""
-    }
-    domains: { 
-      type: DataTypes.ARRAY(DataTypes.TEXT)
-      defaultValue: []
-    }
-    targets: { 
-      type: DataTypes.TEXT
-      defaultValue: ""
-    }
-    entry_raw_url: {
-      type: DataTypes.TEXT
-    }
-    entry_url: {
-      type: DataTypes.TEXT
-    }
     is_enabled: { 
       type: DataTypes.BOOLEAN
       defaultValue: false
@@ -43,13 +25,5 @@ module.exports = (sequelize, DataTypes)->
           as: 'events' 
         }
 
-    }
-    hooks: {
-      beforeValidate: (network, options)->
-        network.entry_url = new Buffer(network.entry_raw_url).toString('base64')
-        network.targets = network.domains.map (domain)->
-          return "(#{domain})"
-        .join "|"
-          
     }
   }

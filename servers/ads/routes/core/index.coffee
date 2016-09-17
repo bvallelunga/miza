@@ -27,14 +27,29 @@ module.exports.impression = (req, res, next)->
   }
 
 
+module.exports.dfp = (req, res, next)->
+  LIBS.models.Network.find({
+    where: {
+      slug: "dfp"
+    }
+  }).then (network)->
+    req.script = "dfp"
+    req.network = network
+    next()
+
+
 module.exports.carbon = (req, res, next)->
-  req.script = "carbon"
-  next()
+  LIBS.models.Network.find({
+    where: {
+      slug: "carbon"
+    }
+  }).then (network)->
+    req.script = "carbon"
+    req.network = network
+    next()
 
 
 module.exports.script = (req, res, next)->
-  script = req.script or "v1"
-
   if req.publisher.is_demo
     req.publisher.endpoint = req.get("host")
 
@@ -43,15 +58,16 @@ module.exports.script = (req, res, next)->
       ip_address: req.ip or req.ips
     }
   }).then (count)->
-    res.render "#{script}/script", {
+    res.render "#{req.script}/script", {
       enabled: req.publisher.coverage_ratio > Math.random() and count == 0
       random_slug: script.random_slug
       publisher: req.publisher
+      network: req.network
       networks: req.publisher.networks.filter (network)->
         return network.is_enabled
     }, (error, code)->
       if error?
-        console.error error
+        console.error error.stack
         code = ""
       
       if CONFIG.is_dev

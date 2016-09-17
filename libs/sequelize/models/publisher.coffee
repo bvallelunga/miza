@@ -91,16 +91,6 @@ module.exports = (sequelize, DataTypes)->
         return "#{hostname}#{if domain.port? then (":" + domain.port) else "" }"
       
       
-      heroku_add_domain: (domain)->
-        LIBS.heroku.post "/apps/#{CONFIG.app_name}/domains", {
-          body: { hostname: domain }
-        } 
-       
-       
-      heroku_remove_domain: (domain)->
-        LIBS.heroku.delete "/apps/#{CONFIG.app_name}/domains/#{domain}"
-      
-      
       reports: (query)->
         query.publisher_id = @id
         
@@ -163,14 +153,14 @@ module.exports = (sequelize, DataTypes)->
           
       
       afterCreate: (publisher, options, callback)->
-        publisher.heroku_add_domain(publisher.endpoint).then ->
+        LIBS.heroku.add_domain(publisher.endpoint).then ->
           callback()
         .catch console.warn
 
         
       afterUpdate: (publisher, options, callback)->
         if publisher.endpoint != publisher.previous("endpoint")
-          publisher.heroku_add_domain(publisher.endpoint).then ->
+          LIBS.heroku.add_domain(publisher.endpoint).then ->
             callback()
           .catch console.warn
           

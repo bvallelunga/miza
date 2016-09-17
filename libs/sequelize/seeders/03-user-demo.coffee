@@ -5,10 +5,10 @@ module.exports.up = (sequelize, models)->
   Promise.props({
     user: create_user models
     publisher: create_publisher models
-  }).then (result)->
+  }).then (result)->  
     result.user[0].addPublisher result.publisher[0]
-    result.publisher[0].addOwner result.user[0]
-    result.publisher[0].addNetworks [ 1, 2, 3, 4, 5 ]
+    result.publisher[0].setOwner result.user[0]
+    result.publisher[0].addNetworks [ 1, 2, 3 ]
     
   
 create_user = (models)->
