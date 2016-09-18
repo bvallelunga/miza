@@ -1,27 +1,35 @@
 <% include ../includes/start %>
 <% include ../includes/header %>
 <div class="container large-2 publishers">
-  <table>
-    <head>
-      <tr>
-        <th>Name</th>
-        <th>Domain</th>
-        <th>API Key</th>
-        <th>Coverage</th>
-        <th>Industry</th>
-      </tr>
-    </head>
-    <tbody>
-      <% publishers.forEach(function(publisher) { %>
+  <form class="form" method="POST" action="/admin/publishers">
+    <% include ../includes/csrf %>
+    <table>
+      <head>
         <tr>
-          <td><a href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.name %></a></td>
-          <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
-          <td><%= publisher.key %></td>
-          <td><%= publisher.coverage_ratio * 100 %>%</td>
-          <td><%= publisher.industry.name %></td>
+          <th>Name</th>
+          <th>Domain</th>
+          <th>API Key</th>
+          <th>Industry</th>
+          <th>Coverage (%)</th>
+          <th>Fee (%)</th>
         </tr>
-      <% }) %>
-    </tbody>
-  </table>
+      </head>
+      <tbody>
+        <% publishers.forEach(function(publisher, i) { %>
+          <input type="hidden" name="publishers[<%= i %>][id]" value="<%= publisher.id %>" required>
+          <tr>
+            <td><a href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.name %></a></td>
+            <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
+            <td><%= publisher.key %></td>
+            <td><%= publisher.industry.name %></td>
+            <td><input class="only number" type="number" name="publishers[<%= i %>][coverage]" value="<%= publisher.coverage_ratio * 100 %>" placeholder="Coverage" min="0" step="1" max="100" required></td>
+            <td><input class="only number" type="number" name="publishers[<%= i %>][fee]" value="<%= publisher.fee * 100 %>" placeholder="Fee" min="0" step="1" max="100" required></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <button class="button" type="submit">Update Publishers</button>
+    <div class="error"></div>
+  </form>
 </div>
 <% include ../includes/end %>

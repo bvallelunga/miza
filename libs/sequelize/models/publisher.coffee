@@ -8,6 +8,13 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING,
       allowNull: false
     }
+    fee: {
+      defaultValue: 0
+      allowNull: false
+      type: DataTypes.DECIMAL(4,3)
+      get: ->      
+        return Number @getDataValue("fee")
+    }
     domain: { 
       type: DataTypes.STRING,
       unique: true

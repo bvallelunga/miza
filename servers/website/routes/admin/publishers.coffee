@@ -9,7 +9,32 @@ module.exports.get = (req, res, next)->
     }]
   }).then (publishers)->
     res.render "admin/publishers", {
-      css: req.css.renderTags "admin"
+      js: req.js.renderTags "modal"
+      css: req.css.renderTags "modal", "admin"
       title: "Admin Publishers"
       publishers: publishers
     }
+
+
+module.exports.post = (req, res, next)->
+  Promise.all req.body.publishers.map (publisher)->
+    return LIBS.models.Publisher.update({
+      coverate_ratio: Number(publisher.fee) / 100
+      fee: Number(publisher.fee) / 100
+    }, {
+      returning: false
+      individualHooks: true
+      where: {
+        id: publisher.id
+      }
+    })
+    
+  .then ->
+    res.json {
+      success: true
+      message: "Publishers have been updated!"
+      next: "/admin/publishers"
+    }
+    
+  .catch next
+  

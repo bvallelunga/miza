@@ -8,7 +8,7 @@ module.exports = (job, done)->
   }).then (publishers)->           
     Promise.all publishers.map (publisher)->
       publisher.pending_events().then (report)->      
-        report.fee = publisher.industry.fee
+        report.fee = publisher.fee
         report.cpm = publisher.industry.cpm          
         return report
         

@@ -78,7 +78,8 @@ module.exports = (sequelize, DataTypes)->
           totals.pings_all += report.pings_all
           totals.pings += report.pings
           totals.impressions += report.impressions
-          totals.impressions_owed += report.impressions/1000 * report.cpm
+          totals.clicks_owed += report.clicks * totals.cpc * report.fee
+          totals.impressions_owed += report.impressions/1000 * report.cpm * report.fee
           totals.clicks += report.clicks
           totals.empty = false
           
