@@ -6,7 +6,7 @@ module.exports.get = (req, res, next)->
   }).then (industries)->
     res.render "admin/industries", {
       js: req.js.renderTags "modal"
-      css: req.css.renderTags "modal", "admin"
+      css: req.css.renderTags "modal", "admin", "fa"
       title: "Admin Industries"
       industries: industries
     }
