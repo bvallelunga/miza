@@ -9,7 +9,6 @@ module.exports = ->
       add_domain: Promise.resolve
     }
 
-
   heroku = new Heroku { 
     token: CONFIG.heroku_token 
   }
@@ -18,7 +17,6 @@ module.exports = ->
     heroku.post "/apps/#{CONFIG.app_name}/domains", {
       body: { hostname: domain }
     } 
-   
    
   remove_domain = (domain)->
     heroku.delete "/apps/#{CONFIG.app_name}/domains/#{domain}"

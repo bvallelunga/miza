@@ -138,7 +138,7 @@ module.exports = ->
       monitoring: true
     }
     
-    heroku_token: "bfc62d15-e97d-45e3-b502-0ae2abd7fcdf"
+    heroku_token: "df8ce9d2-4f9f-4675-8dfd-b2b309ab7131"
     
     cookies: {
       session: (session, redis)->

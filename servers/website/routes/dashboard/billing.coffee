@@ -1,12 +1,9 @@
 numeral = require "numeral"
 
 module.exports.logs = (req, res, next)->
-  req.publisher.getOwner().then (owner)->
-    LIBS.stripe.charges.list({
-      customer: owner.stripe_id
-    })
-      
-  .then (list)-> 
+  LIBS.stripe.charges.list({
+    customer: req.publisher.owner.stripe_id
+  }).then (list)->  
     res.json list.data.filter((charge)->    
       return Number(charge.metadata.publisher) == req.publisher.id
       

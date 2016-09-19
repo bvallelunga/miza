@@ -35,6 +35,7 @@ module.exports = (job, done)->
           customer: publisher.owner.stripe_id
           currency: "usd"
           description: invoice_description
+          receipt_email: publisher.owner.email
           metadata: {
             user: publisher.owner.id
             publisher: publisher.id
