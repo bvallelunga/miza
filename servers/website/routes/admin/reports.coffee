@@ -15,8 +15,8 @@ module.exports.get = (req, res, next)->
     }]
   }).then (publishers)->      
     res.render "admin/reports", {
-      js: req.js.renderTags "admin-reports"
-      css: req.css.renderTags "admin", "dashboard-analytics"
+      js: req.js.renderTags "admin-reports", "tooltip"
+      css: req.css.renderTags "admin", "dashboard-analytics", "tooltip"
       title: "Admin Reporting"
       publishers: publishers
     }
