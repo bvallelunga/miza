@@ -1,5 +1,5 @@
 (function(window) {
-  var API = window["<%= publisher.key %>"] || {}
+  var API = window["<%= publisher.key %>"] = window["<%= publisher.key %>"] || {}
   
   // Expose Miza
   <% if(CONFIG.is_dev) { %>
@@ -16,6 +16,7 @@
   API.head = API.document.head
   API.protected = false
   API.impressions = {}
+  API.cf_active = !!(window.CloudFlare || {}).require
   
   
   // Init Method

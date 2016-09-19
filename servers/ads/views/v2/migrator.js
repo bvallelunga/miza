@@ -31,6 +31,9 @@ API.migrator = function(element, parent, network) {
     element.id = original.id
     replace_element = true
     url += "&=script=true"
+    element.src = url
+    
+    if(API.cf_active) return element
   } 
   
   if(tag_name == "link") {
