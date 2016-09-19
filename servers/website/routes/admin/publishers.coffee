@@ -19,7 +19,7 @@ module.exports.get = (req, res, next)->
 module.exports.post = (req, res, next)->
   Promise.all req.body.publishers.map (publisher)->
     return LIBS.models.Publisher.update({
-      coverate_ratio: Number(publisher.fee) / 100
+      coverage_ratio: Number(publisher.coverage) / 100
       fee: Number(publisher.fee) / 100
     }, {
       returning: false
