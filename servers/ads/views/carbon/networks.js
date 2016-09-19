@@ -116,15 +116,14 @@ API.network_init = function(network) {
     if(network.entry_css.parent) {
       original = original.parentNode
     } 
-    
-    var duplicates_check = API.network_duplicates_check(original, network)
+
     var span = document.createElement("span")
     span.innerHTML += '&nbsp;'
     original.appendChild(span)
     
     if(original.offsetHeight > 0) {
       span.remove()
-      return API.observe(original, network.id, duplicates_check)
+      return API.observe(original, network)
     } else {
       span.remove()
     }
@@ -135,22 +134,21 @@ API.network_init = function(network) {
     element.className = network.entry_css.container
     element.removeAttribute("hidden")
     element.style.display = ""
-    duplicates_check = API.network_duplicates_check(element, network)
     
-    API.observe(element, network.id, duplicates_check)
+    API.observe(element, network.id)
     original.parentNode.replaceChild(element, original)
   })
 }
 
 
-API.network_duplicates_check = function(parent_node, network) {
-  return function(element, callback) {
-    if(element.parentNode == parent_node && network.entry_css.duplicates.test(element.id)) {
-      return element.remove()
-    }
-    
-    callback()
+API.network_duplicates_check = function(element, network, callback) {
+  if(!network.entry_css) return callback()
+  
+  if(network.entry_css.duplicates.test(element.id)) {
+    return element.remove()
   }
+  
+  callback()
 }
 
 
