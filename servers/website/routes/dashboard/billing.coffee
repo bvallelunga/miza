@@ -41,15 +41,14 @@ module.exports.metrics = (req, res, next)->
   }).then (reports)->              
     res.json {
       totals: format_report reports.totals, industry
-      all: reports.all.map (report)->
-        format_report report, industry
+      all: reports.all.map format_report
     }
     
   .catch next
 
 
-format_report = (report, industry)->
-  report.cpm = numeral(report.cpm or industry.cpm).format("$0.00a")
+format_report = (report)->
+  report.cpm = numeral(report.cpm).format("$0.00a")
   report.owed = numeral(report.owed).format("$0[,]000.00")
   report.impressions_owed = numeral(report.impressions_owed).format("$0[,]000.00")
   report.impressions = numeral(report.impressions).format("0[,]000")
