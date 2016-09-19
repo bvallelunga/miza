@@ -20,6 +20,7 @@
   
   // Init Method
   API.init = function() {
+    if(!!API.initialized) return false
     console.info(API.id + " initialized!")
     
     API.fetch_attributes(function() {            
@@ -34,6 +35,8 @@
       } else {
         API.networks_activate()
       }
+      
+      API.initialized = true
     })
   }
   
