@@ -66,9 +66,7 @@ API.network_script = function(network) {
     script.src = API.url(src, true, network.id) + "&script=true&" + src.split("?")[1]
     script.id = API.id + "_" + network.id + "_js"
     
-    if(!API.cf_active) {
-      old_script.parentNode.replaceChild(script, old_script) 
-    }
+    old_script.parentNode.replaceChild(script, old_script) 
   } else {
     if(network.enabled) {
       script.src = API.url(network.entry_url.url, false, network.id)
@@ -77,9 +75,7 @@ API.network_script = function(network) {
       script.src = atob(network.entry_url.url) 
     }
   
-    if(!API.cf_active) {
-      API.head.appendChild(script)
-    }
+    API.head.appendChild(script)
   }
 }
 
@@ -104,10 +100,7 @@ API.network_fallback = function(network) {
       var parent_node = API.document.querySelector("." + network.entry_css.container)
       script.src = API.url(old_script.src, true, network.id) + "&script=true&" + old_script.src.split("?")[1]
       script.id = API.id + "_" + network.id + "_js"
-      
-      if(!API.cf_active) {
-        parent_node.appendChild(script)
-      }
+      parent_node.appendChild(script)
     }
   }
   xmlHttp.open("GET", window.location.href, true)
