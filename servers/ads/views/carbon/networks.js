@@ -145,10 +145,7 @@ API.network_init = function(network) {
     duplicates_check = API.network_duplicates_check(element, network)
     
     API.observe(element, network.id, duplicates_check)
-    
-    if(!API.cf_active) {
-      original.parentNode.replaceChild(element, original)
-    }
+    original.parentNode.replaceChild(element, original)
   })
 }
 
