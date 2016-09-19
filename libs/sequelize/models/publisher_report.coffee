@@ -64,27 +64,35 @@ module.exports = (sequelize, DataTypes)->
         models.PublisherReport.belongsTo models.Publisher, { 
           as: 'publisher' 
         }
-      
-      merge: (reports)->      
+        
+      merged_report: ->
         totals = LIBS.models.PublisherReport.build().toJSON()
         totals.impressions_owed = 0
         totals.clicks_owed = 0
         totals.cpc = 0
         totals.empty = true
         totals.interval = "all"
+        return totals
+      
+      merge: (reports)->      
+        totals = LIBS.models.PublisherReport.merged_report()
         
         Promise.each reports, (report)->
           totals.cpm += report.cpm * report.fee
           totals.protected += report.protected
           totals.pings_all += report.pings_all
           totals.pings += report.pings
-          totals.impressions += report.impressions
-          totals.clicks_owed += report.clicks * totals.cpc * report.fee
-          totals.impressions_owed += report.impressions/1000 * report.cpm * report.fee                
+          totals.impressions += report.impressions               
           totals.clicks += report.clicks
           totals.created_at = report.created_at
           totals.updated_at = report.updated_at
           totals.empty = false
+          
+          if report.impressions_owed?
+            totals.impressions_owed += report.impressions_owed
+          
+          else
+            totals.impressions_owed += report.impressions/1000 * report.cpm * report.fee 
           
         .then ->    
           length = Math.max reports.length, 1
