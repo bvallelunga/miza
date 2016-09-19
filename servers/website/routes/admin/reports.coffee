@@ -42,10 +42,10 @@ module.exports.metrics = (req, res, next)->
         return report.totals
 
   .then (reports)->   
-    LIBS.models.PublisherReport.merge(reports).then (totals)->      
+    LIBS.models.PublisherReport.merge(reports).then (totals)-> 
       return {
         publishers: reports.map format_report
-        totals: format_report totals.totals
+        totals: format_report totals
       }
   
   .then (reports)->

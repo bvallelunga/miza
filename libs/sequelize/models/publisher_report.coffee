@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes)->
       defaultValue: "minute"
     }
     fee: {
-      defaultValue: 0
+      defaultValue: 1
       allowNull: false
       type: DataTypes.DECIMAL(4,3)
       get: ->      
@@ -80,8 +80,10 @@ module.exports = (sequelize, DataTypes)->
           totals.pings += report.pings
           totals.impressions += report.impressions
           totals.clicks_owed += report.clicks * totals.cpc * report.fee
-          totals.impressions_owed += report.impressions/1000 * report.cpm * report.fee
+          totals.impressions_owed += report.impressions/1000 * report.cpm * report.fee                
           totals.clicks += report.clicks
+          totals.created_at = report.created_at
+          totals.updated_at = report.updated_at
           totals.empty = false
           
         .then ->    

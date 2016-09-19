@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes)->
       allowNull: false
     }
     fee: {
-      defaultValue: 0
+      defaultValue: 1
       allowNull: false
       type: DataTypes.DECIMAL(4,3)
       get: ->      
@@ -107,9 +107,10 @@ module.exports = (sequelize, DataTypes)->
             ['created_at', 'DESC']
           ]
         }).then (reports)->
-          reports = reports.map (report)->
-            return report.toJSON()
-        
+          Promise.map reports, (report)->
+            return LIBS.models.PublisherReport.merge [report]
+           
+        .then (reports)->        
           Promise.props {
             all: reports
             totals: LIBS.models.PublisherReport.merge reports
