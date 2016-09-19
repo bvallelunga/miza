@@ -11,14 +11,18 @@ $ ->
 billingMetrics = ->
   $.get("#{location.pathname}/metrics", {
     date: new Date()
-  }).done (metrics)->
-    $(".cpm-metric").text metrics.cpm
-    $(".owed-metric").text metrics.owed
-    $(".impression-metric").text metrics.impressions
-    $(".impression-owed").text metrics.impressions_owed
-    $(".cpc-metric").text metrics.cpc
-    $(".click-metric").text metrics.clicks
-    $(".click-owed").text metrics.clicks_owed
+  }).done (reports)-> 
+    $(".owed-metric").text reports.totals.owed   
+    $(".billing-table .loading").text ""
+    $(".billing-table tbody").prepend reports.all.map (report)->
+      return $("""
+        <tr>
+          <td>#{moment(report.created_at).format("MMM Do YYYY")}</td>
+          <td>#{report.impressions}</td>
+          <td>#{report.cpm}</td>
+          <td>#{report.impressions_owed}</td>
+        </tr>
+      """)
   
 
 billingLogs = ->

@@ -38,14 +38,14 @@ module.exports.metrics = (req, res, next)->
           $gte: date_ago
         }
       }).then (report)->       
-        report.id = publisher.key
-        return report
+        report.totals.id = publisher.key
+        return report.totals
 
   .then (reports)->   
     LIBS.models.PublisherReport.merge(reports).then (totals)->      
       return {
         publishers: reports.map format_report
-        totals: format_report totals
+        totals: format_report totals.totals
       }
   
   .then (reports)->

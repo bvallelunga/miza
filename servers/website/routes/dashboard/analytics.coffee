@@ -25,13 +25,15 @@ module.exports.metrics = (req, res, next)->
     created_at: {
       $gte: month_ago
     }
-  }).then (report)->  
+  }).then (reports)->
+    totals = reports.totals
+    
     res.json {
-      impressions: numeral(report.impressions).format("0[.]0a")
-      clicks: numeral(report.clicks).format("0a")
-      views: numeral(report.pings_all).format("0[.]0a")
-      blocked: numeral(report.protected).format("0[.]0%")
-      ctr: numeral(report.ctr).format("0[.]0%")
+      impressions: numeral(totals.impressions).format("0[.]0a")
+      clicks: numeral(totals.clicks).format("0a")
+      views: numeral(totals.pings_all).format("0[.]0a")
+      blocked: numeral(totals.protected).format("0[.]0%")
+      ctr: numeral(totals.ctr).format("0[.]0%")
     }
     
   .catch next

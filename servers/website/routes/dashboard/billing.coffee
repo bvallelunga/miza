@@ -33,18 +33,25 @@ module.exports.logs = (req, res, next)->
   
 module.exports.metrics = (req, res, next)->
   month_ago = LIBS.helpers.past_date "month", req.query.date
+  industry = req.publisher.industry
 
   req.publisher.reports({
-      paid_at: null
-  }).then (props)->            
+    paid_at: null
+    interval: "day"
+  }).then (reports)->              
     res.json {
-      cpm: numeral(props.cpm or req.publisher.industry.cpm).format("$0.00a")
-      owed: numeral(props.owed).format("$0[,]000.00")
-      impressions_owed: numeral(props.impressions_owed).format("$0[,]000.00")
-      impressions: numeral(props.impressions).format("0[,]000")
-      clicks: numeral(props.clicks).format("0[,]000")
-      clicks_owed: numeral(props.clicks_owed).format("$0[,]000.00")
-      cpc: numeral(props.cpc).format("$0.00a")
+      totals: format_report reports.totals, industry
+      all: reports.all.map (report)->
+        format_report report, industry
     }
     
   .catch next
+
+
+format_report = (report, industry)->
+  report.cpm = numeral(report.cpm or industry.cpm).format("$0.00a")
+  report.owed = numeral(report.owed).format("$0[,]000.00")
+  report.impressions_owed = numeral(report.impressions_owed).format("$0[,]000.00")
+  report.impressions = numeral(report.impressions).format("0[,]000")
+  return report
+  

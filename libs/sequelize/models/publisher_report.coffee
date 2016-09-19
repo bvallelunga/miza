@@ -71,9 +71,10 @@ module.exports = (sequelize, DataTypes)->
         totals.clicks_owed = 0
         totals.cpc = 0
         totals.empty = true
+        totals.interval = "all"
         
         Promise.each reports, (report)->
-          totals.cpm += report.cpm
+          totals.cpm += report.cpm * report.fee
           totals.protected += report.protected
           totals.pings_all += report.pings_all
           totals.pings += report.pings

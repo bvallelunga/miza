@@ -103,7 +103,17 @@ module.exports = (sequelize, DataTypes)->
         
         LIBS.models.PublisherReport.findAll({
           where: query
-        }).then LIBS.models.PublisherReport.merge
+          order: [
+            ['created_at', 'DESC']
+          ]
+        }).then (reports)->
+          reports = reports.map (report)->
+            return report.toJSON()
+        
+          Promise.props {
+            all: reports
+            totals: LIBS.models.PublisherReport.merge reports
+          }
             
        
       pending_events: ->
