@@ -3,8 +3,15 @@
     <div class="core metric tooltip" title="Charges to date. Unpaid charges from previous cycles will be included.">
       <div class="primary owed-metric">---</div>
       <div class="secondary">Billed On <%= billed_on %></div>
+      <div class="notes">100% money back guarantee</div>
     </div>
 </div>
+<% if(publisher.industry.cpm * publisher.fee > 0) { %>
+  <div class="warning grey">
+    LIMITED TIME OFFER<br>
+    Want to receive a 30% discount? <a href="mailto:<%= support_email %>?subject=Billing%20Discount&body=I%20heard%20about%20the%2030%25%20discount%20and%20want%20in%21">Learn more</a>.
+  </div>
+<% } %>
 <div class="billing-table dns">
   <table cellpadding="0" cellspacing="0">
     <thead>
