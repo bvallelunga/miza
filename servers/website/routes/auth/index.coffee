@@ -66,6 +66,11 @@ module.exports.has_publisher = (req, res, next)->
     return publisher.getIndustry().then (industry)->
       publisher.industry = industry
       return publisher
+      
+  .then (publisher)->  
+    return publisher.getOwner().then (owner)->
+      publisher.owner = owner
+      return publisher
   
   .then (publisher)->
     if not publisher?

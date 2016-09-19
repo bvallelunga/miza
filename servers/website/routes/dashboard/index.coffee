@@ -28,10 +28,6 @@ module.exports.get_dashboard = (req, res, next)->
   
   if req.publisher.is_demo
     ads_domain = req.get("host")
-    
-    
-  if dashboard == "billing"
-    billed_on = moment(LIBS.helpers.past_date "month", null, 1).format("MMM D")  
   
   switch dashboard
     when "setup"
@@ -55,7 +51,7 @@ module.exports.get_dashboard = (req, res, next)->
     ads_domain: ads_domain
     guide: req.query.new_publisher?
     changelog: true
-    billed_on: billed_on
+    billed_on: moment(LIBS.helpers.past_date "month", null, 1).format("MMM D") 
   }
   
   
