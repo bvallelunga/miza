@@ -21,10 +21,14 @@ module.exports.post = (req, res, next)->
       }
     
     req.session.user = user.id
+    next_path = "/dashboard"
+    
+    if user.is_admin
+      next_path = "/admin"
     
     res.json {
       success: true
-      next: "/dashboard"
+      next: next_path
     }
     
   .catch next

@@ -1,5 +1,6 @@
 require("../startup") true, ->
   agenda = LIBS.agenda
+  job_config = { timezone: CONFIG.timezone }
 
   # Define Jobs
   agenda.define "stripe.charge", {
@@ -24,14 +25,27 @@ require("../startup") true, ->
     priority: "low"
   }, require("./reports/reducer")("day")
   
-  # Set Job Schedules
-  agenda.every '1st of the month', 'stripe.charge'
-  agenda.every 'minute', 'reports.builder'
-  agenda.every 'hour', 'reports.reducer.hourly'
-  agenda.every 'day', 'reports.reducer.daily'
-  agenda.every 'day', 'stripe.register'
-  agenda.start()
+  
+  # 1st of the month
+  agenda.every '0 0 1 * *', 'stripe.charge', {}, job_config
+  
     
+  # Every Day
+  agenda.every '0 0 * * *', 'stripe.register', {}, job_config
+  agenda.every '0 0 * * *', 'reports.reducer.daily', {}, job_config
+  
+    
+  # Every Hour
+  agenda.every '0 * * * *', 'reports.reducer.hourly', {}, job_config
+  
+
+  # Every Minute
+  agenda.every '* * * * *', 'reports.builder', {}, job_config
+  
+  
+  # Start Agenda
+  agenda.start()
+  
   
   # Graceful Shutdown
   graceful = ->
