@@ -1,6 +1,7 @@
 module.exports.get = (req, res, next)->
   LIBS.models.Publisher.findAll({
     order: [
+      ['fee', 'DESC']
       ['name', 'ASC']
     ]
     include: [{
