@@ -73,7 +73,7 @@ module.exports = (srv)->
   app.get  "/admin/scheduler", routes.auth.is_admin, routes.admin.scheduler.get
   app.post "/admin/access", routes.auth.is_admin, routes.admin.access.post
   app.post "/admin/industries", routes.auth.is_admin, routes.admin.industries.post
-  app.post "/admin/users", routes.auth.is_admin, routes.admin.users.post
+  #app.post "/admin/users", routes.auth.is_admin, routes.admin.users.post
   app.post "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.post
   app.use  "/admin/vendor", admin_router
   

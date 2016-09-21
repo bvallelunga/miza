@@ -1,7 +1,6 @@
 module.exports.get = (req, res, next)->
   LIBS.models.User.findAll({
     order: [
-      ['is_admin', 'DESC']
       ['stripe_card', 'ASC']
       ['name', 'ASC']
     ]
