@@ -38,7 +38,9 @@ module.exports.metrics = (req, res, next)->
   }).then (reports)->              
     res.json {
       totals: format_report reports.totals, industry
-      all: reports.all.map format_report
+      all: reports.all.filter (report)->
+        return report.owed > 0
+      .map format_report
     }
     
   .catch next
