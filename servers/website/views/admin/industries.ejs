@@ -1,6 +1,6 @@
 <% include ../includes/start %>
 <% include ../includes/header %>
-<div class="container industries">
+<div class="container form-table">
   <form class="form" method="POST" action="/admin/industries">
     <% include ../includes/csrf %>
     <table>
@@ -8,7 +8,7 @@
         <tr>
           <th>Industry</th>
           <th>Listing</th>
-          <th>CPM ($)</th>
+          <th class="number">CPM ($)</th>
         </tr>
       </head>
       <tbody>

@@ -14,6 +14,8 @@ module.exports.get = (req, res, next)->
       title: "Admin Publishers"
       publishers: publishers
     }
+    
+  .catch next
 
 
 module.exports.post = (req, res, next)->

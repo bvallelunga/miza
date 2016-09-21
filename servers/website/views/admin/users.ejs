@@ -1,0 +1,39 @@
+<% include ../includes/start %>
+<% include ../includes/header %>
+<div class="container form-table">
+  <form class="form" method="POST" action="/admin/users">
+    <% include ../includes/csrf %>
+    <table>
+      <head>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Card Info</th>
+          <th>Access</th>
+        </tr>
+      </head>
+      <tbody>
+        <% users.forEach(function(user, i) { %>
+          <input type="hidden" name="users[<%= i %>][id]" value="<%= user.id %>" required>
+          <tr>
+            <td><%= user.name %></td>
+            <td><a target="_blank" href="mailto:<%= user.email %>"><%= user.email %></a></td>
+            <td class="<%= user.stripe_card ? "green" : "red" %>"><%= user.stripe_card ? (user.stripe_card.brand + " " + user.stripe_card.last4) : "No Card" %></td>
+            <td>
+              <div class="group">
+                <div class="fa fa-sort"></div>
+                <select class="input only" name="users[<%= i %>][is_admin]" required>
+                  <option value="false" <%= !user.is_admin ? "selected" : "" %>>User</option>
+                  <option value="true" <%= user.is_admin ? "selected" : "" %>>Admin</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <button class="button" type="submit">Update Users</button>
+    <div class="error"></div>
+  </form>
+</div>
+<% include ../includes/end %>
