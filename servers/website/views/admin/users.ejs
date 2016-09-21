@@ -15,7 +15,7 @@
       <tbody>
         <% users.forEach(function(user, i) { %>
           <input type="hidden" name="users[<%= i %>][id]" value="<%= user.id %>" required>
-          <tr>
+          <tr class="<%= user.is_admin ? "admin" : "" %>">
             <td><%= user.name %></td>
             <td><a target="_blank" href="mailto:<%= user.email %>"><%= user.email %></a></td>
             <td class="<%= user.stripe_card ? "green" : "red" %>"><%= user.stripe_card ? (user.stripe_card.brand + " " + user.stripe_card.last4) : "No Card" %></td>
