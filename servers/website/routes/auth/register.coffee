@@ -14,29 +14,43 @@ module.exports.post = (req, res, next)->
   if req.body.password != req.body.confirm_password
     return next "Passwords do not match"
  
-  LIBS.models.UserAccess.findOne({
+  LIBS.models.UserAccess.findAll({
     where: {
       email: email
     }
-  }).then (access)->  
-    if not access?
+  }).then (accesses)->  
+    if accesses.length == 0
       return next "Email address not approved for beta."
   
     LIBS.models.User.create({
       email: email
       password: req.body.password
       name: req.body.name
-      is_admin: access.is_admin
+      is_admin: (accesses.filter (access)->
+        return access.is_admin
+      .length > 0) 
     }).then (user)->
       req.session.user = user.id
-    
-      if not access.publisher_id
-        return user
-          
-      return user.addPublisher access.publisher_id
       
-    .then ->
-      return access.destroy()
+      Promise.filter accesses, (access)->
+        return access.publisher_id?
+        
+      .then (accesses)->
+        Promise.map accesses, (access)->
+          return access.publisher_id
+          
+      .then (publisher_ids)-> 
+        return user.addPublishers publisher_ids
+        
+      .then ->
+        LIBS.models.UserAccess.destroy {
+          where: {
+            id: {
+              $in: accesses.map (access)->
+                return access.id
+            }
+          }
+        }
       
     .then ->
       res.json {

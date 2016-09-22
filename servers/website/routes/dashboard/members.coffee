@@ -1,7 +1,4 @@
 module.exports.add = (req, res, next)->
-  if req.user.is_demo or req.user.id == req.publisher.owner.id
-    return res.redirect "/dashboard/#{req.publisher.id}/members"
-
   email = req.body.email.toLowerCase().trim()
 
   LIBS.models.User.findOne({
@@ -15,11 +12,14 @@ module.exports.add = (req, res, next)->
     LIBS.models.UserAccess.findOrCreate({
       where: {
         email: email
-      }
-      defaults: {
         publisher_id: req.publisher.id
       }
-    }).then ->
+    }).then (data)->  
+      new_record = data[1]
+          
+      if not new_record
+        return Promise.resolve()
+    
       LIBS.sendgrid.send {
         to: "#{email}"
         subject: "#{req.user.name} invited you to #{req.publisher.name}"
@@ -46,21 +46,14 @@ module.exports.add = (req, res, next)->
 
 
 module.exports.remove_invite = (req, res, next)->
-  if req.user.is_demo or req.user.id == req.publisher.owner.id
-    return res.redirect "/dashboard/#{req.publisher.key}/members"
-
   LIBS.models.UserAccess.destroy({
     where: {
       id: req.params.invite
     }
-    force: true
   }).then ->
     res.redirect "/dashboard/#{req.publisher.key}/members"
     
 
 module.exports.remove_member = (req, res, next)->
-  if req.user.is_demo or req.user.id == req.publisher.owner.id
-    return res.redirect "/dashboard/#{req.publisher.key}/members"
-
   req.publisher.removeMember(req.params.member).then ->
     res.redirect "/dashboard/#{req.publisher.key}/members"
