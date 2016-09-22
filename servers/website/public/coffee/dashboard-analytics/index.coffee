@@ -11,11 +11,8 @@ $ ->
 billingMetrics = ->
   $.get("#{location.pathname}/metrics", {
     date: new Date()
-  }).done (reports)-> 
-    if reports.all.length == 0
-      $(".billing-table .loading").remove()
-      
-    $(".billing-table .loading td").text "" 
+  }).done (reports)->       
+    $(".billing-table .loading").remove() 
     $(".owed-metric").text reports.totals.owed   
     $(".billing-table tbody").prepend reports.all.map (report)->
       return $("""
