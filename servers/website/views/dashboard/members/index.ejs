@@ -1,5 +1,11 @@
 <h2>Members</h2>
 <% if(!user.is_demo && (user.is_admin || user.id == publisher.owner.id)) { %>
+  <span>
+    Members will be able to view analytics, billing
+    and change settings. <strong>They will not be able to add/remove members,</strong>
+    only the owner has such privileges.
+  </span>
+  <br><br>
   <form class="form invite" method="POST" action="<%= dashboard_path %>/members/add">
     <% include ../../includes/csrf %>
     <table>
