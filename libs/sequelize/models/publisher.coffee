@@ -73,6 +73,10 @@ module.exports = (sequelize, DataTypes)->
           through: "UserPublisher"
         }
         
+        models.Publisher.hasMany models.UserAccess, {
+          as: 'invites'
+        }
+        
         models.Publisher.belongsTo models.User, { 
           as: 'owner' 
         }

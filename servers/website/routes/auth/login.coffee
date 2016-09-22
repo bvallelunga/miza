@@ -14,11 +14,7 @@ module.exports.post = (req, res, next)->
     }
   }).then (user)->
     if not user?
-      return res.status(400).json {
-        success: false
-        message: "Invalid credentials"
-        csrf: req.csrfToken()
-      }
+      return next "Invalid credentials"
     
     req.session.user = user.id
     next_path = "/dashboard"

@@ -20,11 +20,7 @@ module.exports.post = (req, res, next)->
     }
   }).then (access)->  
     if not access?
-      return res.status(400).json {
-        success: false
-        message: "Email address not approved for beta."
-        csrf: req.csrfToken()
-      }
+      return next "Email address not approved for beta."
   
     LIBS.models.User.create({
       email: email
@@ -38,6 +34,9 @@ module.exports.post = (req, res, next)->
         return user
           
       return user.addPublisher access.publisher_id
+      
+    .then ->
+      return access.destroy()
       
     .then ->
       res.json {

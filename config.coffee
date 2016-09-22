@@ -34,6 +34,10 @@ module.exports = ->
       password: "1Burrito2Go"
     }
     
+    agenda_dash: {
+      title: "Scheduler"
+    }
+    
     queue: {
       producer: process.env.RABBITMQ_BIGWIG_TX_URL
       consumer: process.env.RABBITMQ_BIGWIG_RX_URL

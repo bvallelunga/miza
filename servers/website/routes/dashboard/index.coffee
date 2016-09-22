@@ -17,11 +17,11 @@ module.exports.get_dashboard = (req, res, next)->
   dashboard = req.params.dashboard
   dashboard_path = "/dashboard/#{req.publisher.key}"
   dashboards = [
-    "setup", "analytics", "billing", "settings"
+    "setup", "analytics", "billing", "members", "settings"
   ]
-  dashboard_title = (dashboard.split(' ').map (word) -> word[0].toUpperCase() + word[1..-1].toLowerCase()).join ' '
   ads_domain = CONFIG.ads_server.domain
-  billed_on = ""
+  dashboard_title = (dashboard.split(' ').map (word) -> 
+    return word[0].toUpperCase() + word[1..-1].toLowerCase()).join ' '
 
   if dashboard not in dashboards
     return res.redirect "#{dashboard_path}/analytics"  
@@ -34,28 +34,42 @@ module.exports.get_dashboard = (req, res, next)->
       js.push "code"
       css.push "code"
       
-    when "settings"
+    when "members", "settings"
       js.push "modal", "range-slider"
       css.push "range-slider"
 
     when "analytics", "billing"
       js.push "dashboard-analytics", "tooltip"
       css.push "dashboard-analytics", "tooltip"
+      
+  Promise.resolve().then ->
+    if dashboard != "members"
+      return {}
+      
+    Promise.props {
+      members: req.publisher.getMembers()
+      invites: req.publisher.getInvites()
+    }
   
-  res.render "dashboard/index", {
-    js: req.js.renderTags.apply(req.js, js)
-    css: req.css.renderTags.apply(req.css, css)
-    title: "#{dashboard_title} Dashboard"
-    dashboard_path: dashboard_path
-    dashboard: dashboard
-    ads_domain: ads_domain
-    guide: req.query.new_publisher?
-    changelog: true
-    billed_on: moment(LIBS.helpers.past_date "month", null, 1).format("MMM D") 
-  }
+  .then (props)->
+    res.render "dashboard/index", {
+      js: req.js.renderTags.apply(req.js, js)
+      css: req.css.renderTags.apply(req.css, css)
+      title: "#{dashboard_title} Dashboard"
+      dashboard_path: dashboard_path
+      dashboard: dashboard
+      ads_domain: ads_domain
+      guide: req.query.new_publisher?
+      changelog: true
+      props: props
+      billed_on: moment(LIBS.helpers.past_date "month", null, 1).format("MMM D") 
+    }
+    
+  .catch next
   
   
 module.exports.create = require "./create"
 module.exports.settings = require "./settings"
 module.exports.analytics = require "./analytics"
 module.exports.billing = require "./billing"
+module.exports.members = require "./members"

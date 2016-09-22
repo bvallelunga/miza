@@ -17,7 +17,10 @@ module.exports = (err, req, res, next)->
       return error.message
     
     .join "\n"
-    
+  
+  if not req.xhr
+    return res.redirect "/"  
+  
   res.status(403).json {
     success: false
     message: message

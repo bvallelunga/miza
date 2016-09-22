@@ -59,7 +59,7 @@ module.exports = (srv)->
   
   # Admin 3rd Party Dashboards
   admin_router = express.Router()
-  admin_router.use "/scheduler", routes.auth.is_admin, Agendash(LIBS.agenda, { title: "Scheduler" })
+  admin_router.use "/scheduler", routes.auth.is_admin, Agendash(LIBS.agenda, CONFIG.agenda_dash)
   
   
   # Admin Routes
@@ -73,7 +73,6 @@ module.exports = (srv)->
   app.get  "/admin/scheduler", routes.auth.is_admin, routes.admin.scheduler.get
   app.post "/admin/access", routes.auth.is_admin, routes.admin.access.post
   app.post "/admin/industries", routes.auth.is_admin, routes.admin.industries.post
-  #app.post "/admin/users", routes.auth.is_admin, routes.admin.users.post
   app.post "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.post
   app.use  "/admin/vendor", admin_router
   
@@ -87,7 +86,10 @@ module.exports = (srv)->
   app.get  "/dashboard/:publisher/billing/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.billing.metrics
   app.get  "/dashboard/:publisher/analytics/logs", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.analytics.logs
   app.get  "/dashboard/:publisher/analytics/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.analytics.metrics
+  app.get  "/dashboard/:publisher/members/invite/:invite/remove", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.members.remove_invite
+  app.get  "/dashboard/:publisher/members/member/:member/remove", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.members.remove_member
   app.post "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.create.post
+  app.post "/dashboard/:publisher/members/add", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.members.add
   app.post "/dashboard/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.settings.post
   
   

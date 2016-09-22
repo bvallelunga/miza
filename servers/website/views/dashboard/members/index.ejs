@@ -1,0 +1,41 @@
+<h2>Members</h2>
+<% if(!user.is_demo && (user.is_admin || user.id == publisher.owner.id)) { %>
+  <form class="form invite" method="POST" action="<%= dashboard_path %>/members/add">
+    <% include ../../includes/csrf %>
+    <table>
+      <tr>
+        <td><input class="input left" type="email" name="email" placeholder="Email address" required/></td>
+        <td><button class="button left" type="submit">Add Member</button></td>
+      </tr>
+    </table>
+    <div class="clear error"></div>
+  </form>
+<% } %>
+<table class="members-table">
+  <% props.invites.forEach(function(invite) { %>
+    <tr>
+      <td class="invite"><%= invite.email %></td>
+      <td class="invite">pending</td>
+      <% if(!user.is_demo && (user.is_admin || user.id == publisher.owner.id)) { %>
+        <td>
+          <a class="red" href="<%= dashboard_path %>/members/invite/<%= invite.id %>/remove">Remove</a>
+        </td>
+      <% } %>
+    </tr>
+  <% }) %>
+  <% props.members.forEach(function(member) { %>
+    <tr>
+      <td><%= member.name %></td>
+      <td class="<%= member.id == publisher.owner.id ? "owner" : "member" %>">
+        <%= member.id == publisher.owner.id ? "owner" : "member" %>
+      </td>
+      <% if(!user.is_demo && (user.is_admin || user.id == publisher.owner.id)) { %>
+        <td>
+          <% if(member.id != publisher.owner.id) { %>
+            <a class="red" href="<%= dashboard_path %>/members/member/<%= member.id %>/remove">Remove</a>
+          <% } %>
+        </td>
+      <% } %>
+    </tr>
+  <% }) %>
+</table>

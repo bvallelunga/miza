@@ -5,7 +5,7 @@
     return a == b ? "active" : ""
   }
 %>
-<% if (!publisher.is_demo || user.is_admin) { %>
+<% if (!user.is_demo) { %>
   <div class="publishers_list">
     <div class="current">
       <%= publisher.name %>
@@ -55,6 +55,12 @@
         <a href="<%= dashboard_path %>/billing">
           <span class="fa fa-credit-card"></span>
           Billing
+        </a>
+      </li>
+      <li class="<%= isActive(dashboard, "members") %>">
+        <a href="<%= dashboard_path %>/members">
+          <span class="fa fa-users"></span>
+          Members
         </a>
       </li>
       <li class="<%= isActive(dashboard, "settings") %>">

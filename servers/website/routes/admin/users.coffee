@@ -13,26 +13,3 @@ module.exports.get = (req, res, next)->
     }
     
   .catch next
-
-
-module.exports.post = (req, res, next)->
-  Promise.all req.body.users.map (user)->
-    return LIBS.models.User.update({
-      is_admin: user.is_admin == "true"
-    }, {
-      returning: false
-      individualHooks: true
-      where: {
-        id: user.id
-      }
-    })
-    
-  .then ->
-    res.json {
-      success: true
-      message: "Users have been updated!"
-      next: "/admin/users"
-    }
-    
-  .catch next
-  

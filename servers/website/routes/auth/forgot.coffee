@@ -36,7 +36,8 @@ module.exports.post = (req, res, next)->
       It looks like you requested a password reset. Please use this
       link: http://#{req.get("host")}/reset/#{random}
       
-      -- Support
+      --
+      Miza Support
       """
     }
     
