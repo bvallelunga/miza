@@ -17,6 +17,7 @@ module.exports = (srv)->
   app.use require("cookie-parser")()
   app.use scheduler_regex, require("csurf")({ cookie: true })
   app.use require('express-session')(CONFIG.cookies.session session, LIBS.redis)
+  app.use LIBS.bugsnag.requestHandler
   app.use routes.auth.load_user
   app.use scheduler_regex, require "./locals"
   
@@ -101,8 +102,9 @@ module.exports = (srv)->
   
   
   # Error Handlers
-  app.get  "*", routes.landing.get_not_found
-  app.use  require("./error")
+  app.get "*", routes.landing.get_not_found
+  app.use LIBS.bugsnag.errorHandler
+  app.use require("./error")
   
   
   # Export

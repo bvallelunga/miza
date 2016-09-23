@@ -45,6 +45,8 @@ module.exports = ->
     
     loader_io: "loaderio-6c81ca8de1cc26156be3836bb74e6a05"
     
+    bugsnag: process.env.BUGSNAG
+    
     ads_server: {
       domain: process.env.ADS_DOMAIN
       protected_domain: "misosoup.io"

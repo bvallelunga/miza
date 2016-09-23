@@ -6,6 +6,7 @@ module.exports = {
   mixpanel: require("./mixpanel")()
   sendgrid: require("./sendgrid")()
   agenda: require("./agenda")()
+  bugsnag: require("./bugsnag")()
   queue: require "./queue"
   slack: require "./slack"
   helpers: require "./helpers"
