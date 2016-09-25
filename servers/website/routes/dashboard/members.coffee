@@ -27,7 +27,7 @@ module.exports.add = (req, res, next)->
         Welcome to Miza!
         
         Miza helps publishers recover ad revenue from ad blockers. #{req.user.name}
-        has invited as a member on his #{req.publisher.name} account.
+        has invited you to the #{req.publisher.name} account.
         
         You can register with this link: http://#{req.get("host")}/register?email=#{email}
             
