@@ -12,21 +12,15 @@
       <span class="fa fa-sort"></span>
     </div>
     <div class="publishers">
-      <% user.publishers.forEach(function(pub) { %>
-        <% if (pub.id != publisher.id) { %>
-          <a href="/dashboard/<%= pub.key %>/<%= dashboard %>"><%= pub.name %></a>
-        <% } %>
-      <% }) %>
       <a href="/dashboard/new">
         <span class="fa fa-plus"></span>
         Add Publisher
       </a>
-      <% if (user.is_admin) { %>
-        <form method="GET" action="/dashboard">
-          <span class="fa fa-search"></span>
-          <input name="dashboard" placeholder="Publisher ID">
-        </form>
-      <% } %>
+      <% (props.publishers || user.publishers).forEach(function(pub) { %>
+        <% if (pub.id != publisher.id) { %>
+          <a href="/dashboard/<%= pub.key %>/<%= dashboard %>"><%= pub.name %></a>
+        <% } %>
+      <% }) %>
     </div>
   </div>
 <% } %>

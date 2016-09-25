@@ -42,4 +42,8 @@ module.exports = (interval)->
             if error != "is_empty"
               return Promise.reject error
     
-    .then(-> done()).catch(done)
+    .then(-> done()).catch (error)->
+      if CONFIG.is_prod
+        LIBS.bugsnag.notify error
+      
+      done error

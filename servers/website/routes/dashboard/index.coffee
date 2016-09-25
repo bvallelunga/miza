@@ -50,6 +50,19 @@ module.exports.get_dashboard = (req, res, next)->
       members: req.publisher.getMembers()
       invites: req.publisher.getInvites()
     }
+    
+  .then (props)->
+    if not req.user.is_admin
+      return props
+      
+    LIBS.models.Publisher.findAll({
+      order: [
+        ['fee', 'DESC']
+        ['name', 'ASC']
+      ]
+    }).then (publishers)->
+      props.publishers = publishers
+      return props
   
   .then (props)->
     res.render "dashboard/index", {

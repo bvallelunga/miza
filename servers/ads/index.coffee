@@ -10,6 +10,7 @@ module.exports = (srv)->
   app.engine 'js', ejs.renderFile
   app.use require("compression")()
   app.use require("cookie-parser")()
+  app.use LIBS.bugsnag.requestHandler
   
   
   # Routes  
@@ -22,7 +23,8 @@ module.exports = (srv)->
   
   
   # Error Handlers
-  app.use  require("./error")
+  app.use LIBS.bugsnag.errorHandler
+  app.use require("./error")
   
   
   # Export

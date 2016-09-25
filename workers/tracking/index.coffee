@@ -76,3 +76,6 @@ require("../../startup") true, ->
     .then(ack).catch (error)->
       console.error error
       ack error
+      
+      if CONFIG.is_prod
+        LIBS.bugsnag.notify error

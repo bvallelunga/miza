@@ -43,4 +43,8 @@ module.exports = (job, done)->
       }
     }
   
-  .then(-> done()).catch(done)
+  .then(-> done()).catch (error)->
+    if CONFIG.is_prod
+      LIBS.bugsnag.notify error
+    
+    done error

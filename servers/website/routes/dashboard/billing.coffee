@@ -29,15 +29,12 @@ module.exports.logs = (req, res, next)->
   
   
 module.exports.metrics = (req, res, next)->
-  month_ago = LIBS.helpers.past_date "month", req.query.date
-  industry = req.publisher.industry
-
   req.publisher.reports({
     paid_at: null
     interval: "day"
   }).then (reports)->              
     res.json {
-      totals: format_report reports.totals, industry
+      totals: format_report reports.totals
       all: reports.all.filter (report)->
         return report.owed > 0
       .map format_report

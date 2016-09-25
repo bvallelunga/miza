@@ -76,6 +76,9 @@
   .publishers {
     border-top: solid 2px rgba(0,0,0,0.05);
     display: none;
+    max-height: 250px;
+    overflow-y: scroll;
+    overflow-x: hidden;
     
     a {
       padding: 10px 12px;
@@ -86,6 +89,10 @@
       
       &:hover {
         background: lighten(@blue, 40%);
+      }
+      
+      &:last-child {
+        border-bottom: none;
       }
       
       span {
