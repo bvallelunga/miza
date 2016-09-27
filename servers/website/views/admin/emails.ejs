@@ -1,0 +1,22 @@
+<% include ../includes/start %>
+<% include ../includes/header %>
+<div class="container form-table email-templates">
+    <table>
+      <head>
+        <tr>
+          <th>Name</th>
+          <th>Template</th>
+        </tr>
+      </head>
+      <tbody>
+        <% templates.forEach(function(template) { %>
+          <tr>
+            <td><%= template.split("_").join(" ") %></td>
+            <td><iframe src="/admin/emails/<%= template %>"></iframe></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </form>
+</div>
+<% include ../includes/end %>

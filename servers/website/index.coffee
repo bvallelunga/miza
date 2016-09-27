@@ -48,12 +48,6 @@ module.exports = (srv)->
   app.post "/forgot", routes.auth.not_authenticated, routes.auth.forgot.post
   app.post "/reset/:key", routes.auth.not_authenticated, routes.auth.forgot.reset_post
   
-  
-  # Emails
-  if CONFIG.is_dev
-    app.get  "/emails/:template", routes.emails.get
-  
-
   # Account Routes
   app.get  "/account", routes.auth.is_authenticated, routes.account.get_root
   app.get  "/account/password", routes.auth.is_authenticated, routes.account.get_password
@@ -77,6 +71,8 @@ module.exports = (srv)->
   app.get  "/admin/users", routes.auth.is_admin, routes.admin.users.get
   app.get  "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.get
   app.get  "/admin/scheduler", routes.auth.is_admin, routes.admin.scheduler.get
+  app.get  "/admin/emails", routes.auth.is_admin, routes.admin.emails.get
+  app.get  "/admin/emails/:template", routes.auth.is_admin, routes.admin.emails.email
   app.post "/admin/access", routes.auth.is_admin, routes.admin.access.post
   app.post "/admin/industries", routes.auth.is_admin, routes.admin.industries.post
   app.post "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.post

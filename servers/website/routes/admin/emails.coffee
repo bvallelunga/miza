@@ -48,6 +48,15 @@ forgot_password = (data)->
 
 
 module.exports.get = (req, res, next)->
+  res.render "admin/emails", {
+    js: req.js.renderTags "modal"
+    css: req.css.renderTags "modal", "admin"
+    title: "Admin Emails"
+    templates: Object.keys LIBS.emails.templates
+  } 
+
+
+module.exports.email = (req, res, next)->
   template = req.params.template
 
   load_demo().then (data)->  

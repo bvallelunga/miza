@@ -24,6 +24,7 @@ render = (template_name, recipients)->
     
 
 module.exports.render = render 
+module.exports.templates = templates 
 module.exports.send = (template_name, recipients)->
   render(template_name, recipients).then (emails)->
     Promise.map emails, (email)->
