@@ -26,6 +26,7 @@
     "cookie-parser": "^1.4.3",
     "csurf": "^1.9.0",
     "ejs": "^2.4.1",
+    "email-templates": "^2.4.1",
     "express": "~4.14.x",
     "express-session": "^1.14.0",
     "geoip-lite": "^1.1.8",

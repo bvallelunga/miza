@@ -6,5 +6,6 @@ module.exports = {
   demo:      require "./demo"
   admin:     require "./admin"
   account:   require "./account"
+  emails:    require "./emails"
   
 }

@@ -1,0 +1,10 @@
+<p>
+Hey <%= data.user.name %>!
+</p>
+<p>
+It looks like you requested a password reset. Please use this
+link: <a href="http://<%= host %>/reset/<%= data.random || "abc123" %>">http://<%= host %>/reset/<%= data.random || "abc123" %></a>
+</p>
+<p>
+-- Miza Support
+</p>

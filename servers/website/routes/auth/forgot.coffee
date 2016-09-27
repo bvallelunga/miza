@@ -27,19 +27,14 @@ module.exports.post = (req, res, next)->
     })
     
     LIBS.redis.set "user.reset.#{random}", user.id
-    LIBS.sendgrid.send {
-      to: "#{user.name} <#{user.email}>"
-      subject: 'Reset Password'
-      text: """
-      Hey #{user.name}!
-      
-      It looks like you requested a password reset. Please use this
-      link: http://#{req.get("host")}/reset/#{random}
-      
-      --
-      Miza Support
-      """
-    }
+    LIBS.emails.send "forgot_password", [{
+      to: user.email
+      host: req.get("host")
+      data: {
+        user: user
+        random: random
+      }
+    }]
     
   .then (response)->  
     res.json {

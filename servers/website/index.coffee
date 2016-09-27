@@ -23,7 +23,7 @@ module.exports = (srv)->
   
 
   # Public Routes
-  require("../assets")(app, srv,  __dirname + '/public')
+  require("./assets")(app, srv,  __dirname + '/public')
   app.use "/test", express.static __dirname + '/public/test'
   app.use "/imgs", express.static __dirname + '/public/images'  
   
@@ -47,6 +47,11 @@ module.exports = (srv)->
   app.post "/register", routes.auth.not_authenticated, routes.auth.register.post
   app.post "/forgot", routes.auth.not_authenticated, routes.auth.forgot.post
   app.post "/reset/:key", routes.auth.not_authenticated, routes.auth.forgot.reset_post
+  
+  
+  # Emails
+  if CONFIG.is_dev
+    app.get  "/emails/:template", routes.emails.get
   
 
   # Account Routes

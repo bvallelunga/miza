@@ -10,6 +10,7 @@ module.exports = {
   queue: require "./queue"
   slack: require "./slack"
   helpers: require "./helpers"
+  emails: require "./emails"
   init: ->
     @sequelize().then (models)=>
       @models = models

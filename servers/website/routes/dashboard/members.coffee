@@ -19,23 +19,15 @@ module.exports.add = (req, res, next)->
           
       if not new_record
         return Promise.resolve()
-    
-      LIBS.sendgrid.send {
-        to: "#{email}"
-        subject: "#{req.user.name} invited you to #{req.publisher.name}"
-        text: """
-        Welcome to Miza!
         
-        Miza helps publishers recover ad revenue from ad blockers. #{req.user.name}
-        has invited you to the #{req.publisher.name} account.
-        
-        You can register with this link: http://#{req.get("host")}/register?email=#{email}
-            
-        --
-        Miza Support
-        """
-      }
-  
+      LIBS.emails.send "publisher_invite", [{
+        to: email
+        host: req.get("host")
+        data: {
+          user: req.user
+          publisher: req.publisher
+        }
+      }]  
   .then ->
     res.json {
       success: true
