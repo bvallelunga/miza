@@ -9,6 +9,10 @@ module.exports.date_string = (date)->
 
 
 module.exports.past_date = (range, date, increment=0, time="start")->
+  if range == "yesterday"
+    range = "day"
+    increment = -1
+
   range_at = if date? then new Date(date) else new Date()
   moment_ob = moment(range_at).add(increment, range)
   
