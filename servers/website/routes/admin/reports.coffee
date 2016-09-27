@@ -26,6 +26,14 @@ module.exports.get = (req, res, next)->
   
 module.exports.metrics = (req, res, next)->
   date_ago = LIBS.helpers.past_date req.query.range, req.query.date
+  query = {
+    created_at: {
+      $gte: date_ago
+    }
+  }
+  
+  if req.query.range == "yesterday"
+    query.created_at.$lte = LIBS.helpers.past_date "days", req.query.date
 
   LIBS.models.Publisher.findAll({
     where: {
@@ -33,11 +41,7 @@ module.exports.metrics = (req, res, next)->
     }
   }).then (publishers)->    
     return Promise.map publishers, (publisher)->
-      return publisher.reports({
-        created_at: {
-          $gte: date_ago
-        }
-      }).then (report)->       
+      return publisher.reports(query).then (report)->       
         report.totals.id = publisher.key
         return report.totals
 
