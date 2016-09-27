@@ -45,5 +45,7 @@ module.exports = (interval)->
     .then(-> done()).catch (error)->
       if CONFIG.is_prod
         LIBS.bugsnag.notify error
+      else
+        console.error error
       
       done error

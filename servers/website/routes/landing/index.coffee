@@ -64,5 +64,9 @@ module.exports.post_beta = (req, res, next)->
   
 
 module.exports.get_not_found = (req, res, next)->
-  res.redirect "/"
+  res.status(404).render "landing/error", {
+    error: "404\nPage Not Found"
+    js: req.js.renderTags "modal"
+    css: req.css.renderTags "modal"
+  }
   

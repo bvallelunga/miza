@@ -22,7 +22,6 @@ module.exports.add = (req, res, next)->
         
       LIBS.emails.send "publisher_invite", [{
         to: email
-        host: req.get("host")
         data: {
           user: req.user
           publisher: req.publisher

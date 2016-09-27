@@ -1,0 +1,12 @@
+Hey <%= data.user.name %>,
+
+This was a great week for <%= data.publisher.name %>, <%= company %> protected
+<%= data.report.str_impressions %> impressions<% if(data.report.clicks > 0) { %> and <%= data.report.str_clicks %> clicks<% } %>! 
+If you are interested in more analytics, 
+head over to your dashboard: http://<%= host %>/dashboard/<%= data.publisher.key %>/analytics
+<% if(data.report.owed > 0 && data.publisher.owner.id == data.user.id && data.publisher.owner.stripe_card == null) { %>
+PS: We noticed your account has pending charges that will be processed on <%= data.billed_on %>. 
+If your satisfied with our services, would you mind adding your payment info: http://<%= host %>/account/card.
+We do provide a 30 day money back guarantee if any concerns arise.
+<% } %>
+-- <%= company %> Support

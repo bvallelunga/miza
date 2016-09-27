@@ -47,6 +47,10 @@ module.exports = ->
     
     bugsnag: process.env.BUGSNAG
     
+    web_server: {
+      domain: process.env.WEB_DOMAIN
+    }
+    
     ads_server: {
       domain: process.env.ADS_DOMAIN
       protected_domain: "misosoup.io"

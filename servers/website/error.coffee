@@ -18,11 +18,20 @@ module.exports = (err, req, res, next)->
     
     .join "\n"
   
-  if not req.xhr
-    return res.redirect "/"  
+  res.status(403)
   
-  res.status(403).json {
-    success: false
-    message: message
-    csrf: csrf_token
+  if req.xhr
+    return res.json {
+      success: false
+      message: message
+      csrf: csrf_token
+    }
+  
+  res.render "landing/error", {
+    js: req.js.renderTags "modal"
+    css: req.css.renderTags "modal"
+    error: """
+    An error has occurred 😱 but don't fret, our team has been notified.
+    """
   }
+  

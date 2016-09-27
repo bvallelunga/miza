@@ -16,6 +16,8 @@ render = (template_name, recipients)->
     return Promise.reject "Template not found"
     
   Promise.all recipients.map (recipient)->
+    recipient.company = CONFIG.general.company
+    recipient.host = CONFIG.web_server.domain
     template.render(recipient).then (email)->
       email.to = recipient.to
       return email
