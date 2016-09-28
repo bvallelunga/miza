@@ -27,14 +27,10 @@ module.exports = (job, done)->
         created_at: {
           $gte: LIBS.helpers.past_date "week", null, -1
         }
-      }).then (report)->
-        report = report.totals
-        report.str_clicks = numeral(report.clicks).format("0[,]000")
-        report.str_impressions = numeral(report.impressions).format("0[,]000")
-        
+      }).then (report)->        
         return {
           publisher: publisher
-          report: report
+          report: report.totals
         }
         
   .filter (data)->

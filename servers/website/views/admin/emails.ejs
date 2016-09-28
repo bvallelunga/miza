@@ -12,7 +12,7 @@
         <% templates.forEach(function(template) { %>
           <tr>
             <td><%= template.split("_").join(" ") %></td>
-            <td><iframe src="/admin/emails/<%= template %>"></iframe></td>
+            <td class="template" data-template="<%= template %>"></td>
           </tr>
         <% }) %>
       </tbody>

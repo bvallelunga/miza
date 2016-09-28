@@ -1,5 +1,6 @@
 EmailTemplate = require('email-templates').EmailTemplate
 fs = require "fs"
+numeral = require "numeral"
 templates = {}
 
 for directory in fs.readdirSync __dirname
@@ -18,6 +19,8 @@ render = (template_name, recipients)->
   Promise.all recipients.map (recipient)->
     recipient.company = CONFIG.general.company
     recipient.host = CONFIG.web_server.domain
+    recipient.numeral = numeral
+    
     template.render(recipient).then (email)->
       email.to = recipient.to
       return email

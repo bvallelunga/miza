@@ -30,10 +30,7 @@ publisher_report = (data)->
       $gte: LIBS.helpers.past_date "week", null, -1
     }
   }).then (report)->
-    report = report.totals
-    report.str_clicks = numeral(report.clicks).format("0[,]000")
-    report.str_impressions = numeral(report.impressions).format("0[,]000")
-    return report 
+    return report.totals
 
   Promise.props data
   
@@ -49,7 +46,7 @@ forgot_password = (data)->
 
 module.exports.get = (req, res, next)->
   res.render "admin/emails", {
-    js: req.js.renderTags "modal"
+    js: req.js.renderTags "modal", "admin-emails"
     css: req.css.renderTags "modal", "admin"
     title: "Admin Emails"
     templates: Object.keys LIBS.emails.templates
@@ -77,7 +74,7 @@ module.exports.email = (req, res, next)->
   .then (emails)->
     html = emails[0].html
     text = emails[0].text or ""
-    text = text.replace(/\n\n/g, '<br/><br/>')
+    text = text.replace(/\n/g, '<br/>')
     res.send html or text
     
   .catch next
