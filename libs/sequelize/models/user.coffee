@@ -65,6 +65,11 @@ module.exports = (sequelize, DataTypes)->
           return @update({
             stripe_card: customer.sources.data[0]
           })
+        
+        .then =>
+          LIBS.slack.message {
+            text: "#{@name} updated his payment information"
+          }
           
       stripe_update: ->
         return LIBS.stripe.customers.update(@stripe_id, {

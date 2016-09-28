@@ -99,7 +99,7 @@ module.exports = ->
     disable: {
       heroku: false and is_dev
       queue: false and is_dev
-      slack: true and is_dev
+      slack: false and is_dev
       express: {
         protected: true and is_dev
         logger: true and is_dev
