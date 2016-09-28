@@ -23,18 +23,18 @@ load_demo = ->
     }
     
 
-publisher_report = (data)->
+publisher_report = (data, range)->
   data.billed_on = moment(LIBS.helpers.past_date "month", null, 1).format("MMM D")
   data.report = data.publisher.reports({
     created_at: {
-      $gte: LIBS.helpers.past_date "week", null, -1
+      $gte: LIBS.helpers.past_date range
     }
   }).then (report)->
     return report.totals
 
   Promise.props data
   
-  
+
 forgot_password = (data)->
   data.random = randomstring.generate({
     length: 5
@@ -58,10 +58,13 @@ module.exports.email = (req, res, next)->
 
   load_demo().then (data)->  
     if template == "publisher_report"    
-      return publisher_report data
+      return publisher_report data, "week"
       
     if template == "forgot_password"
       return forgot_password data
+      
+    if template == "add_payment_info"
+      return publisher_report data, "month"
     
     return data
     
@@ -74,7 +77,11 @@ module.exports.email = (req, res, next)->
   .then (emails)->
     html = emails[0].html
     text = emails[0].text or ""
-    text = text.replace(/\n/g, '<br/>')
-    res.send html or text
+    text = text.replace /\n\n/g, '<br/><br/>'
+    
+    res.json {
+      subject: emails[0].subject
+      body: html or text
+    }
     
   .catch next

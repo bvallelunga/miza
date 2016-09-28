@@ -17,15 +17,15 @@ module.exports = (job, done)->
     include: [{
       model: LIBS.models.User
       as: "owner"
-    }, {
-      model: LIBS.models.User
-      as: "members"
+      where: {
+        stripe_card: null
+      }
     }]
-  }).then (publishers)->
+  }).then (publishers)->  
     Promise.map publishers, (publisher)->
       publisher.reports({
         created_at: {
-          $gte: LIBS.helpers.past_date "week"
+          $gte: LIBS.helpers.past_date "month"
         }
       }).then (report)->        
         return {
@@ -34,23 +34,23 @@ module.exports = (job, done)->
         }
         
   .filter (data)->
-    return data.report.impressions > 0
+    return data.report.owed > 0
         
-  .each (data)->
-    Promise.map data.publisher.members, (user)->
-      return {
-        data: {
-          publisher: data.publisher
-          report: data.report
-          user: user
-          billed_on: billed_on
-        }
-        to: user.email
+  .map (data)->
+    return {
+      data: {
+        publisher: data.publisher
+        report: data.report
+        user: data.publisher.owner
+        billed_on: billed_on
       }
-    .then (emails)->
-      LIBS.emails.send "publisher_report", emails
+      to: data.publisher.owner.email
+    }
     
-  .then(-> done()).catch (error)->  
+  .then (emails)->
+    LIBS.emails.send "add_payment_info", emails
+    
+  .then(-> done()).catch (error)->
     if CONFIG.is_prod
       LIBS.bugsnag.notify error
     else

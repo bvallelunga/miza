@@ -4,4 +4,5 @@ $ ->
     template = $template.data "template"
     
     $.get("/admin/emails/#{template}").done (response)->
-      $template.html response
+      $template.find(".subject").html response.subject
+      $template.find(".body").html response.body

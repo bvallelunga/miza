@@ -1,10 +1,13 @@
 Hey <%= data.user.name %>,
 
-Here are <%= data.publisher.name %>'s quick stats for last weeks:
+Last week <%= data.publisher.name %> had:
 
 Protected Impressions: <%= numeral(data.report.impressions).format("0[,]000") %>
+
 Protected Clicks: <%= numeral(data.report.clicks).format("0[,]000") %>
+
 Miza Protection: <%= numeral(data.report.protected).format("0[.]0%") %>
+
 Total Page Views: <%= numeral(data.report.pings_all).format("0[,]000") %>
 
 If you are interested in more analytics, head over to your dashboard: http://<%= host %>/dashboard/<%= data.publisher.key %>/analytics

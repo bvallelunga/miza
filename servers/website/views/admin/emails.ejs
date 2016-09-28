@@ -5,14 +5,16 @@
       <head>
         <tr>
           <th>Name</th>
+          <th>Subject</th>
           <th>Template</th>
         </tr>
       </head>
       <tbody>
         <% templates.forEach(function(template) { %>
-          <tr>
+          <tr class="template" data-template="<%= template %>">
             <td><%= template.split("_").join(" ") %></td>
-            <td class="template" data-template="<%= template %>"></td>
+            <td class="subject"></td>
+            <td class="body"></td>
           </tr>
         <% }) %>
       </tbody>
