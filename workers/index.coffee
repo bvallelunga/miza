@@ -37,15 +37,15 @@ require("../startup") true, ->
   
   
   # 1st of the month
-  agenda.every '0 0 1 * *', 'stripe.charge', {}, job_config
+  agenda.every '30 0 1 * *', 'stripe.charge', {}, job_config
   
   
   # 1st of the Week
-  agenda.every '0 0 * * 1', 'emails.publisher_report.weekly', {}, job_config  
+  agenda.every '30 0 * * 1', 'emails.publisher_report.weekly', {}, job_config  
   
   
   # 21st day of the month
-  agenda.every '0 0 21 * *', 'emails.add_payment_info.monthly', {}, job_config  
+  agenda.every '30 0 21 * *', 'emails.add_payment_info.monthly', {}, job_config  
   
   
   # Every day
