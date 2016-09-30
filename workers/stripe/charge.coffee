@@ -9,6 +9,9 @@ module.exports = (job, done)->
     return done "Not the first of the month!"
    
   LIBS.models.Publisher.findAll({
+    where: {
+      is_demo: false
+    }
     include: [{
       model: LIBS.models.User
       as: "owner"
@@ -22,16 +25,17 @@ module.exports = (job, done)->
     Promise.all publishers.map (publisher)->
       publisher.reports({
         paid_at: null
+        interval: "day"
       }).then (reports)->
-        amount_owed = Math.floor reports.totals.owed * 100
+        stripe_owed = Math.floor reports.totals.owed * 100
+        amount_owed = stripe_owed / 100
 
-        if amount_owed <= 49
+        if amount_owed < 0.50
           return Promise.resolve false
         
         LIBS.mixpanel.people.track_charge publisher.owner.id, amount_owed
-        
         LIBS.stripe.charges.create {
-          amount: amount_owed
+          amount: stripe_owed
           customer: publisher.owner.stripe_id
           currency: "usd"
           description: invoice_description
