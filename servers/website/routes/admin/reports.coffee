@@ -32,6 +32,9 @@ module.exports.metrics = (req, res, next)->
     }
   }
   
+  if req.query.range != "days"
+    query.interval = "day"
+  
   if req.query.range == "yesterday"
     query.created_at.$lte = LIBS.helpers.past_date "days", req.query.date
 
