@@ -18,14 +18,16 @@ module.exports = (srv)->
   app.use scheduler_regex, require("csurf")({ cookie: true })
   app.use require('express-session')(CONFIG.cookies.session session, LIBS.redis)
   app.use LIBS.bugsnag.requestHandler
-  app.use routes.auth.load_user
-  app.use scheduler_regex, require "./locals"
-  
 
   # Public Routes
   require("./assets")(app, srv,  __dirname + '/public')
   app.use "/test", express.static __dirname + '/public/test'
   app.use "/imgs", express.static __dirname + '/public/images'  
+  
+  
+  # Load User & Locals
+  app.use routes.auth.load_user
+  app.use scheduler_regex, require "./locals"
   
   
   # Landing Routes
