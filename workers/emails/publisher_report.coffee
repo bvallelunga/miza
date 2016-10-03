@@ -40,8 +40,8 @@ module.exports = (job, done)->
           report: report.totals
         }
         
-#   .filter (data)->
-#     return data.report.impressions > 0
+  .filter (data)->
+    return data.report.impressions > 0
         
   .each (data)->
     Promise.map data.publisher.members, (user)->
