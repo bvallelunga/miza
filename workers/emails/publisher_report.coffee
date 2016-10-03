@@ -9,7 +9,7 @@ module.exports = (job, done)->
   
   if data.publisher?
     query.id = data.publisher
-  else
+  else if CONFIG.is_prod
     query.is_demo = false
   
   LIBS.models.Publisher.findAll({
@@ -20,8 +20,15 @@ module.exports = (job, done)->
     }, {
       model: LIBS.models.User
       as: "members"
+      where: {
+        notifications: {
+          weekly_reports: {
+            $ne: false
+          }
+        }
+      }
     }]
-  }).then (publishers)->
+  }).then (publishers)->  
     Promise.map publishers, (publisher)->
       publisher.reports({
         created_at: {
@@ -33,8 +40,8 @@ module.exports = (job, done)->
           report: report.totals
         }
         
-  .filter (data)->
-    return data.report.impressions > 0
+#   .filter (data)->
+#     return data.report.impressions > 0
         
   .each (data)->
     Promise.map data.publisher.members, (user)->

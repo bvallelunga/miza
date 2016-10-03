@@ -32,6 +32,10 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.BOOLEAN
       defaultValue: false
     } 
+    notifications: {
+      type: DataTypes.JSONB
+      defaultValue: {}
+    }
   }, {
     classMethods: {
       hash: hasher

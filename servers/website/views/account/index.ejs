@@ -7,6 +7,13 @@
     <input class="top" type="text" name="name" placeholder="Name" value="<%= user.name %>" required/>
     <input type="email" name="email" placeholder="Email address" value="<%= user.email %>" required/>
     <div class="group">
+      <div class="fa fa-sort"></div>
+      <select class="input" name="weekly_reports" required>
+        <option value="true" <%= user.notifications.weekly_reports != false ? "selected" : "" %>>Weekly Reports: On</option>
+        <option value="false" <%= user.notifications.weekly_reports == false ? "selected" : "" %>>Weekly Reports: Off</option>
+      </select>
+    </div>
+    <div class="group">
       <a href="/account/password">Change</a>
       <input type="password" name="password" placeholder="Password" required/>
     </div>

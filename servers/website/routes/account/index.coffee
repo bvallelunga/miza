@@ -1,7 +1,7 @@
 module.exports.get_root = (req, res, next)->
   res.render "account/index", {
     js: req.js.renderTags "modal"
-    css: req.css.renderTags "modal"
+    css: req.css.renderTags "modal", "fa"
     title: "Account Settings"
   }
 
@@ -11,10 +11,13 @@ module.exports.post_root = (req, res, next)->
   
   if req.user.password != temp_password
     return next "Invaild password"
+    
+  req.user.notifications.weekly_reports = req.body.weekly_reports == "true"
 
   req.user.update({
     name: req.body.name
     email: req.body.email
+    notifications: req.user.notifications 
   }).then ->
     res.json {
       success: true
