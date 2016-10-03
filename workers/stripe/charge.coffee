@@ -51,6 +51,7 @@ module.exports = (job, done)->
           return Promise.resolve()
       
         LIBS.models.PublisherReport.update {
+          publisher_id: publisher.id
           paid_at: new Date()
         }, {
           where: {
