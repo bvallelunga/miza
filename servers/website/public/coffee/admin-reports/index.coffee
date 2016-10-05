@@ -1,5 +1,7 @@
 class ReportsDashboard
 
+  override: null
+
   metrics: (start, end)->
     @clear_metrics()
 
@@ -36,109 +38,100 @@ class ReportsDashboard
     $(".ctr-metric").html "---"
     $(".protected-metric").html "---"
     $("tr.publisher .data").html "---"
+  
+  
+  load_default: ->
+    default_start = moment().startOf("day")
+    default_end = moment().endOf("day")
+    @metrics default_start.toDate(), default_end.toDate()
+    $(".range-display .text").text "Today"
+  
+  
+  build_shortcut: (name, formatted, ranges)->
+    {
+      name: name
+      dates: =>
+        @override = formatted
+        return ranges
+    }
+    
+  
+  configure_datepicker: ->
+    _this = @
+  
+    $(".range-display").dateRangePicker({
+      showShortcuts: true
+      showTopbar: false
+      autoClose: true
+      format: 'MMM DD, YYYY'
+      separator: ' <strong>to</strong> '
+      startOfWeek: 'monday'
+      language:'en'
+      customOpenAnimation: (cb)->
+        $(@).fadeIn(0, cb)
+      
+      customCloseAnimation: (cb)->
+        $(@).fadeOut(0, cb)
+      
+      setValue: (value)->
+        $(@).find(".text").html _this.override or value
+        _this.override = null
+      
+      customShortcuts: [
+        @build_shortcut "Last Year", "Last Year", [
+          moment().add(-1, "year").startOf("year").toDate()
+          moment().add(-1, "year").endOf("year").toDate()
+        ]
+        
+        @build_shortcut "Last Month", "Last Month", [
+          moment().add(-1, "month").startOf("month").toDate()
+          moment().add(-1, "month").endOf("month").toDate()
+        ]
+        
+        @build_shortcut "Last Week", "Last Week", [
+          moment().add(-1, "week").isoWeekday(1).startOf("isoweek").toDate()
+          moment().add(-1, "week").isoWeekday(1).endOf("isoweek").toDate()
+        ]
+        
+        @build_shortcut "Yesterday", "Yesterday", [
+          moment().add(-1, "day").startOf("day").toDate()
+          moment().endOf("day").toDate()
+        ]
+        
+        @build_shortcut "Today", "Today", [
+          moment().startOf("day").toDate()
+          moment().endOf("day").toDate()
+        ]
+        
+        @build_shortcut "Week", "This Week", [
+          moment().isoWeekday(1).startOf("isoweek").toDate()
+          moment().isoWeekday(1).endOf("isoweek").toDate()
+        ]
+        
+        @build_shortcut "Month", "This Month", [
+          moment().startOf("month").toDate()
+          moment().endOf("month").toDate()
+        ]
+        
+        @build_shortcut "Year", "This Year", [
+          moment().startOf("year").toDate()
+          moment().endOf("year").toDate()
+        ]
+      ]
+    }).bind 'datepicker-open', (event, obj)->    
+      $(".range-display").addClass "open"
+    
+    .bind 'datepicker-close', (event, obj)->   
+      $(".range-display").removeClass "open"
+    
+    .bind 'datepicker-change', (event, obj)=>    
+      start = moment(obj.date1).startOf("day").toDate()
+      end = moment(obj.date2).endOf("day").toDate()
+      @metrics start, end
 
   
 $ ->  
   dashboard = new ReportsDashboard() 
-  default_start = moment().startOf("day")
-  default_end = moment().endOf("day")
-  dashboard.metrics default_start.toDate(), default_end.toDate()
-
-  $(".range-display").dateRangePicker({
-    showShortcuts: true
-    showTopbar: false
-    autoClose: true
-    format: 'MMM DD, YYYY'
-    separator: ' <strong>to</strong> '
-    startOfWeek: 'monday'
-    language:'en'
-    customOpenAnimation: (cb)->
-      $(this).fadeIn(0, cb)
-    
-    customCloseAnimation: (cb)->
-      $(this).fadeOut(0, cb)
-    
-    setValue: (value)->
-      $(this).find(".text").html value
-    
-    customShortcuts: [
-      {
-        name: "Last Year"
-        dates: ->
-          [
-            moment().add(-1, "year").startOf("year").toDate()
-            moment().add(-1, "year").endOf("year").toDate()
-          ]
-      }
-      {
-        name: "Last Month"
-        dates: ->
-          [
-            moment().add(-1, "month").startOf("month").toDate()
-            moment().add(-1, "month").endOf("month").toDate()
-          ]
-      }
-      {
-        name: "Last Week"
-        dates: ->
-          [
-            moment().add(-1, "week").isoWeekday(1).startOf("isoweek").toDate()
-            moment().add(-1, "week").isoWeekday(1).endOf("isoweek").toDate()
-          ]
-      }
-      {
-        name: "Yesterday"
-        dates: ->
-          [
-            moment().add(-1, "day").startOf("day").toDate()
-            moment().endOf("day").toDate()
-          ]
-      }
-      {
-        name: "Today"
-        dates: ->
-          [
-            moment().startOf("day").toDate()
-            moment().endOf("day").toDate()
-          ]
-      }
-      {
-        name: "Week"
-        dates: ->
-          [
-            moment().isoWeekday(1).startOf("isoweek").toDate()
-            moment().isoWeekday(1).endOf("isoweek").toDate()
-          ]
-      }
-      {
-        name: "Month"
-        dates: ->
-          [
-            moment().startOf("month").toDate()
-            moment().endOf("month").toDate()
-          ]
-      }
-      {
-        name: "Year"
-        dates: ->
-          [
-            moment().startOf("year").toDate()
-            moment().endOf("year").toDate()
-          ]
-      }
-    ]
-  }).bind 'datepicker-open', (event, obj)->    
-    $(".range-display").addClass "open"
+  dashboard.load_default()
+  dashboard.configure_datepicker()
   
-  .bind 'datepicker-close', (event, obj)->   
-    $(".range-display").removeClass "open"
-  
-  .bind 'datepicker-change', (event, obj)->    
-    start = moment(obj.date1).startOf("day").toDate()
-    end = moment(obj.date2).endOf("day").toDate()
-    dashboard.metrics start, end
-    
-  .data("dateRangePicker").setDateRange(
-    default_start.format('MMM DD, YYYY'), 
-    default_end.format('MMM DD, YYYY')
-  )
