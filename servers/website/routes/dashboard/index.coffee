@@ -12,7 +12,7 @@ module.exports.get_root = (req, res, next)->
 
 
 module.exports.get_dashboard = (req, res, next)->
-  js = ["dashboard", "fa"]
+  js = ["dashboard"]
   css = ["dashboard", "fa"]
   dashboard = req.params.dashboard
   dashboard_path = "/dashboard/#{req.publisher.key}"

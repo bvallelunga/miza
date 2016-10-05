@@ -1,11 +1,12 @@
 class ReportsDashboard
 
-  metrics: (range)->
+  metrics: (start, end)->
     @clear_metrics()
 
     $.get("/admin/reports/metrics", {
-      range: range
-      date: new Date()
+      start_date: start
+      end_date: end
+      days: moment.duration(end-start).asDays()
     }).done (data)->
       display_totals data.totals
       data.publishers.forEach display_publisher
@@ -37,12 +38,93 @@ class ReportsDashboard
     $("tr.publisher .data").html "---"
 
   
-$ ->
-  dashboard = new ReportsDashboard()
-  dashboard.metrics $(".range-toggle .active").data("range")
-  
-  $(".range-toggle div").click ->
-    $(".range-toggle div").removeClass "active"
-    $(this).addClass "active"
-    dashboard.metrics $(".range-toggle .active").data("range")
+$ ->  
+  dashboard = new ReportsDashboard() 
+  default_start = moment().startOf("day")
+  default_end = moment().endOf("day")
+  dashboard.metrics default_start.toDate(), default_end.toDate()
 
+  $(".range-display").dateRangePicker({
+    autoClose: true
+    format: 'MMM DD, YYYY'
+    showShortcuts: true
+    separator: ' <strong>to</strong> '
+    startOfWeek: 'monday'
+    language:'en'
+    setValue: (value)->
+      $(this).find(".text").html value
+    customShortcuts: [
+      {
+        name: "Last Year"
+        dates: ->
+          [
+            moment().add(-1, "year").startOf("year").toDate()
+            moment().add(-1, "year").endOf("year").toDate()
+          ]
+      }
+      {
+        name: "Last Month"
+        dates: ->
+          [
+            moment().add(-1, "month").startOf("month").toDate()
+            moment().add(-1, "month").endOf("month").toDate()
+          ]
+      }
+      {
+        name: "Last Week"
+        dates: ->
+          [
+            moment().add(-1, "week").isoWeekday(1).startOf("isoweek").toDate()
+            moment().add(-1, "week").isoWeekday(1).endOf("isoweek").toDate()
+          ]
+      }
+      {
+        name: "Yesterday"
+        dates: ->
+          [
+            moment().add(-1, "day").startOf("day").toDate()
+            moment().endOf("day").toDate()
+          ]
+      }
+      {
+        name: "Today"
+        dates: ->
+          [
+            moment().startOf("day").toDate()
+            moment().endOf("day").toDate()
+          ]
+      }
+      {
+        name: "Week"
+        dates: ->
+          [
+            moment().isoWeekday(1).startOf("isoweek").toDate()
+            moment().isoWeekday(1).endOf("isoweek").toDate()
+          ]
+      }
+      {
+        name: "Month"
+        dates: ->
+          [
+            moment().startOf("month").toDate()
+            moment().endOf("month").toDate()
+          ]
+      }
+      {
+        name: "Year"
+        dates: ->
+          [
+            moment().startOf("year").toDate()
+            moment().endOf("year").toDate()
+          ]
+      }
+    ]
+  }).bind 'datepicker-change', (event, obj)->    
+    start = moment(obj.date1).startOf("day").toDate()
+    end = moment(obj.date2).endOf("day").toDate()
+    dashboard.metrics start, end
+    
+  .data("dateRangePicker").setDateRange(
+    default_start.format('MMM DD, YYYY'), 
+    default_end.format('MMM DD, YYYY')
+  )

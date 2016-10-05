@@ -1,6 +1,31 @@
 @import '../compless/all';
 @import '../global/colors';
 
+.date-picker-wrapper {
+  background: white;
+  border: solid 2px #F3F3F3;
+  .box-shadow(30px 30px 20px white);
+  .border-radius(5px);
+  
+  .shortcuts {
+    a {
+      margin: 0 2px;
+    }
+  }
+  
+  .date-range-length-tip {
+    background: black;
+    color: white;
+    padding: 5px 8px;
+    margin-top: -15px;
+    margin-left: -10px;
+    
+    &:after {
+      border-top-color: black;
+    }
+  }
+}
+
 .reports {
   padding: 100px 0;
   width: 1150px;
@@ -12,39 +37,22 @@
     }
   }
   
-  .range-toggle {
+  .range-display {
     position: absolute;
     top: 10px;
     left: 10px;
     background: white;
     z-index: 2;
+    cursor: pointer;
+    display: inline-block;
+    padding: 8px 12px;
+    min-width: 70px;
+    border: solid 2px #F3F3F3;
+    .border-radius(5px);
     
-    div {
-      position: relative;
-      z-index: 0;
-      cursor: pointer;
-      display: inline-block;
-      padding: 8px 12px;
-      min-width: 70px;
-      text-align: center;
-      border: solid 2px #F3F3F3;
-      float: left;
-      margin: 0 -1px;
-      
-      &:first-child {
-        .border-radius(3px 0 0 3px);
-      }
-      
-      &:last-child {
-        .border-radius(0 3px 3px 0);
-      }
-      
-      &.active {
-        background: @blue;
-        color: white;
-        border-color: darken(@blue, 4%);
-        z-index: 5;
-      }
+    .fa {
+      margin-right: 8px;
+      color: @text_weak;
     }
   }
    

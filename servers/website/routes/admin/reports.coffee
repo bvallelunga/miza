@@ -16,7 +16,7 @@ module.exports.get = (req, res, next)->
   }).then (publishers)->      
     res.render "admin/reports", {
       js: req.js.renderTags "admin-reports", "tooltip"
-      css: req.css.renderTags "admin", "dashboard-analytics", "tooltip"
+      css: req.css.renderTags "admin", "dashboard-analytics", "tooltip", "fa"
       title: "Admin Reporting"
       publishers: publishers
     }
@@ -25,19 +25,16 @@ module.exports.get = (req, res, next)->
   
   
 module.exports.metrics = (req, res, next)->
-  date_ago = LIBS.helpers.past_date req.query.range, req.query.date
   query = {
     created_at: {
-      $gte: date_ago
+      $gte: new Date req.query.start_date
+      $lte: new Date req.query.end_date
     }
   }
   
-  if req.query.range != "days"
+  if Number(req.query.days) > 1
     query.interval = "day"
   
-  if req.query.range == "yesterday"
-    query.created_at.$lte = LIBS.helpers.past_date "days", req.query.date
-
   LIBS.models.Publisher.findAll({
     where: {
      is_demo: false
@@ -48,7 +45,7 @@ module.exports.metrics = (req, res, next)->
         report.totals.id = publisher.key
         return report.totals
 
-  .then (reports)->   
+  .then (reports)->     
     LIBS.models.PublisherReport.merge(reports).then (totals)-> 
       return {
         publishers: reports.map format_report

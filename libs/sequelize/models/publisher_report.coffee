@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes)->
         totals.interval = "all"
         return totals
       
-      merge: (reports)->      
+      merge: (reports)->         
         totals = LIBS.models.PublisherReport.merged_report()
         
         Promise.each reports, (report)->

@@ -104,7 +104,7 @@ module.exports = (sequelize, DataTypes)->
       
       reports: (query)->
         query.publisher_id = @id
-        
+                
         LIBS.models.PublisherReport.findAll({
           where: query
           order: [

@@ -23,7 +23,9 @@ module.exports = (srv)->
   
   
   # Error Handlers
-  app.use LIBS.bugsnag.errorHandler
+  if CONFIG.is_prod
+    app.use LIBS.bugsnag.errorHandler
+  
   app.use require("./error")
   
   
