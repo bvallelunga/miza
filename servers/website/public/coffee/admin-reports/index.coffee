@@ -67,6 +67,7 @@ class ReportsDashboard
       separator: ' <strong>to</strong> '
       startOfWeek: 'monday'
       language:'en'
+      endDate: moment().format "MMM DD, YYYY"
       customOpenAnimation: (cb)->
         $(@).fadeIn(0, cb)
       
@@ -105,17 +106,17 @@ class ReportsDashboard
         
         @build_shortcut "Week", "This Week", [
           moment().isoWeekday(1).startOf("isoweek").toDate()
-          moment().isoWeekday(1).endOf("isoweek").toDate()
+          moment().endOf("day").toDate()
         ]
         
         @build_shortcut "Month", "This Month", [
           moment().startOf("month").toDate()
-          moment().endOf("month").toDate()
+          moment().endOf("day").toDate()
         ]
         
         @build_shortcut "Year", "This Year", [
           moment().startOf("year").toDate()
-          moment().endOf("year").toDate()
+          moment().endOf("day").toDate()
         ]
       ]
     }).bind 'datepicker-open', (event, obj)->    
