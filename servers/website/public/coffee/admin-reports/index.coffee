@@ -51,8 +51,15 @@ $ ->
     separator: ' <strong>to</strong> '
     startOfWeek: 'monday'
     language:'en'
+    customOpenAnimation: (cb)->
+      $(this).fadeIn(0, cb)
+    
+    customCloseAnimation: (cb)->
+      $(this).fadeOut(0, cb)
+    
     setValue: (value)->
       $(this).find(".text").html value
+    
     customShortcuts: [
       {
         name: "Last Year"
@@ -119,7 +126,13 @@ $ ->
           ]
       }
     ]
-  }).bind 'datepicker-change', (event, obj)->    
+  }).bind 'datepicker-open', (event, obj)->    
+    $(".range-display").addClass "open"
+  
+  .bind 'datepicker-close', (event, obj)->   
+    $(".range-display").removeClass "open"
+  
+  .bind 'datepicker-change', (event, obj)->    
     start = moment(obj.date1).startOf("day").toDate()
     end = moment(obj.date2).endOf("day").toDate()
     dashboard.metrics start, end
