@@ -50,7 +50,10 @@ require("../startup") true, ->
   
   # Every day
   agenda.every '0 0 * * *', 'stripe.register', {}, job_config
-  agenda.every '0 0 * * *', 'reports.reducer.daily', {}, job_config
+  
+  
+  # End of every day
+  agenda.every '59 23 * * *', 'reports.reducer.daily', {}, job_config
   
     
   # Every hour
