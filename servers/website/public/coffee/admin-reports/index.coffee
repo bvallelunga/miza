@@ -45,9 +45,10 @@ $ ->
   dashboard.metrics default_start.toDate(), default_end.toDate()
 
   $(".range-display").dateRangePicker({
+    showShortcuts: true
+    showTopbar: false
     autoClose: true
     format: 'MMM DD, YYYY'
-    showShortcuts: true
     separator: ' <strong>to</strong> '
     startOfWeek: 'monday'
     language:'en'
