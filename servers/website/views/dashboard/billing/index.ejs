@@ -6,7 +6,7 @@
       <div class="notes">30 Day Money Back Guarantee</div>
     </div>
 </div>
-<% if(!publisher.is_demo && publisher.industry.cpm * publisher.fee > 0) { %>
+<% if(!publisher.is_demo && publisher.industry.cpm > 0 && publisher.fee == 1) { %>
   <div class="warning grey">
     LIMITED TIME OFFER<br>
     Want to receive a 30% discount? <a href="mailto:<%= support_email %>?subject=Billing%20Discount&body=I%20heard%20about%20the%2030%25%20discount%20and%20want%20in%20for%20my%20<%= publisher.name %>%20account%21">Learn more</a>.
