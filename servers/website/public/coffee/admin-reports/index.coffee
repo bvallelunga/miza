@@ -4,12 +4,18 @@ class ReportsDashboard
 
   metrics: (start, end)->
     @clear_metrics()
+    
+    $(".fa-calendar").hide()
+    $(".fa-refresh").show()
 
     $.get("/admin/reports/metrics", {
       start_date: start
       end_date: end
       days: moment.duration(end-start).asDays()
     }).done (data)->
+      $(".fa-calendar").show()
+      $(".fa-refresh").hide()
+    
       display_totals data.totals
       data.publishers.forEach display_publisher
    
