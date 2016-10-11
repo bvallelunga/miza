@@ -40,7 +40,7 @@
     }
     
     var script = API.s_script()
-    var url = "aHR0cDovL3d3dy5nb29nbGV0YWdzZXJ2aWNlcy5jb20vdGFnL2pzL2dwdC5qcw=="
+    var url = "aHR0cHM6Ly93d3cuZ29vZ2xldGFnc2VydmljZXMuY29tL3RhZy9qcy9ncHQuanM="
     var network_id = "<%= network.id %>"
     
     if(enabled) {
@@ -253,7 +253,7 @@
     for(var i = 0; i < API.s_targets_list.length; i++) {
       var tester = API.s_targets_list[i]
       
-      if(tester.test(src)) {
+      if(new RegExp(tester).test(src)) {
         return API.s_targets[tester]
       }
     }
