@@ -42,7 +42,18 @@ module.exports.get_dashboard = (req, res, next)->
       js.push "dashboard-analytics", "tooltip"
       css.push "dashboard-analytics", "tooltip"
       
+  
   Promise.resolve().then ->
+    if dashboard != "setup"
+      return Promise.resolve()
+      
+    LIBS.models.Network.findAll().then (networks)->
+      res.locals.networks = {}
+      
+      for network in networks
+        res.locals.networks[network.slug] = network
+  
+  .then ->
     if dashboard != "members"
       return {}
       

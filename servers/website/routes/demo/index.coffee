@@ -38,11 +38,18 @@ module.exports.get_wordpress = (req, res, next)->
 module.exports.get_miza = (req, res, next)->
   host = req.get("host").split(".").slice(-2).join(".")
   req.publisher.endpoint = "#{req.publisher.key}.#{host}"
-
-  res.render "demo/#{if req.params.demo? then "tester" else "demo"}", {
-    publisher: req.publisher
-    demo: req.params.demo
-    css: req.css.renderTags "demo"
-    title: "Miza Demo"
-    user: req.user
-  }
+  
+  LIBS.models.Network.findAll().then (networks)->
+    networks_dict = {}
+    
+    for network in networks
+      networks_dict[network.slug] = network
+  
+    res.render "demo/#{if req.params.demo? then "tester" else "demo"}", {
+      publisher: req.publisher
+      demo: req.params.demo
+      css: req.css.renderTags "demo"
+      title: "Miza Demo"
+      user: req.user
+      networks: networks_dict
+    }
