@@ -135,7 +135,7 @@ API.network_init = function(network) {
     element.removeAttribute("hidden")
     element.style.display = ""
     
-    API.observe(element, network.id)
+    API.observe(element, network)
     original.parentNode.replaceChild(element, original)
   })
 }
@@ -157,8 +157,9 @@ API.fetch_network = function(src) {
     
   for(var i = 0; i < API.networks.length; i++) {
     var network = API.networks[i]
+    var tester = new RegExp(network.tester_url)
     
-    if(network.enabled && network.tester_url.test(src)) {
+    if(network.enabled && tester.test(src)) {
       return network.id
     }
   }
