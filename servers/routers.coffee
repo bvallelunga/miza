@@ -11,12 +11,12 @@ module.exports = (srv)->
     }
     
     engine: (req, res, next)->
-      if req.hostname.indexOf(CONFIG.ads_server.protected_domain) > -1
+      domains = req.hostname.split(".").slice(0, -1)
+    
+      if domains.length == 0 and req.hostname.indexOf(CONFIG.ads_server.protected_domain) > -1
         return res.redirect CONFIG.ads_server.denied.redirect
     
-      subdomains = req.hostname.split(".")
-    
-      if subdomains.length >= 2 and subdomains[0] not in CONFIG.website_subdomains
+      if domains.length > 0 and domains[0] not in CONFIG.website_subdomains
         req.url =  "/#{ads_secret}/#{req.path.slice(1)}"
         
       next()
