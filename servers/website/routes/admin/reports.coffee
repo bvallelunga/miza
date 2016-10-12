@@ -26,14 +26,24 @@ module.exports.get = (req, res, next)->
   
 module.exports.metrics = (req, res, next)->
   query = {
-    created_at: {
-      $gte: new Date req.query.start_date
-      $lte: new Date req.query.end_date
-    }
+    $or: [
+      {
+        interval: "day"
+        created_at: {
+          $gte: new Date req.query.start_date
+          $lte: new Date req.query.end_date
+        }
+      }
+    ]
   }
   
-  if Number(req.query.days) > 1
-    query.interval = "day"
+  if req.query.contains_today == "true"
+    query.$or.push {
+      created_at: {
+        $gte: new Date req.query.today_start_date
+        $lte: new Date req.query.today_end_date
+      }
+    }
   
   LIBS.models.Publisher.findAll({
     where: {
