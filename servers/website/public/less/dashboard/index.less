@@ -39,7 +39,7 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  width: 150px;
+  width: 180px;
   border: solid 2px rgba(0,0,0,0.05);
   background: white;
   z-index: 2;
@@ -84,15 +84,15 @@
       padding: 10px 12px;
       display: block;
       font-weight: lighter;
-      border-bottom: solid 1px #F3F3F3;
+      border-top: solid 1px #F3F3F3;
       .ellipsis();
       
       &:hover {
         background: lighten(@blue, 40%);
       }
       
-      &:last-child {
-        border-bottom: none;
+      &:first-child {
+        border-top: none;
       }
       
       span {
@@ -101,8 +101,9 @@
       }
     }
     
-    form {
+    .group {
       position: relative;
+      border-top: solid 1px #F3F3F3;
       
       span {
         position: absolute;
