@@ -18,7 +18,7 @@ API.networks = [
 ]
 
 
-API.networks_activate = function() {  
+API.networks_activate = function() {
   API.networks.forEach(function(network) {    
     if(!API.protected) {
       network.enabled = false
@@ -42,17 +42,8 @@ API.network_script = function(network) {
   var script = API.script()
   
   if(network.entry_url.query) {
-    var is_shadow_blocking = false
-    var elements = API.to_array(document.querySelector(network.entry_css.query).parentNode.getElementsByTagName("*"));
-    
-    for(var i = 0; i < elements.length; i++) {
-      var element = elements[i]
-      
-      if(element.style.display == "none") {
-        is_shadow_blocking = true
-        break
-      }
-    }
+    var is_shadow_blocking = document.querySelector(network.entry_css.query)
+      .parentNode.querySelector("[hidden]")
     
     if(!network.enabled || (!!network.entry_js && !is_shadow_blocking)) return
     API.protected = true
@@ -163,7 +154,7 @@ API.network_duplicates_check = function(element, network, callback) {
 
 API.fetch_network = function(src) {    
   if(!src) return null
-  
+    
   for(var i = 0; i < API.networks.length; i++) {
     var network = API.networks[i]
     var tester = new RegExp(network.tester_url)
