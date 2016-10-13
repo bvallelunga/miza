@@ -22,7 +22,7 @@ module.exports = (sequelize, models)->
       sequelize: sequelize 
     }
     migrations: {
-      params: [ knex ]
+      params: [ knex, models ]
       path: __dirname
       pattern: /^(?!index).*\.coffee$/
     }

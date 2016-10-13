@@ -20,7 +20,7 @@ module.exports = ->
   }
 
   models = require("./models")(sequelize)  
-  require("./migrations")(sequelize).then ->
+  require("./migrations")(sequelize, models).then ->
     return sequelize.sync({ force: false })
     
   .then ->
