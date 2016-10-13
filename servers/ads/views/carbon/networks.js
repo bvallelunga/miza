@@ -11,7 +11,8 @@ API.networks = [
       container: API.id + "_<%= network.id %>_c",
       container_flush: "#carbonads",
       parent: true,
-      duplicates: new RegExp(API.id + "_<%= network.id %>_[0-9]")
+      duplicates_regex: new RegExp(API.id + "_<%= network.id %>_[0-9]"),
+      duplicates: "div[id*=" + API.id + "_<%= network.id %>_], div#carbonads"
     },
     tester_url: /(carbon)|(fusionads)|(buysellads)|(adsafeprotected)/gi
   }
@@ -37,40 +38,48 @@ API.networks_activate = function() {
   })
 }
 
+API.network_flush = function(network) {
+  var to_flush = API.document.querySelector(network.entry_css.container_flush)
+  if(to_flush) to_flush.remove()
+}
+
 
 API.network_script = function(network) {
   var script = API.script()
   
   if(network.entry_url.query) {
     var is_shadow_blocking = false
-    var elements = API.to_array(document.querySelector(network.entry_css.query).parentNode.getElementsByTagName("*"));
+    var tmp_script = document.querySelector(network.entry_css.query)
     
-    for(var i = 0; i < elements.length; i++) {
-      var element = elements[i]
+    if(!!tmp_script) {
+      var elements = API.to_array(tmp_script.parentNode.getElementsByTagName("*"))
       
-      if(element.style.display == "none") {
-        is_shadow_blocking = true
-        break
+      for(var i = 0; i < elements.length; i++) {
+        var element = elements[i]
+        
+        if(element.style.display == "none !important") {
+          is_shadow_blocking = true
+          break
+        }
       }
+    } else {
+      is_shadow_blocking = true
     }
     
-    if(!network.enabled || (!!network.entry_js && !is_shadow_blocking)) return
+    if(!network.enabled && !is_shadow_blocking) return
     API.protected = true
     
     if(is_shadow_blocking) {
-      var to_flush = document.querySelector(network.entry_css.container_flush)
-    
-      if(!!to_flush) {
-        to_flush.remove()
-      }
+      API.network_flush(network)
     }
     
     var old_script = API.document.querySelector(network.entry_url.query)
     
     if(!old_script) {
+      API.network_flush(network)
       return API.network_fallback(network)
     }
-    
+
     var src = old_script.src || old_script.attributes["data-rocketsrc"].value
     script.src = API.url(src, true, network.id) + "&script=true&" + src.split("?")[1]
     script.id = API.id + "_" + network.id + "_js"
@@ -90,6 +99,8 @@ API.network_script = function(network) {
 
 
 API.network_fallback = function(network) {
+  console.log("fallback used")
+  
   var xmlHttp = new XMLHttpRequest()
   xmlHttp.onreadystatechange = function() { 
     if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
@@ -98,18 +109,25 @@ API.network_fallback = function(network) {
       
       html.innerHTML = xmlHttp.responseText
       var old_script = html.querySelector(network.entry_url.query)
+      var old_path = ""
+      var node = old_script.parentNode
       
-      network.entry_css.parent = false
-      network.entry_css.query = (
-        "#" + old_script.parentNode.id + 
-        API.to_array(old_script.parentNode.classList).join(".")
-      )
-      API.network_init(network)
+      while(node.tagName.toLowerCase() != "body") {
+        var selector = node.tagName
+        
+        if(!!node.id) selector += ("#" + node.id)
+        if(!!node.className) selector += ("." + API.to_array(node.classList).join("."))
+        
+        old_path = selector + " " + old_path
+        node = node.parentNode
+      }
       
-      var parent_node = API.document.querySelector("." + network.entry_css.container)
+      var parent_node = API.document.querySelector(old_path)
       script.src = API.url(old_script.src, true, network.id) + "&script=true&" + old_script.src.split("?")[1]
       script.id = API.id + "_" + network.id + "_js"
       parent_node.appendChild(script)
+      
+      API.network_flush(network)
     }
   }
   xmlHttp.open("GET", window.location.href, true)
@@ -124,7 +142,7 @@ API.network_init = function(network) {
   elements_array.forEach(function(original) {
     if(network.entry_css.parent) {
       original = original.parentNode
-    } 
+    }
 
     var span = document.createElement("span")
     span.innerHTML += '&nbsp;'
@@ -147,13 +165,21 @@ API.network_init = function(network) {
     API.observe(element, network)
     original.parentNode.replaceChild(element, original)
   })
+  
+  setInterval(function() {
+    var elements = API.to_array(API.document.querySelectorAll(network.entry_css.duplicates))
+
+    elements.forEach(function(element) {
+      element.remove()
+    })
+  }, 100)
 }
 
 
 API.network_duplicates_check = function(element, network, callback) {
   if(!network.entry_css) return callback()
   
-  if(network.entry_css.duplicates.test(element.id)) {
+  if(network.entry_css.duplicates_regex.test(element.id)) {
     return element.remove()
   }
   

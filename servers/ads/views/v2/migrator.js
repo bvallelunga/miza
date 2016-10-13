@@ -33,6 +33,15 @@ API.migrator = function(element, parent, network_id) {
     url += "&=script=true"
   } 
   
+  if(tag_name == "img") {
+    tmp = API.document.createElement("img")
+    tmp.width = element.width
+    tmp.height = element.height
+    tmp.style = element.style
+    element = tmp
+    replace_element = true
+  }
+  
   if(tag_name == "link") {
     element = element.cloneNode(false) 
     replace_element = true

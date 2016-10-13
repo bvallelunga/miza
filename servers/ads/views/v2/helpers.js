@@ -11,6 +11,7 @@ API.blocker_check = function(window, callback) {
   var test = document.createElement('div')
   test.innerHTML = '&nbsp;'
   test.className = 'adsbox'
+  test.id = "carbonads"
   window.document.body.appendChild(test)
   
   window.setTimeout(function() {
