@@ -35,6 +35,11 @@ require("../startup") true, ->
     priority: "medium"
   }, require("./emails/add_payment_info")
   
+  agenda.define "ads.flush_cache.daily", {
+    concurrency: 1
+    priority: "low"
+  }, require("./ads/flush_cache")
+  
   
   # 1st of the month
   agenda.every '30 0 1 * *', 'stripe.charge', {}, job_config
@@ -51,6 +56,7 @@ require("../startup") true, ->
   # Every day
   agenda.every '0 0 * * *', 'stripe.register', {}, job_config
   agenda.every '0 0 * * *', 'reports.reducer.daily', {}, job_config
+  agenda.every '0 0 * * *', 'ads.flush_cache.daily', {}, job_config
   
     
   # Every hour

@@ -4,7 +4,7 @@ module.exports = (host, path)->
   Promise.resolve().then ->
     encoded = url_safe_decoder path.slice(1).split(".")[0]
     url = new Buffer(encoded, 'base64').toString("ascii")
-    key = "#{host}#{path}"
+    key = "ads_server.cache.#{host}#{path}"
     
     if not is_url_test.test(url)
       return Promise.reject "Invalid url"

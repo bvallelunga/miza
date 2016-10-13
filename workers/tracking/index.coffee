@@ -47,7 +47,7 @@ require("../../startup") true, ->
       }
       
       if event.protected and event.type != "ping"
-        redis_key = "#{event.publisher.key}.events"
+        redis_key = "publisher.#{event.publisher.key}.events"
       
         LIBS.redis.get redis_key, (error, response)->  
           try

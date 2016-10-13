@@ -1,7 +1,7 @@
 numeral = require "numeral"
 
 module.exports.logs = (req, res, next)->
-  redis_key = "#{req.publisher.key}.events"
+  redis_key = "publisher.#{req.publisher.key}.events"
       
   LIBS.redis.get redis_key, (error, response)->
     if error?
