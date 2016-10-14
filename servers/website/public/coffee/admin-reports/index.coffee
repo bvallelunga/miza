@@ -8,11 +8,10 @@ class ReportsDashboard
     @clear_metrics()
     @start = start
     @end = end
+    today = new Date()
     
     $(".fa-calendar").hide()
     $(".fa-refresh").show()
-    
-    today = new Date()
 
     $.get("/admin/reports/metrics", {
       start_date: start
@@ -26,12 +25,6 @@ class ReportsDashboard
     
       display_totals data.totals
       data.publishers.forEach display_publisher
-      
-    
-    setTimeout =>
-      @metrics @start, @end
-
-    , 30000
    
   
   display_publisher = (publisher)->
@@ -61,10 +54,14 @@ class ReportsDashboard
   
   
   load_default: ->
-    default_start = moment().startOf("day")
-    default_end = moment().endOf("day")
-    @metrics default_start.toDate(), default_end.toDate()
     $(".range-display .text").text "Today"
+    @start = moment().startOf("day").toDate()
+    @end = moment().endOf("day").toDate()
+    @metrics @start, @end
+    
+    setInterval =>
+      @metrics @start, @end
+    , 30000
   
   
   build_shortcut: (name, formatted, ranges)->
