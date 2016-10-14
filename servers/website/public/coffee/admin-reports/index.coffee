@@ -1,9 +1,13 @@
 class ReportsDashboard
 
   override: null
+  start: null
+  end: null
 
   metrics: (start, end)->
     @clear_metrics()
+    @start = start
+    @end = end
     
     $(".fa-calendar").hide()
     $(".fa-refresh").show()
@@ -22,6 +26,12 @@ class ReportsDashboard
     
       display_totals data.totals
       data.publishers.forEach display_publisher
+      
+    
+    setTimeout =>
+      @metrics @start, @end
+
+    , 30000
    
   
   display_publisher = (publisher)->
