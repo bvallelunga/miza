@@ -10,7 +10,7 @@ API.script = function() {
 API.blocker_check = function(window, callback) {
   var test = document.createElement('div')
   test.innerHTML = '&nbsp;'
-  test.className = 'adsbox'
+  test.className = 'adsbox googleads carbonads'
   test.id = "carbonads"
   window.document.body.appendChild(test)
   

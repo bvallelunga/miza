@@ -28,9 +28,8 @@ API.networks_activate = function() {
     if(network.enabled) {
       API.window[API.id + "_" + network.id] = network.entry_js
       API.network_init(network)
+      API.network_script(network)
     }
-    
-    API.network_script(network)
     
     if(!API.network) { 
       API.status("p", network.id)
@@ -65,9 +64,6 @@ API.network_script = function(network) {
     } else {
       is_shadow_blocking = true
     }
-    
-    if(!network.enabled || !is_shadow_blocking) return
-    API.protected = true
     
     if(is_shadow_blocking) {
       API.network_flush(network)
