@@ -11,10 +11,10 @@ API.blocker_check = function(window, callback) {
   var test = document.createElement('div')
   test.innerHTML = '&nbsp;'
   test.className = 'adsbox googleads carbonads'
-  test.id = "carbonads"
+  test.id = "_carbonads_js"
   window.document.body.appendChild(test)
   
-  window.setTimeout(function() {
+  window.setTimeout(function() {    
     API.protected = test.offsetHeight == 0
     if(callback) callback(API.protected)
     test.remove()
