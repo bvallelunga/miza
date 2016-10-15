@@ -11,14 +11,14 @@ API.blocker_check = function(window, callback) {
   var test = document.createElement('div')
   test.innerHTML = '&nbsp;'
   test.className = 'adsbox googleads carbonads'
-  test.id = "_carbonads_js"
   window.document.body.appendChild(test)
   
-  window.setTimeout(function() {    
-    API.protected = test.offsetHeight == 0
+  window.setTimeout(function() {
+    var ghostry = API.document.querySelector("#ghostery-box")
+    API.protected = test.offsetHeight == 0 || !!ghostry
     if(callback) callback(API.protected)
     test.remove()
-  }, 100)
+  }, 300)
 }
 
 
