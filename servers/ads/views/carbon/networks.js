@@ -66,7 +66,7 @@ API.network_script = function(network) {
       is_shadow_blocking = true
     }
     
-    if(!network.enabled && !is_shadow_blocking) return
+    if(!network.enabled || !is_shadow_blocking) return
     API.protected = true
     
     if(is_shadow_blocking) {

@@ -15,7 +15,7 @@ API.migrator = function(element, parent, network_id) {
   if(tag_name == "a") {
     url += "&link=true"
     
-    if(!API.impressions[parent]) {
+    if(API.protected && !API.impressions[parent]) {
       API.status("i", network)
       API.impressions[parent] = true
     }
