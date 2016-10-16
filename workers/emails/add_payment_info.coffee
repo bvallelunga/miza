@@ -2,7 +2,7 @@ moment = require "moment"
 numeral = require "numeral"
 
 
-module.exports = (job, done)->
+module.exports = require("../template") (job)-> 
   query = {}
   data = job.attrs.data or {}
   billed_on = moment(LIBS.helpers.past_date "month", null, 1).format("MMM D")
@@ -49,11 +49,3 @@ module.exports = (job, done)->
     
   .then (emails)->
     LIBS.emails.send "add_payment_info", emails
-    
-  .then(-> done()).catch (error)->
-    if CONFIG.is_prod
-      LIBS.bugsnag.notify error
-    else
-      console.error error
-    
-    done error

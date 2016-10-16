@@ -44,6 +44,11 @@ module.exports = ->
     }
     
     loader_io: "loaderio-6c81ca8de1cc26156be3836bb74e6a05"
+    github: "b7461c61f9dda3034fff8b7abe250b3bd018b269"
+    cloudflare: {
+      email: "vallelungabrian@gmail.com"
+      key: "95d02dc401e4afc66b5ea0888d76d8f1555ca"
+    }
     
     bugsnag: process.env.BUGSNAG
     

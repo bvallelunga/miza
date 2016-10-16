@@ -1,5 +1,5 @@
-module.exports = (job, done)->
-
+module.exports = require("../template") (job)-> 
+  
   LIBS.models.Publisher.findAll({
     include: [{
       model: LIBS.models.Industry
@@ -42,11 +42,4 @@ module.exports = (job, done)->
         }
       }
     }
-  
-  .then(-> done()).catch (error)->
-    if CONFIG.is_prod
-      LIBS.bugsnag.notify error
-    else
-      console.error error
-    
-    done error
+

@@ -1,4 +1,4 @@
-module.exports = (job, done)-> 
+module.exports = require("../template") (job)->
   new Promise (res, rej)->  
     LIBS.redis.keys "ads_server.cache.*", (error, keys)->
       if error?
@@ -13,11 +13,4 @@ module.exports = (job, done)->
         
         console.log count
         res()
-      
-  .then(-> done()).catch (error)->
-    if CONFIG.is_prod
-      LIBS.bugsnag.notify error
-    else
-      console.error error
-      
-    done error
+

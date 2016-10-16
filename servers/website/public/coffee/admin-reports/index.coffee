@@ -16,9 +16,6 @@ class ReportsDashboard
     $.get("/admin/reports/metrics", {
       start_date: start
       end_date: end
-      today_start_date: moment().startOf("day").toDate()
-      today_end_date: moment().endOf("day").toDate()
-      contains_today: today > start && today < end
     }).done (data)->
       $(".fa-calendar").show()
       $(".fa-refresh").hide()

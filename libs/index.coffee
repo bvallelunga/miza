@@ -7,6 +7,8 @@ module.exports = {
   sendgrid: require("./sendgrid")()
   agenda: require("./agenda")()
   bugsnag: require("./bugsnag")()
+  github: require("./github")()
+  cloudflare: require("./cloudflare")()
   queue: require "./queue"
   slack: require "./slack"
   helpers: require "./helpers"

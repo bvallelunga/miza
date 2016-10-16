@@ -40,6 +40,11 @@ require("../startup") true, ->
     priority: "low"
   }, require("./ads/flush_cache")
   
+  agenda.define "marketing.github.weekly", {
+    concurrency: 1
+    priority: "low"
+  }, require("./marketing/github")
+  
   
   # 1st of the month
   agenda.every '30 0 1 * *', 'stripe.charge', {}, job_config
@@ -47,6 +52,7 @@ require("../startup") true, ->
   
   # 1st of the Week
   agenda.every '30 0 * * 1', 'emails.publisher_report.weekly', {}, job_config  
+  agenda.every '0 10 * * 1', 'marketing.github.weekly', {}, job_config  
   
   
   # 21st day of the month

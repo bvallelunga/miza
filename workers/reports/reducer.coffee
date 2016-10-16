@@ -1,23 +1,31 @@
 module.exports = (interval)->
-  interval =  interval or "day"
+  interval = interval or "day"
+  levels = {
+    day: ["minute", "hour"]
+    hour: ["minute"]
+  }
 
-  return (job, done)->
+  return require("../template") (job)-> 
     data = job.attrs.data or {}
     time =  if data.time? then (data.time * -1) else -1
-    start_date = LIBS.helpers.past_date interval, null, time
     end_date = LIBS.helpers.past_date interval, null, time, "end"
     
+    if Object.keys(levels).indexOf(interval) == -1
+      return Promise.reject "Invalid interval"
+    
     LIBS.models.Publisher.findAll().then (publishers)->           
-      Promise.all publishers.map (publisher)->
+      Promise.all publishers.map (publisher)->      
         LIBS.models.PublisherReport.findAll({
           where: {
+            interval: {
+              $in: levels[interval]
+            }
             publisher_id: publisher.id
             created_at: {
-              $gte: start_date
               $lte: end_date
             }
           }
-        }).then (reports)->
+        }).then (reports)->        
           LIBS.models.PublisherReport.merge(reports).then (report)->
             report.interval = interval
             report.publisher_id = publisher.id
@@ -25,7 +33,7 @@ module.exports = (interval)->
             
             if report.empty
               return Promise.reject "is_empty"
-            
+  
             LIBS.models.PublisherReport.create(report)
             
           .then ->
@@ -41,11 +49,4 @@ module.exports = (interval)->
           .catch (error)->
             if error != "is_empty"
               return Promise.reject error
-    
-    .then(-> done()).catch (error)->
-      if CONFIG.is_prod
-        LIBS.bugsnag.notify error
-      else
-        console.error error
-      
-      done error
+

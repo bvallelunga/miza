@@ -1,7 +1,7 @@
 moment = require "moment"
 
 
-module.exports = (job, done)->
+module.exports = require("../template") (job)-> 
   date = moment()
   invoice_description = "Invoice for #{date.format("MMMM YYYY")}"
   
@@ -59,10 +59,3 @@ module.exports = (job, done)->
           }
         }
 
-  .then(-> done()).catch (error)->
-    if CONFIG.is_prod
-      LIBS.bugsnag.notify error
-    else
-      console.error error
-      
-    done error
