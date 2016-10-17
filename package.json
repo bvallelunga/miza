@@ -31,7 +31,7 @@
     "express": "~4.14.x",
     "express-session": "^1.14.0",
     "geoip-lite": "^1.1.8",
-    "github": "https://github.com/mikedeboer/node-github#master",
+    "github": "^5.2.2",
     "heroku-client": "^3.0.0-beta3",
     "jackrabbit": "^4.3.0",
     "knex": "^0.11.9",
