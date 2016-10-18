@@ -154,7 +154,7 @@ pull_request = (repo, forked_repo, invite)->
     
     We realized that ad blockers were taking a huge chunk of our revenue so we built [Miza](https://miza.io). You can think of Miza as a bodyguard for your ads, when Miza is installed, your ads will always appear.
     
-    We are currently in a private beta and thought your site would be a great fit! If you want to give us a, it's as simple as merging the pull request. Once you have merged the pull request you can view your analytics with this link: [#{invite_url}](#{invite_url})
+    We are currently in a private beta and thought your site would be a great fit! If you want to give us a try, it's as simple as merging the pull request. Once you have merged the pull request you can view your analytics with this link: [#{invite_url}](#{invite_url})
     
     You can contact me directly if you have any questions at #{CONFIG.general.support.email} Thanks for your time!
     """
