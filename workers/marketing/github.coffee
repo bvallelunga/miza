@@ -7,7 +7,7 @@ INGNORE_PATHS = [
 
 
 module.exports = require("../template") (job)->   
-  count = job.attrs.count or 2
+  count = job.attrs.count or 5
   repos_dict = {}
   
   search_repos().map (item)->  
