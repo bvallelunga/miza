@@ -2,6 +2,7 @@ module.exports.login = require "./login"
 module.exports.register = require "./register"
 module.exports.logout = require "./logout"
 module.exports.forgot = require "./forgot"
+module.exports.invite = require "./invite"
 
 
 module.exports.load_user = (req, res, next)->

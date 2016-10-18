@@ -1,5 +1,6 @@
+<% var guide_counter = counter %>
 <div class="guide dfp">
-  <h3>3) Replace the Ad Network Script</h3>
+  <h3><%= ++guide_counter %>) Replace the Ad Network Script</h3>
   <p>
     Find the network's initialization script. It should be located in the 
     top portion of <span>head</span> element and will look
@@ -11,7 +12,7 @@
   </p>
   <pre><code><%= include("../../samples/miza_dfp/head") %></code></pre>
   
-  <h3>4) Replace the Ad IDs</h3>
+  <h3><%= ++guide_counter %>) Replace the Ad IDs</h3>
   <p>
     Find all ad display element code that contains the text <span>div-gpt-ad</span>. 
     They should be located in the <span>body</span> element and will look
@@ -28,7 +29,7 @@
   </p>
   <pre><code><%= include("../../samples/miza_dfp/body") %></code></pre>
   
-  <h3>5) You are all set!</h3>
+  <h3><%= ++guide_counter %>) You are all set!</h3>
   <p>
     <%- include("./finished") %>
   </p>

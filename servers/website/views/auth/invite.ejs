@@ -1,0 +1,29 @@
+<% include ../includes/start %>
+<% include ../includes/header %>
+<div class="container invite-page">
+  <% include ../includes/logo %>
+  <span>
+    One more step! Create an account so you
+    can manage and view analytics for your repo.
+  </span>
+  <form class="form" method="POST" action="/invite/<%= invite.key %>">
+    <% include ../includes/csrf %>
+    <div>
+      <input class="top" type="text" name="name" placeholder="Name" required/>
+      <input type="email" name="email" placeholder="Email address" required/>
+      <input type="password" name="password" placeholder="Password" required/>
+      <input class="bottom" type="text" value="Repository: <%= invite.data.repo_original_name %>" disabled />
+    </div>
+    <div class="checkbox-group">
+      <input id="terms-checkbox" type="checkbox" required/>
+      <label for="terms-checkbox">
+        Please to agree to our <a target="_blank" href="/legal/terms">Terms of Service</a> 
+        and <a target="_blank" href="/legal/privacy">Privacy Policy</a>.
+      </label>
+    </div>
+    <button class="button" type="submit">Sign Up</button>
+    <div class="error"></div>
+  </form>
+</div>
+<% include ../includes/footer %>
+<% include ../includes/end %>

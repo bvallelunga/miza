@@ -1,26 +1,8 @@
 module.exports.set_user = (req, res, next)->
-  Promise.resolve().then ->
-    if req.user? and req.user.email == "demo@miza.io"
-      return req.user
-  
-    LIBS.models.User.findOne({
-      where: {
-        email: "demo@miza.io"
-      }
-      include: [{
-        model: LIBS.models.Publisher
-        as: "publishers"
-      }]
-    }).then (user)->
-      req.session.user = user.id
-      req.user = user
-      return user
-  
-  .then (user)->
-    req.publisher = user.publishers[0]
-    next()
-    
-  .catch next
+  req.session.user = LIBS.models.defaults.demo_user.id
+  req.user = LIBS.models.defaults.demo_user
+  req.publisher = LIBS.models.defaults.demo_user.publishers[0]
+  next()
 
 
 module.exports.get_root = (req, res, next)->

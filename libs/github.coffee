@@ -7,7 +7,7 @@ module.exports = ->
   
   github.authenticate({
     type: "token"
-    token: CONFIG.github
+    token: CONFIG.github.token
   })
   
   return github

@@ -1,4 +1,6 @@
 Cloudflare = require "cloudflare"
 
 module.exports = ->
-  return new Cloudflare CONFIG.cloudflare
+  cloudflare = new Cloudflare CONFIG.cloudflare
+  cloudflare.Cloudflare = Cloudflare
+  return cloudflare

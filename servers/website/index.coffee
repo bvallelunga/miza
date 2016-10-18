@@ -45,10 +45,12 @@ module.exports = (srv)->
   app.get  "/logout", routes.auth.logout.get
   app.get  "/forgot", routes.auth.not_authenticated, routes.auth.forgot.get
   app.get  "/reset/:key", routes.auth.not_authenticated, routes.auth.forgot.reset_get
+  app.get  "/invite/:key", routes.auth.not_authenticated, routes.auth.invite.fetch, routes.auth.invite.get
   app.post "/login", routes.auth.not_authenticated, routes.auth.login.post
   app.post "/register", routes.auth.not_authenticated, routes.auth.register.post
   app.post "/forgot", routes.auth.not_authenticated, routes.auth.forgot.post
   app.post "/reset/:key", routes.auth.not_authenticated, routes.auth.forgot.reset_post
+  app.post  "/invite/:key", routes.auth.not_authenticated, routes.auth.invite.fetch, routes.auth.invite.post
   
   # Account Routes
   app.get  "/account", routes.auth.is_authenticated, routes.account.get_root

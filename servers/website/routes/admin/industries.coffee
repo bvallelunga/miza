@@ -31,7 +31,6 @@ module.exports.post = (req, res, next)->
   .then ->
     res.json {
       success: true
-      message: "Industries have been updated!"
       next: "/admin/industries"
     }
     

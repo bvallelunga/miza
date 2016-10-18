@@ -1,43 +1,46 @@
+<% var counter = 0 %>
 <h2>Setup Guide</h2>
 <span>
   The goal of this guide is to ease the process of installing <%= company %> in your website.
   Please note that the guide is a work in progress and subject to change. We will reach
   out if any changes are required on your end after the setup is complete. 
 </span>
-<h3>1) Add <%= company %> DNS CNAME</h3>
-<p>
-  Please add this CNAME record to your websites DNS. This will enable traffic to be
-  routed to <%= company %> though your domain name which will increase the defensibility
-  of ads being delivered on your website. Feel free to <a href="mailto:<%= support_email %>">contact us</a> 
-  if you don't know how, our team can walk you through it.
-  <br><br>
-  <strong>We will NOT under any circumstance use it to 
-  spam or do anything to tarnish your domain's reputation.</strong> 
-  We value your trust above all else, and will do everything in our power to retain it.
-</p>
-<div class="dns">
-  <table cellpadding="0" cellspacing="0">
-    <thead>
-      <th><span>Record Type</span></th>
-      <th><span>Name</span></th>
-      <th><span>TTL</span></th>
-      <th><span>Value</span></th>
-    </thead>
-    <body>
-      <tr>
-        <td>CNAME</td>
-        <td><%= publisher.endpoint %></td>
-        <td>300</td>
-        <td><%= ads_domain %></td>
-      </tr>
-    </body>
-  </table>
-</div>
-<div class="warning">
-  If your site uses HTTPS, please add <a target="_blank" href="http://<%= publisher.endpoint %>"><%= publisher.endpoint %></a>
-  to the SSL certificate.<br>Without doing this, most browsers will not load <%= company %> when using HTTPS urls.
-</div>
-<h3>2) Select an Ad Network</h3>
+<% if(!publisher.miza_endpoint) { %>
+  <h3><%= ++counter %>) Add <%= company %> DNS CNAME</h3>
+  <p>
+    Please add this CNAME record to your websites DNS. This will enable traffic to be
+    routed to <%= company %> though your domain name which will increase the defensibility
+    of ads being delivered on your website. Feel free to <a href="mailto:<%= support_email %>">contact us</a> 
+    if you don't know how, our team can walk you through it.
+    <br><br>
+    <strong>We will NOT under any circumstance use it to 
+    spam or do anything to tarnish your domain's reputation.</strong> 
+    We value your trust above all else, and will do everything in our power to retain it.
+  </p>
+  <div class="dns">
+    <table cellpadding="0" cellspacing="0">
+      <thead>
+        <th><span>Record Type</span></th>
+        <th><span>Name</span></th>
+        <th><span>TTL</span></th>
+        <th><span>Value</span></th>
+      </thead>
+      <body>
+        <tr>
+          <td>CNAME</td>
+          <td><%= publisher.endpoint %></td>
+          <td>300</td>
+          <td><%= ads_domain %></td>
+        </tr>
+      </body>
+    </table>
+  </div>
+  <div class="warning">
+    If your site uses HTTPS, please add <a target="_blank" href="http://<%= publisher.endpoint %>"><%= publisher.endpoint %></a>
+    to the SSL certificate.<br>Without doing this, most browsers will not load <%= company %> when using HTTPS urls.
+  </div>
+<% } %>
+<h3><%= ++counter %>) Select an Ad Network</h3>
 <div class="networks">
   <div class="network left active" data-guide="carbon">
     <div class="image" style="background-image: url(/imgs/networks/carbon.png)"></div>

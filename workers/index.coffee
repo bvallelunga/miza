@@ -25,22 +25,22 @@ require("../startup") true, ->
     priority: "high"
   }, require("./reports/reducer")("day")
   
-  agenda.define "emails.publisher_report.weekly", {
+  agenda.define "emails.publisher_report", {
     concurrency: 1
     priority: "medium"
   }, require("./emails/publisher_report")
   
-  agenda.define "emails.add_payment_info.monthly", {
+  agenda.define "emails.add_payment_info", {
     concurrency: 1
     priority: "medium"
   }, require("./emails/add_payment_info")
   
-  agenda.define "ads.flush_cache.daily", {
+  agenda.define "ads.flush_cache", {
     concurrency: 1
     priority: "low"
   }, require("./ads/flush_cache")
   
-  agenda.define "marketing.github.weekly", {
+  agenda.define "marketing.github", {
     concurrency: 1
     priority: "low"
   }, require("./marketing/github")
@@ -51,22 +51,22 @@ require("../startup") true, ->
   
   
   # 1st of the Week
-  agenda.every '30 0 * * 1', 'emails.publisher_report.weekly', {}, job_config  
-  agenda.every '0 10 * * 1', 'marketing.github.weekly', {}, job_config  
+  agenda.every '30 0 * * 1', 'emails.publisher_report', {}, job_config  
   
   
   # 21st day of the month
-  agenda.every '30 0 21 * *', 'emails.add_payment_info.monthly', {}, job_config  
+  agenda.every '30 0 21 * *', 'emails.add_payment_info', {}, job_config  
   
   
   # Every day
   agenda.every '0 0 * * *', 'stripe.register', {}, job_config
   agenda.every '0 0 * * *', 'reports.reducer.daily', {}, job_config
-  agenda.every '0 0 * * *', 'ads.flush_cache.daily', {}, job_config
+  agenda.every '0 0 * * *', 'ads.flush_cache', {}, job_config
   
     
   # Every hour
   agenda.every '0 * * * *', 'reports.reducer.hourly', {}, job_config
+  agenda.every '0 * * * *', 'marketing.github', {}, job_config  
   
 
   # Every minute

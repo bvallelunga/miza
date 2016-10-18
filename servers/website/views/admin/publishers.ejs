@@ -10,6 +10,7 @@
           <th>Domain</th>
           <th>API Key</th>
           <th>Industry</th>
+          <th>Miza Endpoint</th>
           <th class="number">Coverage (%)</th>
           <th class="number">Fee (%)</th>
         </tr>
@@ -22,6 +23,15 @@
             <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
             <td><%= publisher.key %></td>
             <td><%= publisher.industry.name %></td>
+            <td>
+              <div class="group">
+                <div class="fa fa-sort"></div>
+                <select class="input only" name="publishers[<%= i %>][miza_endpoint]" required>
+                  <option value="false" <%= !publisher.miza_endpoint ? "selected" : "" %>>No</option>
+                  <option value="true" <%= publisher.miza_endpoint ? "selected" : "" %>>Yes</option>
+                </select>
+              </div>
+            </td>
             <td><input class="only number" type="number" name="publishers[<%= i %>][coverage]" value="<%= publisher.coverage_ratio * 100 %>" placeholder="Coverage" min="0" step="1" max="100" required></td>
             <td><input class="only number" type="number" name="publishers[<%= i %>][fee]" value="<%= publisher.fee * 100 %>" placeholder="Fee" min="0" step="1" max="100" required></td>
           </tr>

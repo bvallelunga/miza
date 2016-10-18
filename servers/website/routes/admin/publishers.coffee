@@ -11,7 +11,7 @@ module.exports.get = (req, res, next)->
   }).then (publishers)->
     res.render "admin/publishers", {
       js: req.js.renderTags "modal"
-      css: req.css.renderTags "modal", "admin"
+      css: req.css.renderTags "modal", "admin", "fa"
       title: "Admin Publishers"
       publishers: publishers
     }
@@ -20,10 +20,11 @@ module.exports.get = (req, res, next)->
 
 
 module.exports.post = (req, res, next)->
-  Promise.all req.body.publishers.map (publisher)->
+  Promise.all req.body.publishers.map (publisher)->  
     return LIBS.models.Publisher.update({
       coverage_ratio: Number(publisher.coverage) / 100
       fee: Number(publisher.fee) / 100
+      miza_endpoint: publisher.miza_endpoint == "true"
     }, {
       returning: false
       individualHooks: true
@@ -35,7 +36,6 @@ module.exports.post = (req, res, next)->
   .then ->
     res.json {
       success: true
-      message: "Publishers have been updated!"
       next: "/admin/publishers"
     }
     

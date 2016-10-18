@@ -1,5 +1,6 @@
+<% var guide_counter = counter %>
 <div class="guide carbon active">
-  <h3>3) Insert <%= company %> Initialization Script</h3>
+  <h3><%= ++guide_counter %>) Insert <%= company %> Initialization Script</h3>
   <p>
     Paste the script before any other ad network scripts 
     into the <span>head</span> element. The <span>CSS classes</span>
@@ -12,7 +13,7 @@
     ad styling over to Miza protected ads.
   </div>
   <pre><code><%= include("../../samples/miza_carbon/head") %></code></pre>
-  <h3>4) You are all set!</h3>
+  <h3><%= ++guide_counter %>) You are all set!</h3>
   <p>
     <%- include("./finished") %>
   </p>

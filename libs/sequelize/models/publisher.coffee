@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes)->
 
   return sequelize.define "Publisher", {
     name: { 
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
       allowNull: false
     }
     fee: {
@@ -16,8 +16,7 @@ module.exports = (sequelize, DataTypes)->
         return Number @getDataValue("fee")
     }
     domain: { 
-      type: DataTypes.STRING,
-      unique: true
+      type: DataTypes.STRING
       allowNull: false
       validate: {
         isUrl: {
@@ -26,11 +25,10 @@ module.exports = (sequelize, DataTypes)->
       }
       set: (value)->
         value = @extract_domain value
-        @setDataValue 'domain', value 
-        @setDataValue 'endpoint', "#{@key}.#{value.split(".").slice(-2).join(".")}"
+        @setDataValue 'domain', value
     }
     endpoint: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
       unique: true
       allowNull: false
       validate: {
@@ -40,11 +38,15 @@ module.exports = (sequelize, DataTypes)->
       }
     }
     key: { 
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
       unique: true
       allowNull: false
     }
     is_demo: {
+      type: DataTypes.BOOLEAN
+      defaultValue: false
+    }
+    miza_endpoint: {
       type: DataTypes.BOOLEAN
       defaultValue: false
     }
@@ -100,6 +102,13 @@ module.exports = (sequelize, DataTypes)->
         domain = url.parse website.toLowerCase()
         hostname = (domain.hostname || domain.pathname).split(".").slice(-2).join(".")
         return "#{hostname}#{if domain.port? then (":" + domain.port) else "" }"
+      
+      
+      create_endpoint: ->
+        if @miza_endpoint
+          return "#{@key}.#{CONFIG.ads_server.domain}"
+         
+        return "#{@key}.#{@domain}"
       
       
       reports: (query)->
@@ -162,31 +171,75 @@ module.exports = (sequelize, DataTypes)->
               reported_at: null
             }
           })
-        })         
+        })  
+    
+        
+      cloudflare_add: (endpoint)->
+        LIBS.cloudflare.browseZones({
+          name: CONFIG.ads_server.protected_domain
+        }).then (zones)->        
+          record = LIBS.cloudflare.Cloudflare.DNSRecord.create {
+            type: "CNAME"
+            name: endpoint
+            content: CONFIG.ads_server.protected_domain
+            zone_id: zones.result[0].id
+            proxied: true
+          }
+          
+          LIBS.cloudflare.addDNS record
+          
+        .catch(console.error)
+
+        
+      cloudflare_remove: (key)->
+        LIBS.cloudflare.browseZones({
+          name: CONFIG.ads_server.protected_domain
+        }).then (zones)->        
+          LIBS.cloudflare.browseDNS(zones.result[0])
+        
+        .then (records)->
+          for record in records.result
+            if record.name.indexOf(key) > -1
+              return LIBS.cloudflare.deleteDNS record
+              
+        .catch(console.error)
+        
+        
+      heroku_add: (endpoint)->
+        LIBS.heroku.add_domain(endpoint)
+          .catch(console.error)
     }
     hooks: {
-      beforeValidate: (publisher, options)->
+      beforeValidate: (publisher)->
         if not publisher.key?
           publisher.key = randomstring.generate({
             length: Math.floor(Math.random() * 4) + 4
             charset: 'alphabetic'
           }).toLowerCase()
-          publisher.endpoint = "#{publisher.key}.#{publisher.domain}"
+          publisher.endpoint = publisher.create_endpoint()
+          
+          
+      beforeUpdate: (publisher)->
+        publisher.endpoint = publisher.create_endpoint()
           
       
-      afterCreate: (publisher, options, callback)->
-        LIBS.heroku.add_domain(publisher.endpoint).then ->
-          callback()
-        .catch console.warn
+      afterCreate: (publisher)->
+        publisher.heroku_add(publisher.endpoint)
+        
+        if publisher.miza_endpoint
+          publisher.cloudflare_add publisher.endpoint
 
         
-      afterUpdate: (publisher, options, callback)->
+      afterUpdate: (publisher)->
         if publisher.endpoint != publisher.previous("endpoint")
-          LIBS.heroku.add_domain(publisher.endpoint).then ->
-            callback()
-          .catch console.warn
-          
-        callback()
+          publisher.heroku_add(publisher.endpoint)
+            
+        if publisher.miza_endpoint != publisher.previous("miza_endpoint")
+          if publisher.miza_endpoint
+            publisher.cloudflare_add publisher.endpoint
+            
+          else
+            publisher.cloudflare_remove publisher.key
 
     }
   }

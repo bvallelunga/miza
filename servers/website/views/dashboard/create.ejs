@@ -8,6 +8,13 @@
     <input class="email" type="url" name="publisher_domain" placeholder="http://publisher.com" required/>
     <div class="group">
       <div class="fa fa-sort"></div>
+      <select class="input" name="publisher_miza_endpoint" required>
+        <option value="false">Not hosted on Github</option>
+        <option value="true">Using Github hosting</option>
+      </select>
+    </div>
+    <div class="group">
+      <div class="fa fa-sort"></div>
       <select class="input bottom" name="publisher_industry" required>
         <option disabled="true" selected>Select Industry</option>
         <% industries.forEach(function(industry) { %>

@@ -8,6 +8,10 @@ module.exports.date_string = (date)->
   ].join "-"
 
 
+module.exports.capitalize = (string)->
+  return string.charAt(0).toUpperCase() + string.slice(1)
+
+
 module.exports.past_date = (range, date, increment=0, time="start")->
   if range == "yesterday"
     range = "day"

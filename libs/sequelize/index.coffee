@@ -25,6 +25,9 @@ module.exports = ->
     
   .then ->
     require("./seeders")(sequelize, models)
+
+  .then ->
+    require("./defaults")(models)
   
   .then ->
     return Object.assign(database, models)
