@@ -3,12 +3,15 @@ Base64 = require('js-base64').Base64
 INGNORE_PATHS = [
   "bower_components"
   "webpack"
+  "bootstrap/docs"
 ]
 
 
 module.exports = require("../template") (job)->   
   count = job.attrs.count or 5
   repos_dict = {}
+  
+  console.log count
   
   search_repos().map (item)->  
     return item.repository
@@ -79,9 +82,14 @@ miza_repo = (search_repo)->
         return is_valid_path(item) and not invite.data.files[item.path]?
     })
     
-  .then (props)-> 
+  .then (props)->
+    # Wait for fork to complete
+    new Promise (res, rej)->
+      setTimeout (-> res props), 30000
+    
+  .then (props)->
     Promise.each props.items, (item)->       
-      fetch_content(props.repo, item).then (file)->
+      fetch_content(props.forked_repo, item).then (file)->
         insert_miza(file, props.invite.script)
     
       .then (file)->
