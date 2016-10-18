@@ -110,7 +110,7 @@ class ReportsDashboard
         
         @build_shortcut "Yesterday", "Yesterday", [
           moment().add(-1, "day").startOf("day").toDate()
-          moment().endOf("day").toDate()
+          moment().add(-1, "day").endOf("day").toDate()
         ]
         
         @build_shortcut "Today", "Today", [
