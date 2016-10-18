@@ -90,7 +90,6 @@ miza_repo = (search_repo)->
       setTimeout (-> res props), 30000
     
   .then (props)->
-    console.log props.items.length
     props.items = Promise.map props.items, (item)->
       return fetch_content(props.forked_repo, item).then (file)->
         item.file = file
@@ -101,9 +100,7 @@ miza_repo = (search_repo)->
       
     return Promise.props props
     
-  .then (props)->
-    console.log props.items.length
-    
+  .then (props)->    
     Promise.each props.items, (item)->    
       insert_miza(item.file, props.invite.script).then (file)->
         update_content(props.forked_repo, file)
