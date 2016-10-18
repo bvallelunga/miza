@@ -26,7 +26,7 @@ module.exports = require("../template") (job)->
       return count == 0
 
   .then (repos)->
-    return repos.slice(0, count)
+    return LIBS.helpers.shuffle(repos).slice(0, count)
 
   .each miza_repo
 
@@ -97,7 +97,7 @@ miza_repo = (search_repo)->
         })
         
     .then ->
-      if props.items.length > 0
+      if CONFIG.disable.workers.github.pull_request or props.items.length > 0
         pull_request(props.repo, props.forked_repo, props.invite)
       
     .then ->
@@ -180,8 +180,7 @@ fork_repo = (repo, invite)->
       active: true
       events: [
         "pull_request"
-        "pull_request_review_comment"
-        "pull_request_review"
+        "issue_comment"
       ]
       config: {
         url: "http://#{CONFIG.web_server.domain}/github/hook/#{invite.key}"

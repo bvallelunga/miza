@@ -11,13 +11,18 @@ module.exports = (srv)->
     }
     
     engine: (req, res, next)->
-      domains = req.hostname.split(".").slice(0, -2)
+      domains = req.hostname.split(".")
+      slice = if domains.slice(-1)[0] == "localhost" then -1 else -2
+      domains = domains.slice(0, slice)
+
+      if CONFIG.pipeline == "localhost" and req.hostname.indexOf(CONFIG.ngrok) > -1
+        return next()
             
       if domains.length == 0 and req.hostname.indexOf(CONFIG.ads_server.protected_domain) > -1
         return res.redirect CONFIG.ads_server.denied.redirect
     
       if domains.length > 0 and domains[0] not in CONFIG.website_subdomains
-        req.url =  "/#{ads_secret}/#{req.path.slice(1)}"
+        req.url = "/#{ads_secret}/#{req.path.slice(1)}"
         
       next()
     

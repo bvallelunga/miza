@@ -1,22 +1,31 @@
 module.exports = (err, req, res, next)->
-  console.error err.stack or err
   message = err.message or err
   csrf_token = ""
+  send_bug = true
   
   if req.csrfToken?
     csrf_token = req.csrfToken()
   
   if err.code == 'EBADCSRFTOKEN'
     message = "Invalid CSRF token!"
+    send_bug = false
     
   if err.errors?
     message = err.errors.map (error)->
       if error.type == "unique violation"
+        send_bug = false
         return "#{error.path} is already in use"
       
       return error.message
     
     .join "\n"
+  
+  if send_bug
+    if CONFIG.is_prod
+      LIBS.bugsnag.notify error
+    
+    else
+      console.error err.stack or err
   
   res.status(403)
   

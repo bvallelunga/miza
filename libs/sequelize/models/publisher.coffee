@@ -175,6 +175,9 @@ module.exports = (sequelize, DataTypes)->
     
         
       cloudflare_add: (endpoint)->
+        if CONFIG.disable.cloudflare
+          return Promise.resolve()
+        
         LIBS.cloudflare.browseZones({
           name: CONFIG.ads_server.protected_domain
         }).then (zones)->        
@@ -192,6 +195,9 @@ module.exports = (sequelize, DataTypes)->
 
         
       cloudflare_remove: (key)->
+        if CONFIG.disable.cloudflare
+          return Promise.resolve()
+        
         LIBS.cloudflare.browseZones({
           name: CONFIG.ads_server.protected_domain
         }).then (zones)->        

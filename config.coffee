@@ -44,6 +44,7 @@ module.exports = ->
       consumer: process.env.RABBITMQ_BIGWIG_RX_URL
     }
     
+    ngrok: "ngrok.io"
     loader_io: "loaderio-6c81ca8de1cc26156be3836bb74e6a05"
     cloudflare: {
       email: "vallelungabrian@gmail.com"
@@ -107,7 +108,8 @@ module.exports = ->
     ]
     
     disable: {
-      heroku: false and is_dev
+      cloudflare: true and is_dev
+      heroku: true and is_dev
       queue: false and is_dev
       slack: false and is_dev
       express: {
@@ -117,6 +119,11 @@ module.exports = ->
       ads_server: {
         downloader: true and is_dev
         modifier: false and is_dev
+      }
+      workers: {
+        github: {
+          pull_request: true and is_dev
+        }
       }
     }
     

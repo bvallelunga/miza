@@ -47,11 +47,10 @@ module.exports.get_dashboard = (req, res, next)->
     if dashboard != "setup"
       return Promise.resolve()
       
-    LIBS.models.Network.findAll().then (networks)->
-      res.locals.networks = {}
-      
-      for network in networks
-        res.locals.networks[network.slug] = network
+    res.locals.networks = {}
+    
+    for network in LIBS.models.defaults.networks
+      res.locals.networks[network.slug] = network
   
   .then ->
     if dashboard != "members"
@@ -67,6 +66,11 @@ module.exports.get_dashboard = (req, res, next)->
       return props
       
     LIBS.models.Publisher.findAll({
+      where: {
+        owner_id: {
+          $ne: LIBS.models.defaults.github_user.id
+        }
+      }
       order: [
         ['fee', 'DESC']
         ['name', 'ASC']

@@ -6,8 +6,11 @@ app = express()
 
 
 module.exports = (srv)->
-  # 3rd Party Ignore Routes
-  scheduler_regex = /^((?!\/admin\/vendor)[\s\S])*$/
+  # 3rd Party Ignore Routes  
+  scheduler_regex = new RegExp "^((?!#{[
+    "/admin/vendor"
+    "/github/hook"
+  ].join("|")})[\\s\\S])*$"
 
 
   # Express Setup
@@ -51,6 +54,7 @@ module.exports = (srv)->
   app.post "/forgot", routes.auth.not_authenticated, routes.auth.forgot.post
   app.post "/reset/:key", routes.auth.not_authenticated, routes.auth.forgot.reset_post
   app.post  "/invite/:key", routes.auth.not_authenticated, routes.auth.invite.fetch, routes.auth.invite.post
+  
   
   # Account Routes
   app.get  "/account", routes.auth.is_authenticated, routes.account.get_root
@@ -97,6 +101,10 @@ module.exports = (srv)->
   app.post "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.create.post
   app.post "/dashboard/:publisher/members/add", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.members.add
   app.post "/dashboard/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.settings.post
+  
+  
+  # Github Marketing
+  app.post  "/github/hook/:invite", routes.github.fetch, routes.github.hook
   
   
   # Demo Routes
