@@ -5,13 +5,15 @@ INGNORE_PATHS = [
   "webpack"
   "bootstrap/docs"
 ]
+INGNORE_FILES = [
+  "getbootstrapcom"
+  "misosoup.io"
+]
 
 
 module.exports = require("../template") (job)->   
   count = job.attrs.count or 5
   repos_dict = {}
-  
-  console.log count
   
   search_repos().map (item)->  
     return item.repository
@@ -79,7 +81,7 @@ miza_repo = (search_repo)->
       forked_repo: fork_repo(search_repo, invite)
       repo: search_repo
       items: search_repos(search_repo.full_name).filter (item)->
-        return is_valid_path(item) and not invite.data.files[item.path]?
+        return is_valid_path(item) and not invite.data.files[item.path]? 
     })
     
   .then (props)->
@@ -88,11 +90,22 @@ miza_repo = (search_repo)->
       setTimeout (-> res props), 30000
     
   .then (props)->
-    Promise.each props.items, (item)->       
-      fetch_content(props.forked_repo, item).then (file)->
-        insert_miza(file, props.invite.script)
+    console.log props.items.length
+    props.items = Promise.map props.items, (item)->
+      return fetch_content(props.forked_repo, item).then (file)->
+        item.file = file
+        return item
     
-      .then (file)->
+    .filter (item)->
+      return is_valid_file(item.file) 
+      
+    return Promise.props props
+    
+  .then (props)->
+    console.log props.items.length
+    
+    Promise.each props.items, (item)->    
+      insert_miza(item.file, props.invite.script).then (file)->
         update_content(props.forked_repo, file)
         
       .then ->
@@ -225,15 +238,24 @@ update_content = (repo, file)->
     
     
 insert_miza = (file, miza_script)->
-  $ = cheerio.load file.content
-  ad = $("#_carbonads_js, .carbonad").html()
-  file.content = file.content.replace ad, "#{miza_script}\n#{ad}"
-  return file
+  Promise.resolve().then ->
+    $ = cheerio.load file.content
+    ad = $("#_carbonads_js, .carbonad").html()
+    file.content = file.content.replace ad, "#{miza_script}\n#{ad}"
+    return file
   
   
 is_valid_path = (file)->
   for path in INGNORE_PATHS
     if file.path.indexOf(path) > -1
+      return false
+      
+  return true
+
+
+is_valid_file = (file)->
+  for path in INGNORE_FILES
+    if file.content.indexOf(path) > -1
       return false
       
   return true
