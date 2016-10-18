@@ -36,12 +36,10 @@ require("../startup") true, ->
   }, require("./emails/add_payment_info")
   
   agenda.define "ads.flush_cache", {
-    concurrency: 1
     priority: "low"
   }, require("./ads/flush_cache")
   
   agenda.define "marketing.github", {
-    concurrency: 1
     priority: "low"
   }, require("./marketing/github")
   

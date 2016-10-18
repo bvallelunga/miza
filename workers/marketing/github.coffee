@@ -1,10 +1,13 @@
 cheerio = require 'cheerio'
+Base64 = require('js-base64').Base64
 INGNORE_PATHS = [
   "bower_components"
+  "webpack"
 ]
 
+
 module.exports = require("../template") (job)->   
-  count = job.attrs.count or 1
+  count = job.attrs.count or 2
   repos_dict = {}
   
   search_repos().map (item)->  
@@ -67,23 +70,17 @@ miza_invite = (repo)->
 
 
 miza_repo = (search_repo)->
-  search_repos(search_repo.full_name).filter (item)->
-    return is_valid_path(item)
-
-  .then (items)->
-    miza_invite(search_repo).then (invite)->
-      Promise.props({
-        invite: invite
-        forked_repo: fork_repo(search_repo, invite)
-        items: items
-        repo: search_repo
-      })
+  miza_invite(search_repo).then (invite)->
+    Promise.props({
+      invite: invite
+      forked_repo: fork_repo(search_repo, invite)
+      repo: search_repo
+      items: search_repos(search_repo.full_name).filter (item)->
+        return is_valid_path(item) and not invite.data.files[item.path]?
+    })
     
   .then (props)-> 
-    Promise.each props.items, (item)->    
-      if props.invite.data.files[item.path]?
-        return Promise.resolve()
-      
+    Promise.each props.items, (item)->          
       fetch_content(props.forked_repo, item).then (file)->
         insert_miza(file, props.invite.script)
     
@@ -96,9 +93,11 @@ miza_repo = (search_repo)->
           data: props.invite.data
         })
         
-    .then ->
-      if CONFIG.disable.workers.github.pull_request or props.items.length > 0
-        pull_request(props.repo, props.forked_repo, props.invite)
+    .then -> 
+      if CONFIG.disable.workers.github.pull_request or props.items.length == 0
+        return Promise.resolve()
+      
+      pull_request(props.repo, props.forked_repo, props.invite)
       
     .then ->
       props.invite.data.pull_request = true
@@ -153,7 +152,7 @@ pull_request = (repo, forked_repo, invite)->
     
     Awesome choice picking Carbon ads, they are simple and unobtrusive! My friend and I have been working on our spare time a way to increase Carbon revenue by ~30%. 
     
-    We realized that ad blockers were taking a huge chunk of our revenue so we built [Miza](https://miza.io). You can think of Miza as a body guard for your ads, when Miza is installed, your ads will always appear.
+    We realized that ad blockers were taking a huge chunk of our revenue so we built [Miza](https://miza.io). You can think of Miza as a bodyguard for your ads, when Miza is installed, your ads will always appear.
     
     We are currently in a private beta and thought your site would be a great fit! If you want to give us a, it's as simple as merging the pull request. Once you have merged the pull request you can view your analytics with this link: [#{invite_url}](#{invite_url})
     
@@ -202,7 +201,8 @@ fetch_content = (repo, item)->
     path: item.path
     ref: "master"
   }).then (file)->
-    file.content = new Buffer(file.content, 'base64').toString("ascii")
+    file.content = Base64.decode(file.content)
+    console.log file.content
     return file
     
     
@@ -212,7 +212,7 @@ update_content = (repo, file)->
     repo: repo.name
     path: file.path
     message: "Added Miza to #{file.path}"
-    content: new Buffer(file.content).toString('base64')
+    content: Base64.encode(file.content)
     sha: file.sha
   })
     

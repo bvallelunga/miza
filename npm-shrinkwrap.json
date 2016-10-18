@@ -2195,6 +2195,11 @@
         }
       }
     },
+    "js-base64": {
+      "version": "2.1.9",
+      "from": "js-base64@latest",
+      "resolved": "https://registry.npmjs.org/js-base64/-/js-base64-2.1.9.tgz"
+    },
     "jsbn": {
       "version": "0.1.0",
       "from": "jsbn@>=0.1.0 <0.2.0",

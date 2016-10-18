@@ -35,6 +35,7 @@
     "github": "^5.2.2",
     "heroku-client": "^3.0.0-beta3",
     "jackrabbit": "^4.3.0",
+    "js-base64": "^2.1.9",
     "knex": "^0.11.9",
     "less": "^2.7.1",
     "mixpanel": "^0.4.0",
