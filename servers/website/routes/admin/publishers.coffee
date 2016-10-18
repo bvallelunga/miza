@@ -1,5 +1,10 @@
 module.exports.get = (req, res, next)->
   LIBS.models.Publisher.findAll({
+    where: {
+      owner_id: {
+        $ne: LIBS.models.defaults.github_user.id
+      }
+    }
     order: [
       ['fee', 'DESC']
       ['name', 'ASC']
