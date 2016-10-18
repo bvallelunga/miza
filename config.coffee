@@ -25,6 +25,7 @@ module.exports = ->
       flush: false and is_dev
     }
     
+    pipeline: process.env.PIPELINE
     protected: process.env.APP_NAME.indexOf("dev") > -1
     app_name: process.env.APP_NAME
     website_subdomains: [ "local", "www", "dev", "miza", process.env.APP_NAME ]
