@@ -140,7 +140,7 @@ search_repos = (repo, page=1, items=[])->
 
 
 pull_request = (repo, forked_repo, invite)->
-  invite_url = "http://#{CONFIG.web_server.domain}/invite/#{invite.key}"
+  invite_url = "#{CONFIG.web_server.host}/invite/#{invite.key}"
 
   LIBS.github.pullRequests.create({
     owner: repo.owner.login
@@ -183,7 +183,7 @@ fork_repo = (repo, invite)->
         "issue_comment"
       ]
       config: {
-        url: "http://#{CONFIG.web_server.domain}/github/hook/#{invite.key}"
+        url: "#{CONFIG.web_server.host}/github/hook/#{invite.key}"
         content_type: "json"
       }
     })

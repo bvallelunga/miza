@@ -60,6 +60,7 @@ module.exports = ->
     
     web_server: {
       domain: process.env.WEB_DOMAIN
+      host: "#{if process.env.PIPELINE == "localhost" then "http" else "https"}://#{process.env.WEB_DOMAIN}"
     }
     
     ads_server: {

@@ -1,6 +1,6 @@
 Hey <%= data.user.name %>,
 
-We noticed your <%= data.publisher.name %> account has pending charges that will be processed on <%= data.billed_on %>. If your satisfied with our services, would you mind adding your payment info: http://<%= host %>/account/card. We provide a 30 day money back guarantee if any concerns arise. Here are some stats about the month:
+We noticed your <%= data.publisher.name %> account has pending charges that will be processed on <%= data.billed_on %>. If your satisfied with our services, would you mind adding your payment info: <%= host %>/account/card. We provide a 30 day money back guarantee if any concerns arise. Here are some stats about the month:
 
 Protected Impressions: <%= numeral(data.report.impressions).format("0[,]000") %>
 

@@ -18,7 +18,7 @@ render = (template_name, recipients)->
     
   Promise.all recipients.map (recipient)->
     recipient.company = CONFIG.general.company
-    recipient.host = CONFIG.web_server.domain
+    recipient.host = CONFIG.web_server.host
     recipient.numeral = numeral
     
     template.render(recipient).then (email)->
