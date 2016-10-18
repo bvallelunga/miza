@@ -20,7 +20,7 @@ module.exports = (models)->
     })
     github_publisher_industry: models.Industry.findOne({
       where: {
-        name: "Carbon: Dev Circle"
+        name: "Carbon Dev Circle"
       }
     })
     networks: models.Network.findAll()
