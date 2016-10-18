@@ -2,7 +2,6 @@ cheerio = require 'cheerio'
 INGNORE_PATHS = [
   "bower_components"
 ]
-EMPTY_ERROR = "No changes for repo"
 
 module.exports = require("../template") (job)->   
   count = job.attrs.count or 1
@@ -72,17 +71,15 @@ miza_repo = (search_repo)->
     return is_valid_path(item)
 
   .then (items)->
-    if items.length == 0
-      return Promise.reject EMPTY_ERROR
-  
-    Promise.props({
-      invite: miza_invite(search_repo)
-      forked_repo: fork_repo(search_repo)
-      items: items
-      repo: search_repo
-    })
+    miza_invite(search_repo).then (invite)->
+      Promise.props({
+        invite: invite
+        forked_repo: fork_repo(search_repo, invite)
+        items: items
+        repo: search_repo
+      })
     
-  .then (props)->   
+  .then (props)-> 
     Promise.each props.items, (item)->    
       if props.invite.data.files[item.path]?
         return Promise.resolve()
@@ -100,7 +97,8 @@ miza_repo = (search_repo)->
         })
         
     .then ->
-      pull_request(props.repo, props.forked_repo, props.invite)
+      if props.items.length > 0
+        pull_request(props.repo, props.forked_repo, props.invite)
       
     .then ->
       props.invite.data.pull_request = true
@@ -164,7 +162,7 @@ pull_request = (repo, forked_repo, invite)->
   })
 
 
-fork_repo = (repo)->
+fork_repo = (repo, invite)->
   LIBS.github.repos.fork({
     owner: repo.owner.login
     repo: repo.name
@@ -174,6 +172,22 @@ fork_repo = (repo)->
     
     if forked_repo.name == target_name
       return forked_repo
+      
+    LIBS.github.repos.createHook({
+      owner: CONFIG.github.organization
+      repo: repo.name
+      name: "web"
+      active: true
+      events: [
+        "pull_request"
+        "pull_request_review_comment"
+        "pull_request_review"
+      ]
+      config: {
+        url: "http://#{CONFIG.web_server.domain}/github/hook/#{invite.key}"
+        content_type: "json"
+      }
+    })
   
     LIBS.github.repos.edit({
       owner: CONFIG.github.organization
