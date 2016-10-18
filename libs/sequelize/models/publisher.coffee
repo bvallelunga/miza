@@ -111,15 +111,14 @@ module.exports = (sequelize, DataTypes)->
         return "#{@key}.#{@domain}"
       
       
-      reports: (query)->
+      reports: (query, full_query={})->
         query.publisher_id = @id
+        full_query.where = query
+        full_query.order = [
+          ['created_at', 'DESC']
+        ]
                 
-        LIBS.models.PublisherReport.findAll({
-          where: query
-          order: [
-            ['created_at', 'DESC']
-          ]
-        }).then (reports)->
+        LIBS.models.PublisherReport.findAll(full_query).then (reports)->      
           Promise.map reports, (report)->
             return LIBS.models.PublisherReport.merge [report]
            

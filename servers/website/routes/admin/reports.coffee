@@ -30,6 +30,15 @@ module.exports.metrics = (req, res, next)->
       $gte: new Date req.query.start_date
       $lte: new Date req.query.end_date
     }
+    $or: [
+      {
+        interval: "hour"
+      }
+      {
+        interval: "minute"
+        deleted_at: null
+      }
+    ]
   }
   
   LIBS.models.Publisher.findAll({
@@ -38,7 +47,9 @@ module.exports.metrics = (req, res, next)->
     }
   }).then (publishers)->    
     return Promise.map publishers, (publisher)->
-      return publisher.reports(query).then (report)->       
+      return publisher.reports(query, {
+        paranoid: false
+      }).then (report)->       
         report.totals.id = publisher.key
         return report.totals
 
