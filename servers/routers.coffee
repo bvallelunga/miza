@@ -11,8 +11,8 @@ module.exports = (srv)->
     }
     
     engine: (req, res, next)->
-      domains = req.hostname.split(".").slice(0, -1)
-    
+      domains = req.hostname.split(".").slice(0, -2)
+            
       if domains.length == 0 and req.hostname.indexOf(CONFIG.ads_server.protected_domain) > -1
         return res.redirect CONFIG.ads_server.denied.redirect
     
