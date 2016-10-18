@@ -80,8 +80,8 @@ miza_repo = (search_repo)->
     })
     
   .then (props)-> 
-    Promise.each props.items, (item)->          
-      fetch_content(props.forked_repo, item).then (file)->
+    Promise.each props.items, (item)->       
+      fetch_content(props.repo, item).then (file)->
         insert_miza(file, props.invite.script)
     
       .then (file)->
@@ -202,7 +202,6 @@ fetch_content = (repo, item)->
     ref: "master"
   }).then (file)->
     file.content = Base64.decode(file.content)
-    console.log file.content
     return file
     
     
