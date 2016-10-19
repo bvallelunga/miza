@@ -1,8 +1,16 @@
 moment = require "moment"
 
 module.exports.get_root = (req, res, next)->
-  if req.query.dashboard?
-    return res.redirect "/dashboard/#{req.query.dashboard}/analytics"
+  if req.query.id?
+    return LIBS.models.Publisher.findOne({
+      where: {
+        id: req.query.id
+      }
+    }).then (publisher)->
+      if not publisher?
+        return res.redirect "/dashboard"
+        
+      res.redirect "/dashboard/#{publisher.key}/#{req.query.page or "analytics"}"
 
   if req.user.publishers.length == 0
     return res.redirect "/dashboard/new"
