@@ -33,10 +33,10 @@ module.exports = (req, res, next)->
   res.locals.changelog_key = CONFIG.changelog
   res.locals.random = "r=#{random_slug}"
   res.locals.mixpanel = CONFIG.mixpanel.key
-  res.locals.intercom = ((user)-> 
+  res.locals.intercom = ((user)->      
     if not user? or user.is_demo
       return {}
-      
+            
     return { 
       user_id: user.id
       name: user.name
@@ -56,11 +56,7 @@ module.exports = (req, res, next)->
     "logo" : "#{res.locals.host}/imgs/logo.png?#{res.locals.random}"
     "graph": "#{res.locals.host}/imgs/graph.png?#{res.locals.random}"
   }
-  
-  if req.user?
-    res.locals.intercom_base.email = req.user.email
-    res.locals.intercom_base.name = req.user.name
-  
+    
   # Next
   next()
   

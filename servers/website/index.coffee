@@ -30,7 +30,7 @@ module.exports = (srv)->
   
   # Load User & Locals
   app.use routes.auth.load_user
-  app.use scheduler_regex, require "./locals"
+  app.use require "./locals"
   
   
   # Landing Routes
