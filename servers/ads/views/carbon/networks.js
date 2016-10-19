@@ -7,6 +7,7 @@ API.networks = [
       query: "#_carbonads_js"
     },
     entry_css: {
+      base: "carbon",
       query: "#_carbonads_js",
       container: API.id + "_<%= network.id %>_c",
       container_flush: "#carbonads",
@@ -32,7 +33,7 @@ API.networks_activate = function() {
     }
     
     if(!API.network) { 
-      API.status("p", network.id)
+      API.status("p", network)
     }
   })
 }
@@ -77,13 +78,13 @@ API.network_script = function(network) {
     }
 
     var src = old_script.src || old_script.attributes["data-rocketsrc"].value
-    script.src = API.url(src, true, network.id) + "&script=true&" + src.split("?")[1]
+    script.src = API.url(src, true, network) + "&script=true&" + src.split("?")[1]
     script.id = API.id + "_" + network.id + "_js"
     
     old_script.parentNode.replaceChild(script, old_script) 
   } else {
     if(network.enabled) {
-      script.src = API.url(network.entry_url.url, false, network.id)
+      script.src = API.url(network.entry_url.url, false, network)
       
     } else {
       script.src = atob(network.entry_url.url) 
@@ -119,7 +120,7 @@ API.network_fallback = function(network) {
       }
       
       var parent_node = API.document.querySelector(old_path)
-      script.src = API.url(old_script.src, true, network.id) + "&script=true&" + old_script.src.split("?")[1]
+      script.src = API.url(old_script.src, true, network) + "&script=true&" + old_script.src.split("?")[1]
       script.id = API.id + "_" + network.id + "_js"
       parent_node.appendChild(script)
       
@@ -173,8 +174,6 @@ API.network_init = function(network) {
 
 
 API.network_duplicates_check = function(element, network, callback) {
-  if(!network.entry_css) return callback()
-  
   if(network.entry_css.duplicates_regex.test(element.id)) {
     return element.remove()
   }
@@ -191,7 +190,7 @@ API.fetch_network = function(src) {
     var tester = new RegExp(network.tester_url)
     
     if(network.enabled && tester.test(src)) {
-      return network.id
+      return network
     }
   }
   

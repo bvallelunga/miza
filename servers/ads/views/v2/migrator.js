@@ -1,11 +1,12 @@
-API.migrator = function(element, parent, network_id) {  
+API.migrator = function(element, parent, network) {  
   var attributes = element.attributes || {}
   var path = element.src ? "src" : "href"
   var src = (attributes[path] || {}).value || element[path]
   var tag_name = API.tag_name(element)
   var url_type = API.url_type(src)
   var replace_element = false
-  var network = network_id || API.fetch_network(src)
+  
+  network = network || API.fetch_network(src)
   
   if (!network || !url_type) return element
     

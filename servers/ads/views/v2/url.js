@@ -40,7 +40,7 @@ API.url = function(url, encode, network, tracking, url_type) {
 
   return (
     API.base + url + "?" + params +
-    (network ? ("&network=" + network) : "") +
+    (network ? ("&network=" + network.id) : "") +
     "&protected=" + API.protected + "&"
   )
 }

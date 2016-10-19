@@ -2,10 +2,8 @@ API.observers = {}
 
 API.observe = function(element, network) {
   element = element.isProxyNode ? element.proxiedNode : element
-  network = network || {}
-  
-  var observer = API.observers[network.id] || API.observer(element, network)
-  API.observers[network.id] = observer
+  var observer = API.observers[(network || {}).id] || API.observer(element, network)
+  API.observers[(network || {}).id] = observer
     
   observer.observe(element, { 
     attributes: true,
@@ -23,6 +21,10 @@ API.observer = function(parent, network) {
   return new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {      
       API.to_array(mutation.addedNodes).forEach(function(element) {
+        if(!network) {
+          return API.observer_element(element, parent, network)
+        }
+        
         API.network_duplicates_check(element, network, function() {
           API.observer_element(element, parent, network)
         })
@@ -54,7 +56,7 @@ API.observer_element = function(element, parent, network, from_observer) {
     element.m_handled = true
   }
   
-  API.migrator(element, parent, network.id)
+  API.migrator(element, parent, network)
   
   API.to_array(element.children).forEach(function(child) {
     API.observer_element(child, element, network)
