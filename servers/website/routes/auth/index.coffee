@@ -86,11 +86,11 @@ module.exports.has_publisher = (req, res, next)->
     if not publisher.is_demo
       res.locals.intercom.company = {
         id: publisher.id
+        key: publisher.key
         name: publisher.name
         industry: publisher.industry.name
-        "industry id": publisher.industry.id
-        "industry cpm": publisher.industry.cpm
-        "industry fee": publisher.industry.fee * 100
+        fee: publisher.fee * 100
+        coverage: publisher.coverage_ratio * 100
       }
       
     next()
