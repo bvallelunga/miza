@@ -16,7 +16,7 @@
     <div class="group">
       <a href="/account/card"><%= user.stripe_card ? "Update" : "Add" %></a>
       <input type="text" placeholder="Card's Last 4" disabled
-        value="<%= user.stripe_card ? (user.stripe_card.brand + " " + user.stripe_card.last4) : "" %>" />
+        value="<%= user.stripe_card || "" %>" />
     </div>
     <div class="group">
       <a href="/account/password">Update</a>

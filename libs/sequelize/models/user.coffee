@@ -23,7 +23,15 @@ module.exports = (sequelize, DataTypes)->
     }
     name: DataTypes.STRING 
     stripe_id: DataTypes.STRING
-    stripe_card: DataTypes.JSONB
+    stripe_card: {
+      type: DataTypes.JSONB
+      get: ->
+        card = @getDataValue "stripe_card"
+        if not card? then return null
+        
+        return "#{card.brand} #{card.last4}"
+    
+    }
     is_demo: { 
       type: DataTypes.BOOLEAN
       defaultValue: false

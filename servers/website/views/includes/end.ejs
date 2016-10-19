@@ -57,6 +57,7 @@
           "$name": "<%= user.name %>",
           "$email": "<%= user.email %>",
           "Stripe": "<%= user.stripe_id %>",
+          "Card": "<%= user.stripe_card %>",
           "Admin": <%- user.is_admin %>,
           "Publishers": <%- user.publishers.length %>,
           "Created On": "<%= user.created_at.toISOString() %>"
@@ -65,8 +66,10 @@
       
       <% if(title.length > 0) { %>
         mixpanel.track("WEB.PAGE.<%= title.split(" ").join("_") %>")
+        Intercom("trackEvent", "WEB.PAGE.<%= title.split(" ").join("_") %>")
       <% } else if(path == "/") { %>
         mixpanel.track("WEB.PAGE.Home")
+        Intercom("trackEvent", "WEB.PAGE.Home")
       <% } %>
     </script>
     

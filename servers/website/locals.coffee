@@ -40,7 +40,10 @@ module.exports = (req, res, next)->
     return { 
       user_id: user.id
       name: user.name
-      email: user.email  
+      email: user.email
+      stripe: user.stripe_id
+      card: user.stripe_card
+      admin: user.is_admin
     }
   )(req.user)
   res.locals.intercom_base = CONFIG.intercom

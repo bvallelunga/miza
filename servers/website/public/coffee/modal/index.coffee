@@ -20,6 +20,10 @@ $ ->
         success: true
       }
       
+      Intercom "trackEvent", "WEB.Form.#{title}", {
+        success: true
+      }
+      
       window.location.href = response.next
     
     ).fail (error)->
@@ -28,6 +32,11 @@ $ ->
       form.find(".password").val ""
       form.find(".csrf").val json.csrf
       button.text(original).removeClass "loading"
+      
+      Intercom "trackEvent", "WEB.Form.#{title}", {
+        success: false
+        error: json.message
+      }
       
       mixpanel.track "WEB.Form.#{title}", {
         success: false
