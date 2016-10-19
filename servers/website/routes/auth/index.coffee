@@ -83,7 +83,7 @@ module.exports.has_publisher = (req, res, next)->
     req.publisher = publisher
     res.locals.publisher = publisher
     
-    if not publisher.is_demo
+    if not req.user.is_admin and not publisher.is_demo
       res.locals.intercom.company = {
         id: publisher.id
         key: publisher.key
