@@ -54,6 +54,7 @@ module.exports = ->
     github: {
       organization: "miza-platform"
       token: "b7461c61f9dda3034fff8b7abe250b3bd018b269"
+      marketing_email: "brian@miza.io"
     }
     
     bugsnag: process.env.BUGSNAG
@@ -136,7 +137,7 @@ module.exports = ->
         "Let us worry about Ad Blockers, so you can focus on what is important."
       )  
       support: {
-        email: "brian@miza.io"
+        email: "support@miza.io"
         phone: "(310) 849-2533" 
       }
     }
