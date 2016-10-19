@@ -58,7 +58,7 @@ class ReportsDashboard
     
     setInterval =>
       @metrics @start, @end
-    , 30000
+    , 60000
   
   
   build_shortcut: (name, formatted, ranges)->
