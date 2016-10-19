@@ -7,10 +7,10 @@ $ ->
   
     form = $(this)
     hint = form.find(".error").text ""
-    button = form.find("button").addClass("loading")
+    button = form.find("button")
     original = button.text()
     
-    button.text("sending")
+    button.addClass("loading").text("sending")
   
     $.post(form.attr("action"), form.serialize(), (response)->  
       if response.message?

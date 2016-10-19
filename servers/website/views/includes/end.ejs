@@ -5,7 +5,8 @@
         title: "<%= full_title %>",
         name: "<%= site_title %>",
         delimeter: "<%= site_delimeter %>",
-        media: <%- JSON.stringify(media) %>
+        media: <%- JSON.stringify(media) %>,
+        csrf: <%- JSON.stringify(csrf) %>
       }, JSON.parse('<%- JSON.stringify(config) %>'))
     </script>
     

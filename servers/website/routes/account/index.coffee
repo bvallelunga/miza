@@ -58,23 +58,17 @@ module.exports.post_password = (req, res, next)->
 
 module.exports.get_card = (req, res, next)->
   res.render "account/card", {
-    js: req.js.renderTags "modal", "card"
+    js: req.js.renderTags "card"
     css: req.css.renderTags "modal"
     title: "Save Card"
+    config: {
+      stripe_key: CONFIG.stripe.public
+    }
   }
 
   
 module.exports.post_card = (req, res, next)->
-  expiry = req.body.expiry.split("/")
-
-  req.user.stripe_set_card({
-    object: "card"
-    number: req.body.number
-    name: req.body.name
-    exp_month: Number expiry[0]
-    exp_year: Number expiry[1]
-    cvc: Number req.body.cvc
-  }).then ->
+  req.user.stripe_set_card(req.body).then ->
     res.json {
       success: true
       message: "Your card has been added!"

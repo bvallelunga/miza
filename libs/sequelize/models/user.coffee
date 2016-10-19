@@ -30,7 +30,14 @@ module.exports = (sequelize, DataTypes)->
         if not card? then return null
         
         return "#{card.brand} #{card.last4}"
-    
+        
+      set: (value)->
+        LIBS.slack.message {
+          text: "#{@name} updated his payment information"
+        }
+        
+        @setDataValue 'stripe_card', value
+  
     }
     is_demo: { 
       type: DataTypes.BOOLEAN
@@ -72,16 +79,11 @@ module.exports = (sequelize, DataTypes)->
           
       stripe_set_card: (card)->
         return LIBS.stripe.customers.update(@stripe_id, {
-          source: card
+          source: card.id
         }).then (customer)=>          
           return @update({
-            stripe_card: customer.sources.data[0]
+            stripe_card: card.card
           })
-        
-        .then =>
-          LIBS.slack.message {
-            text: "#{@name} updated his payment information"
-          }
           
       stripe_update: ->
         return LIBS.stripe.customers.update(@stripe_id, {

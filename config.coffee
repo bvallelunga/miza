@@ -94,7 +94,11 @@ module.exports = ->
       secret: process.env.MIXPANEL_SECRET
     }
     
-    stripe: process.env.STRIPE
+    stripe: {
+      private: process.env.STRIPE
+      public: process.env.STRIPE_PUBLIC
+    }
+    
     changelog: "ypg6GJ"
     
     default_user_access: [
@@ -113,7 +117,7 @@ module.exports = ->
       cloudflare: true and is_dev
       heroku: true and is_dev
       queue: false and is_dev
-      slack: false and is_dev
+      slack: true and is_dev
       express: {
         protected: true and is_dev
         logger: true and is_dev

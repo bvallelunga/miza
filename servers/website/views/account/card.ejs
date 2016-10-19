@@ -2,14 +2,14 @@
 <% include ../includes/header %>
 <div class="container large-2">
   <% include ../includes/logo %>
-  <form class="form card" method="POST" action="/account/card">
+  <form class="form card">
     <div class="view left">
       <% include ../includes/csrf %>
-      <input class="top" type="text" name="number" placeholder="**** **** **** ****" required>
-      <input type="text" name="name" placeholder="Tony Stark" required/>
+      <input class="top card-number" type="text" name="number" placeholder="**** **** **** ****" data-stripe="number" required>
+      <input type="text" name="name" placeholder="Tony Stark" data-stripe="name" required/>
       <div class="split">
-        <input class="bottom left" type="text" name="expiry" placeholder="** / ****" required/>
-        <input class="bottom right" type="text" name="cvc" placeholder="***" required/>
+        <input class="bottom left" type="text" name="expiry" placeholder="** / ****" data-stripe="exp" required/>
+        <input class="bottom right" type="text" name="cvc" placeholder="***" data-stripe="cvc" required/>
       </div>
       <button class="button" type="submit">Save Card</button>
       <div class="error"></div>

@@ -13,7 +13,7 @@ module.exports = (req, res, next)->
   
   #Locals  
   if req.csrfToken?
-    res.locals.csrf = req.csrfToken()
+    res.locals.csrf = req.csrfToken() 
   
   res.locals.host = "https://#{req.get("host")}"
   res.locals.hostname = req.get("host")
