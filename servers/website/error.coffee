@@ -22,7 +22,7 @@ module.exports = (err, req, res, next)->
   
   if send_bug
     if CONFIG.is_prod
-      LIBS.bugsnag.notify error
+      LIBS.bugsnag.notify err
     
     else
       console.error err.stack or err

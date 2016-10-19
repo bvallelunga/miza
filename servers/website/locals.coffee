@@ -12,7 +12,9 @@ module.exports = (req, res, next)->
   res.header 'Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
   
   #Locals  
-  res.locals.csrf = req.csrfToken()
+  if req.csrfToken?
+    res.locals.csrf = req.csrfToken()
+  
   res.locals.host = "https://#{req.get("host")}"
   res.locals.hostname = req.get("host")
   res.locals.url = res.locals.host + req.originalUrl
