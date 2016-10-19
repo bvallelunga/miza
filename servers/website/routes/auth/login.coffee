@@ -3,6 +3,7 @@ module.exports.get = (req, res, next)->
     js: req.js.renderTags "modal"
     css: req.css.renderTags "modal"
     title: "Sign In"
+    next: req.query.next
   }
   
 
@@ -21,10 +22,10 @@ module.exports.post = (req, res, next)->
     
     if user.is_admin
       next_path = "/admin"
-    
+          
     res.json {
       success: true
-      next: next_path
+      next: req.body.next or next_path
     }
     
   .catch next

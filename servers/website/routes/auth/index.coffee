@@ -26,7 +26,7 @@ module.exports.not_authenticated = (req, res, next)->
     return next()
     
   if req.user.is_demo
-    return res.redirect "/logout?next=#{req.originalUrl}"
+    return res.redirect "/logout"
   
   if req.user.is_admin
     return res.redirect "/admin"
@@ -36,7 +36,7 @@ module.exports.not_authenticated = (req, res, next)->
 
 module.exports.is_authenticated = (req, res, next)->
   if not req.user?
-    return res.redirect "/"
+    return res.redirect "/login?next=#{req.originalUrl}"
     
   next()
 

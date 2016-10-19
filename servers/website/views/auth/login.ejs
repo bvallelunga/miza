@@ -4,6 +4,9 @@
   <% include ../includes/logo %>
   <form class="form" method="POST" action="/login">
     <% include ../includes/csrf %>
+    <% if(next) { %>
+      <input type="hidden" name="next" value="<%= next %>" />
+    <% } %>
     <input class="top" type="email" name="email" placeholder="Email address" required/>
     <div class="group">
       <a href="/forgot">Forgot</a>
