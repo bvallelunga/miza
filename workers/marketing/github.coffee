@@ -4,6 +4,7 @@ INGNORE_PATHS = [
   "bower_components"
   "webpack"
   "bootstrap/docs"
+  "plugins"
 ]
 INGNORE_FILES = [
   "getbootstrapcom"
