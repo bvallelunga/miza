@@ -6,6 +6,7 @@ module.exports.get = (req, res, next)->
       }
     }
     order: [
+      ['is_activated', 'DESC']
       ['fee', 'DESC']
       ['name', 'ASC']
     ]
