@@ -75,9 +75,7 @@ module.exports.get_dashboard = (req, res, next)->
       
     LIBS.models.Publisher.findAll({
       where: {
-        owner_id: {
-          $ne: LIBS.models.defaults.github_user.id
-        }
+        is_activated: true
       }
       order: [
         ['fee', 'DESC']

@@ -34,6 +34,7 @@
     "geoip-lite": "^1.1.8",
     "github": "^5.2.2",
     "heroku-client": "^3.0.0-beta3",
+    "intercom.io": "^1.2.1",
     "jackrabbit": "^4.3.0",
     "js-base64": "^2.1.9",
     "knex": "^0.11.9",

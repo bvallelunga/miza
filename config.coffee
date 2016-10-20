@@ -157,6 +157,7 @@ module.exports = ->
     
     intercom: {
       app_id: process.env.INTERCOM
+      api_key: process.env.INTERCOM_KEY
     }
     
     sendgrid: {

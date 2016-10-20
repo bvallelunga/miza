@@ -91,6 +91,7 @@ module.exports.has_publisher = (req, res, next)->
         industry: publisher.industry.name
         fee: publisher.fee * 100
         coverage: publisher.coverage_ratio * 100
+        activated: publisher.is_activated
       }
       
     next()

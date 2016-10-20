@@ -9,6 +9,7 @@ module.exports = {
   bugsnag: require("./bugsnag")()
   github: require("./github")()
   cloudflare: require("./cloudflare")()
+  intercom: require("./intercom")()
   queue: require "./queue"
   slack: require "./slack"
   helpers: require "./helpers"

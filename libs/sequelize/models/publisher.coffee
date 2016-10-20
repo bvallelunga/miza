@@ -46,6 +46,10 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.BOOLEAN
       defaultValue: false
     }
+    is_activated: {
+      type: DataTypes.BOOLEAN
+      defaultValue: false
+    }
     miza_endpoint: {
       type: DataTypes.BOOLEAN
       defaultValue: false

@@ -46,6 +46,23 @@ require("../../startup") true, ->
         "Publisher Key": event.publisher.key
       }
       
+      if not event.publisher.is_activated
+        # Intercom updates
+        LIBS.models.Publisher.update {
+          is_activated: true
+        }, {
+          where: {
+            id: event.publisher.id
+          }
+        }
+        
+        LIBS.intercom.updateCompany({
+          id: event.publisher.id
+          custom_attributes: {
+            is_activated: true 
+          }
+        })
+      
       if event.protected and event.type != "ping"
         redis_key = "publisher.#{event.publisher.key}.events"
       
