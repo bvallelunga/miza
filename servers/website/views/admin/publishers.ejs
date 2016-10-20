@@ -8,7 +8,6 @@
         <tr>
           <th>Name</th>
           <th>Domain</th>
-          <th>API Key</th>
           <th>Industry</th>
           <th>Activated</th>
           <th>Miza Endpoint</th>
@@ -22,7 +21,6 @@
           <tr>
             <td><a href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.name %></a></td>
             <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
-            <td><%= publisher.key %></td>
             <td><%= publisher.industry.name %></td>
             <td class="<%= publisher.is_activated ? "green" : "red" %>"><%= publisher.is_activated ? "Activated" : "Not Activated" %></td>
             <td>
