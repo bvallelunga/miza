@@ -13,7 +13,7 @@ INGNORE_FILES = [
 
 
 module.exports = require("../template") (job)->   
-  count = job.attrs.count or 5
+  count = job.attrs.count or 0
   repos_dict = {}
   
   search_repos().map (item)->  
