@@ -59,7 +59,7 @@ require("../../startup") true, ->
         LIBS.intercom.updateCompany({
           id: event.publisher.id
           custom_attributes: {
-            is_activated: true 
+            activated: true 
           }
         })
       
