@@ -1,11 +1,43 @@
 <% include ../includes/start %>
 <% include ../includes/header %>
+<% 
+  active_publishers = publishers.filter(function(publisher) {
+    return publisher.is_activated
+  }).length
+  
+  miza_endpoints = publishers.filter(function(publisher) {
+    return publisher.miza_endpoint
+  }).length
+  
+  discounts_given = publishers.filter(function(publisher) {
+    return publisher.fee == 1
+  }).length
+%>
 <div class="container form-table">
+  <div class="stats">
+    <span>
+      <strong>Activated</strong>
+      (<%= active_publishers %>)
+    </span>
+    <span>
+      <strong>Not Activated</strong>
+      (<%= publishers.length - active_publishers %>)
+    </span>
+    <span>
+      <strong>Miza Endpoints Issued</strong>
+      (<%= miza_endpoints %>)
+    </span>
+    <span>
+      <strong>Discounts Given</strong>
+      (<%= discounts_given %>)
+    </span>
+  </div>
   <form class="form" method="POST" action="/admin/publishers">
     <% include ../includes/csrf %>
     <table>
       <head>
         <tr>
+          <th></th>
           <th>Name</th>
           <th>Domain</th>
           <th>Industry</th>
@@ -20,6 +52,7 @@
         <% publishers.forEach(function(publisher, i) { %>
           <input type="hidden" name="publishers[<%= i %>][id]" value="<%= publisher.id %>" required>
           <tr>
+            <td><%= i + 1 %></td>
             <td><a href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.name %></a></td>
             <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
             <td><%= publisher.industry.name %></td>

@@ -1,30 +1,56 @@
 <% include ../includes/start %>
 <% include ../includes/header %>
+<% 
+  admins_only = users.filter(function(user) {
+    return user.is_admin
+  }).length
+  
+  users_only = users.filter(function(user) {
+    return !user.is_admin
+  }).length
+  
+  cards_entered = users.filter(function(user) {
+    return !!user.stripe_card
+  }).length
+%>
 <div class="container form-table users">
-    <table>
-      <head>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Card Info</th>
-          <th>Admin Contact</th>
-          <th>Access</th>
-          <th>Joined</th>
+  <div class="stats">
+    <span>
+      <strong>Admins</strong>
+      (<%= admins_only %>)
+    </span>
+    <span>
+      <strong>Users</strong>
+      (<%= users_only %>)
+    </span>
+    <span>
+      <strong>Cards Entered</strong>
+      (<%= cards_entered %>)
+    </span>
+  </div>
+  <table>
+    <head>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Card Info</th>
+        <th>Admin Contact</th>
+        <th>Access</th>
+        <th>Joined</th>
+      </tr>
+    </head>
+    <tbody>
+      <% users.forEach(function(user, i) { %>
+        <tr class="<%= user.is_admin ? "admin" : "" %>">
+          <td><%= user.name %></td>
+          <td><a href="mailto:<%= user.email %>"><%= user.email %></a></td>
+          <td class="<%= user.stripe_card ? "green" : "red" %>"><%= user.stripe_card || "No Card" %></td>
+          <td><%= user.admin_contact ? user.admin_contact.name : "" %></td>
+          <td><%= user.is_admin ? "Admin" : "User" %></td>
+          <td><%= moment(user.created_at).format("MMM Do, YYYY") %></td>
         </tr>
-      </head>
-      <tbody>
-        <% users.forEach(function(user, i) { %>
-          <tr class="<%= user.is_admin ? "admin" : "" %>">
-            <td><%= user.name %></td>
-            <td><a href="mailto:<%= user.email %>"><%= user.email %></a></td>
-            <td class="<%= user.stripe_card ? "green" : "red" %>"><%= user.stripe_card || "No Card" %></td>
-            <td><%= user.admin_contact ? user.admin_contact.name : "" %></td>
-            <td><%= user.is_admin ? "Admin" : "User" %></td>
-            <td><%= moment(user.created_at).format("MMM Do, YYYY") %></td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
-  </form>
+      <% }) %>
+    </tbody>
+  </table>
 </div>
 <% include ../includes/end %>
