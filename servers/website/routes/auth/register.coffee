@@ -22,10 +22,18 @@ module.exports.post = (req, res, next)->
     if accesses.length == 0
       return next "Email address not approved for beta."
   
+    admin_contact = null
+    admin_contacts = accesses.filter (access)->
+      return access.admin_contact_id?  
+    
+    if admin_contacts.length > 0
+      admin_contact = admin_contacts[0].admin_contact_id
+    
     LIBS.models.User.create({
       email: email
       password: req.body.password
       name: req.body.name
+      admin_contact_id: admin_contact
       is_admin: (accesses.filter (access)->
         return access.is_admin
       .length > 0) 

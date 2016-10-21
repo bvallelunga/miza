@@ -10,11 +10,17 @@ module.exports.get = (req, res, next)->
       ['fee', 'DESC']
       ['name', 'ASC']
     ]
-    include: [{
-      model: LIBS.models.Industry
-      as: "industry"
-    }]
-  }).then (publishers)->
+    include: [
+      {
+        model: LIBS.models.Industry
+        as: "industry"
+      }
+      {
+        model: LIBS.models.User
+        as: "admin_contact"
+      }
+    ]
+  }).then (publishers)->  
     res.render "admin/publishers", {
       js: req.js.renderTags "modal"
       css: req.css.renderTags "modal", "admin", "fa"

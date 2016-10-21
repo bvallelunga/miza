@@ -21,5 +21,9 @@ module.exports = (sequelize, DataTypes)->
           as: 'publisher' 
         }
         
+        models.UserAccess.belongsTo models.User, { 
+          as: 'admin_contact' 
+        }
+        
     }
   }

@@ -25,6 +25,7 @@ module.exports.post = (req, res, next)->
     owner_id: req.user.id
     miza_endpoint: req.body.publisher_miza_endpoint == "true"
     industry_id: Number req.body.publisher_industry
+    admin_contact_id: req.user.admin_contact_id
   }).then (publisher)->
     publisher.addNetworks LIBS.models.defaults.network_ids
     req.user.addPublisher(publisher).then ->

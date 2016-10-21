@@ -12,6 +12,7 @@ module.exports.post = (req, res, next)->
   LIBS.models.UserAccess.bulkCreate(emails.map (email)->
     return { 
       email: email.trim() 
+      admin_contact_id: req.user.id
     }
   , {
     returning: false

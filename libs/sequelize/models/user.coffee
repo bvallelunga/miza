@@ -60,6 +60,10 @@ module.exports = (sequelize, DataTypes)->
           as: 'publishers'
           through: "UserPublisher"
         }
+        
+        models.User.belongsTo models.User, { 
+          as: 'admin_contact' 
+        }
 
     }
     instanceMethods: {

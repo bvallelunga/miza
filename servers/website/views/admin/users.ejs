@@ -7,6 +7,7 @@
           <th>Name</th>
           <th>Email</th>
           <th>Card Info</th>
+          <th>Admin Contact</th>
           <th>Access</th>
           <th>Joined</th>
         </tr>
@@ -17,6 +18,7 @@
             <td><%= user.name %></td>
             <td><a href="mailto:<%= user.email %>"><%= user.email %></a></td>
             <td class="<%= user.stripe_card ? "green" : "red" %>"><%= user.stripe_card || "No Card" %></td>
+            <td><%= user.admin_contact ? user.admin_contact.name : "" %></td>
             <td><%= user.is_admin ? "Admin" : "User" %></td>
             <td><%= moment(user.created_at).format("MMM Do, YYYY") %></td>
           </tr>

@@ -4,6 +4,10 @@ module.exports.get = (req, res, next)->
       ['stripe_card', 'ASC']
       ['name', 'ASC']
     ]
+    include: [{
+      model: LIBS.models.User
+      as: "admin_contact"
+    }]
   }).then (users)->
     res.render "admin/users", {
       js: req.js.renderTags "modal"

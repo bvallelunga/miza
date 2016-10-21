@@ -17,6 +17,9 @@ module.exports.add = (req, res, next)->
         email: email
         publisher_id: req.publisher.id
       }
+      defaults: {
+        admin_contact_id: req.publisher.admin_contact_id
+      }
     }).then (data)->  
       new_record = data[1]
           

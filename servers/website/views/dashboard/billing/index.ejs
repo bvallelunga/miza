@@ -9,7 +9,8 @@
 <% if(!publisher.is_demo && publisher.industry.cpm > 0 && publisher.fee == 1) { %>
   <div class="warning grey">
     LIMITED TIME OFFER<br>
-    Want to receive a 30% discount? <a href="mailto:<%= support_email %>?subject=Billing%20Discount&body=I%20heard%20about%20the%2030%25%20discount%20and%20want%20in%20for%20my%20<%= publisher.name %>%20account%21">Learn more</a>.
+    Want to receive a 30% discount? 
+    <a href="#" onclick="Intercom('showNewMessage', 'I heard about the 30% discount and want in. What are next steps?')">Learn more</a>.
   </div>
 <% } %>
 <div class="billing-table dns">
