@@ -48,7 +48,9 @@ module.exports = (req, res, next)->
       admin: user.is_admin
     }
   )(req.user)
-  res.locals.intercom_base = CONFIG.intercom
+  res.locals.intercom_base = {
+    app_id: CONFIG.intercom.app_id
+  }
   res.locals.support_email = CONFIG.general.support.email
   res.locals.support_phone = CONFIG.general.support.phone
   res.locals.support_phone_clean = CONFIG.general.support.phone.replace(/\D+/g, '')
