@@ -45,6 +45,7 @@ module.exports.metrics = (req, res, next)->
   LIBS.models.Publisher.findAll({
     where: {
      is_demo: false
+     is_activated: true
     }
   }).then (publishers)->    
     return Promise.map publishers, (publisher)->
