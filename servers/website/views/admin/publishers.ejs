@@ -10,7 +10,11 @@
   }).length
   
   discounts_given = publishers.filter(function(publisher) {
-    return publisher.fee == 1
+    return publisher.fee < 1 && publisher.fee > 0
+  }).length
+  
+  free_publishers = publishers.filter(function(publisher) {
+    return publisher.fee == 0
   }).length
 %>
 <div class="container form-table">
@@ -30,6 +34,10 @@
     <span>
       <strong>Discounts Given</strong>
       (<%= discounts_given %>)
+    </span>
+    <span>
+      <strong>Free Tier</strong>
+      (<%= free_publishers %>)
     </span>
   </div>
   <form class="form" method="POST" action="/admin/publishers">
