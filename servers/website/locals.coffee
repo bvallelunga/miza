@@ -44,7 +44,7 @@ module.exports = (req, res, next)->
       name: user.name
       email: user.email
       stripe: user.stripe_id
-      card: user.stripe_card
+      card: !!user.stripe_card
       admin: user.is_admin
     }
   )(req.user)

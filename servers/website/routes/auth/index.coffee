@@ -92,6 +92,7 @@ module.exports.has_publisher = (req, res, next)->
         fee: publisher.fee * 100
         coverage: publisher.coverage_ratio * 100
         activated: publisher.is_activated
+        card: !!publisher.owner.stripe_card
       }
       
     next()
