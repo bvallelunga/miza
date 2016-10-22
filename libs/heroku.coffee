@@ -6,7 +6,7 @@ module.exports = ->
     return {
       heroku: {}
       add_domain: Promise.resolve
-      add_domain: Promise.resolve
+      remove_domain: Promise.resolve
     }
 
   heroku = new Heroku { 

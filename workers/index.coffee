@@ -43,6 +43,10 @@ require("../startup") true, ->
     priority: "low"
   }, require("./marketing/github")
   
+  agenda.define "marketing.github_cleanup", {
+    priority: "low"
+  }, require("./marketing/github_cleanup")
+  
   
   # 1st of the month
   agenda.every '30 0 1 * *', 'stripe.charge', {}, job_config

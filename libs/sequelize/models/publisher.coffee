@@ -221,6 +221,11 @@ module.exports = (sequelize, DataTypes)->
       heroku_add: (endpoint)->
         LIBS.heroku.add_domain(endpoint)
           .catch(console.error)
+          
+      
+      heroku_remove: (endpoint)->
+        LIBS.heroku.remove_domain(endpoint)
+          .catch(console.error)
     }
     hooks: {
       beforeValidate: (publisher)->
