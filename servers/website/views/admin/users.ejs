@@ -15,13 +15,17 @@
 %>
 <div class="container form-table users">
   <div class="stats">
-    <span data-filter="admin">
-      <strong>Admins</strong>
-      (<%= admins_only %>)
+    <span class="active" data-filter="all">
+      <strong>All</strong>
+      (<%= users.length %>)
     </span>
     <span data-filter="user">
       <strong>Users</strong>
       (<%= users_only %>)
+    </span>
+    <span data-filter="admin">
+      <strong>Admins</strong>
+      (<%= admins_only %>)
     </span>
     <span data-filter="card">
       <strong>Cards Entered</strong>
@@ -31,7 +35,6 @@
   <table>
     <thead>
       <tr>
-        <th></th>
         <th>Name</th>
         <th>Email</th>
         <th>Card Info</th>
@@ -46,7 +49,6 @@
           <%= user.is_admin ? "admin" : "user" %>
           <%= !!user.stripe_card ? "card" : "" %>
         ">
-          <td><%= i + 1 %></td>
           <td><%= user.name %></td>
           <td><a href="mailto:<%= user.email %>"><%= user.email %></a></td>
           <td class="<%= user.stripe_card ? "green" : "red" %>"><%= user.stripe_card || "No Card" %></td>
