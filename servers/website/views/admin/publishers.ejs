@@ -19,23 +19,23 @@
 %>
 <div class="container form-table">
   <div class="stats">
-    <span>
+    <span data-filter="activated">
       <strong>Activated</strong>
       (<%= active_publishers %>)
     </span>
-    <span>
+    <span data-filter="not-activated">
       <strong>Not Activated</strong>
       (<%= publishers.length - active_publishers %>)
     </span>
-    <span>
+    <span data-filter="endpoint">
       <strong>Miza Endpoints Issued</strong>
       (<%= miza_endpoints %>)
     </span>
-    <span>
+    <span data-filter="discount">
       <strong>Discounts Given</strong>
       (<%= discounts_given %>)
     </span>
-    <span>
+    <span data-filter="free">
       <strong>Free Tier</strong>
       (<%= free_publishers %>)
     </span>
@@ -43,7 +43,7 @@
   <form class="form" method="POST" action="/admin/publishers">
     <% include ../includes/csrf %>
     <table>
-      <head>
+      <thead>
         <tr>
           <th></th>
           <th>Name</th>
@@ -55,11 +55,16 @@
           <th class="dynamic number">Coverage (%)</th>
           <th class="dynamic number">Fee (%)</th>
         </tr>
-      </head>
+      </thead>
       <tbody>
         <% publishers.forEach(function(publisher, i) { %>
           <input type="hidden" name="publishers[<%= i %>][id]" value="<%= publisher.id %>" required>
-          <tr>
+          <tr class="
+            <%= publisher.is_activated ? "activated" : "not-activated" %>  
+            <%= publisher.miza_endpoint ? "endpoint" : "" %>
+            <%= (publisher.fee < 1 && publisher.fee > 0) ? "discount" : "" %>
+            <%= publisher.fee == 0 ? "free" : "" %>    
+          ">
             <td><%= i + 1 %></td>
             <td><a href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.name %></a></td>
             <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>

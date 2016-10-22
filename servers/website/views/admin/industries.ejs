@@ -4,13 +4,13 @@
   <form class="form" method="POST" action="/admin/industries">
     <% include ../includes/csrf %>
     <table>
-      <head>
+      <thead>
         <tr>
           <th>Industry</th>
           <th>Listing</th>
           <th class="number">CPM ($)</th>
         </tr>
-      </head>
+      </thead>
       <tbody>
         <% industries.forEach(function(industry, i) { %>
           <input type="hidden" name="industries[<%= i %>][id]" value="<%= industry.id %>" required>

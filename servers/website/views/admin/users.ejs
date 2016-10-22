@@ -15,22 +15,23 @@
 %>
 <div class="container form-table users">
   <div class="stats">
-    <span>
+    <span data-filter="admin">
       <strong>Admins</strong>
       (<%= admins_only %>)
     </span>
-    <span>
+    <span data-filter="user">
       <strong>Users</strong>
       (<%= users_only %>)
     </span>
-    <span>
+    <span data-filter="card">
       <strong>Cards Entered</strong>
       (<%= cards_entered %>)
     </span>
   </div>
   <table>
-    <head>
+    <thead>
       <tr>
+        <th></th>
         <th>Name</th>
         <th>Email</th>
         <th>Card Info</th>
@@ -38,10 +39,14 @@
         <th>Access</th>
         <th>Joined</th>
       </tr>
-    </head>
+    </thead>
     <tbody>
       <% users.forEach(function(user, i) { %>
-        <tr class="<%= user.is_admin ? "admin" : "" %>">
+        <tr class="
+          <%= user.is_admin ? "admin" : "user" %>
+          <%= !!user.stripe_card ? "card" : "" %>
+        ">
+          <td><%= i + 1 %></td>
           <td><%= user.name %></td>
           <td><a href="mailto:<%= user.email %>"><%= user.email %></a></td>
           <td class="<%= user.stripe_card ? "green" : "red" %>"><%= user.stripe_card || "No Card" %></td>

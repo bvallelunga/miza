@@ -2,13 +2,13 @@
 <% include ../includes/header %>
 <div class="container form-table email-templates">
     <table>
-      <head>
+      <thead>
         <tr>
           <th>Name</th>
           <th>Subject</th>
           <th>Template</th>
         </tr>
-      </head>
+      </thead>
       <tbody>
         <% templates.forEach(function(template) { %>
           <tr class="template" data-template="<%= template %>">
