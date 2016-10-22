@@ -10,7 +10,7 @@
   <p>
     Please add this CNAME record to your websites DNS. This will enable traffic to be
     routed to <%= company %> though your domain name which will increase the defensibility
-    of ads being delivered on your website. Feel free to <a href="mailto:<%= support_email %>">contact us</a> 
+    of ads being delivered on your website. Feel free to <a href="#" onclick="Intercom('showNewMessage', 'Can you please help me setup the DNS CNAME record?')">contact us</a> 
     if you don't know how, our team can walk you through it.
     <br><br>
     <strong>We will NOT under any circumstance use it to 
@@ -37,7 +37,8 @@
   </div>
   <div class="warning">
     If your site uses HTTPS, please add <a target="_blank" href="http://<%= publisher.endpoint %>"><%= publisher.endpoint %></a>
-    to the SSL certificate.<br>Without doing this, most browsers will not load <%= company %> when using HTTPS urls.
+    to the SSL certificate.<br>Without doing this, most browsers will not load <%= company %> when using HTTPS urls. If you 
+    do not have access to your DNS please <a href="#" onclick="Intercom('showNewMessage', 'Sadly I do not have access to my DNS. What is your alternative solution?')">reach out</a>, we have alternative solution ready for you.
   </div>
 <% } %>
 <h3><%= ++counter %>) Select an Ad Network</h3>
