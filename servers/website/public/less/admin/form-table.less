@@ -2,14 +2,20 @@
 @import '../global/colors';
 
 .stats {
-  text-align: left;
-  margin-top: -20px;
-  margin-bottom: 20px;
+  margin-bottom: 60px;
+  text-align: center;
+  background: #fafbfc;
+  border: 1px solid #dde5ed;
+  display: inline-block;
+  padding: 10px 5px;
+  .border-radius(4px);
   
   span {
     display: inline-block;
     margin: 0 20px;
     cursor: pointer;
+    padding: 0;
+    color: #3b5468;
     
     &.active {
       color: @blue;
