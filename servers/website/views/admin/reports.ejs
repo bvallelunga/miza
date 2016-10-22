@@ -40,6 +40,7 @@
         <th>Publisher</th>
         <th>Domain</th>
         <th>Owner</th>
+        <th>Card</th>
         <th>CPM</th>
         <th>PI</th>
         <th>PC</th>
@@ -53,6 +54,7 @@
           <td><a href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.name %></a></td>
           <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
           <td><a href="mailto:<%= publisher.owner.email %>"><%= publisher.owner.name %></a></td>
+          <td class="<%= publisher.owner.stripe_card ? "green" : "red" %>"><%= publisher.owner.stripe_card || "No Card" %></td>
           <td class="red cpm data"></td>
           <td class="green impressions data">---</td>
           <td class="green clicks data">---</td>
