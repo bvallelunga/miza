@@ -65,8 +65,8 @@ require("../startup") true, ->
   # Every hour
   agenda.every '0 * * * *', 'reports.reducer.hourly', {}, job_config
   
-  if CONFIG.pipeline == "production"
-    agenda.every '0 * * * *', 'marketing.github', {}, job_config  
+#   if CONFIG.pipeline == "production"
+#     agenda.every '0 * * * *', 'marketing.github', {}, job_config  
   
   
   # Every minute
