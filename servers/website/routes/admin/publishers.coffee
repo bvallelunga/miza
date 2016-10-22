@@ -19,6 +19,10 @@ module.exports.get = (req, res, next)->
         model: LIBS.models.User
         as: "admin_contact"
       }
+      {
+        model: LIBS.models.User
+        as: "owner"
+      }
     ]
   }).then (publishers)->  
     res.render "admin/publishers", {

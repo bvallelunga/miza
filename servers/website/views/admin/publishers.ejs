@@ -16,9 +16,17 @@
   free_publishers = publishers.filter(function(publisher) {
     return publisher.fee == 0
   }).length
+  
+  paying_publishers = publishers.filter(function(publisher) {
+    return !!publisher.owner.stripe_card
+  }).length
 %>
 <div class="container form-table">
   <div class="stats">
+    <span data-filter="paying">
+      <strong>Paying</strong>
+      (<%= paying_publishers %>)
+    </span>
     <span data-filter="activated">
       <strong>Activated</strong>
       (<%= active_publishers %>)
@@ -63,7 +71,8 @@
             <%= publisher.is_activated ? "activated" : "not-activated" %>  
             <%= publisher.miza_endpoint ? "endpoint" : "" %>
             <%= (publisher.fee < 1 && publisher.fee > 0) ? "discount" : "" %>
-            <%= publisher.fee == 0 ? "free" : "" %>    
+            <%= publisher.fee == 0 ? "free" : "" %> 
+            <%= !!publisher.owner.stripe_card ? "paying" : "" %>   
           ">
             <td><%= i + 1 %></td>
             <td><a href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.name %></a></td>
