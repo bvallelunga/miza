@@ -55,11 +55,11 @@
           <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
           <td><a href="mailto:<%= publisher.owner.email %>"><%= publisher.owner.name %></a></td>
           <td class="<%= publisher.owner.stripe_card ? "green" : "red" %>"><%= publisher.owner.stripe_card || "No Card" %></td>
-          <td class="red cpm data"></td>
-          <td class="green impressions data">---</td>
-          <td class="green clicks data">---</td>
-          <td class="green protected data">---</td>
-          <td class="green owed data">---</td>
+          <td class="cpm data"></td>
+          <td class="impressions data">---</td>
+          <td class="clicks data">---</td>
+          <td class="protected data">---</td>
+          <td class="owed data">---</td>
         </tr>
       <% }) %>
     </tbody>
