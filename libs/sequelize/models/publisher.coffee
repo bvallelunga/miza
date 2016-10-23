@@ -226,6 +226,20 @@ module.exports = (sequelize, DataTypes)->
       heroku_remove: (endpoint)->
         LIBS.heroku.remove_domain(endpoint)
           .catch(console.error)
+      
+      
+      publisher_activated: ->
+        LIBS.intercom.updateCompany({
+          id: @id
+          custom_attributes: {
+            activated: true 
+          }
+        })
+        
+        LIBS.slack.message {
+          text: "#{@name} publisher is now activate! <#{CONFIG.web_server.host}/dashboard/#{@key}/analytics|Publisher Analytics>"
+        }
+      
     }
     hooks: {
       beforeValidate: (publisher)->
@@ -251,6 +265,9 @@ module.exports = (sequelize, DataTypes)->
       afterUpdate: (publisher)->
         if publisher.endpoint != publisher.previous("endpoint")
           publisher.heroku_add(publisher.endpoint)
+          
+        if publisher.is_activated and publisher.changed("is_activated")
+          publisher.publisher_activated()
             
         if publisher.miza_endpoint != publisher.previous("miza_endpoint")
           if publisher.miza_endpoint

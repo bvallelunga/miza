@@ -123,7 +123,7 @@ module.exports = ->
         logger: true and is_dev
       }
       ads_server: {
-        downloader: true and is_dev
+        downloader: false and is_dev
         modifier: false and is_dev
       }
       workers: {
