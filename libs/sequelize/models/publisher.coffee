@@ -265,11 +265,21 @@ module.exports = (sequelize, DataTypes)->
         
           @reports({
             paid_at: null
-            interval: "day"
+            $or: [
+              {
+                interval: "hour"
+              }
+              {
+                interval: "minute"
+                deleted_at: null
+              }
+            ]
             created_at: {
               $gte: moment().startOf("month").toDate()
               $lte: moment().endOf("month").toDate()
             }
+          }, {
+            paranoid: false
           }).then (reports)=>             
             return {
               id: @id

@@ -25,6 +25,17 @@ module.exports.metrics = (req, res, next)->
     created_at: {
       $gte: month_ago
     }
+    $or: [
+      {
+        interval: "hour"
+      }
+      {
+        interval: "minute"
+        deleted_at: null
+      }
+    ]
+  }, {
+    paranoid: false
   }).then (reports)->
     totals = reports.totals
     
