@@ -1,6 +1,7 @@
 url = require 'url'
 randomstring = require "randomstring"
 moment = require "moment"
+numeral = require "numeral"
 
 module.exports = (sequelize, DataTypes)->
 
@@ -248,6 +249,20 @@ module.exports = (sequelize, DataTypes)->
             @owner = owner
             
         .then =>
+          attrs = {
+            id: @id
+            key: @key
+            name: @name
+            industry: @industry.name
+            fee: @fee * 100
+            coverage: @coverage_ratio * 100
+            activated: @is_activated
+            card: !!@owner.stripe_card
+            created_at: @created_at
+          }
+          
+          if not api then return attrs
+        
           @reports({
             paid_at: null
             interval: "day"
@@ -255,25 +270,10 @@ module.exports = (sequelize, DataTypes)->
               $gte: moment().startOf("month").toDate()
               $lte: moment().endOf("month").toDate()
             }
-          }).then (reports)=> 
-            attrs = {
-              id: @id
-              key: @key
-              name: @name
-              industry: @industry.name
-              fee: @fee * 100
-              coverage: @coverage_ratio * 100
-              activated: @is_activated
-              card: !!@owner.stripe_card
-              monthly_spend: reports.totals.owed
-              created_at: @created_at
-            }
-            
-            if not api then return attrs
-            
+          }).then (reports)=>             
             return {
               id: @id
-              monthly_spend: attrs.monthly_spend
+              monthly_spend: reports.totals.owed
               created_at: attrs.created_at
               custom_attributes: {
                 key: attrs.key
@@ -283,6 +283,10 @@ module.exports = (sequelize, DataTypes)->
                 coverage: attrs.coverage
                 activated: attrs.activated
                 card: attrs.card
+                total_page_views: numeral(reports.totals.pings_all).format("0[,]000")
+                miza_protection: numeral(reports.totals.protected).format("0[.]0%")
+                protected_clicks: numeral(reports.totals.clicks).format("0[,]000")
+                protected_impressions: numeral(reports.totals.impressions).format("0[,]000")
               }
             }
       
