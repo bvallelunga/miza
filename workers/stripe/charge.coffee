@@ -3,7 +3,6 @@ moment = require "moment"
 
 module.exports = require("../template") (job)-> 
   date = moment()
-  invoice_description = "Invoice for #{date.format("MMMM YYYY")}"
   
   if CONFIG.is_prod and date.date() != 1
     return done "Not the first of the month!"
@@ -38,7 +37,7 @@ module.exports = require("../template") (job)->
           amount: stripe_owed
           customer: publisher.owner.stripe_id
           currency: "usd"
-          description: invoice_description
+          description: "#{publisher.name} Invoice for #{date.format("MMMM YYYY")}"
           receipt_email: publisher.owner.email
           metadata: {
             user: publisher.owner.id

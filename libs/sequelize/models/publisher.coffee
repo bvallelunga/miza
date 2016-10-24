@@ -1,5 +1,6 @@
 url = require 'url'
 randomstring = require "randomstring"
+moment = require "moment"
 
 module.exports = (sequelize, DataTypes)->
 
@@ -229,16 +230,61 @@ module.exports = (sequelize, DataTypes)->
       
       
       publisher_activated: ->
-        LIBS.intercom.updateCompany({
-          id: @id
-          custom_attributes: {
-            activated: true 
-          }
-        })
-        
         LIBS.slack.message {
           text: "#{@name} publisher is now activate! <#{CONFIG.web_server.host}/dashboard/#{@key}/analytics|Publisher Analytics>"
         }
+        
+      intercom: (api=false)->
+        Promise.resolve().then =>
+          if @industry? then return @
+          
+          @getIndustry().then (industry)=>
+            @industry = industry
+            
+        .then =>
+          if @owner? then return @
+          
+          @getOwner().then (owner)=>
+            @owner = owner
+            
+        .then =>
+          @reports({
+            paid_at: null
+            interval: "day"
+            created_at: {
+              $gte: moment().startOf("month").toDate()
+              $lte: moment().endOf("month").toDate()
+            }
+          }).then (reports)=> 
+            attrs = {
+              id: @id
+              key: @key
+              name: @name
+              industry: @industry.name
+              fee: @fee * 100
+              coverage: @coverage_ratio * 100
+              activated: @is_activated
+              card: !!@owner.stripe_card
+              monthly_spend: reports.totals.owed
+              created_at: @created_at
+            }
+            
+            if not api then return attrs
+            
+            return {
+              id: @id
+              monthly_spend: attrs.monthly_spend
+              created_at: attrs.created_at
+              custom_attributes: {
+                key: attrs.key
+                name: attrs.name
+                industry: attrs.industry
+                fee: attrs.fee
+                coverage: attrs.coverage
+                activated: attrs.activated
+                card: attrs.card
+              }
+            }
       
     }
     hooks: {

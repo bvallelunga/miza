@@ -66,36 +66,18 @@ module.exports.has_publisher = (req, res, next)->
       
     return null
   
-  .then (publisher)->  
-    return publisher.getIndustry().then (industry)->
-      publisher.industry = industry
-      return publisher
-      
-  .then (publisher)->  
-    return publisher.getOwner().then (owner)->
-      publisher.owner = owner
-      return publisher
-  
   .then (publisher)->
     if not publisher?
       return res.redirect "/dashboard"
     
-    req.publisher = publisher
-    res.locals.publisher = publisher
-    
-    if not req.user.is_admin and not publisher.is_demo
-      res.locals.intercom.company = {
-        id: publisher.id
-        key: publisher.key
-        name: publisher.name
-        industry: publisher.industry.name
-        fee: publisher.fee * 100
-        coverage: publisher.coverage_ratio * 100
-        activated: publisher.is_activated
-        card: !!publisher.owner.stripe_card
-      }
+    publisher.intercom().then (intercom)->
+      req.publisher = publisher
+      res.locals.publisher = publisher
       
-    next()
+      if not req.user.is_admin and not publisher.is_demo
+        res.locals.intercom.company = intercom
+        
+      next()
     
   .catch (error)->
     res.redirect "/dashboard"
