@@ -61,7 +61,8 @@ require("../startup") true, ->
   
   
   # 21st day of the month
-  agenda.every '30 0 21 * *', 'emails.add_payment_info', {}, job_config  
+# Moved to intercom
+#   agenda.every '30 0 21 * *', 'emails.add_payment_info', {}, job_config  
   
   
   # Every day
