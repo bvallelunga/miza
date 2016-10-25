@@ -73,9 +73,7 @@ module.exports.has_publisher = (req, res, next)->
     publisher.intercom().then (intercom)->
       req.publisher = publisher
       res.locals.publisher = publisher
-      
-      if not req.user.is_admin and not publisher.is_demo
-        res.locals.intercom.company = intercom
+      res.locals.intercom.company = intercom
         
       next()
     

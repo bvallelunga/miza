@@ -53,6 +53,8 @@ module.exports.remove_invite = (req, res, next)->
   }).then ->
     res.redirect "/dashboard/#{req.publisher.key}/members"
     
+  .catch next 
+    
 
 module.exports.remove_member = (req, res, next)->
   if req.user.id != req.publisher.owner_id or req.params.member == req.publisher.owner_id
@@ -60,3 +62,5 @@ module.exports.remove_member = (req, res, next)->
   
   req.publisher.removeMember(req.params.member).then ->
     res.redirect "/dashboard/#{req.publisher.key}/members"
+    
+  .catch next 

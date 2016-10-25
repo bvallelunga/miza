@@ -36,7 +36,7 @@ module.exports = (req, res, next)->
   res.locals.random = "r=#{random_slug}"
   res.locals.mixpanel = CONFIG.mixpanel.key
   res.locals.intercom = ((user)->      
-    if not user? or user.is_demo
+    if not user?
       return {}
             
     return { 
@@ -45,7 +45,6 @@ module.exports = (req, res, next)->
       email: user.email
       stripe: user.stripe_id
       card: !!user.stripe_card
-      admin: user.is_admin
     }
   )(req.user)
   res.locals.intercom_base = {

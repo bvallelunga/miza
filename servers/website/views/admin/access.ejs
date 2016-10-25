@@ -1,10 +1,8 @@
 <% include ../includes/start %>
 <% include ../includes/header %>
-<div class="container large">
+<div class="side container left short">
   <span>
-    Granting access will give them the ability to register on the site. It <u>will
-    not</u> send them an invite email, we are doing things that don't
-    scale. Please reach out to them individually with a link to the registration page 👍
+    Please reach out to your invitee with a link to register 👍
   </span>
   <form class="form" method="POST" action="/admin/access">
     <% include ../includes/csrf %>
@@ -12,5 +10,29 @@
     <button class="button" type="submit">Grant Access</button>
     <div class="error"></div>
   </form>
+</div>
+<div class="side container right long form-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Publisher</th>
+        <th>Admin</th>
+        <th>Invited</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% invites.forEach(function(invite, i) { %>
+        <tr>
+          <td class="text-left"><a href="mailto:<%= invite.email %>"><%= invite.email %></a></td>
+          <td><%= invite.publisher ? invite.publisher.name : "" %></td>
+          <td><%= invite.admin_contact ? invite.admin_contact.name : "" %></td>
+          <td><%= moment(invite.created_at).format("MMM Do, YYYY") %></td>
+          <td><a class="red" href="<%= path %>/remove/<%= invite.id %>">remove</a></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
 </div>
 <% include ../includes/end %>

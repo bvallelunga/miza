@@ -12,14 +12,16 @@
     
     <!-- Intercom -->
     <script>
-      var json = '<%- JSON.stringify(Object.assign(intercom_base, intercom)) %>'
-      window.intercomSettings = JSON.parse(json, function (key, value) {
-        if (key.indexOf("_at") > -1) {
-          return new Date(value)
-        }
-        
-        return value
-      })
+      <% if(!(user && (user.is_admin || user.is_demo))) { %>
+        var json = '<%- JSON.stringify(Object.assign(intercom_base, intercom)) %>'
+        window.intercomSettings = JSON.parse(json, function (key, value) {
+          if (key.indexOf("_at") > -1) {
+            return new Date(value)
+          }
+          
+          return value
+        })
+      <% } %>
     </script>
     <script>
       (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){

@@ -1,7 +1,28 @@
 <% include ../includes/start %>
 <% include ../includes/header %>
-<div class="container form-table">
-  <form class="form" method="POST" action="/admin/industries">
+<div class="container side short left">
+  <span class="red">
+    Please be careful when creating new industries!
+  </span>
+  <form class="form" method="POST" action="/admin/industries/create">
+    <% include ../includes/csrf %>
+    <div>
+      <input class="top" type="text" name="name" placeholder="Industry Name" required>
+      <div class="group">
+        <div class="fa fa-sort"></div>
+        <select class="input" name="private" required>
+          <option value="false" selected>Listed</option>
+          <option value="true">Unlisted</option>
+        </select>
+      </div>
+      <input class="bottom number" type="number" name="cpm" placeholder="CPM" min="0" step="0.01" required>
+    </div>
+    <button class="button" type="submit">Create Industry</button>
+    <div class="error"></div>
+  </form>
+</div>
+<div class="container form-table side long right">
+  <form class="form" method="POST" action="/admin/industries/update">
     <% include ../includes/csrf %>
     <table>
       <thead>
@@ -15,7 +36,7 @@
         <% industries.forEach(function(industry, i) { %>
           <input type="hidden" name="industries[<%= i %>][id]" value="<%= industry.id %>" required>
           <tr>
-            <td><input class="only" type="text" name="industries[<%= i %>][name]" value="<%= industry.name %>" placeholder="Name" min="0" step="0.01" required></td>
+            <td><input class="only" type="text" name="industries[<%= i %>][name]" value="<%= industry.name %>" placeholder="Name" required></td>
             <td>
               <div class="group">
                 <div class="fa fa-sort"></div>

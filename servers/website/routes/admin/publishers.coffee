@@ -1,35 +1,39 @@
 module.exports.get = (req, res, next)->
-  LIBS.models.Publisher.findAll({
-    where: {
-      owner_id: {
-        $ne: LIBS.models.defaults.github_user.id
+  Promise.props({
+    industries: LIBS.models.Industry.findAll()
+    publishers: LIBS.models.Publisher.findAll({
+      where: {
+        owner_id: {
+          $ne: LIBS.models.defaults.github_user.id
+        }
       }
-    }
-    order: [
-      ['is_activated', 'DESC']
-      ['fee', 'DESC']
-      ['name', 'ASC']
-    ]
-    include: [
-      {
-        model: LIBS.models.Industry
-        as: "industry"
-      }
-      {
-        model: LIBS.models.User
-        as: "admin_contact"
-      }
-      {
-        model: LIBS.models.User
-        as: "owner"
-      }
-    ]
-  }).then (publishers)->  
+      order: [
+        ['is_activated', 'DESC']
+        ['fee', 'DESC']
+        ['name', 'ASC']
+      ]
+      include: [
+        {
+          model: LIBS.models.Industry
+          as: "industry"
+        }
+        {
+          model: LIBS.models.User
+          as: "admin_contact"
+        }
+        {
+          model: LIBS.models.User
+          as: "owner"
+        }
+      ]
+    })
+  }).then (props)->  
     res.render "admin/publishers", {
       js: req.js.renderTags "modal", "admin-table"
       css: req.css.renderTags "modal", "admin", "fa"
       title: "Admin Publishers"
-      publishers: publishers
+      publishers: props.publishers
+      industries: props.industries
     }
     
   .catch next
@@ -41,6 +45,7 @@ module.exports.post = (req, res, next)->
       coverage_ratio: Number(publisher.coverage) / 100
       fee: Number(publisher.fee) / 100
       miza_endpoint: publisher.miza_endpoint == "true"
+      industry_id: publisher.industry
     }, {
       returning: false
       individualHooks: true

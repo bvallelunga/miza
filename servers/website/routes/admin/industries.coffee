@@ -14,7 +14,7 @@ module.exports.get = (req, res, next)->
   .catch next
 
 
-module.exports.post = (req, res, next)->
+module.exports.update = (req, res, next)->
   Promise.all req.body.industries.map (industry)->
     return LIBS.models.Industry.update({
       name: industry.name
@@ -29,6 +29,20 @@ module.exports.post = (req, res, next)->
     })
     
   .then ->
+    res.json {
+      success: true
+      next: "/admin/industries"
+    }
+    
+  .catch next
+  
+  
+module.exports.create = (req, res, next)->
+  LIBS.models.Industry.create({
+    name: req.body.name
+    cpm: Number req.body.cpm
+    private: req.body.private == "true"
+  }).then ->
     res.json {
       success: true
       next: "/admin/industries"
