@@ -72,8 +72,8 @@ module.exports = (srv)->
   
   # Admin Routes
   app.get  "/admin", routes.auth.is_admin, routes.admin.get_root
-  app.get  "/admin/access", routes.auth.is_admin, routes.admin.access.get
-  app.get  "/admin/access/remove/:invite", routes.auth.is_admin, routes.admin.access.remove
+  app.get  "/admin/invites", routes.auth.is_admin, routes.admin.invites.get
+  app.get  "/admin/invites/remove/:invite", routes.auth.is_admin, routes.admin.invites.remove
   app.get  "/admin/reports", routes.auth.is_admin, routes.admin.reports.get
   app.get  "/admin/reports/metrics", routes.auth.is_admin, routes.admin.reports.metrics
   app.get  "/admin/industries", routes.auth.is_admin, routes.admin.industries.get
@@ -82,7 +82,7 @@ module.exports = (srv)->
   app.get  "/admin/scheduler", routes.auth.is_admin, routes.admin.scheduler.get
   app.get  "/admin/emails", routes.auth.is_admin, routes.admin.emails.get
   app.get  "/admin/emails/:template", routes.auth.is_admin, routes.admin.emails.email
-  app.post "/admin/access", routes.auth.is_admin, routes.admin.access.post
+  app.post "/admin/access", routes.auth.is_admin, routes.admin.invites.post
   app.post "/admin/industries/update", routes.auth.is_admin, routes.admin.industries.update
   app.post "/admin/industries/create", routes.auth.is_admin, routes.admin.industries.create
   app.post "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.post

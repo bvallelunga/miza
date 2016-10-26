@@ -14,7 +14,7 @@ module.exports.get = (req, res, next)->
       }
     ]
   }).then (invites)->
-    res.render "admin/access", {
+    res.render "admin/invites", {
       js: req.js.renderTags "modal"
       css: req.css.renderTags "modal", "admin"
       title: "Admin Grant Access"

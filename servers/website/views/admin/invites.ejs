@@ -4,7 +4,7 @@
   <span>
     Please reach out to your invitee with a link to register 👍
   </span>
-  <form class="form" method="POST" action="/admin/access">
+  <form class="form" method="POST" action="<%= path %>">
     <% include ../includes/csrf %>
     <textarea class="textarea only" name="emails" placeholder="One email address per line" required></textarea>
     <button class="button" type="submit">Grant Access</button>
