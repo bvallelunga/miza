@@ -82,7 +82,7 @@ module.exports = (srv)->
   app.get  "/admin/scheduler", routes.auth.is_admin, routes.admin.scheduler.get
   app.get  "/admin/emails", routes.auth.is_admin, routes.admin.emails.get
   app.get  "/admin/emails/:template", routes.auth.is_admin, routes.admin.emails.email
-  app.post "/admin/access", routes.auth.is_admin, routes.admin.invites.post
+  app.post "/admin/invites", routes.auth.is_admin, routes.admin.invites.post
   app.post "/admin/industries/update", routes.auth.is_admin, routes.admin.industries.update
   app.post "/admin/industries/create", routes.auth.is_admin, routes.admin.industries.create
   app.post "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.post
