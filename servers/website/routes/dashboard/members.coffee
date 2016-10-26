@@ -1,5 +1,5 @@
 module.exports.add = (req, res, next)->
-  if req.user.id != req.publisher.owner_id
+  if not req.user.is_admin and req.user.id != req.publisher.owner_id
     return next "Ownership access is required!"
   
   email = req.body.email.toLowerCase().trim()
@@ -43,7 +43,7 @@ module.exports.add = (req, res, next)->
 
 
 module.exports.remove_invite = (req, res, next)->
-  if req.user.id != req.publisher.owner_id
+  if not req.user.is_admin and req.user.id != req.publisher.owner_id
     return res.redirect "/dashboard/#{req.publisher.key}/members"
 
   LIBS.models.UserAccess.destroy({
@@ -57,7 +57,7 @@ module.exports.remove_invite = (req, res, next)->
     
 
 module.exports.remove_member = (req, res, next)->
-  if req.user.id != req.publisher.owner_id or req.params.member == req.publisher.owner_id
+  if not req.user.is_admin and (req.user.id != req.publisher.owner_id or req.params.member == req.publisher.owner_id)
     return res.redirect "/dashboard/#{req.publisher.key}/members"
   
   req.publisher.removeMember(req.params.member).then ->
