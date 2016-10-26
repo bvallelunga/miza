@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes)->
     cpm: {
       type: DataTypes.DECIMAL(6,3)
       defaultValue: 0
+      allowNull: false
       validate: {
         min: {
           args: [ 0 ]
@@ -20,15 +21,13 @@ module.exports = (sequelize, DataTypes)->
     }
   }, {
     hooks: {            
-      afterUpdate: (industry, options, callback)->               
+      afterUpdate: (industry)->                     
         LIBS.models.IndustryAudit.create({
           name: industry.previous "name"
           cpm: industry.previous "cpm"
           private: industry.previous "private"
-        }).then ->
-          callback()
-          
-        .catch callback
+          industry_id: industry.id
+        })
 
     }
   }

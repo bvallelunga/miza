@@ -235,7 +235,13 @@ module.exports = (sequelize, DataTypes)->
           text: "#{@name} publisher is now activate! <#{CONFIG.web_server.host}/dashboard/#{@key}/analytics|Publisher Analytics>"
         }
         
-      intercom: (api=false)->
+      intercom: (api=false)->          
+        if not api 
+          return Promise.resolve {
+            id: @id
+            key: @key
+          }
+        
         Promise.resolve().then =>
           if @industry? then return @
           
@@ -249,20 +255,12 @@ module.exports = (sequelize, DataTypes)->
             @owner = owner
             
         .then =>
-          attrs = {
-            id: @id
-            key: @key
-            name: @name
-            industry: @industry.name
-            fee: @fee * 100
-            coverage: @coverage_ratio * 100
-            activated: @is_activated
-            card: !!@owner.stripe_card
-            created_at: @created_at
-          }
+          if @admin_contact? then return @
           
-          if not api then return attrs
-        
+          @getAdmin_contact().then (admin)=>
+            @admin_contact = admin
+            
+        .then =>
           @reports({
             paid_at: null
             interval: "day"
@@ -274,15 +272,16 @@ module.exports = (sequelize, DataTypes)->
             return {
               id: @id
               monthly_spend: reports.totals.owed
-              created_at: attrs.created_at
+              created_at: @created_at
               custom_attributes: {
-                key: attrs.key
-                name: attrs.name
-                industry: attrs.industry
-                fee: attrs.fee
-                coverage: attrs.coverage
-                activated: attrs.activated
-                card: attrs.card
+                key: @key
+                name: @name
+                industry: @industry.name
+                fee: @fee * 100
+                coverage: @coverage_ratio * 100
+                activated: @is_activated
+                card: !!@owner.card
+                admin: if @admin_contact? then @admin_contact.name else null
                 total_page_views: numeral(reports.totals.pings_all).format("0[,]000")
                 miza_protection: numeral(reports.totals.protected).format("0[.]0%")
                 protected_clicks: numeral(reports.totals.clicks).format("0[,]000")
