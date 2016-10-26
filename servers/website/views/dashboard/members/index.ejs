@@ -38,7 +38,7 @@
       <% if(!user.is_demo && (user.is_admin || user.id == publisher.owner.id)) { %>
         <td>
           <% if(member.id != publisher.owner.id) { %>
-            <a class="red" href="<%= dashboard_path %>/members/member/<%= member.id %>/remove">Remove</a>
+            <a class="red" href="<%= dashboard_path %>/members/member/<%= member.id %>/remove">remove</a>
           <% } %>
         </td>
       <% } %>
