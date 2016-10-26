@@ -6,5 +6,4 @@ module.exports = require("../template") (job)->
     }
   }).each (publisher)->
     publisher.intercom(true).then (intercom)->
-      console.log intercom
       LIBS.intercom.updateCompany(intercom)
