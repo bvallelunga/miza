@@ -36,8 +36,7 @@ module.exports.post = (req, res, next)->
   }).then ->
     res.json {
       success: true
-      message: "Users have been approved for registration!"
-      next: "/admin"
+      next: "/admin/invites"
     }
     
   .catch next
@@ -49,6 +48,6 @@ module.exports.remove = (req, res, next)->
       id: req.params.invite
     }
   }).then ->
-    res.redirect "/admin/access"
+    res.redirect "/admin/invites"
     
   .catch next
