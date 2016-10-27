@@ -69,14 +69,17 @@ module.exports.has_publisher = (req, res, next)->
   .then (publisher)->
     if not publisher?
       return res.redirect "/dashboard"
+      
+    publisher.associations({
+      owner: true
+      industry: true
+    }).then ->
+      publisher.intercom().then (intercom)->
+        req.publisher = publisher
+        res.locals.publisher = publisher
+        res.locals.intercom.company = intercom
+          
+        next()
     
-    publisher.intercom().then (intercom)->
-      req.publisher = publisher
-      res.locals.publisher = publisher
-      res.locals.intercom.company = intercom
-        
-      next()
-    
-  .catch (error)->
-    res.redirect "/dashboard"
+  .catch next
   

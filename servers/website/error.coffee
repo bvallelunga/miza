@@ -19,7 +19,7 @@ module.exports = (err, req, res, next)->
       return error.message
     
     .join "\n"
-  
+
   if send_bug
     if CONFIG.is_prod
       LIBS.bugsnag.notify err

@@ -234,6 +234,35 @@ module.exports = (sequelize, DataTypes)->
         LIBS.slack.message {
           text: "#{@name} publisher is now activate! <#{CONFIG.web_server.host}/dashboard/#{@key}/analytics|Publisher Analytics>"
         }
+
+        
+      associations: (fetch)->
+        fetch = fetch or { 
+          industry: true
+          owner: true
+          admin_contact: true
+        }
+      
+        Promise.resolve().then =>
+          if not fetch["industry"] or @industry? then return
+            
+          @getIndustry().then (industry)=>
+            @industry = industry
+            
+        .then =>
+          if not fetch["owner"] or @owner? then return
+          
+          @getOwner().then (owner)=>
+            @owner = owner
+            
+        .then =>
+          if not fetch["admin_contact"] or @admin_contact? then return
+          
+          @getAdmin_contact().then (admin)=>
+            @admin_contact = admin
+            
+        .then => @
+    
         
       intercom: (api=false)->          
         if not api 
@@ -241,26 +270,8 @@ module.exports = (sequelize, DataTypes)->
             id: @id
             key: @key
           }
-        
-        Promise.resolve().then =>
-          if @industry? then return @
-          
-          @getIndustry().then (industry)=>
-            @industry = industry
             
-        .then =>
-          if @owner? then return @
-          
-          @getOwner().then (owner)=>
-            @owner = owner
-            
-        .then =>
-          if @admin_contact? then return @
-          
-          @getAdmin_contact().then (admin)=>
-            @admin_contact = admin
-            
-        .then =>
+        @associations().then =>
           @reports({
             paid_at: null
             interval: "day"
