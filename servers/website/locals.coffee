@@ -35,18 +35,7 @@ module.exports = (req, res, next)->
   res.locals.changelog_key = CONFIG.changelog
   res.locals.random = "r=#{random_slug}"
   res.locals.mixpanel = CONFIG.mixpanel.key
-  res.locals.intercom = ((user)->      
-    if not user?
-      return {}
-            
-    return { 
-      user_id: user.id
-      name: user.name
-      email: user.email
-      stripe: user.stripe_id
-      card: !!user.stripe_card
-    }
-  )(req.user)
+  res.locals.intercom = {}
   res.locals.intercom_base = {
     app_id: CONFIG.intercom.app_id
   }
@@ -61,6 +50,13 @@ module.exports = (req, res, next)->
   }
     
   # Next
-  next()
+  if not req.user?
+    return next()
+    
+  req.user.intercom().then (intercom)->
+    res.locals.intercom = intercom
+    next()
+  
+  .catch next
   
   

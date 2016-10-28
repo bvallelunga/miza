@@ -51,6 +51,10 @@ require("../startup") true, ->
     priority: "medium"
   }, require("./intercom/publisher")
   
+  agenda.define "intercom.user", {
+    priority: "medium"
+  }, require("./intercom/user")
+  
   
   # 1st of the month
   agenda.every '30 0 1 * *', 'stripe.charge', {}, job_config
@@ -74,6 +78,7 @@ require("../startup") true, ->
   # Every hour
   agenda.every '0 * * * *', 'reports.reducer.hourly', {}, job_config
   agenda.every '0 * * * *', 'intercom.publisher', {}, job_config
+  agenda.every '0 * * * *', 'intercom.user', {}, job_config
   
 #   if CONFIG.pipeline == "production"
 #     agenda.every '0 * * * *', 'marketing.github', {}, job_config  

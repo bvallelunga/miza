@@ -1,6 +1,6 @@
 module.exports = { 
 
-  up: (knex)->   
+  up: (knex)->  
     knex.schema.hasTable("User").then (exists)->
       if not exists then return 
   

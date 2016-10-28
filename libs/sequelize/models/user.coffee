@@ -98,6 +98,38 @@ module.exports = (sequelize, DataTypes)->
             name: @name
           }
         })
+      
+      
+      intercom: (api)->   
+        if not api
+          return Promise.resolve {
+            name: @name
+            email: @email
+            user_id: @id
+          }
+        
+        Promise.resolve().then =>
+          if @publishers?
+            return Promise.resolve()
+          
+          @getPublishers().then (publishers)=>
+            @publishers = publishers
+        
+        .then =>
+          return {
+            user_id: @id
+            name: @name
+            email: @email
+            created_at: @created_at
+            companies: @publishers.map (publisher)->
+              return {
+                id: publisher.key
+              }
+            custom_attributes: {
+              stripe: @stripe_id
+              card: !!@stripe_card
+            }
+          }
     
     }
     hooks: {        

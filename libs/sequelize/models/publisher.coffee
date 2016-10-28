@@ -267,8 +267,7 @@ module.exports = (sequelize, DataTypes)->
       intercom: (api=false)->          
         if not api 
           return Promise.resolve {
-            id: @id
-            key: @key
+            id: @key
           }
             
         @associations().then =>
@@ -281,12 +280,11 @@ module.exports = (sequelize, DataTypes)->
             }
           }).then (reports)=>             
             return {
-              id: @id
+              id: @key
               monthly_spend: reports.totals.owed
               created_at: @created_at
+              name: @name
               custom_attributes: {
-                key: @key
-                name: @name
                 industry: @industry.name
                 fee: @fee * 100
                 coverage: @coverage_ratio * 100
