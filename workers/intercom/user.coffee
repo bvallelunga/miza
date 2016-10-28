@@ -3,7 +3,7 @@ module.exports = require("../template") (job)->
   LIBS.models.User.findAll({
     where: {
       is_demo: false
-      #is_admin: false
+      is_admin: false
       id: {
         $ne: LIBS.models.defaults.github_user.id
       }
