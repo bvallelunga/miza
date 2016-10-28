@@ -2,6 +2,10 @@
 <% include ../includes/header %>
 <div class="container">
   <% include ../includes/logo %>
+  <span>
+    Welcome back! Sign in to see analytics<br>
+    and manage your accounts.
+  </span>
   <form class="form" method="POST" action="/login">
     <% include ../includes/csrf %>
     <% if(next) { %>

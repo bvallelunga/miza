@@ -33,6 +33,7 @@ module.exports.post = (req, res, next)->
       email: email
       password: req.body.password
       name: req.body.name
+      phone: req.body.phone or null
       admin_contact_id: admin_contact
       is_admin: (accesses.filter (access)->
         return access.is_admin

@@ -1,4 +1,5 @@
 crypto = require 'crypto'
+phoneFormatter = require 'phone-formatter'
 
 module.exports = (sequelize, DataTypes)->
   hasher = (value)->
@@ -22,6 +23,15 @@ module.exports = (sequelize, DataTypes)->
         @setDataValue 'password', @hash(value) 
     }
     name: DataTypes.STRING 
+    phone: {
+      type: DataTypes.STRING
+      set: (value)->
+        if not value?
+          return @setDataValue 'phone', null
+      
+        value = phoneFormatter.normalize value
+        @setDataValue 'phone', value
+    }
     stripe_id: DataTypes.STRING
     stripe_card: {
       type: DataTypes.JSONB
@@ -120,6 +130,7 @@ module.exports = (sequelize, DataTypes)->
             user_id: @id
             name: @name
             email: @email
+            phone: @phone
             created_at: @created_at
             companies: @publishers.map (publisher)->
               return {

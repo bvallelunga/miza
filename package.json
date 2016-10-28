@@ -47,6 +47,7 @@
     "numeral": "^1.5.3",
     "pg": "^6.0.3",
     "pg-hstore": "^2.3.2",
+    "phone-formatter": "0.0.2",
     "piler": "https://github.com/bvallelunga/piler.git#master",
     "randomstring": "^1.1.5",
     "redis": "^2.6.2",

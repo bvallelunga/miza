@@ -2992,6 +2992,11 @@
       "from": "pgpass@>=1.0.0 <2.0.0",
       "resolved": "https://registry.npmjs.org/pgpass/-/pgpass-1.0.1.tgz"
     },
+    "phone-formatter": {
+      "version": "0.0.2",
+      "from": "phone-formatter@latest",
+      "resolved": "https://registry.npmjs.org/phone-formatter/-/phone-formatter-0.0.2.tgz"
+    },
     "piler": {
       "version": "0.5.1",
       "from": "git+https://github.com/bvallelunga/piler.git#master",
