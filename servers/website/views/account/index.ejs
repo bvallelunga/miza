@@ -1,30 +1,42 @@
 <% include ../includes/start %>
 <% include ../includes/header %>
-<div class="container">
-  <% include ../includes/logo %>
-  <form class="form" method="POST" action="/account">
-    <% include ../includes/csrf %>
-    <input class="top" type="text" name="name" placeholder="Name" value="<%= user.name %>" required/>
-    <input type="email" name="email" placeholder="Email address" value="<%= user.email %>" required/>
-    <div class="group">
-      <div class="fa fa-sort"></div>
-      <select class="input" name="weekly_reports" required>
-        <option value="true" <%= user.notifications.weekly_reports != false ? "selected" : "" %>>Weekly Reports: On</option>
-        <option value="false" <%= user.notifications.weekly_reports == false ? "selected" : "" %>>Weekly Reports: Off</option>
-      </select>
-    </div>
-    <div class="group">
-      <a href="/account/card"><%= user.stripe_card ? "Update" : "Add" %></a>
-      <input type="text" placeholder="Card's Last 4" disabled
-        value="<%= user.stripe_card || "" %>" />
-    </div>
-    <div class="group">
-      <a href="/account/password">Update</a>
-      <input class="bottom" type="password" name="password" placeholder="Password" required/>
-    </div>
-    <button class="button" type="submit">Update Profile</button>
-    <div class="error"></div>
-  </form>
+<%  
+  function isActive(a, b) {
+    return a == b ? "active" : ""
+  }
+%>
+<div class="container">  
+  <div class="sidebar left">
+    <% include ../includes/logo %>
+    <ul>
+      <li class="<%= isActive(dashboard, "profile") %>">
+        <a href="/account/profile">
+          <span class="fa fa-user"></span>
+          Account
+        </a>
+      </li>
+      <li class="<%= isActive(dashboard, "password") %>">
+        <a href="/account/password">
+          <span class="fa fa-key"></span>
+          Password
+        </a>
+      </li>
+      <li class="<%= isActive(dashboard, "notifications") %>">
+        <a href="/account/notifications">
+          <span class="fa fa-bell"></span>
+          Notifications
+        </a>
+      </li>
+      <li class="<%= isActive(dashboard, "billing") %>">
+        <a href="/account/billing">
+          <span class="fa fa-credit-card"></span>
+          Change Card
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="display right settings-dashboard">
+    <%- include("./" + dashboard + "/index") %>
+  </div>
 </div>
-<% include ../includes/footer %>
 <% include ../includes/end %>

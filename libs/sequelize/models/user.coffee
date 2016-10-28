@@ -94,7 +94,7 @@ module.exports = (sequelize, DataTypes)->
       stripe_set_card: (card)->
         return LIBS.stripe.customers.update(@stripe_id, {
           source: card.id
-        }).then (customer)=>          
+        }).then (customer)=>                
           return @update({
             stripe_card: card.card
           })

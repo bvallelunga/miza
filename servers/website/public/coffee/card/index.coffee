@@ -31,7 +31,7 @@ $ ->
         return error_handler response.error.message
         
       response._csrf = config.csrf
-      $.post "/account/card", response, (response)->
+      $.post form.attr("action"), response, (response)->
         if response.message?
           alert response.message
         

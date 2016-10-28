@@ -1,0 +1,24 @@
+<h2>Profile</h2>
+<form class="form" method="POST" action="/account/profile">
+  <% include ../../includes/csrf %>
+  <table>
+    <tr>
+      <td class="title">Full Name</td>
+      <td><input class="top" type="text" name="name" placeholder="Name" value="<%= user.name %>" required/></td>
+    </tr>
+    <tr>
+      <td class="title">Email Address</td>
+      <td><input type="email" name="email" placeholder="Email address" value="<%= user.email %>" required/></td>
+    </tr>
+    <tr>
+      <td class="title">Phone Number</td>
+      <td><input type="tel" name="phone" placeholder="Phone number (optional, for support)" value="<%= user.phone || "" %>"/></td>
+    </tr>
+    <tr>
+      <td class="title">Credit Card</td>
+      <td><input disabled value="<%= user.stripe_card || "NONE" %>"/></td>
+    </tr>
+  </table>
+  <button class="button" type="submit">Update Profile</button>
+  <div class="error"></div>
+</form>

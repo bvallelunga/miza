@@ -58,11 +58,11 @@ module.exports = (srv)->
   
   # Account Routes
   app.get  "/account", routes.auth.is_authenticated, routes.account.get_root
-  app.get  "/account/password", routes.auth.is_authenticated, routes.account.get_password
-  app.get  "/account/card", routes.auth.is_authenticated, routes.account.get_card
-  app.post "/account", routes.auth.is_authenticated, routes.account.post_root
-  app.post "/account/password", routes.auth.is_authenticated, routes.account.post_password
-  app.post "/account/card", routes.auth.is_authenticated, routes.account.post_card
+  app.get  "/account/:dashboard", routes.auth.is_authenticated, routes.account.get_root
+  app.post "/account/profile", routes.auth.is_authenticated, routes.account.profile.post
+  app.post "/account/notifications", routes.auth.is_authenticated, routes.account.notifications.post
+  app.post "/account/password", routes.auth.is_authenticated, routes.account.password.post
+  app.post "/account/billing", routes.auth.is_authenticated, routes.account.billing.post
   
   
   # Admin 3rd Party Dashboards

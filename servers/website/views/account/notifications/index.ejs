@@ -1,0 +1,20 @@
+<h2>Email Notifications</h2>
+<form class="form" method="POST" action="/account/notifications">
+  <% include ../../includes/csrf %>
+  <table>
+    <tr>
+      <td class="title">Weekly Reports</td>
+      <td>
+        <div class="group">
+          <div class="fa fa-sort"></div>
+          <select class="input" name="weekly_reports" required>
+            <option value="true" <%= user.notifications.weekly_reports != false ? "selected" : "" %>>On</option>
+            <option value="false" <%= user.notifications.weekly_reports == false ? "selected" : "" %>>Off</option>
+          </select>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <button class="button" type="submit">Update Notifications</button>
+  <div class="error"></div>
+</form>

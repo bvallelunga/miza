@@ -1,0 +1,20 @@
+<h2>Change Password</h2>
+<form class="form" method="POST" action="/account/password">
+  <% include ../../includes/csrf %>
+  <table>
+    <tr>
+      <td class="title">Old</td>
+      <td><input class="top" type="password" name="old_password" placeholder="Old Password" required/></td>
+    </tr>
+    <tr>
+      <td class="title">New</td>
+      <td><input type="password" name="new_password" placeholder="New Password" required/></td>
+    </tr>
+    <tr>
+      <td class="title">Confirm</td>
+      <td><input class="bottom" type="password" name="confirm_password" placeholder="Confirm Password" required/></td>
+    </tr>
+  </table>
+  <button class="button" type="submit">Update Password</button>
+  <div class="error"></div>
+</form>

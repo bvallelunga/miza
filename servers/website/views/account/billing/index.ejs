@@ -1,0 +1,19 @@
+<h2>Change Card</h2>
+<form class="form card" method="POST" action="/account/billing">
+  <div class="view left">
+    <% include ../../includes/csrf %>
+    <input class="top card-number" type="text" name="number" placeholder="**** **** **** ****" data-stripe="number" required>
+    <input type="text" name="name" placeholder="Tony Stark" data-stripe="name" required/>
+    <div class="split">
+      <input class="bottom left" type="text" name="expiry" placeholder="** / ****" data-stripe="exp" required/>
+      <input class="bottom right" type="text" name="cvc" placeholder="***" data-stripe="cvc" required/>
+    </div>
+    <button class="button" type="submit">Save Card</button>
+    <div class="error"></div>
+  </div>
+  <div class="card-wrapper view right"></div>
+  <div class="clear"></div>
+  <a class="stripe" href="http://stripe.com" target="_body">
+    <img src="/imgs/stripe.png"/>
+  </a>
+</form>

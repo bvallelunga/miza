@@ -153,8 +153,8 @@
       
       .fa {
         font-size: 0.9em;
-        margin-right: 4px;
-        width: 18px;
+        margin-right: 5px;
+        width: 20px;
         color: lighten(@blue, 30%);
       }
     }
@@ -235,6 +235,84 @@
       font-size: 1.2em;
       font-weight: lighter;
       text-align: center;
+    }
+    
+    .group {
+      position: relative;
+      
+      .fa, a {
+        position: absolute;
+        font-size: 1.5em;
+        top: 15px;
+        right: 15px;
+        color: rgba(0,0,0,0.1);
+        z-index: 1;
+      }
+      
+      a {
+        font-size: 1em;
+        font-weight: bold;
+        color: @blue;
+        text-transform: uppercase;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    
+    &.card { 
+      width: 100%;
+         
+      .view {
+        width: 49%;
+      }
+      
+      input, .input {
+        border-top-width: 0;
+        .border-radius(0);
+        
+        &.only {
+          border-top-width: 1px;
+          margin-bottom: 15px;
+          .border-radius(5px);
+        }
+        
+        &.top {
+          margin: 0;
+          border-top-width: 1px;
+          .border-radius(5px 5px 0 0);
+        }
+        
+        &.bottom {
+          margin-bottom: 15px;
+          .border-radius(0 0 5px 5px);
+        }
+      }
+      
+      .stripe {
+        width: 150px;
+        margin: 20px auto;
+        display: block;
+        
+        img {
+          width: 100%;
+        }
+      }
+    }
+    
+    .split input {
+      width: 50%;
+      display: inline-block;
+      
+      &.left {
+        .border-radius(0 0 0 5px);
+        border-right: none;
+      }
+      
+      &.right {
+        .border-radius(0 0 5px 0);
+      }
     }
   }
   
