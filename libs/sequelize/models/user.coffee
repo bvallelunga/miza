@@ -130,13 +130,13 @@ module.exports = (sequelize, DataTypes)->
             user_id: @id
             name: @name
             email: @email
-            phone: @phone
             created_at: @created_at
             companies: @publishers.map (publisher)->
               return {
                 id: publisher.key
               }
             custom_attributes: {
+              phone: @phone
               stripe: @stripe_id
               card: !!@stripe_card
             }

@@ -22,7 +22,7 @@ module.exports = ->
     postgres: {
       url: process.env.DATABASE_URL
       ssl: process.env.DATABASE_URL.indexOf("localhost") == -1
-      flush: false and is_dev
+      flush: false and is_dev # BE VERY CAREFUL! THIS WILL FLUSH THE DB
     }
     
     pipeline: process.env.PIPELINE
@@ -72,14 +72,6 @@ module.exports = ->
         message: "It works!"
         redirect: "http://misosoup.com"
       }
-    }
-    
-    reporting_worker: {
-      interval: 1 * 60 * 1000 # 1 minute
-    }
-    
-    tracking_worker: {
-      interval: 10 * 1000 # 10 seconds
     }
     
     logger: (->  
