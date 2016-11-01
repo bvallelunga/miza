@@ -2,7 +2,7 @@ moment = require "moment"
 
 
 module.exports = require("../template") (job)-> 
-  date = moment()
+  date = moment().subtract(1, "month")
   
   if CONFIG.is_prod and date.date() != 1
     return done "Not the first of the month!"
