@@ -31,7 +31,7 @@ npm run services
 
 # Quick Push To Production
 Sometimes we will need to push quickly to 
-production without all submitting a pull request.
+production without submitting a pull request.
 Use this command to quickly push to production. It
 will take up to 5 minutes for the web workers to show
 the changes.
