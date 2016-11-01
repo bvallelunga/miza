@@ -9,10 +9,10 @@
     "COMMAND": {
       "required": true
     },
-    "HEROKU_API_TOKEN": {
+    "INTERCOM": {
       "required": true
     },
-    "INTERCOM": {
+    "INTERCOM_KEY": {
       "required": true
     },
     "MIXPANEL": {
@@ -24,15 +24,31 @@
     "PORT": {
       "required": true
     },
+    "PIPELINE": {
+      "required": true
+    },
     "STRIPE": {
       "required": true
     },
+    "STRIPE_PUBLIC": {
+      "required": true
+    },
     "ADS_DOMAIN": {
+      "required": true
+    },
+    "WEB_DOMAIN": {
+      "required": true
+    },
+    "NODE_ENV": {
       "required": true
     }
   },
   "formation": {
     "tracking_worker": {
+      "quantity": 1,
+      "size": "free"
+    },
+    "workers": {
       "quantity": 1,
       "size": "free"
     },
