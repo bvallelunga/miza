@@ -4,8 +4,8 @@ moment = require "moment"
 module.exports = require("../template") (job)-> 
   date = moment().subtract(1, "month")
   
-  if CONFIG.is_prod and date.date() != 1
-    return done "Not the first of the month!"
+  if CONFIG.is_prod and date.date() != 5
+    return done "Not the 5th of the month!"
    
   LIBS.models.Publisher.findAll({
     where: {
@@ -25,6 +25,9 @@ module.exports = require("../template") (job)->
       publisher.reports({
         paid_at: null
         interval: "day"
+        created_at: {
+          $lte: date.endOf("month").toDate()
+        }
       }).then (reports)->
         stripe_owed = Math.floor reports.totals.owed * 100
         amount_owed = stripe_owed / 100
