@@ -56,8 +56,8 @@ require("../startup") true, ->
   }, require("./intercom/user")
   
   
-  # 5th of the month
-  agenda.every '0 0 5 * *', 'stripe.charge', {}, job_config
+  # 5th of the month: TODO CHANGE TO THE 5th IN 3 DAYS
+  agenda.every '0 0 1 * *', 'stripe.charge', {}, job_config
   
   
   # 1st of the Week
