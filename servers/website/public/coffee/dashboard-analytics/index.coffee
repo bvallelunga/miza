@@ -31,11 +31,13 @@ class ReportsDashboard
   metrics: (start, end, clear=true)->
     @start = start
     @end = end
+    days = moment.duration(end-start).asDays()
     today = new Date()
     
     if clear
       @clear_metrics()
-    
+      
+    $(".warning").toggle days < 2
     $(".fa-calendar").hide()
     $(".fa-refresh").show()
 
@@ -66,8 +68,8 @@ class ReportsDashboard
   
   
   load_default: ->
-    $(".range-display .text").text "Today"
-    @start = moment().startOf("day").toDate()
+    $(".range-display .text").text "This Month"
+    @start = moment().startOf("month").toDate()
     @end = moment().endOf("day").toDate()
     @metrics @start, @end
     
