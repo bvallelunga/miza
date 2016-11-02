@@ -1,44 +1,6 @@
 @import '../compless/all';
 @import '../global/colors';
 
-.date-picker-wrapper {
-  background: white;
-  border: solid 2px #F3F3F3;
-  margin-top: -8px;
-  .box-shadow(30px 30px 20px white);
-  .border-radius(0 5px 5px 5px);
-  
-  .shortcuts {
-    a {
-      margin: 0 2px;
-    }
-  }
-  
-  .month-wrapper {
-    border: none;
-  }
-  
-  &.no-topbar {
-    padding-top: 0;
-  }
-  
-  .footer {
-    padding-top: 6px;
-  }
-  
-  .date-range-length-tip {
-    background: black;
-    color: white;
-    padding: 5px 8px;
-    margin-top: -15px;
-    margin-left: -10px;
-    
-    &:after {
-      border-top-color: black;
-    }
-  }
-}
-
 .reports {
   padding: 100px 0;
   width: 1150px;
@@ -54,24 +16,6 @@
     position: absolute;
     top: 10px;
     left: 10px;
-    background: white;
-    z-index: 2;
-    cursor: pointer;
-    display: inline-block;
-    padding: 8px 12px;
-    min-width: 70px;
-    border: solid 2px #F3F3F3;
-    .border-radius(5px);
-    
-    .fa {
-      margin-right: 8px;
-      color: @text_weak;
-    }
-    
-    &.open {
-      border-bottom: 0;
-      .border-radius(5px 5px 0 0);
-    }
   }
    
   a {

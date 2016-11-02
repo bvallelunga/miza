@@ -18,12 +18,11 @@ module.exports.logs = (req, res, next)->
       return b_date - a_date
   
   
-module.exports.metrics = (req, res, next)->
-  month_ago = LIBS.helpers.past_date "month", req.query.date
-  
+module.exports.metrics = (req, res, next)->  
   req.publisher.reports({
     created_at: {
-      $gte: month_ago
+      $gte: new Date req.query.start_date
+      $lte: new Date req.query.end_date
     }
     $or: [
       {

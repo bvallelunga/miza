@@ -46,9 +46,13 @@ module.exports.get_dashboard = (req, res, next)->
       js.push "modal", "range-slider"
       css.push "range-slider"
 
-    when "analytics", "billing"
-      js.push "dashboard-analytics", "tooltip"
-      css.push "dashboard-analytics", "tooltip"
+    when "analytics"
+      js.push "dashboard-analytics", "tooltip", "date-range"
+      css.push "tooltip", "date-range"
+      
+    when "billing"
+      js.push "dashboard-billing", "tooltip"
+      css.push "tooltip"
       
   
   Promise.resolve().then ->

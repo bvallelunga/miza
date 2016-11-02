@@ -101,6 +101,27 @@
   }
 }
 
+.analytics-dashboard {
+  .date-picker-wrapper.date-dropdown {
+    right: 0 !important;
+    left: inherit !important;
+    .border-radius(5px 0 5px 5px);
+    .box-shadow(-30px 30px 20px white);
+  }
+  
+  
+  .range-display {
+    position: absolute;
+    top: 0;
+    right: 0;
+    
+    &.open {
+      border-bottom: 0;
+      .border-radius(5px 5px 0 0);
+    }
+  }
+}
+
 .metrics {
   margin-bottom: 65px;
   .clearfix();

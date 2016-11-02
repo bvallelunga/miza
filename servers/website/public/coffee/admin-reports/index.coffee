@@ -16,15 +16,15 @@ class ReportsDashboard
     $.get("/admin/reports/metrics", {
       start_date: start
       end_date: end
-    }).done (data)->
+    }).done (data)=>
       $(".fa-calendar").show()
       $(".fa-refresh").hide()
     
-      display_totals data.totals
-      data.publishers.forEach display_publisher
+      @display_totals data.totals
+      data.publishers.forEach @display_publisher
    
   
-  display_publisher = (publisher)->
+  display_publisher: (publisher)->
     $publisher = $("tr.#{publisher.id}").toggleClass "inactive", not publisher.active
     $publisher.find(".protected").text publisher.protected
     $publisher.find(".owed").text publisher.owed
@@ -33,7 +33,7 @@ class ReportsDashboard
     $publisher.find(".clicks").text publisher.clicks
         
         
-  display_totals = (totals)->     
+  display_totals: (totals)->     
     $(".impressions-metric").html totals.impressions
     $(".clicks-metric").html totals.clicks
     $(".owed-metric").html totals.owed
@@ -81,6 +81,7 @@ class ReportsDashboard
       separator: ' <strong>to</strong> '
       startOfWeek: 'monday'
       language:'en'
+      extraClass: "date-dropdown"
       endDate: moment().format "MMM DD, YYYY"
       customOpenAnimation: (cb)->
         $(@).fadeIn(0, cb)

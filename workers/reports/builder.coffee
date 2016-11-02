@@ -5,12 +5,11 @@ module.exports = require("../template") (job)->
       model: LIBS.models.Industry
       as: "industry"
     }]
-  }).then (publishers)->           
-    Promise.all publishers.map (publisher)->
-      publisher.pending_events().then (report)->      
-        report.fee = publisher.fee
-        report.cpm = publisher.industry.cpm          
-        return report
+  }).map (publisher)->           
+    publisher.pending_events().then (report)->      
+      report.fee = publisher.fee
+      report.cpm = publisher.industry.cpm          
+      return report
         
   .then (reports)->
     return {
