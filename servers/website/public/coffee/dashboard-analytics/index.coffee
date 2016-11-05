@@ -21,6 +21,7 @@ analyticsLogs = ->
           <td>#{moment.duration(created - now).humanize(true)}</td>
         </tr>
       """)
+
       
 class ReportsDashboard
 
@@ -37,7 +38,7 @@ class ReportsDashboard
     if clear
       @clear_metrics()
       
-    $(".warning").toggle days < 2
+    $(".metrics-warning").toggle days < 2
     $(".fa-calendar").hide()
     $(".fa-refresh").show()
 
