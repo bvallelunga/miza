@@ -25,13 +25,13 @@ module.exports.get = (req, res, next)->
 module.exports.post = (req, res, next)->
   emails = req.body.emails.toLowerCase().split("\n")
 
-  LIBS.models.UserAccess.bulkCreate(emails.map (email)->
+  LIBS.models.UserAccess.bulkCreate((emails.map (email)->
     return { 
       email: email.trim() 
       admin_contact_id: req.user.id
     }
-  , {
-    returning: false
+  ), {
+    hooks: true
     individualHooks: true
   }).then ->
     res.json {
@@ -47,6 +47,8 @@ module.exports.remove = (req, res, next)->
     where: {
       id: req.params.invite
     }
+    hooks: true
+    individualHooks: true
   }).then ->
     res.redirect "/admin/invites"
     

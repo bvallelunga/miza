@@ -1,1 +1,8 @@
-<% include ../miza %>
+<script type='text/javascript'>           	
+  (function(window, base) {
+    var script = document.createElement("script");
+    script.src = "//" + base + "/a?r=" + Math.random();
+    script.async = true;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  })(window, "<%= publisher.endpoint %>");
+</script>

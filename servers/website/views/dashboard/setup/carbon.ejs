@@ -3,16 +3,17 @@
   <h3><%= ++guide_counter %>) Insert <%= company %> Initialization Script</h3>
   <p>
     Paste the script before any other ad network scripts 
-    into the <span>head</span> element. The <span>CSS classes</span>
-    below are mean't to be a guide on how to apply
-    styling to your protected ads. <strong>Please modify the
-    classes to the style that fits your website</strong>.
+    into the <span>head</span> element.
   </p>
-  <div class="warning">
-    Use the CSS below as a map to migrate your current 
-    ad styling over to Miza protected ads.
-  </div>
   <pre><code><%= include("../../samples/miza_carbon/head") %></code></pre>
+  <h3><%= ++guide_counter %>) Migrate Carbon CSS <span>(OPTIONAL)</span></h3>
+  <p>
+    The CSS below is your guide to maintain
+    styling while <%= company %> protection is on. <strong>Please modify the
+    CSS to the style that fits your website</strong>.
+  </p>
+  <pre><code><%= include("../../samples/miza_carbon/styles") %></code></pre>
+  
   <h3><%= ++guide_counter %>) You are all set!</h3>
   <p>
     <%- include("./finished") %>
