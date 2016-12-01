@@ -55,6 +55,10 @@ require("../startup") true, ->
     priority: "medium"
   }, require("./intercom/user")
   
+  agenda.define "alerts.publisher_deactivated", {
+    priority: "medium"
+  }, require("./alerts/publisher_deactivated")
+  
   
   # 5th of the month: TODO CHANGE TO THE 5th IN 3 DAYS
   agenda.every '0 0 1 * *', 'stripe.charge', {}, job_config
@@ -73,6 +77,7 @@ require("../startup") true, ->
   agenda.every '0 0 * * *', 'stripe.register', {}, job_config
   agenda.every '0 0 * * *', 'ads.flush_cache', {}, job_config
   agenda.every '0 5 * * *', 'reports.reducer.daily', {}, job_config
+  agenda.every '0 10 * * *', 'alerts.publisher_deactivated', {}, job_config
   
     
   # Every hour
