@@ -5,7 +5,7 @@ module.exports = require("../template") (job)->
   date = moment().subtract(1, "month")
   
   if CONFIG.is_prod and date.date() != 5
-    return done "Not the 5th of the month!"
+    return Promise.reject "Not the 5th of the month!"
    
   LIBS.models.Publisher.findAll({
     where: {
