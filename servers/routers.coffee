@@ -3,11 +3,13 @@ module.exports = (srv)->
 
   return {
     
-    website: require("./website")(srv)
+    website: {
+      app: require("./website")(srv)
+    }
     
     ads: {
       app: require("./ads")(srv),
-      prefix: "/" + ads_secret
+      prefix: "/#{ads_secret}"
     }
     
     engine: (req, res, next)->

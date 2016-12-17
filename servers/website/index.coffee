@@ -112,8 +112,8 @@ module.exports = (srv)->
   # Demo Routes
   app.get "/demo", routes.demo.set_user, routes.demo.get_root
   app.get "/demo/wordpress", routes.demo.get_wordpress
-  app.get "/demo/protector", routes.demo.set_user, routes.demo.get_miza
-  app.get "/demo/protector/:demo", routes.demo.set_user, routes.demo.get_miza
+  app.get "/demo/:product", routes.demo.set_user, routes.demo.get_miza
+  app.get "/demo/:product/:demo", routes.demo.set_user, routes.demo.get_miza
   
   
   # Error Handlers

@@ -9,6 +9,18 @@ module.exports = (models)->
         as: "publishers"
       }]
     })
+    demo_publisher_network: models.Publisher.findOne({
+      where: {
+        is_demo: true
+        product: "network"
+      }
+    })
+    demo_publisher_protect: models.Publisher.findOne({
+      where: {
+        is_demo: true
+        product: "protect"
+      }
+    })
     github_user: models.User.findOne({
       where: {
         email: "github@miza.io"
@@ -27,5 +39,10 @@ module.exports = (models)->
   }).then (defaults)->
     defaults.network_ids = defaults.networks.map (network)->
       return network.id
+      
+    defaults.demo_publishers = {
+      protect: defaults.demo_publisher_protect
+      network: defaults.demo_publisher_network
+    }
     
     models.defaults = defaults

@@ -4,11 +4,12 @@ module.exports.up = (sequelize, models)->
   
   Promise.props({
     user: create_user models
-    publisher: create_publisher models
+    publishers: create_publishers models
   }).then (result)->  
-    result.user[0].addPublisher result.publisher[0]
-    result.publisher[0].setOwner result.user[0]
-    result.publisher[0].addNetworks [ 1, 2, 3 ]
+    Promise.each result.publishers, (publisher)->
+      result.user[0].addPublisher publisher[0]
+      publisher[0].setOwner result.user[0]
+      publisher[0].addNetworks [ 1, 2, 3 ]
     
   
 create_user = (models)->
@@ -24,15 +25,29 @@ create_user = (models)->
   })
   
 
-create_publisher = (models)->
-  models.Publisher.findOrCreate({
-    where: {
-      domain: "miza.io"
-    },
-    defaults: {
-      name: "Demo"
-      is_demo: true
-      industry_id: 2
-    }
-  })
+create_publishers = (models)->
+  Promise.all [
+    models.Publisher.findOrCreate({
+      where: {
+        domain: "protect.miza.io"
+      },
+      defaults: {
+        name: "Protect Demo"
+        is_demo: true
+        industry_id: 2
+        product: "protect"
+      }
+    }),
+    models.Publisher.findOrCreate({
+      where: {
+        domain: "network.miza.io"
+      },
+      defaults: {
+        name: "Network Demo"
+        is_demo: true
+        industry_id: 2
+        product: "network"
+      }
+    }) 
+  ]
 

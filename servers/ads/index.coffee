@@ -1,24 +1,26 @@
-express = require 'express'
-routes = require "./routes"
+app = require('express')()
 ejs = require "ejs"
-app = express()
 
 module.exports = (srv)->
+  router = require("./router")(srv)
+
   # Express Setup
-  app.set 'views', __dirname + '/views'
   app.set 'view engine', 'js'
   app.engine 'js', ejs.renderFile
   app.use require("compression")()
   app.use require("cookie-parser")()
   app.use LIBS.bugsnag.requestHandler
+  app.use router.core.auth.has_publisher
+    
   
   # Routes  
-  app.get "/c", routes.auth.has_publisher, routes.protect.carbon, routes.protect.script
+  app.get "/check", router.core.check
+  app.get "/p", router.core.ping
+  app.get "/i", router.core.auth.has_network, router.core.impression
   
-  app.get "/check", routes.auth.has_publisher, routes.core.check
-  app.get "/p", routes.auth.has_publisher, routes.core.ping
-  app.get "/i", routes.auth.has_publisher, routes.auth.has_network, routes.core.impression
-  app.get "/*", routes.auth.has_publisher, routes.auth.has_network, routes.core.router
+  app.use router.engine
+  app.use router.protect.prefix, router.protect.app
+  app.use router.network.prefix, router.network.app
   
   
   # Error Handlers

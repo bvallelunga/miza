@@ -1,6 +1,6 @@
 uglifyJS = require 'uglify-js'
-utils = require "../core/utils"
 proxy = require "./proxy"
+randomstring = require "randomstring"
 
 
 module.exports.carbon = (req, res, next)->
@@ -23,9 +23,9 @@ module.exports.script = (req, res, next)->
       ip_address: req.ip or req.ips
     }
   }).then (count)->
-    res.render "protect/#{req.script}/script", {
+    res.render "#{req.script}/script", {
       enabled: req.publisher.coverage_ratio > Math.random() and count == 0
-      random_slug: utils.random_slug
+      random_slug: randomstring.generate(15)
       publisher: req.publisher
       network: req.network
       networks: req.publisher.networks.filter (network)->
@@ -46,7 +46,7 @@ module.exports.script = (req, res, next)->
     
 
 module.exports.proxy = (req, res, next)->
-  proxy.path(req.get('host'), req.path, req.decoded_path).then (path)->
+  proxy.path(req.get('host'), req.path).then (path)->
     return proxy.downloader path, req.query, req.headers
     
   .then (data)->   

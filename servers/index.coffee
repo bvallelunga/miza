@@ -26,7 +26,7 @@ require("../startup") true, ->
   routers = require("./routers")(srv)
   app.use routers.engine
   app.use routers.ads.prefix, routers.ads.app
-  app.use routers.website
+  app.use routers.website.app
   
   
   # Server Listen

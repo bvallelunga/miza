@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
       allowNull: false
     }
+    product: { 
+      type: DataTypes.STRING
+      allowNull: false
+    }
     fee: {
       defaultValue: 1
       allowNull: false
@@ -290,6 +294,7 @@ module.exports = (sequelize, DataTypes)->
                 coverage: @coverage_ratio * 100
                 activated: @is_activated
                 card: !!@owner.stripe_card
+                product: @product
                 admin: if @admin_contact? then @admin_contact.name else null
                 total_page_views: numeral(reports.totals.pings_all).format("0[,]000")
                 miza_protection: numeral(reports.totals.protected).format("0[.]0%")
