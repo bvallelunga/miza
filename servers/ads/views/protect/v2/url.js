@@ -32,7 +32,7 @@ API.url = function(url, encode, network, tracking, url_type) {
       url = API.url_append(url)
     }
     
-    url = btoa(url)
+    url = btoa("protect:" + url)
       .replace(/\+/g, '-')
       .replace(/\//g, '_')
       .replace(/\=+$/, '')

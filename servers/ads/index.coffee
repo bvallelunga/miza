@@ -12,14 +12,13 @@ module.exports = (srv)->
   app.use require("cookie-parser")()
   app.use LIBS.bugsnag.requestHandler
   
-  
   # Routes  
-  app.get "/", routes.auth.has_publisher, routes.core.dfp, routes.core.script
-  app.get "/c", routes.auth.has_publisher, routes.core.carbon, routes.core.script
+  app.get "/c", routes.auth.has_publisher, routes.protect.carbon, routes.protect.script
+  
   app.get "/check", routes.auth.has_publisher, routes.core.check
   app.get "/p", routes.auth.has_publisher, routes.core.ping
   app.get "/i", routes.auth.has_publisher, routes.auth.has_network, routes.core.impression
-  app.get "*", routes.auth.has_publisher, routes.auth.has_network, routes.core.proxy
+  app.get "/*", routes.auth.has_publisher, routes.auth.has_network, routes.core.router
   
   
   # Error Handlers
