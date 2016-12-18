@@ -8,7 +8,8 @@ module.exports = require("../template") (job)->
   }).map (publisher)->           
     publisher.pending_events().then (report)->      
       report.fee = publisher.fee
-      report.cpm = publisher.industry.cpm          
+      report.cpm = publisher.industry.cpm   
+      report.product = publisher.product       
       return report
         
   .then (reports)->

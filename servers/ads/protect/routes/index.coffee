@@ -12,28 +12,21 @@ module.exports.script = (req, res, next)->
   if req.publisher.is_demo
     req.publisher.endpoint = req.get("host")
 
-  LIBS.models.OptOut.count({
-    where: {
-      ip_address: req.ip or req.ips
-    }
-  }).then (count)->
-    res.render "#{req.script}/script", {
-      enabled: req.publisher.coverage_ratio > Math.random() and count == 0
-      random_slug: randomstring.generate(15)
-      publisher: req.publisher
-    }, (error, code)->
-      if error?
-        console.error error.stack
-        code = ""
-      
-      if CONFIG.is_dev
-        return res.send code
+  res.render "#{req.script}/script", {
+    enabled: req.publisher.coverage_ratio > Math.random() and req.miza_enabled
+    random_slug: randomstring.generate(15)
+    publisher: req.publisher
+  }, (error, code)->
+    if error?
+      console.error error.stack
+      code = ""
     
-      res.send uglifyJS.minify(code, {
-        fromString: true
-      }).code
-      
-  .catch next
+    if CONFIG.is_dev
+      return res.send code
+  
+    res.send uglifyJS.minify(code, {
+      fromString: true
+    }).code
     
 
 module.exports.proxy = (req, res, next)->

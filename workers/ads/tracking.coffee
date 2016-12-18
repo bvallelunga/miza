@@ -37,6 +37,7 @@ require("../../startup") true, ->
         $screen_height: browser.demensions.height
         $os: device.os.name
         $city: geo_location.city
+        "Product": event.publisher.product
         "Protected": event.protected
         "Asset Type": event.type
         "Network": event.network_name

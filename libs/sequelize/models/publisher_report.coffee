@@ -48,6 +48,7 @@ module.exports = (sequelize, DataTypes)->
         return Number @getDataValue("clicks")
     }
     paid_at: DataTypes.DATE
+    product: DataTypes.STRING
   }, {
     indexes: [
       {

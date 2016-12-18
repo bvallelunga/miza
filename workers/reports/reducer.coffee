@@ -27,6 +27,7 @@ module.exports = (interval)->
           report.interval = interval
           report.publisher_id = publisher.id
           report.created_at = end_date
+          report.product = publisher.product
           
           if report.empty
             return Promise.reject "is_empty"

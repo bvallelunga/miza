@@ -20,3 +20,15 @@ module.exports.has_publisher = (req, res, next)->
     next()
     
   .catch next
+  
+  
+module.exports.has_opted_out = (req, res, next)->
+  LIBS.models.OptOut.count({
+    where: {
+      ip_address: req.ip or req.ips
+    }
+  }).then (count)->
+    req.miza_enabled = count == 0
+    next()
+    
+  .catch next

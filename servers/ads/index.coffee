@@ -6,12 +6,12 @@ module.exports = (srv)->
 
   # Express Setup
   app.engine 'js', ejs.renderFile
-  app.engine 'coffee', ejs.renderFile
   app.engine 'ejs', ejs.renderFile
   app.use require("compression")()
   app.use require("cookie-parser")()
   app.use LIBS.bugsnag.requestHandler
   app.use router.core.auth.has_publisher
+  app.use router.core.auth.has_opted_out
     
   
   # Routes  

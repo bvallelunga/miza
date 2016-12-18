@@ -13,35 +13,27 @@
   API.window = window
   API.document = window.document
   API.host = API.window.location.protocol + "//" + API.window.location.host
-  API.head = API.document.head
   API.protected = false
-  API.impressions = {}
   
   
   // Init Method
   API.init = function() {
     API.fetch_attributes(function() {      
-      if(API.protected) {
-        API.observe_init(API.window)
-        API.observe(API.document.head, API.network)
-        API.observe(API.document.body, API.network)
-      }
+      API.status("p")
       
-      if(API.network) {
-        API.observer_element(API.document, API.document, API.network)
-      } else {
-        API.networks_activate()
+      if(API.in_frame) {
+        API.status("i")
+      } else if(API.protected) {
+        API.observe_init()
       }
     })
   }
   
   
   // Helper Methods
-  <% include ./networks.js %>
   <% include ./helpers.js %>
   <% include ./url.js %>
   <% include ./observe.js %>
-  <% include ./migrator.js %>
   
   
   // Init Miza
