@@ -21,5 +21,4 @@ module.exports.impression = (req, res, next)->
   LIBS.models.Event.queue req, {
     type: "impression"
     publisher: req.publisher
-    network: req.network
   }

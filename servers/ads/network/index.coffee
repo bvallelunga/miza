@@ -1,8 +1,10 @@
 app = require('express')()
-#routes = require "./routes"
+routes = require "./routes"
+core = require "../core"
 
 module.exports = (srv)->
   # Express Setup
+  app.set 'view engine', 'coffee'  
   app.set 'views', __dirname + '/views'
   
   # Routes  

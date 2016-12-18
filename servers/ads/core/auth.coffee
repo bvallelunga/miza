@@ -20,14 +20,3 @@ module.exports.has_publisher = (req, res, next)->
     next()
     
   .catch next
-  
-  
-module.exports.has_network = (req, res, next)->
-  network_id = Number req.query.network
-  
-  for network in req.publisher.networks
-    if network.id == network_id
-      req.network = network
-      return next()
-  
-  return res.end CONFIG.ads_server.denied.message

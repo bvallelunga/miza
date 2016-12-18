@@ -1,6 +1,6 @@
 API.networks = [
   {
-    id: "<%= network.id %>",
+    name: "carbon",
     enabled: <%- enabled %>,
     entry_js: window["_carbonads"],
     entry_url: {
@@ -9,11 +9,11 @@ API.networks = [
     entry_css: {
       base: "carbon",
       query: "#_carbonads_js",
-      container: API.id + "_<%= network.id %>_c",
+      container: API.id + "_c",
       container_flush: "#carbonads",
       parent: true,
-      duplicates_regex: new RegExp(API.id + "_<%= network.id %>_[0-9]"),
-      duplicates: "div[id*=" + API.id + "_<%= network.id %>_], div#carbonads"
+      duplicates_regex: new RegExp(API.id + "_[0-9]"),
+      duplicates: "div[id*=" + API.id + "_], div#carbonads"
     },
     tester_url: /(carbon)|(fusionads)|(buysellads)|(adsafeprotected)/gi
   }
@@ -27,7 +27,7 @@ API.networks_activate = function() {
     }
     
     if(network.enabled) {
-      API.window[API.id + "_" + network.id] = network.entry_js
+      API.window[API.id] = network.entry_js
       API.network_init(network)
       API.network_script(network)
     }
@@ -78,13 +78,13 @@ API.network_script = function(network) {
     }
 
     var src = old_script.src || old_script.attributes["data-rocketsrc"].value
-    script.src = API.url(src, true, network) + "&script=true&" + src.split("?")[1]
-    script.id = API.id + "_" + network.id + "_js"
+    script.src = API.url(src, true) + "&script=true&" + src.split("?")[1]
+    script.id = API.id + "_js"
     
     old_script.parentNode.replaceChild(script, old_script) 
   } else {
     if(network.enabled) {
-      script.src = API.url(network.entry_url.url, false, network)
+      script.src = API.url(network.entry_url.url, false)
       
     } else {
       script.src = atob(network.entry_url.url) 
@@ -120,8 +120,8 @@ API.network_fallback = function(network) {
       }
       
       var parent_node = API.document.querySelector(old_path)
-      script.src = API.url(old_script.src, true, network) + "&script=true&" + old_script.src.split("?")[1]
-      script.id = API.id + "_" + network.id + "_js"
+      script.src = API.url(old_script.src, true) + "&script=true&" + old_script.src.split("?")[1]
+      script.id = API.id + "_js"
       parent_node.appendChild(script)
       
       API.network_flush(network)

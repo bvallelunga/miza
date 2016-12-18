@@ -9,7 +9,6 @@ module.exports.up = (sequelize, models)->
     Promise.each result.publishers, (publisher)->
       result.user[0].addPublisher publisher[0]
       publisher[0].setOwner result.user[0]
-      publisher[0].addNetworks [ 1, 2, 3 ]
     
   
 create_user = (models)->

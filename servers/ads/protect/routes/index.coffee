@@ -4,14 +4,8 @@ randomstring = require "randomstring"
 
 
 module.exports.carbon = (req, res, next)->
-  LIBS.models.Network.find({
-    where: {
-      slug: "carbon"
-    }
-  }).then (network)->
-    req.script = "carbon"
-    req.network = network
-    next()
+  req.script = "carbon"
+  next()
 
 
 module.exports.script = (req, res, next)->
@@ -27,9 +21,6 @@ module.exports.script = (req, res, next)->
       enabled: req.publisher.coverage_ratio > Math.random() and count == 0
       random_slug: randomstring.generate(15)
       publisher: req.publisher
-      network: req.network
-      networks: req.publisher.networks.filter (network)->
-        return network.is_enabled
     }, (error, code)->
       if error?
         console.error error.stack
@@ -51,7 +42,7 @@ module.exports.proxy = (req, res, next)->
     
   .then (data)->   
     if data.media == "asset" and not data.cached
-      return proxy.modifier data, req.publisher, req.network, req.query
+      return proxy.modifier data, req.publisher, req.query
         
     return data
     
@@ -79,7 +70,6 @@ module.exports.proxy = (req, res, next)->
         type: "click"
         asset_url: data.href
         publisher: req.publisher
-        network: req.network
       })
       
   

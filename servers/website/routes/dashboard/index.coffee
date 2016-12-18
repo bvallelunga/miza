@@ -58,11 +58,6 @@ module.exports.get_dashboard = (req, res, next)->
   Promise.resolve().then ->
     if dashboard != "setup"
       return Promise.resolve()
-      
-    res.locals.networks = {}
-    
-    for network in LIBS.models.defaults.networks
-      res.locals.networks[network.slug] = network
   
   .then ->
     if dashboard != "members"

@@ -21,18 +21,11 @@ module.exports.get_miza = (req, res, next)->
   req.publisher = LIBS.models.defaults.demo_publishers[req.params.product]
   req.publisher.endpoint = "#{req.publisher.key}.#{host}"
   
-  LIBS.models.Network.findAll().then (networks)->
-    networks_dict = {}
-    
-    for network in networks
-      networks_dict[network.slug] = network
-  
-    res.render "demo/#{if req.params.demo? then "tester" else "demo"}", {
-      publisher: req.publisher
-      product: req.params.product
-      demo: req.params.demo
-      css: req.css.renderTags "demo"
-      title: "Miza Demo"
-      user: req.user
-      networks: networks_dict
-    }
+  res.render "demo/#{if req.params.demo? then "tester" else "demo"}", {
+    publisher: req.publisher
+    product: req.params.product
+    demo: req.params.demo
+    css: req.css.renderTags "demo"
+    title: "Miza Demo"
+    user: req.user
+  }

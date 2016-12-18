@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes)->
-
+  
   return sequelize.define "Network", {
     name: { 
       type: DataTypes.STRING

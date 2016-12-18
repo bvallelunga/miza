@@ -11,7 +11,7 @@ API.migrator = function(element, parent, network) {
   if (!network || !url_type) return element
     
   var original = element
-  var url = API.url(src, true, network, false, url_type)
+  var url = API.url(src, true, false, url_type)
   
   if(tag_name == "a") {
     url += "&link=true"
