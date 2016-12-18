@@ -8,9 +8,9 @@ module.exports = (headers, params)->
     new_headers["x-mh-X-#{header}"] = value
     
   params.apiver = "502"
-  params.pub = "1100029438"
-  params.adspace = "130209793"
-  params.divid = "smt-130209793"
+  params.pub = "0"
+  params.adspace = "0"
+  params.divid = "smt-0"
   params.coppa = "1"
   
   if not params.format?

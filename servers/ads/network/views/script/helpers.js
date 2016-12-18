@@ -17,7 +17,7 @@ API.iframe = function(element) {
   }
   
   var iframe = document.createElement('iframe')
-  var random = Math.random().toString(36).substring(7)
+  var random = "f" + Math.random().toString(36).substring(7)
   
   iframe.style.outline = "none";
   iframe.style.border = "solid 1px #ccc";
