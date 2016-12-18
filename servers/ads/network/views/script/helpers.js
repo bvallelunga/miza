@@ -1,12 +1,33 @@
 API.iframe = function(element) {
+  var parent = element.parentNode
+  var width = element.offsetWidth || parent.offsetWidth
+  var height = element.offsetHeight || parent.offsetHeight
+  
+  if(width == 0 || height == 0) {
+    var classNames = API.to_array(parent.classList)
+    
+    classNames.forEach(function(className) {     
+      var dems = new RegExp("([0-9]+)x([0-9]+)", "i").exec(className) || []
+      
+      if(dems.length == 3) {
+        width = dems[1]
+        height = dems[2]
+      }
+    })
+  }
+  
   var iframe = document.createElement('iframe')
+  var random = Math.random().toString(36).substring(7)
+  
   iframe.style.outline = "none";
   iframe.style.border = "solid 1px #ccc";
-  iframe.width = "100%";
-  iframe.height = "100%";
+  iframe.width = width;
+  iframe.height = height;
+  iframe.className = random
   iframe.src = API.url("a", false, true, {
-    w: element.parentNode.offsetWidth,
-    h: element.parentNode.offsetHeight
+    width: width,
+    height: height,
+    frame: random
   })
   return iframe
 }
@@ -15,14 +36,14 @@ API.iframe = function(element) {
 API.blocker_check = function(window, callback) {
   var test = document.createElement('div')
   test.innerHTML = '&nbsp;'
-  test.className = 'adsbox googleads carbonads'
+  test.className = 'adsbox googleads carbonads adsbygoogle'
   window.document.body.appendChild(test)
   
   window.setTimeout(function() {
     var ghostry = API.document.querySelector("#ghostery-box")
     API.protected = test.offsetHeight == 0 || !!ghostry
-    if(callback) callback(API.protected)
     test.remove()
+    if(callback) callback(API.protected)
   }, 300)
 }
 

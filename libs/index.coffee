@@ -14,6 +14,7 @@ module.exports = {
   slack: require "./slack"
   helpers: require "./helpers"
   emails: require "./emails"
+  exchanges: require "./exchanges"
   init: ->
     @sequelize().then (models)=>
       @models = models

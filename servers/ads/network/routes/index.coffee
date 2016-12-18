@@ -20,6 +20,22 @@ module.exports.script = (req, res, next)->
     res.send uglifyJS.minify(code, {
       fromString: true
     }).code
+    
+    
+module.exports.ad_frame = (req, res, next)->  
+  LIBS.exchanges.smaato(req.headers, {
+    ref: req.get('referrer')
+    width: req.query.width
+    height: req.query.height
+    devip: req.ip or req.ips
+  }).then (response)->
+    console.log response
+    res.render "ad/frame"
+    
+  .catch ->
+    res.render "ad/remove", {
+      frame: req.query.frame
+    }
       
       
 module.exports.notfound = (req, res, next)->

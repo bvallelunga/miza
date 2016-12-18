@@ -1,5 +1,5 @@
 API.observables = [
-  ".adsbygoogle"
+  ".adsbygoogle", ".dp-ad-chrome iframe"
 ].join(",")
 
 
@@ -23,6 +23,13 @@ API.start_observing = function() {
     childList: true,
     subtree: true
   })
+  
+  window.addEventListener("message", function(event) {
+    if(event.data.name == "removeframe") {
+      var element = API.document.querySelector("." + event.data.frame)
+      element.parentNode.parentNode.removeChild(element.parentNode)
+    }
+  }, false);
 }
 
 

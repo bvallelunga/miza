@@ -1,3 +1,8 @@
 module.exports = (err, req, res, next)->
-  console.error err.stack   
+  if CONFIG.is_prod
+    LIBS.bugsnag.notify err
+  
+  else
+    console.error err.stack or err
+  
   res.send CONFIG.ads_server.denied.message

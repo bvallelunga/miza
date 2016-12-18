@@ -10,6 +10,7 @@ module.exports = (srv)->
   
   # Routes  
   app.get "/", routes.script
+  app.get "/a", routes.ad_frame
 
   app.use "/*", routes.notfound
   
