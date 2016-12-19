@@ -26,7 +26,7 @@ module.exports = require("../template") (job)->
       day2 = reports.all[0].impressions
       change_pct = ((day2 - day1) / day1) * 100
     
-      if change_pct < -20
+      if change_pct < -70
         LIBS.slack.message {
           text: "ALERT: #{publisher.name} had #{Math.floor Math.abs change_pct}% less impressions yesterday. Something may be wrong! <#{CONFIG.web_server.host}/dashboard/#{publisher.key}/analytics|Publisher Analytics>"
         }
