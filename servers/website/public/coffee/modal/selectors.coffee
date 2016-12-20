@@ -9,5 +9,5 @@ $ ->
     
     setTimeout ->    
       $(".container").removeClass("large-2")
-      $("form").fadeIn 250
+      $(".finish").fadeIn 250
     , 300

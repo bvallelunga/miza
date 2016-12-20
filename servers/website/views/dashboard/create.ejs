@@ -4,44 +4,61 @@
   <% include ../includes/logo %>
   <div class="preselect">
     <span>
-      Please select a Miza product. If you are a<br>
-      Carbon user please select Miza Protect.
+      Please select a Miza product. <strong>If you are a<br>
+      Carbon user select Miza Protect.</strong>
     </span>
     <div class="selectors">
       <div class="select" data-select="network">
         <div class="fa fa-globe"></div>
-        <div class="name">Miza Network</div>
+        <div class="name">NETWORK</div>
+        <div class="desc">
+          Show ads from Miza's Network<br>when an Ad Blocker exists.
+        </div>
+        <div class="pricing">
+          Payout from Miza Network
+        </div>
       </div>
       <div class="select" data-select="protect">
         <div class="fa fa-shield"></div>
-        <div class="name">Miza Protect</div>
+        <div class="name">PROTECT</div>
+        <div class="desc">
+          Protect your existing ad<br>network from Ad Blockers.
+        </div>
+        <div class="pricing">
+          Pay for Protected Impressions
+        </div>
       </div>
     </div>
   </div>
-  <form class="hidden" class="form" method="POST" action="/dashboard/new">
-    <% include ../includes/csrf %>
-    <input class="select_value" type="hidden" name="publisher_product" required/>
-    <input class="name top" type="text" name="publisher_name" placeholder="Publisher Name" required/>
-    <input class="email" type="url" name="publisher_domain" placeholder="http://publisher.com" required/>
-    <div class="group publisher_industry">
-      <div class="fa fa-sort"></div>
-      <select class="input" name="publisher_industry" required>
-        <option disabled="true" selected>Select Industry</option>
-        <% industries.forEach(function(industry) { %>
-          <option value="<%= industry.id %>"><%= industry.name %></option>
-        <% }) %>
-      </select>
-    </div>
-    <div class="group">
-      <div class="fa fa-sort"></div>
-      <select class="input bottom" name="publisher_miza_endpoint" required>
-        <option value="false">Not hosted on Github</option>
-        <option value="true">Using Github hosting</option>
-      </select>
-    </div>
-    <button class="button" type="submit">Create Publisher Account</button>
-    <div class="error"></div>
-  </form>
+  <div class="finish hidden">
+    <span>
+      Almost done! Just need a couple<br>more details about your account.
+    </span>
+    <form class="form" method="POST" action="/dashboard/new">
+      <% include ../includes/csrf %>
+      <input class="select_value" type="hidden" name="publisher_product" required/>
+      <input class="name top" type="text" name="publisher_name" placeholder="Publisher Name" required/>
+      <input class="email" type="url" name="publisher_domain" placeholder="http://publisher.com" required/>
+      <div class="group publisher_industry">
+        <div class="fa fa-sort"></div>
+        <select class="input" name="publisher_industry" required>
+          <option disabled="true" selected>Select Industry</option>
+          <% industries.forEach(function(industry) { %>
+            <option value="<%= industry.id %>"><%= industry.name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="group">
+        <div class="fa fa-sort"></div>
+        <select class="input bottom" name="publisher_miza_endpoint" required>
+          <option value="false">Not hosted on Github</option>
+          <option value="true">Using Github hosting</option>
+        </select>
+      </div>
+      <button class="button" type="submit">Create Publisher Account</button>
+      <div class="error"></div>
+    </form>
+  </div>
 </div>
 <% include ../includes/footer %>
 <% include ../includes/end %>

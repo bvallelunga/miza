@@ -159,8 +159,8 @@ footer {
     .select {
       position: relative;
       cursor: pointer;
-      width: 180px;
-      padding: 15px 20px;
+      width: 240px;
+      padding: 15px 10px;
       margin: 20px 20px;
       text-align: center;
       background: #FDFDFD;
@@ -170,19 +170,37 @@ footer {
       
       &:hover {
         border-color: @blue;
+        
+        .pricing {
+          background: @blue;
+          color: white;
+        }
       }
       
       .fa {
-        margin: 30px 0;
+        margin: 15px 0;
         font-size: 4em;
         color: @blue;
         text-shadow: 0 1px 0 rgba(0,0,0,0.15);
       }
       
       .name {
-        margin-top: 20px;
+        margin-top: 15px;
         font-size: 1.2em;
         font-weight: bold;
+      }
+      
+      .desc {
+        font-size: 1em;
+        margin-top: 2px;
+        font-weight: lighter;
+      }
+      
+      .pricing {
+        margin: 30px -10px -15px -10px;
+        padding: 15px 0;
+        font-size: 1.1em;
+        background: rgba(0,0,0,0.05);
       }
     }
   }
