@@ -18,12 +18,11 @@
   
   // Init Method
   API.init = function() {
-    API.fetch_attributes(function() {      
-      API.status("p")
-      
+    API.fetch_attributes(function() {            
       if(API.in_frame) {
         API.status("i")
       } else if(API.protected) {
+        API.status("p")
         API.observe_init()
       }
     })

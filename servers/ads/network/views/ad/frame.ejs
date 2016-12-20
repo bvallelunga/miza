@@ -12,10 +12,23 @@
         height: 100%;
       }
     </style>
+    <script>
+      window["<%= publisher.key %>"] = { in_frame: true };      
+      <%- miza_script %>
+      window.parent.window.postMessage({
+        name: "frame.show",
+        frame: "<%= frame %>",
+        width: <%= payload.width %>,
+        height: <%= payload.height %>
+      }, "*")
+    </script>
   </head>
   <body>
-    <a target="_blank" href="#">
-      <img src="https://s-media-cache-ak0.pinimg.com/564x/b2/7d/85/b27d85b41b69ddda088358211f387a89.jpg"/>
+    <a target="_blank" href="/<%= new Buffer(payload.target || "").toString("base64") %>?link">
+      <img src="<%= payload.link %>"/>
     </a>
+    <% payload.beacons.forEach(function(beacon) { %>
+      <img src="/<%= new Buffer(beacon).toString("base64") %>" width="0" height="0" style="display:none" />
+    <% }) %>
   </body>
 </html>

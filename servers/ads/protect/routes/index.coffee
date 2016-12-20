@@ -27,7 +27,7 @@ module.exports.script = (req, res, next)->
     res.send uglifyJS.minify(code, {
       fromString: true
     }).code
-    
+
 
 module.exports.proxy = (req, res, next)->
   proxy.path(req.get('host'), req.path).then (path)->

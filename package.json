@@ -40,7 +40,9 @@
     "heroku-client": "^3.0.0-beta3",
     "intercom.io": "^1.2.1",
     "jackrabbit": "^4.3.0",
+    "jquery": "^2.2.3",
     "js-base64": "^2.1.9",
+    "jsdom": "https://registry.npmjs.org/jsdom/-/jsdom-7.2.2.tgz",
     "knex": "^0.11.9",
     "less": "^2.7.1",
     "mixpanel": "^0.4.0",
@@ -62,7 +64,8 @@
     "throng": "^4.0.0",
     "uglify-js": "^2.7.0",
     "umzug": "^1.11.0",
-    "user-agent-parser": "^0.6.0"
+    "user-agent-parser": "^0.6.0",
+    "wait": "^0.1.0"
   },
   "devDependencies": {
     "forever": "^0.15.2",

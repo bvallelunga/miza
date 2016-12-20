@@ -1,10 +1,12 @@
 <html>
   <head>
     <script>
-      window.parent.window.postMessage({
-        name: "removeframe",
-        frame: "<%= frame %>"
-      }, "*");
+      (function(window) {
+        window.parent.window.postMessage({
+          name: "frame.remove",
+          frame: "<%= frame %>"
+        }, "*")
+      })(window)
     </script>
   </head>
 </html>

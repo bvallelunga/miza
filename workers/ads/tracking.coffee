@@ -86,7 +86,7 @@ require("../../startup") true, ->
       return LIBS.models.Event.create event
     
     .then(ack).catch (error)->
-      console.error error
+      console.error error.stack
       ack error
       
       if CONFIG.is_prod

@@ -1,5 +1,6 @@
 uglifyJS = require 'uglify-js'
 randomstring = require "randomstring"
+proxy = require "./proxy"
 
 module.exports.script = (req, res, next)->
   if req.publisher.is_demo
@@ -15,11 +16,18 @@ module.exports.script = (req, res, next)->
       code = ""
     
     if CONFIG.is_dev
-      return res.send code
+      req.miza_script = code
   
-    res.send uglifyJS.minify(code, {
-      fromString: true
-    }).code
+    else
+      req.miza_script = uglifyJS.minify(code, {
+        fromString: true
+      }).code
+    
+    next()
+    
+    
+module.exports.script_send = (req, res, next)->
+  res.send req.miza_script
     
     
 module.exports.ad_frame = (req, res, next)->  
@@ -28,9 +36,13 @@ module.exports.ad_frame = (req, res, next)->
     width: req.query.width
     height: req.query.height
     devip: req.ip or req.ips
-  }).then (response)->
-    console.log response
-    res.render "ad/frame"
+  }).then (payload)->
+    res.render "ad/frame", {
+      publisher: req.publisher
+      miza_script: req.miza_script
+      payload: payload
+      frame: req.query.frame
+    }
     
   .catch (error)->
     console.error error
@@ -39,5 +51,35 @@ module.exports.ad_frame = (req, res, next)->
     }
       
       
-module.exports.notfound = (req, res, next)->
-  return res.end CONFIG.ads_server.denied.message
+module.exports.proxy = (req, res, next)->
+  proxy.path(req.get('host'), req.path).then (path)->
+    return proxy.downloader path, req.query, req.headers
+    
+  .then (data)-> 
+    if data.media == "link"
+      res.redirect data.href
+      
+    else 
+      res.set "Content-Type", data.content_type
+
+      if data.media == "binary"
+        res.end data.content, "binary"
+      
+      else
+        res.send data.content
+      
+    return data
+      
+  .then (data)->
+    if data.to_cache
+      LIBS.redis.set data.key, JSON.stringify data
+
+    if data.media == "link"
+      LIBS.models.Event.queue(req, {
+        type: "click"
+        asset_url: data.href
+        publisher: req.publisher
+      })
+      
+  
+  .catch next

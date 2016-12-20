@@ -9,10 +9,9 @@ module.exports = (srv)->
   
   
   # Routes  
-  app.get "/", routes.script
-  app.get "/a", routes.ad_frame
-
-  app.use "/*", routes.notfound
+  app.get "/", routes.script, routes.script_send
+  app.get "/a", routes.script, routes.ad_frame
+  app.get "/*", routes.proxy
   
   # Export
   return app

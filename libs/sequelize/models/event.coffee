@@ -10,9 +10,6 @@ module.exports = (sequelize, DataTypes)->
     ip_address: { 
       type: DataTypes.STRING
       allowNull: false
-      validate: {
-        isIP: true
-      }
       set: (value)->      
         if value == "::1" or value == "::ffff:127.0.0.1" 
           value = "127.0.0.1"
@@ -21,15 +18,9 @@ module.exports = (sequelize, DataTypes)->
     }
     asset_url: {
       type: DataTypes.TEXT
-      validate: {
-        isUrl: true
-      }
     }
     referrer_url: {
       type: DataTypes.TEXT
-      validate: {
-        isUrl: true
-      }
     }
     protected: { 
       type: DataTypes.BOOLEAN
@@ -81,7 +72,7 @@ module.exports = (sequelize, DataTypes)->
         LIBS.queue.publish "event-queued", {
           type: data.type 
           ip_address: req.ip or req.ips
-          protected: req.query.protected == "true"
+          protected: req.publisher.product == "network" or req.query.protected == "true"
           asset_url: data.asset_url
           product: data.publisher.product
           publisher: data.publisher

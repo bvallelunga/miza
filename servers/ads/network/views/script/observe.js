@@ -25,9 +25,16 @@ API.start_observing = function() {
   })
   
   window.addEventListener("message", function(event) {
-    if(event.data.name == "removeframe") {
+    if(event.data.name == "frame.remove") {
       var element = API.document.querySelector("." + event.data.frame)
       element.parentNode.parentNode.removeChild(element.parentNode)
+    }
+    
+    if(event.data.name == "frame.show") {
+      var element = API.document.querySelector("." + event.data.frame)
+      element.width = event.data.width
+      element.height = event.data.height
+      element.style.display = "block"
     }
   }, false);
 }

@@ -21,8 +21,7 @@ API.iframe = function(element) {
   
   iframe.style.outline = "none";
   iframe.style.border = "solid 1px #ccc";
-  iframe.width = width;
-  iframe.height = height;
+  iframe.style.display = "none";
   iframe.className = random
   iframe.src = API.url("a", false, true, {
     width: width,
