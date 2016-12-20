@@ -151,6 +151,41 @@ footer {
       }
     }
   }
+  
+  .selectors {
+    margin: 10px -10px -10px -10px;
+    .clearfix();
+    
+    .select {
+      position: relative;
+      cursor: pointer;
+      width: 180px;
+      padding: 15px 20px;
+      margin: 20px 20px;
+      text-align: center;
+      background: #FDFDFD;
+      border: solid 2px rgba(0,0,0,0.05);
+      display: inline-block;
+      .border-radius(4px);
+      
+      &:hover {
+        border-color: @blue;
+      }
+      
+      .fa {
+        margin: 30px 0;
+        font-size: 4em;
+        color: @blue;
+        text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+      }
+      
+      .name {
+        margin-top: 20px;
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+    }
+  }
     
   button {
     .border-radius(3px);

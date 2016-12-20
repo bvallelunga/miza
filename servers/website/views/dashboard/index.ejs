@@ -7,7 +7,7 @@
 %>
 <div class="publishers_list">
   <div class="current">
-    <%= publisher.name %>
+    <%= publisher.full_name() %>
     <span class="fa fa-sort"></span>
   </div>
   <div class="publishers">
@@ -25,7 +25,9 @@
     <% } %>
     <% (props.publishers || user.publishers).forEach(function(pub) { %>
       <% if (pub.id != publisher.id) { %>
-        <a class="publisher-link" href="/dashboard/<%= pub.key %>/<%= dashboard %>"><%= pub.name %></a>
+        <a class="publisher-link" href="/dashboard/<%= pub.key %>/<%= dashboard %>">
+          <%= pub.full_name() %>
+        </a>
       <% } %>
     <% }) %>
   </div>

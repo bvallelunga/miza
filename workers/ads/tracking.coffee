@@ -40,8 +40,6 @@ require("../../startup") true, ->
         "Product": event.publisher.product
         "Protected": event.protected
         "Asset Type": event.type
-        "Network": event.network_name
-        "Network ID": event.network_id
         "Publisher ID": event.publisher_id
         "Publisher Name": event.publisher.name
         "Publisher Key": event.publisher.key
@@ -69,7 +67,6 @@ require("../../startup") true, ->
             
           events.unshift {
             type: event.type
-            network_name: event.network_name
             browser: browser.name or "Unknown"
             os: device.os.name or "Unknown"
             created_at: new Date()

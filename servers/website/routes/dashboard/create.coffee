@@ -15,16 +15,22 @@ module.exports.get = (req, res, next)->
   
 module.exports.post = (req, res, next)->
   Publisher = LIBS.models.Publisher 
-  
-  if not req.body.publisher_industry?
-    return next "Please select an industry."
+  industry_id = Number req.body.publisher_industry
+    
+  if not industry_id
+    if req.body.publisher_product == "protect"
+      return next "Please select an industry."
+    
+    else
+      industry_id = null
 
   Publisher.create({
+    product: req.body.publisher_product
     domain: req.body.publisher_domain
     name: req.body.publisher_name
     owner_id: req.user.id
     miza_endpoint: req.body.publisher_miza_endpoint == "true"
-    industry_id: Number req.body.publisher_industry
+    industry_id: industry_id
     admin_contact_id: req.user.admin_contact_id
   }).then (publisher)->
     req.user.addPublisher(publisher).then ->

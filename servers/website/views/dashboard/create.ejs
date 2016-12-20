@@ -1,25 +1,42 @@
 <% include ../includes/start %>
 <% include ../includes/header %>
-<div class="container">
+<div class="container large-2">
   <% include ../includes/logo %>
-  <form class="form" method="POST" action="/dashboard/new">
+  <div class="preselect">
+    <span>
+      Please select a Miza product. If you are a<br>
+      Carbon user please select Miza Protect.
+    </span>
+    <div class="selectors">
+      <div class="select" data-select="network">
+        <div class="fa fa-globe"></div>
+        <div class="name">Miza Network</div>
+      </div>
+      <div class="select" data-select="protect">
+        <div class="fa fa-shield"></div>
+        <div class="name">Miza Protect</div>
+      </div>
+    </div>
+  </div>
+  <form class="hidden" class="form" method="POST" action="/dashboard/new">
     <% include ../includes/csrf %>
+    <input class="select_value" type="hidden" name="publisher_product" required/>
     <input class="name top" type="text" name="publisher_name" placeholder="Publisher Name" required/>
     <input class="email" type="url" name="publisher_domain" placeholder="http://publisher.com" required/>
-    <div class="group">
+    <div class="group publisher_industry">
       <div class="fa fa-sort"></div>
-      <select class="input" name="publisher_miza_endpoint" required>
-        <option value="false">Not hosted on Github</option>
-        <option value="true">Using Github hosting</option>
-      </select>
-    </div>
-    <div class="group">
-      <div class="fa fa-sort"></div>
-      <select class="input bottom" name="publisher_industry" required>
+      <select class="input" name="publisher_industry" required>
         <option disabled="true" selected>Select Industry</option>
         <% industries.forEach(function(industry) { %>
           <option value="<%= industry.id %>"><%= industry.name %></option>
         <% }) %>
+      </select>
+    </div>
+    <div class="group">
+      <div class="fa fa-sort"></div>
+      <select class="input bottom" name="publisher_miza_endpoint" required>
+        <option value="false">Not hosted on Github</option>
+        <option value="true">Using Github hosting</option>
       </select>
     </div>
     <button class="button" type="submit">Create Publisher Account</button>

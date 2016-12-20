@@ -15,7 +15,6 @@ analyticsLogs = ->
       return $("""
         <tr>
           <td>#{log.type}</td>
-          <td>#{log.network_name or ""}</td>
           <td>#{log.browser}</td>
           <td>#{log.os}</td>
           <td>#{moment.duration(created - now).humanize(true)}</td>

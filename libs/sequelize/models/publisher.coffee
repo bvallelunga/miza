@@ -112,6 +112,10 @@ module.exports = (sequelize, DataTypes)->
 
     }
     instanceMethods: {
+      full_name: ->
+        return "#{@name} (#{@product[0].toUpperCase()})"
+      
+      
       extract_domain: (website)->
         domain = url.parse website.toLowerCase()
         hostname = (domain.hostname || domain.pathname).split(".").slice(-2).join(".")
