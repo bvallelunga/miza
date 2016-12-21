@@ -1,4 +1,11 @@
-module.exports = require("../template") (job)-> 
+module.exports = require("../template") {
+  intervals: [
+    ["intercom.publisher", "0 * * * *"]
+  ]
+  config: {
+    priority: "medium"
+  }
+}, (job)-> 
   
   LIBS.models.Publisher.findAll({
     where: {

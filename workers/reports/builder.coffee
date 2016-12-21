@@ -1,4 +1,11 @@
-module.exports = require("../template") (job)-> 
+module.exports = require("../template") {
+  intervals: [
+    ["reports.builder", '* * * * *']
+  ]
+  config: {
+    priority: "medium" 
+  }
+}, (job)-> 
   
   LIBS.models.Publisher.findAll({
     include: [{
@@ -8,8 +15,12 @@ module.exports = require("../template") (job)->
   }).map (publisher)->           
     publisher.pending_events().then (report)->      
       report.fee = publisher.fee
-      report.cpm = publisher.industry.cpm   
-      report.product = publisher.product       
+      report.product = publisher.product  
+      report.cpm = 0
+      
+      if publisher.product == "protect"
+        report.cpm = publisher.industry.cpm   
+     
       return report
         
   .then (reports)->

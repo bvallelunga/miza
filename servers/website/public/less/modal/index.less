@@ -57,10 +57,27 @@ footer {
     font-weight: lighter;
     display: block;
     padding-bottom: 20px;
+    position: relative;
     
     &.red {
       color: @red;
       font-weight: normal;
+    }
+    
+    span {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      top: 50%;
+      margin-top: -25px;
+      margin-left: -55px;
+      cursor: pointer;
+      color: rgba(0,0,0,0.15);
+      text-align: center;
+      
+      &:hover {
+        color: @blue;
+      }
     }
   }
   
@@ -164,7 +181,7 @@ footer {
       margin: 20px 20px;
       text-align: center;
       background: #FDFDFD;
-      border: solid 2px rgba(0,0,0,0.05);
+      border: solid 2px #F1F1F1;
       display: inline-block;
       .border-radius(4px);
       
@@ -200,7 +217,7 @@ footer {
         margin: 30px -10px -15px -10px;
         padding: 15px 0;
         font-size: 1.1em;
-        background: rgba(0,0,0,0.05);
+        background: #F1F1F1;
       }
     }
   }

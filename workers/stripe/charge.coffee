@@ -1,7 +1,15 @@
 moment = require "moment"
 
 
-module.exports = require("../template") (job)-> 
+module.exports = require("../template") {
+  intervals: [
+    ["stripe.charge", '0 0 5 * *']
+  ]
+  config: {
+    concurrency: 1
+    priority: "highest"
+  }
+}, (job)-> 
   date = moment().subtract(1, "month")
   
   if CONFIG.is_prod and date.date() != 5

@@ -1,6 +1,5 @@
 request = require "request"
 jsdom = require "jsdom"
-jQuery = require "jquery"
 wait = require "wait"
 
 
@@ -11,13 +10,13 @@ module.exports = (headers, params)->
       return response
       
     parse_content(response.mediadata).then (payload)->
-      payload.beacons = payload.beacons.concat(response.beacons)
+      payload.beacons = response.beacons #payload.beacons.concat(response.beacons)
       payload.width = response.width
       payload.height = response.height
       
       if not payload.link
         return Promise.reject "No ad available"
-      
+
       return payload
   
   .then (payload)->
@@ -41,9 +40,9 @@ parse_content = (html)->
     jsdom.env """
       <div id="smt-0">#{html}</div>
     """, {
+      scripts: [ "http://code.jquery.com/jquery.js" ]
       userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36"
-      resourceLoader: (resource, callback)->
-        console.log resource.url.href                
+      resourceLoader: (resource, callback)->               
         download_list.push resource        
         resource.defaultFetch (error, content)->
           download_list.shift()
@@ -57,10 +56,8 @@ parse_content = (html)->
       if error? then return rej error 
       
       wait.wait 500, ->
-        wait.waitUntil (-> download_list.length == 0), 500, ->        
-          $ = jQuery(window)
-          
-          collect_content($).then (response)->
+        wait.waitUntil (-> download_list.length == 0), 500, ->          
+          collect_content(window.$).then (response)->
             res response
             window.close()
           
@@ -74,14 +71,18 @@ collect_content = ($)->
     target: null
     link: null
     beacons: []
-    html: $("body").html()
   }
 
   Promise.resolve().then ->
     # Find Link & Target
-    data.target = $("a").attr("href")
-    data.link = $("a img").attr("src")
+    $image = ($("a im, img").filter ->
+      return this.width > 20 and this.height > 20  
+      
+    .eq(0))
     
+    data.link = $image.attr("src")
+    data.target = $image.parents("a").attr("href")
+        
     # Find Beacons
     data.beacons = ($("img").filter ->
       return this.width < 5 and this.height < 5
@@ -102,10 +103,10 @@ fetch_content = (headers, params)->
     new_headers["x-mh-X-#{header}"] = value
     
   params.apiver = "502"
-  params.pub = "0"
-  params.adspace = "0"
-  params.divid = "smt-0"
-  params.dimensionstrict = true
+  params.pub = CONFIG.exchanges.smaato.publisher
+  params.adspace = CONFIG.exchanges.smaato.adspace
+  params.divid = "smt-#{CONFIG.exchanges.smaato.adspace}"
+  params.dimensionstrict = false
   
   if not params.format?
     params.format = "richmedia"

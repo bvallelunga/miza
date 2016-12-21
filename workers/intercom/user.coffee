@@ -1,5 +1,12 @@
-module.exports = require("../template") (job)-> 
-  
+module.exports = require("../template") { 
+  intervals: [
+    ["intercom.user", "0 * * * *"]
+  ]
+  config: {
+    priority: "medium"
+  }
+}, (job)-> 
+
   LIBS.models.User.findAll({
     where: {
       is_demo: false

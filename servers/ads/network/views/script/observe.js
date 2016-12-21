@@ -32,8 +32,9 @@ API.start_observing = function() {
     
     if(event.data.name == "frame.show") {
       var element = API.document.querySelector("." + event.data.frame)
-      element.width = event.data.width
-      element.height = event.data.height
+      var parent = element.parentNode
+      parent.width = element.width = event.data.width
+      parent.height = element.height = event.data.height
       element.style.display = "block"
     }
   }, false);

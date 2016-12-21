@@ -1,4 +1,11 @@
-module.exports = require("../template") (job)-> 
+module.exports = require("../template") {
+  intervals: [
+    ["stripe.register", '0 0 * * *']
+  ]
+  config: {
+    priority: "medium"
+  }
+},  (job)-> 
   data = job.attrs.data or {}
   query = {
     stripe_id: null

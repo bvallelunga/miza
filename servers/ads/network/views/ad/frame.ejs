@@ -24,9 +24,13 @@
     </script>
   </head>
   <body>
-    <a target="_blank" href="/<%= new Buffer(payload.target || "").toString("base64") %>?link">
+    <% if(!!payload.target) { %>
+      <a target="_blank" href="/<%= new Buffer(payload.target).toString("base64") %>?link">
+        <img src="<%= payload.link %>"/>
+      </a>
+    <% } else { %> 
       <img src="<%= payload.link %>"/>
-    </a>
+    <% } %>
     <% payload.beacons.forEach(function(beacon) { %>
       <img src="/<%= new Buffer(beacon).toString("base64") %>" width="0" height="0" style="display:none" />
     <% }) %>

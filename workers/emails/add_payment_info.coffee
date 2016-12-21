@@ -2,7 +2,16 @@ moment = require "moment"
 numeral = require "numeral"
 
 
-module.exports = require("../template") (job)-> 
+module.exports = require("../template") {
+  disabled: true
+  intervals: [
+    ["emails.add_payment_info", "30 0 21 * *"]
+  ]
+  config: {
+    concurrency: 1
+    priority: "medium"
+  }
+}, (job)-> 
   query = {}
   data = job.attrs.data or {}
   billed_on = moment(LIBS.helpers.past_date "month", null, 1).format("MMM D")

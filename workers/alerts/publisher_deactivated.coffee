@@ -1,6 +1,13 @@
 moment = require "moment"
 
-module.exports = require("../template") (job)->  
+module.exports = require("../template") {
+  intervals: [
+    ["alerts.publisher_deactivated", "0 10 * * *"]
+  ]
+  config: {
+    priority: "medium" 
+  }
+}, (job)->  
   end_date = moment().subtract(3, "day")
     .startOf("day")
     .toDate()

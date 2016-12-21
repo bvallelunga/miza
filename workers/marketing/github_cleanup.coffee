@@ -1,4 +1,12 @@
-module.exports = require("../template") (job)-> 
+module.exports = require("../template")  {
+  disabled: true
+  intervals: [
+    ["marketing.github_cleanup"]
+  ]
+  config: {
+    priority: "low" 
+  }
+}, (job)-> 
   LIBS.models.PublisherInvite.findAll({
     include: [{
       model: LIBS.models.Publisher

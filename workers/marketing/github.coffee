@@ -12,7 +12,15 @@ INGNORE_FILES = [
 ]
 
 
-module.exports = require("../template") (job)->   
+module.exports = require("../template") {
+  disabled: true
+  intervals: [
+    ["marketing.github", '0 * * * *']
+  ]
+  config: {
+    priority: "low" 
+  }
+}, (job)->   
   count = job.attrs.count or 1
   repos_dict = {}
   
