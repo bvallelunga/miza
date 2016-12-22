@@ -25,11 +25,17 @@ module.exports.get_dashboard = (req, res, next)->
   dashboard = req.params.dashboard
   dashboard_path = "/dashboard/#{req.publisher.key}"
   dashboards = [
-    "setup", "analytics", "billing", "members", "settings"
+    "setup", "analytics", "members", "settings"
   ]
   ads_domain = CONFIG.ads_server.domain
   dashboard_title = (dashboard.split(' ').map (word) -> 
     return word[0].toUpperCase() + word[1..-1].toLowerCase()).join ' '
+
+  if req.publisher.product == "protect"
+    dashboards.push "billing"
+    
+  if req.publisher.product == "network"
+    dashboards.push "payouts"
 
   if dashboard not in dashboards
     return res.redirect "#{dashboard_path}/analytics"  
@@ -50,7 +56,7 @@ module.exports.get_dashboard = (req, res, next)->
       js.push "dashboard-analytics", "tooltip", "date-range"
       css.push "tooltip", "date-range"
       
-    when "billing"
+    when "billing", "payouts"
       js.push "dashboard-billing", "tooltip"
       css.push "tooltip"
       
@@ -95,7 +101,8 @@ module.exports.get_dashboard = (req, res, next)->
       guide: req.query.new_publisher?
       changelog: true
       props: props
-      billed_on: moment(LIBS.helpers.past_date "month", null, 1).format("MMM D") 
+      billed_on: moment(LIBS.helpers.past_date "month", null, 1).add(4, "day").format("MMM D") 
+      payout_on: moment(LIBS.helpers.past_date "month", null, 1).add(10, "day").format("MMM D") 
     }
     
   .catch next

@@ -1,0 +1,14 @@
+<% if(publisher.owner.stripe_payout == null && !publisher.is_demo) { %>
+<!--
+  <div class="warning orange">
+    <% if(user.id == publisher.owner.id) { %>
+      Thank you for using <%= company %>! At the beginning of the next month you will receive
+      a<br>payout for the ad revenue generate. 
+      <a href="/account/payouts">Add Payout Information</a>
+    <% } else { %>
+      Please ask the account owner to add their payout information. 
+      <a href="mailto:<%= publisher.owner.email %>">Email <%= publisher.owner.name %></a>
+    <% } %>
+  </div>
+-->
+<% } %>

@@ -1,25 +1,17 @@
-<h2>Billing</h2>
+<h2>Payouts</h2>
 <div class="metrics">
-    <div class="core metric tooltip" title="Charges to date. Unpaid charges from previous cycles will be included.">
+    <div class="core metric tooltip" title="Ad revenue generated from this month.">
       <div class="primary owed-metric">---</div>
-      <div class="secondary">Billed on <%= billed_on %></div>
-      <div class="notes">30 Day Money Back Guarantee</div>
+      <div class="secondary">Payout on <%= payout_on %></div>
     </div>
 </div>
-<% if(!publisher.is_demo && publisher.industry.cpm > 0 && publisher.fee == 1) { %>
-  <div class="warning orange">
-    LIMITED TIME OFFER<br>
-    Want to receive a 30% discount? 
-    <a href="#" onclick="Intercom('showNewMessage', 'I heard about the 30% discount and want in. What are next steps?')">Learn more</a>.
-  </div>
-<% } %>
 <div class="billing-table dns">
   <table cellpadding="0" cellspacing="0">
     <thead>
       <th><span>Date</span></th>
       <th><span>Count</span></th>
       <th><span>CPM</span></th>
-      <th><span>Charges</span></th>
+      <th><span>Revenue</span></th>
     </thead>
     <body>
       <tr class="loading">
@@ -35,7 +27,7 @@
 <table class="logs-table">
   <thead>
     <tr>
-      <th>Payment ID</th>
+      <th>Transfer ID</th>
       <th>Amount</th>
       <th>Status</th>
       <th>Method</th>

@@ -15,11 +15,7 @@ module.exports.post = (req, res, next)->
     }
   }).then (user)->  
     if not user?
-      return res.status(400).json {
-        success: false
-        message: "Email address not found"
-        csrf: req.csrfToken()
-      }
+      return next "Email address not found"
       
     random = randomstring.generate({
       length: 5

@@ -18,10 +18,12 @@
         <div class="slider-display"></div>
       </td>
     </tr>
-    <tr>
-      <td class="title">Industry</td>
-      <td><input type="text" value="<%= publisher.industry.name %>" disabled></td>
-    </tr>
+    <% if(publisher.industry) { %>
+      <tr>
+        <td class="title">Industry</td>
+        <td><input type="text" value="<%= publisher.industry.name %>" disabled></td>
+      </tr>
+    <% } %>
     <tr>
       <td class="title">Primary Owner</td>
       <td><input type="text" value="<%= publisher.owner.name %>" disabled></td>

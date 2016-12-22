@@ -3,7 +3,7 @@
     <% if(user.id == publisher.owner.id) { %>
       Thank you for using <%= company %>! If you are happy using us, please add your payment information.<br>
       We will <u>NOT</u> charge you immediately, only at the start of the next billing cycle (<%= billed_on %>). 
-      <a href="/account/card">Add credit card</a>
+      <a href="/account/billing">Add credit card</a>
     <% } else { %>
       Please ask the account owner to add their payment information. 
       <a href="mailto:<%= publisher.owner.email %>">Email <%= publisher.owner.name %></a>

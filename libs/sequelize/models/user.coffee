@@ -43,10 +43,26 @@ module.exports = (sequelize, DataTypes)->
         
       set: (value)->
         LIBS.slack.message {
-          text: "#{@name} updated his payment information"
+          text: "#{@name} updated his billing information"
         }
         
         @setDataValue 'stripe_card', value
+  
+    }
+    stripe_payout: {
+      type: DataTypes.JSONB
+      get: ->
+        card = @getDataValue "stripe_payout"
+        if not card? then return null
+        
+        return "#{card.brand} #{card.last4}"
+        
+      set: (value)->
+        LIBS.slack.message {
+          text: "#{@name} updated his payout information"
+        }
+        
+        @setDataValue 'stripe_payout', value
   
     }
     is_demo: { 
@@ -91,12 +107,20 @@ module.exports = (sequelize, DataTypes)->
           @stripe_id = customer.id
           return @save()
           
-      stripe_set_card: (card)->
+      stripe_billing_card: (card)->
         return LIBS.stripe.customers.update(@stripe_id, {
           source: card.id
         }).then (customer)=>                
           return @update({
             stripe_card: card.card
+          })
+          
+      stripe_payout_card: (card)->
+        return LIBS.stripe.customers.createSource(@stripe_id, {
+          source: card.id
+        }).then (customer)=>                
+          return @update({
+            stripe_payout: card.card
           })
           
       stripe_update: ->

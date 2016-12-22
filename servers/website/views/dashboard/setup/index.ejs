@@ -1,4 +1,3 @@
-<% var counter = 0 %>
 <h2>Setup Guide</h2>
 <span>
   The goal of this guide is to ease the process of installing <%= company %> in your website.
@@ -6,7 +5,7 @@
   out if any changes are required on your end after the setup is complete. 
 </span>
 <% if(!publisher.miza_endpoint) { %>
-  <h3><%= ++counter %>) Add <%= company %> DNS CNAME</h3>
+  <h3>Add <%= company %> DNS CNAME</h3>
   <p>
     Please add this CNAME record to your websites DNS. This will enable traffic to be
     routed to <%= company %> though your domain name which will increase the defensibility
@@ -35,17 +34,24 @@
       </body>
     </table>
   </div>
-  <div class="warning">
+  <div class="warning orange">
     If your site uses HTTPS, please add <a target="_blank" href="http://<%= publisher.endpoint %>"><%= publisher.endpoint %></a>
     to the SSL certificate.<br>Without doing this, most browsers will not load <%= company %> when using HTTPS urls. If you 
     do not have access to your DNS please <a href="#" onclick="Intercom('showNewMessage', 'Sadly I do not have access to my DNS. What is your alternative solution?')">reach out</a>, we have alternative solution ready for you.
   </div>
 <% } %>
-<h3><%= ++counter %>) Select an Ad Network</h3>
-<div class="networks">
-  <div class="network left active" data-guide="carbon">
-    <div class="image" style="background-image: url(/imgs/networks/carbon.png)"></div>
-    <div class="name">Carbon</div>
-  </div>
-</div>
-<% include ./carbon %>
+
+<%- include("./" + publisher.product + "/index") %>
+
+<h3>You are all set!</h3>
+<p>
+  Ready. Set. Go! Deploy the changes to your servers and it's off to the races. 
+  We will automatically track impressions and clicks which
+  can be seen in the <a href="<%= dashboard_path %>/analytics">analytics page</a>. 
+  <br><br>
+  If you want to control what percent of your user base receives <%= company %> protection
+  you can change that with the <span>Coverage</span> setting in the 
+  <a href="<%= dashboard_path %>/settings">settings page</a>.
+  Please <a href="#" onclick="Intercom('showNewMessage', 'I ran into a problem while doing the installation. Please help!')">contact us</a> at any time if problems
+  arise, we will do our best to reach out as soon as possible.
+</p>

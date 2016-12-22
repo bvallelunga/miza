@@ -3,13 +3,13 @@ module.exports.get_root = (req, res, next)->
   css = ["dashboard", "fa"]
   dashboard = req.params.dashboard
   dashboards = [
-    "profile", "notifications", "billing", "password"
+    "profile", "notifications", "billing", "password", "payouts"
   ]
   
   if dashboard not in dashboards
     return res.redirect "/account/profile"  
     
-  if dashboard == "billing"
+  if dashboard in ["billing", "payouts"]
     js = ["dashboard", "card"]
     res.locals.config.stripe_key = CONFIG.stripe.public
   
@@ -24,4 +24,5 @@ module.exports.get_root = (req, res, next)->
 module.exports.profile = require "./profile"
 module.exports.notifications = require "./notifications"
 module.exports.billing = require "./billing"
+module.exports.payouts = require "./payouts"
 module.exports.password = require "./password"

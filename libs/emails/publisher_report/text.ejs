@@ -11,7 +11,7 @@ Miza Protection: <%= numeral(data.report.protected).format("0[.]0%") %>
 Total Page Views: <%= numeral(data.report.pings_all).format("0[,]000") %>
 
 If you are interested in more analytics, head over to your dashboard: <%= host %>/dashboard/<%= data.publisher.key %>/analytics
-<% if(data.report.owed > 0 && data.publisher.owner.id == data.user.id && data.publisher.owner.stripe_card == null) { %>
+<% if(data.publisher.product == "protect" && data.report.owed > 0 && data.publisher.owner.id == data.user.id && data.publisher.owner.stripe_card == null) { %>
 PS: We noticed your account has pending charges that will be processed on <%= data.billed_on %>. If your satisfied with our services, would you mind adding your payment info: <%= host %>/account/card. We provide a 30 day money back guarantee if any concerns arise.
 <% } %>
 -- <%= company %> Support
