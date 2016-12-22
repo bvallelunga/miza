@@ -1390,11 +1390,6 @@
         }
       }
     },
-    "jquery": {
-      "version": "3.1.1",
-      "from": "jquery@latest",
-      "resolved": "https://registry.npmjs.org/jquery/-/jquery-3.1.1.tgz"
-    },
     "js-base64": {
       "version": "2.1.9",
       "from": "js-base64@latest",
@@ -2732,6 +2727,11 @@
       "version": "3.5.1",
       "from": "git+https://github.com/terinjokes/VeryModel.git#old_data",
       "resolved": "git+https://github.com/terinjokes/VeryModel.git#bd56f08bc33cff7fa58001bea6348b7785390349"
+    },
+    "wait": {
+      "version": "0.1.0",
+      "from": "wait@latest",
+      "resolved": "https://registry.npmjs.org/wait/-/wait-0.1.0.tgz"
     },
     "wbuf": {
       "version": "1.7.2",

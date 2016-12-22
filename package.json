@@ -40,7 +40,6 @@
     "heroku-client": "^3.0.0-beta3",
     "intercom.io": "^1.2.1",
     "jackrabbit": "^4.3.0",
-    "jquery": "^2.2.3",
     "js-base64": "^2.1.9",
     "jsdom": "https://registry.npmjs.org/jsdom/-/jsdom-7.2.2.tgz",
     "knex": "^0.11.9",
