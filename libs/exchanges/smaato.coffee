@@ -6,6 +6,8 @@ wait = require "wait"
 module.exports = (headers, params)->
   
   fetch_content(headers, params).then (response)->
+    console.log response
+  
     if response.type != "RICHMEDIA"
       return response
       
@@ -97,7 +99,7 @@ collect_content = ($)->
 
 fetch_content = (headers, params)->
   new_headers = {}
-  headers.host = "dev.miza.io"
+  headers.host = "miza.io"
 
   for header, value of headers
     new_headers["x-mh-X-#{header}"] = value

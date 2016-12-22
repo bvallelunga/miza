@@ -45,6 +45,7 @@ module.exports.ad_frame = (req, res, next)->
     }
     
   .catch (error)->
+    console.log error
     res.render "ad/remove", {
       frame: req.query.frame
     }
