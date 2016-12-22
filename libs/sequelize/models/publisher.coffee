@@ -333,7 +333,7 @@ module.exports = (sequelize, DataTypes)->
         if publisher.endpoint != publisher.previous("endpoint")
           publisher.heroku_add(publisher.endpoint)
           
-        if publisher.is_activated and publisher.changed("is_activated")
+        if not publisher.is_demo and publisher.is_activated and publisher.changed("is_activated")
           publisher.publisher_activated()
             
         if publisher.miza_endpoint != publisher.previous("miza_endpoint")
