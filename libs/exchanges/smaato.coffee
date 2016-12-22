@@ -14,7 +14,7 @@ module.exports = (headers, params)->
       return response
       
     parse_content(response.mediadata).then (payload)->
-      payload.beacons = response.beacons #payload.beacons.concat(response.beacons)
+      payload.beacons = payload.beacons.concat(response.beacons)
       payload.width = response.width
       payload.height = response.height
       
