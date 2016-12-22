@@ -80,14 +80,16 @@
             <td class="<%= publisher.is_activated ? "green" : "red" %>"><%= publisher.is_activated ? "Activated" : "Not Activated" %></td>
             <td><%= publisher.admin_contact ? publisher.admin_contact.name : "" %></td>
             <td>
-              <div class="group">
-                <div class="fa fa-sort"></div>
-                <select class="input only" name="publishers[<%= i %>][industry]" required>
-                  <% industries.forEach(function(industry) { %>
-                    <option value="<%= industry.id %>" <%= industry.id == publisher.industry.id ? "selected" : "" %>><%= industry.name %></option>
-                  <% }) %>
-                </select>
-              </div>
+              <% if(publisher.product == "protect") { %>
+                <div class="group">
+                  <div class="fa fa-sort"></div>
+                  <select class="input only" name="publishers[<%= i %>][industry]" required>
+                    <% industries.forEach(function(industry) { %>
+                      <option value="<%= industry.id %>" <%= industry.id == publisher.industry.id ? "selected" : "" %>><%= industry.name %></option>
+                    <% }) %>
+                  </select>
+                </div>
+              <% } %>
             </td>
             <td>
               <div class="group">
