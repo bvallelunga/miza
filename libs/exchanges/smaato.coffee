@@ -19,7 +19,6 @@ module.exports = (headers, params)->
       payload.height = response.height
       
       if not payload.link
-        console.log payload.html
         return Promise.reject "No ad available"
 
       return payload

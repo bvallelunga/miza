@@ -5,6 +5,9 @@ proxy = require "./proxy"
 module.exports.script = (req, res, next)->
   if req.publisher.is_demo
     req.publisher.endpoint = req.get("host")
+    
+  if not req.cookies.session?
+    res.cookie "session", randomstring.generate(15)
 
   res.render "script/index.js", {
     enabled: req.publisher.coverage_ratio > Math.random() and req.miza_enabled
@@ -30,12 +33,13 @@ module.exports.script_send = (req, res, next)->
   res.send req.miza_script
     
     
-module.exports.ad_frame = (req, res, next)->  
+module.exports.ad_frame = (req, res, next)->      
   LIBS.exchanges.smaato(req.headers, {
     ref: req.get('referrer')
     width: req.query.width
     height: req.query.height
     devip: req.ip or req.ips
+    session: req.cookies
   }).then (payload)->
     res.render "ad/frame", {
       publisher: req.publisher
