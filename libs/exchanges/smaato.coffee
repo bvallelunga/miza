@@ -1,13 +1,15 @@
 request = require "request"
 jsdom = require "jsdom"
 wait = require "wait"
+jQuery = ""
+
+request "http://code.jquery.com/jquery.js", (error, response, body)->
+  jQuery = body
 
 
 module.exports = (headers, params)->
   
-  fetch_content(headers, params).then (response)->
-    console.log response
-  
+  fetch_content(headers, params).then (response)->  
     if response.type != "RICHMEDIA"
       return response
       
@@ -17,55 +19,60 @@ module.exports = (headers, params)->
       payload.height = response.height
       
       if not payload.link
+        console.log payload.html
         return Promise.reject "No ad available"
 
       return payload
   
-  .then (payload)->
-    new Promise (res, rej)->  
-      request {
-        method: "GET"
-        encoding: null
-        url: payload.link
-        followAllRedirects: true
-      }, (error, response, body)->
-        if error? then return rej error
+  .then convert_image
         
-        payload.link = "data:" + response.headers["content-type"] + ";base64," + new Buffer(body).toString('base64')
-        res payload
+
+convert_image = (payload)->
+  new Promise (res, rej)->  
+    request {
+      method: "GET"
+      encoding: null
+      url: payload.link
+      followAllRedirects: true
+    }, (error, response, body)->
+      if error? then return rej error
+      
+      payload.link = "data:" + response.headers["content-type"] + ";base64," + new Buffer(body).toString('base64')
+      res payload
   
 
 parse_content = (html)->
   new Promise (res, rej)->
     download_list = []
-  
-    jsdom.env """
-      <div id="smt-0">#{html}</div>
-    """, {
-      scripts: [ "http://code.jquery.com/jquery.js" ]
-      userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36"
-      resourceLoader: (resource, callback)->               
-        download_list.push resource        
-        resource.defaultFetch (error, content)->
-          download_list.shift()
-          callback error, content
-      
-      features: {
-        FetchExternalResources: ["script", "frame", "iframe"]
-        ProcessExternalResources: ["script"]
-      }
-    }, (error, window)->
-      if error? then return rej error 
-      
-      wait.wait 500, ->
-        wait.waitUntil (-> download_list.length == 0), 500, ->          
-          collect_content(window.$).then (response)->
-            res response
-            window.close()
-          
-          .catch (error)->
-            rej error
-            window.close() 
+    
+    wait.waitUntil (-> jQuery.length > 0), 10, ->  
+      jsdom.env """
+        <div id="smt-0">#{html}</div>
+      """, {
+        src: [ jQuery ]
+        userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36"
+        resourceLoader: (resource, callback)->               
+          download_list.push resource        
+          resource.defaultFetch (error, content)->
+            download_list.shift()
+            callback error, content
+        
+        features: {
+          FetchExternalResources: ["script", "frame", "iframe"]
+          ProcessExternalResources: ["script"]
+        }
+      }, (error, window)->
+        if error? then return rej error 
+        
+        wait.wait 100, ->
+          wait.waitUntil (-> download_list.length == 0), 200, ->        
+            collect_content(window.$).then (response)->
+              res response
+              window.close()
+            
+            .catch (error)->
+              rej error
+              window.close() 
 
 
 collect_content = ($)->
@@ -73,12 +80,16 @@ collect_content = ($)->
     target: null
     link: null
     beacons: []
+    html: $("body").html()
   }
 
   Promise.resolve().then ->
     # Find Link & Target
-    $image = ($("a im, img").filter ->
-      return this.width > 20 and this.height > 20  
+    $image = ($("a img, img").filter ->
+      $this = $(this)
+      width = $this.width() or this.width
+      height = $this.height() or this.height
+      return width > 20 and height > 20  
       
     .eq(0))
     
@@ -87,7 +98,10 @@ collect_content = ($)->
         
     # Find Beacons
     data.beacons = ($("img").filter ->
-      return this.width < 5 and this.height < 5
+      $this = $(this)
+      width = $this.width() or this.width
+      height = $this.height() or this.height
+      return width < 5 and height < 5
     
     .map ->
       return this.src

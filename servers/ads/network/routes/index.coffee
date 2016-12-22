@@ -53,7 +53,10 @@ module.exports.ad_frame = (req, res, next)->
       
 module.exports.proxy = (req, res, next)->
   proxy.path(req.get('host'), req.path).then (path)->
-    return proxy.downloader path, req.query, req.headers
+    return proxy.downloader path, req.query, {
+      referer: req.get('referrer')
+      "user-agent": req.get("user-agent")
+    }
     
   .then (data)-> 
     if data.media == "link"
