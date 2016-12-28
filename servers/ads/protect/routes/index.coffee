@@ -16,6 +16,7 @@ module.exports.script = (req, res, next)->
     enabled: req.publisher.coverage_ratio > Math.random() and req.miza_enabled
     random_slug: randomstring.generate(15)
     publisher: req.publisher
+    network: LIBS.models.defaults.carbon_network
   }, (error, code)->
     if error?
       console.error error.stack
@@ -38,7 +39,7 @@ module.exports.proxy = (req, res, next)->
     
   .then (data)->   
     if data.media == "asset" and not data.cached
-      return proxy.modifier data, req.publisher, req.query
+      return proxy.modifier data, req.publisher
         
     return data
     

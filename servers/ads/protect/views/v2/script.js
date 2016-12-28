@@ -20,7 +20,10 @@
   
   // Init Method
   API.init = function() {
-    API.fetch_attributes(function() {      
+    API.fetch_attributes(function() {
+      // TODO: remove when finished
+      API.protected = true
+      
       if(API.protected) {
         API.observe_init(API.window)
         API.observe(API.document.head, API.network)

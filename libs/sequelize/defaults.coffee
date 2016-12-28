@@ -36,6 +36,11 @@ module.exports = (models)->
       }
     })
     networks: models.Network.findAll()
+    carbon_network: models.Network.findOne({
+      where: {
+        slug: "carbon"
+      }
+    })
   }).then (defaults)->
     defaults.network_ids = defaults.networks.map (network)->
       return network.id

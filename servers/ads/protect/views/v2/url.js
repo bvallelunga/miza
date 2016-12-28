@@ -10,9 +10,9 @@ API.url_attributes = {
 }
 
 
-API.status = function(status) {
+API.status = function(status, network) {
   var img = document.createElement('img')
-  img.src = API.url(status, false, true)
+  img.src = API.url(status, false, network, true)
   img.m_handled = true
   img.style.display = "none"
   document.body.appendChild(img)
@@ -22,7 +22,7 @@ API.status = function(status) {
 }
 
 
-API.url = function(url, encode, tracking, url_type) {  
+API.url = function(url, encode, network, tracking, url_type) {  
   var params = tracking == true ? API.url_params : ""
    
   if(encode != false) {
@@ -40,6 +40,7 @@ API.url = function(url, encode, tracking, url_type) {
 
   return (
     API.base + url + "?" + params +
+    (network ? ("&network=" + network.id) : "") +
     "&protected=" + API.protected + "&"
   )
 }

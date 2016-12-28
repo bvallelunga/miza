@@ -6,6 +6,9 @@ module.exports = (host, path)->
     url = new Buffer(encoded, 'base64').toString("ascii")
     key = "ads_server.cache.#{host}#{path}"
     
+    if not is_url_test.test(url)
+      return Promise.reject "Invalid url"
+    
     if url.slice(0, 2) == "//"
       url = "http:" + url
     

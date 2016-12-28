@@ -1,6 +1,6 @@
 API.networks = [
   {
-    name: "",
+    id: "2",
     enabled: <%- enabled %>,
     entry_js: API.window["adsbygoogle"],
     entry_url: "aHR0cDovL3BhZ2VhZDIuZ29vZ2xlc3luZGljYXRpb24uY29tL3BhZ2VhZC9qcy9hZHNieWdvb2dsZS5qcw==",
@@ -17,19 +17,19 @@ API.networks_activate = function() {
     }
     
     if(network.enabled) {
-      API.window[API.id] = network.entry_js
+      API.window[API.id + "_" + network.id] = network.entry_js
       API.network_init(network)
     }
     
     API.network_script(network)
-    API.status("p")
+    API.status("p", network.id)
   })
 }
 
 
 API.network_script = function(network) {
   var script = API.script()
-  script.src = API.url(network.entry_url, false)
+  script.src = API.url(network.entry_url, false, network.id)
   
   if(!network.enabled) {
     script.src = atob(network.entry_url) 
@@ -47,9 +47,9 @@ API.network_init = function(network) {
     var element = original.cloneNode(true);  
     
     element.id = "" 
-    element.className = API.id
+    element.className = API.id + "_" + network.id
     
-    API.observe(element, network)
+    API.observe(element, network.id)
     original.parentNode.replaceChild(element, original)
   })
 }
@@ -62,7 +62,7 @@ API.fetch_network = function(src) {
     var network = API.networks[i]
     
     if(network.enabled && network.tester_url.test(src)) {
-      return network
+      return network.id
     }
   }
   
