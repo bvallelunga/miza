@@ -1,22 +1,24 @@
 <style type="text/css">
+  <% network = LIBS.models.defaults.carbon_network.id %>
+  
   #carbonads .carbon-wrap,
-  #<%= publisher.key %> .<%= publisher.key %>-wrap {
+  #<%= publisher.key %>_<%= network %> .<%= publisher.key %>_<%= network %>-wrap {
     display: block;
     width: 150px;
   }
   
   #carbonads .carbon-img,
-  #<%= publisher.key %> .<%= publisher.key %>-img {
+  #<%= publisher.key %>_<%= network %> .<%= publisher.key %>_<%= network %>-img {
     display: block;
   }
   
   #carbonads .carbon-img img,
-  #<%= publisher.key %> .<%= publisher.key %>-img img {
+  #<%= publisher.key %>_<%= network %> .<%= publisher.key %>_<%= network %>-img img {
     display: block;
   }
   
   #carbonads .carbon-text,
-  #<%= publisher.key %> .<%= publisher.key %>-text {
+  #<%= publisher.key %>_<%= network %> .<%= publisher.key %>_<%= network %>-text {
     clear: both;
     display: block;
     padding: 10px 0 0;
@@ -26,7 +28,7 @@
   }
   
   #carbonads .carbon-poweredby,
-  #<%= publisher.key %> .<%= publisher.key %>-poweredby {
+  #<%= publisher.key %>_<%= network %> .<%= publisher.key %>_<%= network %>-poweredby {
     display: block;
     color: #ADB0BA;
     font-size: .9em;
