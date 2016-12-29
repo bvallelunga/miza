@@ -19,7 +19,7 @@ module.exports = (headers, params)->
       payload.height = response.height
       
       if not payload.link
-        return Promise.reject "No ad available"
+        return Promise.reject "Miza: Could not parse ad"
 
       return payload
   
@@ -74,8 +74,8 @@ parse_content = (html)->
               window.close() 
 
 
-collect_content = ($)->
-  data = {
+collect_content = ($, data)->
+  data = data or {
     target: null
     link: null
     beacons: []
@@ -86,8 +86,8 @@ collect_content = ($)->
     # Find Link & Target
     $image = ($("a img, img").filter ->
       $this = $(this)
-      width = $this.width() or this.width
-      height = $this.height() or this.height
+      width = parseInt $this.width() or this.width
+      height = parseInt $this.height() or this.height
       return width > 20 and height > 20  
       
     .eq(0))
@@ -98,14 +98,31 @@ collect_content = ($)->
     # Find Beacons
     data.beacons = ($("img").filter ->
       $this = $(this)
-      width = $this.width() or this.width
-      height = $this.height() or this.height
+      width = parseInt $this.width() or this.width
+      height = parseInt $this.height() or this.height
       return width < 5 and height < 5
     
     .map ->
       return this.src
       
     .get())
+     
+    # Find iFrames
+    if not data.link?
+      iframes = ($("iframe").filter ->
+        $this = $(this)
+        width = parseInt $this.width() or this.width
+        height = parseInt $this.height() or this.height
+        return width > 20 and height > 20  
+      
+      .map ->
+        return $(this).contents().find("html").html()
+        
+      .get())
+      
+      if iframes.length > 0
+        $("html").html iframes[0]
+        return collect_content $, data
      
     return data
     

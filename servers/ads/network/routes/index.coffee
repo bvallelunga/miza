@@ -35,14 +35,13 @@ module.exports.script_send = (req, res, next)->
     
 module.exports.ad_frame = (req, res, next)->      
   LIBS.exchanges.smaato({
-    #referer: req.get('referrer')
-    host: CONFIG.web_server.domain
+    referer: req.get('referrer')
     "user-agent": req.get("user-agent")
   }, {
-    #ref: req.get('referrer')
+    ref: req.get('referrer')
     width: req.query.width
     height: req.query.height
-    #devip: req.ip or req.ips
+    devip: req.ip or req.ips
     session: req.cookies
   }).then (payload)->
     res.render "ad/frame", {
@@ -53,7 +52,7 @@ module.exports.ad_frame = (req, res, next)->
     }
     
   .catch (error)->
-    console.log error
+    console.log error.stack or error
     res.render "ad/remove", {
       frame: req.query.frame
     }
