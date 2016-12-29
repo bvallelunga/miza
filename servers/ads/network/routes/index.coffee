@@ -34,11 +34,15 @@ module.exports.script_send = (req, res, next)->
     
     
 module.exports.ad_frame = (req, res, next)->      
-  LIBS.exchanges.smaato(req.headers, {
-    ref: req.get('referrer')
+  LIBS.exchanges.smaato({
+    #referer: req.get('referrer')
+    host: CONFIG.web_server.domain
+    "user-agent": req.get("user-agent")
+  }, {
+    #ref: req.get('referrer')
     width: req.query.width
     height: req.query.height
-    devip: req.ip or req.ips
+    #devip: req.ip or req.ips
     session: req.cookies
   }).then (payload)->
     res.render "ad/frame", {

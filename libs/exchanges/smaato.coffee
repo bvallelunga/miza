@@ -112,7 +112,6 @@ collect_content = ($)->
 
 fetch_content = (headers, params)->
   new_headers = {}
-  headers.host = "miza.io"
 
   for header, value of headers
     new_headers["x-mh-X-#{header}"] = value
