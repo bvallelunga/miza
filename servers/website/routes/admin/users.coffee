@@ -17,3 +17,14 @@ module.exports.get = (req, res, next)->
     }
     
   .catch next
+
+
+module.exports.simulate = (req, res, next)->
+  LIBS.models.User.findById(req.params.user).then (user)->
+    if user.is_admin
+      return Promise.reject "Can not simualte on admin account!"
+    
+    req.session.user = user.id
+    res.redirect "/dashboard"
+    
+  .catch next

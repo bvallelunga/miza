@@ -41,6 +41,7 @@
         <th>Admin Contact</th>
         <th>Access</th>
         <th>Joined</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -55,6 +56,11 @@
           <td><%= user.admin_contact ? user.admin_contact.name : "" %></td>
           <td><%= user.is_admin ? "Admin" : "User" %></td>
           <td><%= moment(user.created_at).format("MMM Do, YYYY") %></td>
+          <td>
+            <% if(!user.is_admin) { %>
+              <a href="/admin/users/<%= user.id %>/simulate">Simulate</a>
+            <% } %>
+          </td>
         </tr>
       <% }) %>
     </tbody>
