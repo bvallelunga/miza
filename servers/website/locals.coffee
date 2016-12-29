@@ -29,6 +29,7 @@ module.exports = (req, res, next)->
   res.locals.logo = CONFIG.general.logo
   res.locals.config = {}
   res.locals.user = req.user or null
+  res.locals.user_simulate = req.session.simulate or false
   res.locals.title_first = true
   res.locals.is_prod = CONFIG.is_prod
   res.locals.changelog = false

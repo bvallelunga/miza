@@ -12,7 +12,7 @@
     
     <!-- Intercom -->
     <script>
-      <% if(!(user && (user.is_admin || user.is_demo))) { %>
+      <% if(!(user && (user.is_admin || user.is_demo || user_simulate))) { %>
         var json = '<%- JSON.stringify(Object.assign(intercom_base, intercom)) %>'
         window.intercomSettings = JSON.parse(json, function (key, value) {
           if (key.indexOf("_at") > -1) {

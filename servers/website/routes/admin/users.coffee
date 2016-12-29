@@ -25,6 +25,7 @@ module.exports.simulate = (req, res, next)->
       return Promise.reject "Can not simualte on admin account!"
     
     req.session.user = user.id
+    req.session.simulate = true
     res.redirect "/dashboard"
     
   .catch next
