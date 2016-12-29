@@ -32,7 +32,7 @@ module.exports.get_dashboard = (req, res, next)->
     return word[0].toUpperCase() + word[1..-1].toLowerCase()).join ' '
 
   if req.publisher.product == "protect"
-    dashboards.push "billing"
+    dashboards.push "abtest", "billing"
     
   if req.publisher.product == "network"
     dashboards.push "payouts"
@@ -48,7 +48,7 @@ module.exports.get_dashboard = (req, res, next)->
       js.push "code"
       css.push "code"
       
-    when "members", "settings"
+    when "members", "settings", "abtest"
       js.push "modal", "range-slider"
       css.push "range-slider"
 
@@ -109,6 +109,7 @@ module.exports.get_dashboard = (req, res, next)->
   
   
 module.exports.create = require "./create"
+module.exports.abtest = require "./abtest"
 module.exports.settings = require "./settings"
 module.exports.analytics = require "./analytics"
 module.exports.billing = require "./billing"

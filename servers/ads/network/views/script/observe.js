@@ -1,5 +1,5 @@
 API.observables = [
-  ".adsbygoogle", ".dp-ad-chrome iframe"
+  ".adsbygoogle", ".dp-ad-chrome iframe", "#_carbonads_js"
 ].join(",")
 
 

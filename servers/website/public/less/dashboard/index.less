@@ -392,6 +392,50 @@
     }
   }
   
+  .slider {
+    padding: 20px 0;
+ 
+    .slider-range {
+      border: none;
+      background: @blue;
+      .box-shadow(none);
+      
+      .noUi-handle {
+        cursor: pointer;
+        .box-shadow(none);
+        
+        &:hover {
+          background: #f9f9f9;
+        }
+      }
+      
+      .noUi-origin {
+        border: solid 1px rgba(0,0,0,0.1);
+        .box-shadow(none);
+      }
+    }
+    
+    .slider-display {
+      background: none;
+      color: @blue;
+    }
+  }
+  
+  &.abtest-dashboard {
+    form {
+      margin-top: 50px;
+      
+      .publisher {
+        margin-bottom: 20px;
+        font-size: 1.2em;
+      }
+      
+      button {
+        margin-bottom: 15px; 
+      }
+    }
+  }
+  
   &.members-dashboard {
     form.invite table td:first-child {
       width: 75%;
@@ -444,45 +488,26 @@
           padding-left: 0;
           .box-shadow(none);
         }
-        
-        &.slider {
-          padding: 20px 0 10px;
-        }
-        
-        .slider-range {
-          width: 80%;
-          float: left;
-          border: none;
-          background: @blue;
-          .box-shadow(none);
-          
-          .noUi-handle {
-            cursor: pointer;
-            .box-shadow(none);
-            
-            &:hover {
-              background: #f9f9f9;
-            }
-          }
-          
-          .noUi-origin {
-            border: solid 1px rgba(0,0,0,0.1);
-            .box-shadow(none);
-          }
-        }
-        
-        .slider-display {
-          width: 15%;
-          float: right;
-          background: none;
-          padding: 0;
-          text-align: right;
-          font-size: 1.2em;
-          color: @blue;
-          margin-top: -3px;
-        }
       } 
-    }  
+    }
+    
+    .slider {
+      padding: 20px 0 10px;
+   
+      .slider-range {
+        width: 80%;
+        float: left;
+      }
+      
+      .slider-display {
+        width: 15%;
+        float: right;
+        padding: 0;
+        text-align: right;
+        margin-top: -3px;
+        font-size: 1.2em;
+      } 
+    }
   }
   
   &.setup-dashboard {

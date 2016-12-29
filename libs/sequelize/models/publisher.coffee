@@ -77,6 +77,7 @@ module.exports = (sequelize, DataTypes)->
         return Number @getDataValue("coverage_ratio")
    
     }
+    abtest: DataTypes.JSONB
   }, {    
     classMethods: {      
       associate: (models)->

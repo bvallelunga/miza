@@ -1,0 +1,26 @@
+<h2>A/B Testing</h2>
+<span>
+  A/B Testing allows you to split the ad traffic between the
+  Protect & Network products without any additional code 
+  changes on your end. To view analytics on the each product,
+  please go to the product's respective analytics page.
+</span>
+<form class="form" method="POST" action="<%= dashboard_path %>/abtest">
+  <% include ../../includes/csrf %>
+  <div class="publisher slider">
+    <div class="publisher a left">
+      <%= publisher.full_name() %>
+      <span class="slider-display value"></span>
+    </div>
+    <div class="publisher b right">
+      <%= networks[0].full_name() %>
+      <span class="slider-display leftover"></span>
+    </div>
+    <div class="clear"></div>
+    <div class="slider-range" data-min="0" data-max="100" data-value="<%= publisher.abtest.coverage * 100 %>"></div>
+    <input class="slider-input" type="hidden" name="coverage" value="<%= publisher.abtest.coverage %>">
+    <input type="hidden" name="alt_publisher" value="<%= networks[0].id %>">
+  </div>
+  <button class="button" type="submit">Update Testing</button>
+  <div class="error"></div>
+</form>

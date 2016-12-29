@@ -104,6 +104,7 @@ module.exports = (srv)->
   app.post "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.create.post
   app.post "/dashboard/:publisher/members/add", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.members.add
   app.post "/dashboard/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.settings.post
+  app.post "/dashboard/:publisher/abtest", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.abtest.post
   
   
   # Github Marketing
