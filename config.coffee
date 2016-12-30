@@ -127,8 +127,8 @@ module.exports = ->
     
     exchanges: {
       smaato: {
-        publisher: "1100029438"
-        adspace: "130209793"
+        publisher: process.env.SMAATO_PUB
+        adspace: process.env.SMAATO_SPACE
       }  
     }
     
