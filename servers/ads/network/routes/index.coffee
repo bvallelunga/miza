@@ -42,7 +42,7 @@ module.exports.ad_frame = (req, res, next)->
     width: req.query.width
     height: req.query.height
     devip: req.ip or req.ips
-    session: req.cookies
+    session: req.cookies.session
   }).then (payload)->
     res.render "ad/frame", {
       publisher: req.publisher
