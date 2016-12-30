@@ -7,7 +7,8 @@ module.exports = (srv)->
   app.set 'views', __dirname + '/views'
   
   # Routes  
-  app.get "/c", routes.carbon, routes.script
+  app.get "/", routes.abtest, routes.script
+  app.get "/c", routes.abtest, routes.script
   app.get "/*", routes.proxy
   
   

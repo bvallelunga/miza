@@ -2,17 +2,30 @@ uglifyJS = require 'uglify-js'
 proxy = require "./proxy"
 randomstring = require "randomstring"
 
+  
+module.exports.abtest = (req, res, next)->
+  abtest = req.publisher.abtest.coverage
+  alt_publisher = req.publisher.abtest.alt_publisher
 
-module.exports.carbon = (req, res, next)->
-  req.script = "carbon"
-  next()
+  if abtest > Math.random()
+    return next()
+    
+  LIBS.models.Publisher.findById(alt_publisher).then (publisher)->
+    endpoint = publisher.endpoint
+    
+    if publisher.is_demo
+      endpoint = "#{publisher.key}.#{CONFIG.web_server.domain}"
+    
+    res.redirect "#{req.protocol}://#{endpoint}"
+    
+  .catch next
 
 
 module.exports.script = (req, res, next)->
   if req.publisher.is_demo
     req.publisher.endpoint = req.get("host")
 
-  res.render "#{req.script}/script", {
+  res.render "carbon/script", {
     enabled: req.publisher.coverage_ratio > Math.random() and req.miza_enabled
     random_slug: randomstring.generate(15)
     publisher: req.publisher
