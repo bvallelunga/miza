@@ -58,8 +58,8 @@ fetch_content = ->
       }, (error, window)->
         if error? then return rej error 
         
-        wait.wait 1000, ->
-          wait.waitUntil (-> download_list.length == 0), 200, ->        
+        wait.wait 100, ->
+          wait.waitUntil (-> download_list.length == 0), 50, ->        
             collect_content(window.$).then (response)->
               res response
               window.close()
