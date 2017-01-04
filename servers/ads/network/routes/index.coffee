@@ -32,18 +32,10 @@ module.exports.script = (req, res, next)->
 module.exports.script_send = (req, res, next)->
   res.send req.miza_script
     
-    
-module.exports.ad_frame = (req, res, next)->      
-  LIBS.exchanges.smaato({
-    #referer: req.get('referrer')
-    "user-agent": req.get("user-agent")
-  }, {
-    #ref: req.get('referrer')
-    width: req.query.width
-    height: req.query.height
-    #devip: req.ip or req.ips
-    session: req.cookies.session
-  }).then (payload)->
+ 
+ 
+module.exports.ad_frame = (req, res, next)->
+  LIBS.exchanges.fetch(req).then (payload)->
     res.render "ad/frame", {
       publisher: req.publisher
       miza_script: req.miza_script
