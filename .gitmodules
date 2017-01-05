@@ -1,3 +1,0 @@
-[submodule "servers/website/public/less/compless"]
-	path = servers/website/public/less/compless
-	url = https://github.com/Laborate/compless.git
