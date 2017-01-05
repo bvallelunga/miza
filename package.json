@@ -8,7 +8,6 @@
     "npm": "3.x.x"
   },
   "scripts": {
-    "start": "coffee server.coffee",
     "prod-deploy": "bash ./scripts/prod_deploy.sh",
     "prepare": "bash ./scripts/npm_prepare.sh",
     "local-setup": "bash ./scripts/local_setup.sh",
