@@ -62,6 +62,7 @@ module.exports.has_publisher = (req, res, next)->
         where: {
           key: req.params.publisher
         }
+        paranoid: false
       })
       
     return null

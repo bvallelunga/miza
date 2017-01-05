@@ -7,6 +7,7 @@ module.exports.get = (req, res, next)->
      is_demo: false
      is_activated: true
     }
+    paranoid: false
     order: [
       ['name', 'ASC']
     ]
@@ -47,6 +48,7 @@ module.exports.metrics = (req, res, next)->
      is_demo: false
      is_activated: true
     }
+    paranoid: false
   }).then (publishers)->    
     return Promise.map publishers, (publisher)->
       return publisher.reports(query, {
