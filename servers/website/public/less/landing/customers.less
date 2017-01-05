@@ -2,6 +2,77 @@
 @import '../global/colors';
 
 .customers {
-  padding: 50px 0;
+  padding: 70px 0 0 0;
+  text-align: center;
+  background: #F9FAFB;
   min-height: 400px;
+  border-bottom: 1px solid #E9EDF2;
+  
+  .container {
+    width: 600px;
+    margin: 0 auto;
+    
+    .view {
+      display: none;
+      
+      &.active {
+        display: block;
+      }
+    }
+  
+    .quote {
+      font-size: 3em;
+      color: @text_weak;
+      margin-bottom: 50px;
+    }
+    
+    .review {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    
+    .author {
+      font-size: 1.5em;
+      color: #8B9BAD;
+      
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+    
+  }
+}
+
+.request_demo {
+  width: 100%;
+  padding: 50px 0;
+  text-align: center;
+  color: white;
+  background: #5f357d;
+  background: -webkit-radial-gradient(circle farthest-corner at right bottom,#682a84 0%,#241668 100%);
+  background: radial-gradient(circle farthest-corner at right bottom,#682a84 0%,#241668 100%);
+  
+  span {
+    font-size: 2em;
+    font-family: "Ubuntu";
+    font-weight: bold;
+  }
+  
+  a {
+    background: white;
+    color: @blue;
+    cursor: pointer;
+    padding: 15px 30px;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-left: 20px;
+    display: inline-block;
+    .border-radius(50px);
+    .box-shadow(0 5px 8px 0 rgba(0,0,0,0.2));
+    .transition();
+    
+    &:hover {
+      .transform(scale(1.05));
+    }
+  }
 }
