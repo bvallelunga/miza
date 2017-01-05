@@ -1,0 +1,36 @@
+<div class="hero">
+  <div class="background"></div>
+  <div class="container">
+    <div class="navigation">
+      <div class="left">
+        <% include ../../includes/logo.ejs %>
+        <div class="shortcuts">
+          <a href="#products">Products</a>
+          <a href="#features">Features</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+      </div>
+      <div class="right">
+        <% include ../../includes/header %>
+      </div>
+    </div>
+    <div class="graphic">
+      <div class="image"></div>
+    </div>
+    <header class="header">
+      <h1>Beating ad blockers<br>made simple.</h1>
+      <h2>
+        In 5 minutes you can have ads magically reappear on your site!
+        Don't let Ad Blockers steal your revenue.
+      </h2>
+      <div class="actionable">
+        <form class="form" method="POST" action="/access/request">
+          <% include ../../includes/csrf %>
+          <input name="email" type="email" placeholder="Enter your email" required/>
+          <button class="button">Request Demo</button>
+        </form>
+      </div>
+    </header>
+    <div class="clear"></div>
+  </div>
+</div>

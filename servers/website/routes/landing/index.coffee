@@ -2,7 +2,7 @@ request = require "request"
 
 
 module.exports.get_root = (req, res, next)->
-  res.render "landing/index", {
+  res.render "landing/home", {
     js: req.js.renderTags "landing", "fa"
     css: req.css.renderTags "landing", "fa"
   }

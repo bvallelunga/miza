@@ -1,5 +1,5 @@
 <% if(changelog) { %>
-  <h1 class="logo"><%= company %></h1>
+  <div class="logo"><%= company %></div>
   <script>
     var HW_config = {
       selector: "h1.logo",
@@ -8,5 +8,5 @@
   </script>
   <script async src="//cdn.headwayapp.co/widget.js"></script>
 <% } else { %>
-  <h1 class="logo"><%= company %><sup>Beta</sup></h1>
+  <div class="logo"><%= company %><sup>Beta</sup></div>
 <% } %>
