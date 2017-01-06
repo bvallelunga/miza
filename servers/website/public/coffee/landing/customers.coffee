@@ -3,6 +3,9 @@ $ ->
   quotes = $(".customers .view")
   index = 0
   
+  if quotes.length < 2
+    return
+  
   setInterval ->
     index++
     
