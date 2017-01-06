@@ -106,18 +106,15 @@
 @transition-property: all;
 @transition-duration: .2s;
 @transition-timing-function: ease;
-@transition-delay: ~"0s";
+@transition-delay: 0s;
+@transition-default: ~"all 0.2s ease 0s";
 
 // unfortunately, for now you can specify only one property with ".transition" mixin
-.transition(
-    @property: @transition-property,
-    @duration: @transition-duration,
-    @timing-function: @transition-timing-function,
-    @delay: @transition-delay) {
-        -webkit-transition: @arguments;
-        -moz-transition: @property, @duration, @timing-function;
-        -o-transition: @arguments;
-        transition: @arguments;
+.transition(@transition: @transition-default) {
+        -webkit-transition: @transition;
+        -moz-transition: @transition;
+        -o-transition: @transition;
+        transition: @transition;
 }
 
 .transition-property(@property: @transition-property) {
