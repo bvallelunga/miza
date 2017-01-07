@@ -37,11 +37,12 @@
     font-size: 1.2em;
     .transition();
     .border-radius(5px);
+    .box-shadow(0 0 20px 2px rgba(0,0,0,0.05));
     
     &:hover, &.active {
       border-color: @blue;
       .transform(scale(1.05));
-      
+
       .pricing {
         background: @blue;
         color: white;
@@ -87,8 +88,7 @@
   .information {
     position: relative;
     display: none;
-    height: 600px;
-    padding: 40px 0 70px;
+    padding: 60px 0 80px;
     border-top: solid 1px rgba(0,0,0,0.5);
     background: rgba(37,139,248,1);
     background: -moz-radial-gradient(center, ellipse cover, rgba(37,139,248,1) 0%, rgba(56,58,175,1) 100%);
@@ -142,6 +142,48 @@
       
       &:hover {
         .transform(scale(1.1));
+      }
+    }
+    
+    .section {
+      display: none;
+      text-align: left;
+      color: white;
+      height: 430px;
+      .clearfix();
+      
+      .graphic {
+        width: 40%;
+        height: 100%;
+        float: right;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+      
+      ul {
+        width: 50%;
+        float: left;
+        
+        li {
+          font-size: 1.25em;
+          margin-bottom: 45px;
+          
+          &:last-child {
+            margin: 0;
+          }
+          
+          strong {
+            color: white;
+            font-size: 1.25em;
+          }
+          
+          div {
+            font-weight: lighter;
+            line-height: 1.8em;
+            color: rgba(255,255,255,0.75);
+          }
+        }
       }
     }
   }

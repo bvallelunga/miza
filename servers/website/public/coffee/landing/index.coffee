@@ -7,6 +7,8 @@ $ ->
     $(".products .product").removeClass "active"
     $(this).addClass "active"
     $(".products .information").slideDown 500
+    $(".products .information .section").hide()
+    $(".products .information .#{$(this).data "product"}").show()
   
     
   $(".products .information .close").click ->
@@ -20,25 +22,30 @@ go_events = ->
     
   window.events_called = true
   events = $(".ad-events .event")
-  index = 0
-  
-  interval = setInterval ->
-    i = index++
-  
-    if i > events.length
-      return clearInterval interval
       
-    events.eq(i).css({
+  animator = (index)->        
+    events.eq(index).css({
       marginTop: "-100px"
       display: "block"
-      opacity: 1
-      zIndex: events.length - i
+      opacity: 0
+      zIndex: events.length - index
     }).animate({
       opacity: 1
       marginTop: "15px"
-    }, 500, "easeOutBack")
-  , 800
+    }, 800)
+    
+    if index <= events.length
+      setTimeout ->
+        animator ++index
+      
+      , random_int(800, 3000)
+      
+  animator 0
   
+  
+random_int = (min, max)->
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+
   
 go_quotes = ->  
   if window.quotes_called?
