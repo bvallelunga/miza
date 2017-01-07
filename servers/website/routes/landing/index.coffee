@@ -58,7 +58,7 @@ module.exports.post_beta = (req, res, next)->
   }
   
   LIBS.slack.message {
-    text: "#{req.body.name} (#{req.body.email}, #{req.body.phone}) is the #{req.body.title} of #{req.body.website} requested a demo."
+    text: "#{req.body.name} (#{req.body.email}, #{req.body.phone}) who is the #{req.body.title} of #{req.body.website} requested a demo."
   }
   
 
