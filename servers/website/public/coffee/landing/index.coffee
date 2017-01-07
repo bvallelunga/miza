@@ -1,8 +1,6 @@
 $ ->
-  in_view $("#features"), go_events
-  in_view $("#customers"), go_quotes
-  
-  
+  go_quotes()
+
   $(".products .product").click ->
     $(".products .product").removeClass "active"
     $(this).addClass "active"
@@ -16,37 +14,6 @@ $ ->
     $(".products .information").slideUp 500
   
 
-go_events = ->
-  if window.events_called?
-    return
-    
-  window.events_called = true
-  events = $(".ad-events .event")
-      
-  animator = (index)->        
-    events.eq(index).css({
-      marginTop: "-100px"
-      display: "block"
-      opacity: 0
-      zIndex: events.length - index
-    }).animate({
-      opacity: 1
-      marginTop: "15px"
-    }, 800)
-    
-    if index <= events.length
-      setTimeout ->
-        animator ++index
-      
-      , random_int(800, 3000)
-      
-  animator 0
-  
-  
-random_int = (min, max)->
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-
-  
 go_quotes = ->  
   if window.quotes_called?
     return
