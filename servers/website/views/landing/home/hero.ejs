@@ -23,10 +23,13 @@
       <div class="actionable">
         <form class="form" method="POST" action="/access/request">
           <% include ../../includes/csrf %>
-          <input class="top-short" name="name" type="text" placeholder="Full Name" required/>
-          <input class="top-long" name="phone" type="tele" placeholder="Work Phone"/>
+          <input class="top-long" name="name" type="text" placeholder="Full Name" required/>
+          <input class="top-short" name="phone" type="tele" placeholder="Work Phone"/>
           <div class="clear"></div>
-          <input name="email" type="email" placeholder="Enter your work email" required/>
+          <input class="top-long" name="website" type="text" placeholder="Work Wesite" required/>
+          <input class="top-short" name="title" type="text" placeholder="Job Title" required/>
+          <div class="clear"></div>
+          <input class="last" name="email" type="email" placeholder="Work email" required/>
           <button class="button">Request Demo</button>
         </form>
       </div>

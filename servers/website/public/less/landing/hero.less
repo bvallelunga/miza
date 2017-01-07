@@ -126,9 +126,9 @@
     
     .actionable {  
       position: relative;
-      margin-top: 40px;
+      margin-top: 35px;
       padding: 5px;
-      height: 140px;
+      height: 210px;
       background: rgba(0,0,0,0.5);
       .box-shadow(~"inset 0 -1px 2px rgba(14,41,57,0.15), inset 0 1px 2px rgba(14,41,57,0.15), 0 0 20px 4px rgba(0,0,0,0.15)");
       .border-radius(6px);
@@ -144,17 +144,20 @@
           font-size: 1.5em;
           float: left;
           font-weight: normal;
+          margin-bottom: 10px;
           .border-radius(4px);
           
-          &.top-short {
-            width: 60%;
-            margin-bottom: 10px;
-            float: left;
+          &.last {
+            margin-bottom: 0;
           }
           
           &.top-long {
+            width: 60%;
+            float: left;
+          }
+          
+          &.top-short {
             width: 38%;
-            margin-bottom: 10px;
             float: right;
           }
         }
