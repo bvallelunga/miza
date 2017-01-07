@@ -1,8 +1,6 @@
 <div class="fixed-side-nav">
   <% if(user && user.is_admin) { %>
     <a class="inverse" href="/admin">Admin Center</a>
-  <% } else { %>
-    <a href="#" class="inverse" onclick="Intercom('showNewMessage')">Contact Us</a>
   <% } %>
   <% if(user) { %>
     <a href="/dashboard">Dashboard</a>
@@ -11,6 +9,7 @@
       <a class="dropdown-item red" href="/logout">Sign Out</a>
     </span>
   <% } else { %>
-    <a href="/login">Sign In</a>
+    <a href="/login" class="inverse">Log In</a>
+    <a href="/register">Sign Up</a>
   <% } %>
 </div>

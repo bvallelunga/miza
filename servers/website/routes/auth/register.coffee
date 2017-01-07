@@ -18,10 +18,7 @@ module.exports.post = (req, res, next)->
     where: {
       email: email
     }
-  }).then (accesses)->  
-    if accesses.length == 0
-      return next "Email address not approved for beta."
-  
+  }).then (accesses)->    
     admin_contact = null
     admin_contacts = accesses.filter (access)->
       return access.admin_contact_id?  

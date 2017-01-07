@@ -5,58 +5,52 @@
   position: relative;
   z-index: 0;
   width: 100%;
-  padding: 70px 0;
   text-align: center;
   min-height: 400px;
-  background: #258BF8;
-  background: rgba(37,139,248,1);
-  background: -moz-radial-gradient(center, ellipse cover, rgba(37,139,248,1) 0%, rgba(56,58,175,1) 100%);
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(37,139,248,1)), color-stop(100%, rgba(56,58,175,1)));
-  background: -webkit-radial-gradient(center, ellipse cover, rgba(37,139,248,1) 0%, rgba(56,58,175,1) 100%);
-  background: -o-radial-gradient(center, ellipse cover, rgba(37,139,248,1) 0%, rgba(56,58,175,1) 100%);
-  background: -ms-radial-gradient(center, ellipse cover, rgba(37,139,248,1) 0%, rgba(56,58,175,1) 100%);
-  background: radial-gradient(ellipse at center, rgba(37,139,248,1) 0%, rgba(56,58,175,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#258bf8', endColorstr='#383aaf', GradientType=1 );
-  .box-shadow(~"inset 0 2px 15px rgba(0,0,0,0.35), inset 0 -1px 0 rgba(0,0,0,0.1)");
   .clearfix();
-  
-  &:before {
-    content: "";
-    background-image: url("/imgs/landing.png");
-    background-repeat: repeat;
-    background-position: center center;
-    user-select: none;
-    background-size: 100px;
-    margin: 0 auto;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left:  0;
-    opacity: 0.5;
-  }
   
   h3 {
     font-family: "Ubuntu";
     font-weight: bold;
     font-size: 2.7em;
-    color: white;
-    margin: 0 0 35px 0;
-    text-shadow: 0 2px 0 rgba(0,0,0,0.5);
+    color: @blue;
+    margin: 20px 0 5px 0;
+  }
+  
+  h4 {
+    font-size: 1.5em;
+    color: @text_weak;
+    margin: 0 0 35px;
   }
 
   .product {
+    cursor: pointer;
     position: relative;
     width: 280px;
     padding: 15px 10px;
-    margin: 20px 40px;
+    margin: 20px 40px 150px;
     text-align: center;
     background: #FDFDFD;
+    border: solid 2px #F1F1F1;
     display: inline-block;
     overflow: hidden;
     font-size: 1.2em;
+    .transition();
     .border-radius(5px);
-    .box-shadow(~"inset 0 -1px 2px rgba(14,41,57,0.15), inset 0 1px 2px rgba(14,41,57,0.15), 0 0 20px 4px rgba(0,0,0,0.15)");
+    
+    &:hover, &.active {
+      border-color: @blue;
+      .transform(scale(1.05));
+      
+      .pricing {
+        background: @blue;
+        color: white;
+      }
+      
+      &.active {
+        .transform(scale(1.1));
+      }
+    }
     
     .fa {
       margin: 25px 0;
@@ -74,15 +68,81 @@
       font-size: 1em;
       margin-top: 5px;
       font-weight: lighter;
+      margin-bottom: 80px;
     }
     
     .pricing {
-      margin: 40px -10px -15px -10px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
       padding: 15px 0;
       font-size: 1.1em;
       background: #F1F1F1;
       font-weight: bold;
+      .transition();
     }
   }
-
+  
+  .information {
+    position: relative;
+    display: none;
+    height: 600px;
+    padding: 40px 0 70px;
+    border-top: solid 1px rgba(0,0,0,0.5);
+    background: rgba(37,139,248,1);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(37,139,248,1) 0%, rgba(56,58,175,1) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(37,139,248,1)), color-stop(100%, rgba(56,58,175,1)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(37,139,248,1) 0%, rgba(56,58,175,1) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(37,139,248,1) 0%, rgba(56,58,175,1) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(37,139,248,1) 0%, rgba(56,58,175,1) 100%);
+    background: radial-gradient(ellipse at center, rgba(37,139,248,1) 0%, rgba(56,58,175,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#258bf8', endColorstr='#383aaf', GradientType=1 );
+    .box-shadow(~"inset 0 2px 15px rgba(0,0,0,0.35), inset 0 -1px 0 rgba(0,0,0,0.1)");
+    
+    &:before {
+      content: "";
+      top: 0;
+      left:  0;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background: rgba(0,0,0,0.5);
+    }
+    
+    .background {
+      content: "";
+      background-image: url("/imgs/landing.png");
+      background-repeat: repeat;
+      background-position: center center;
+      user-select: none;
+      background-size: 100px;
+      margin: 0 auto;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left:  0;
+      opacity: 0.3;
+    }
+    
+    .close {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      font-size: 1.4em;
+      width: 40px;
+      height: 40px;
+      padding: 10px;
+      background: rgba(255,255,255,0.5);
+      color: white;
+      cursor: pointer;
+      .transition();
+      .border-radius(50%);
+      
+      &:hover {
+        .transform(scale(1.1));
+      }
+    }
+  }
 }
