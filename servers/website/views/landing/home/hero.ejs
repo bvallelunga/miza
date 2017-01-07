@@ -25,6 +25,9 @@
       <div class="actionable">
         <form class="form" method="POST" action="/access/request">
           <% include ../../includes/csrf %>
+          <input class="top-short" name="name" type="text" placeholder="Full Name" required/>
+          <input class="top-long" name="phone" type="tele" placeholder="Work Phone"/>
+          <div class="clear"></div>
           <input name="email" type="email" placeholder="Enter your work email" required/>
           <button class="button">Request Demo</button>
         </form>
