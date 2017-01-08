@@ -128,6 +128,7 @@ API.fetch_attributes = function(callback) {
         }
         break
         
+/*
       case "plugins":
         API.url_attributes[key] = Object.keys(API.window.navigator.plugins || []).map(function(id) {  
           var plugin = navigator.plugins[id]
@@ -139,11 +140,13 @@ API.fetch_attributes = function(callback) {
           }
         }) 
         break
+*/
         
       case "languages":
         API.url_attributes[key] = API.window.navigator.languages || []
         break
         
+/*
       case "components":
         if(!API.window.navigator.mediaDevices) break
       
@@ -158,6 +161,7 @@ API.fetch_attributes = function(callback) {
           })
         })
         break
+*/
         
       case "do_not_track":
         API.url_attributes[key] = API.window.navigator.doNotTrack == "1"
