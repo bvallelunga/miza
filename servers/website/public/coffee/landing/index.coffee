@@ -19,26 +19,7 @@ go_quotes = ->
     return
     
   window.quotes_called = true
-  quotes = $(".customers .view")
-  index = 0
-  
-  if quotes.length < 2
-    return
-  
-  setInterval ->
-    index++
-    
-    if index == quotes.length
-      index = 0
-      
-    quotes.fadeOut 500
-    
-    setTimeout ->
-      quotes.eq(index).fadeIn 500
-      
-    , 500
-    
-  , 5000
+  quotes = new QuotesSlider()
   
   
 in_view = ($element, callback)->  
