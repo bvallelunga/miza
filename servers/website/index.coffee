@@ -24,8 +24,7 @@ module.exports = (srv)->
 
   # Public Routes
   require("./assets")(app, srv,  __dirname + '/public')
-  app.use "/test", express.static __dirname + '/public/test'
-  app.use "/imgs", express.static __dirname + '/public/images'  
+  app.use "/imgs", express.static __dirname + '/public/images'
   
   
   # Load User & Locals
