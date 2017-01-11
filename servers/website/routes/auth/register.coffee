@@ -58,7 +58,10 @@ module.exports.post = (req, res, next)->
           }
         }
       
-    .then ->
+    .then -> 
+      if accesses.length > 0
+        req.session.new_publisher = true    
+      
       res.json {
         success: true
         next: "/dashboard"

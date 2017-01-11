@@ -91,6 +91,9 @@ module.exports.get_dashboard = (req, res, next)->
       return props
   
   .then (props)->
+    show_guide = req.query.new_publisher? or req.session.new_publisher
+    req.session.new_publisher = false
+  
     res.render "dashboard/index", {
       js: req.js.renderTags.apply(req.js, js)
       css: req.css.renderTags.apply(req.css, css)
@@ -98,7 +101,7 @@ module.exports.get_dashboard = (req, res, next)->
       dashboard_path: dashboard_path
       dashboard: dashboard
       ads_domain: ads_domain
-      guide: req.query.new_publisher?
+      guide: show_guide
       changelog: true
       props: props
       billed_on: moment(LIBS.helpers.past_date "month", null, 1).add(4, "day").format("MMM D") 
