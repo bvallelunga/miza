@@ -12,6 +12,7 @@ module.exports.get_about = (req, res, next)->
   res.render "landing/about", {
     js: req.js.renderTags "landing", "fa"
     css: req.css.renderTags "landing", "fa"
+    title: "About Us"
   } 
   
 
@@ -19,6 +20,7 @@ module.exports.get_payouts = (req, res, next)->
   res.render "landing/payouts", {
     js: req.js.renderTags "landing", "fa"
     css: req.css.renderTags "landing", "fa"
+    title: "Payouts"
   }  
 
 

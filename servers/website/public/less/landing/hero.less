@@ -35,13 +35,17 @@
   }
   
   &.payouts {
+    overflow: visible;
     min-height: 750px;
     background: #24C6DC; /* fallback for old browsers */
     background: -webkit-linear-gradient(to left, #24C6DC , #514A9D); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to left, #24C6DC , #514A9D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
     
     &:before {
-      opacity: 0.6;
+      opacity: 0.5;
+      bottom: 0;
+      right:  0;
+      transform: none;
     } 
     
     .bg-footer {
@@ -75,6 +79,88 @@
         color: black;
         font-weight: lighter;
         
+      }
+    }
+    
+    .modal {
+      position: relative;
+      z-index: 1;
+      width: 550px;
+      background: white;
+      height: 500px;
+      margin: 0 auto;
+      overflow: hidden;
+      .border-radius(4px);
+      .box-shadow(0 5px 15px 0 rgba(0,0,0,0.08));
+      
+      .title {
+        color: @blue;
+        text-align: center;
+        font-weight: lighter;
+        padding: 30px 0;
+        font-size: 1.5em;
+        font-family: "Ubuntu";
+        border-bottom: solid 1px rgba(0,0,0,0.05);
+      }
+      
+      .payout {
+        text-align: center;
+        color: black;
+        font-size: 3.5em;
+        padding-top: 30px;
+        font-weight: lighter;
+      }
+      
+      .subpayout {
+        text-align: center;
+        color: @text_weak;
+        font-size: 1.5em;
+      }
+      
+      .bennefits {
+        width: 350px;
+        margin: 40px auto;
+        
+        .bennefit {
+          margin: 20px 0;
+          
+          span {
+            display: inline-block;
+            background: lighten(@blue, 10%);
+            padding: 5px;
+            color: white;
+            font-size: 1em;
+            margin-right: 10px;
+            .border-radius(50%);
+          }
+          
+          div {
+            display: inline-block;
+            font-size: 1.3em;
+            color: #8B9BAD;
+          }
+        }
+      }
+      
+      a {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        background: #F6F9FC;
+        padding: 25px 0;
+        font-size: 1.5em;
+        color: #32325D;
+        border-top: solid 1px rgba(0,0,0,0.03);
+        
+        span {
+          margin-left: 10px;
+        }
+        
+        &:hover {
+          background: darken(#F6F9FC, 2%);
+        }
       }
     }
 
