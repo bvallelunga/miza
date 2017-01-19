@@ -13,7 +13,6 @@ $ ->
     $(".products .information .section").hide()
     $(".products .information .#{product}").show()
     old_product = product
-    window.location.href = "#information"
   
     
   $(".products .information .close").click ->
