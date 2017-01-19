@@ -1,12 +1,19 @@
 $ ->
   go_quotes()
-
+  old_product = ""
+  
   $(".products .product").click ->
+    product = $(this).data("product")
+  
     $(".products .product").removeClass "active"
     $(this).addClass "active"
+    $(".products .information").removeClass old_product
+    $(".products .information").addClass product
     $(".products .information").slideDown 500
     $(".products .information .section").hide()
-    $(".products .information .#{$(this).data "product"}").show()
+    $(".products .information .#{product}").show()
+    old_product = product
+    window.location.href = "#information"
   
     
   $(".products .information .close").click ->

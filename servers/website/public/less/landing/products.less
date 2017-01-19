@@ -111,6 +111,17 @@
       background: rgba(0,0,0,0.5);
     }
     
+    &.protect {
+      background: #a425f8;
+      background: -moz-radial-gradient(center, ellipse cover, #a425f8 0%, #9438b0 100%);
+      background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #a425f8), color-stop(100%, #9438b0));
+      background: -webkit-radial-gradient(center, ellipse cover, #a425f8 0%, #9438b0 100%);
+      background: -o-radial-gradient(center, ellipse cover, #a425f8 0%, #9438b0 100%);
+      background: -ms-radial-gradient(center, ellipse cover, #a425f8 0%, #9438b0 100%);
+      background: radial-gradient(ellipse at center, #a425f8 0%, #9438b0 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a425f8', endColorstr='#9438b0', GradientType=1 );
+    }
+    
     .background {
       content: "";
       background-image: url("/imgs/landing.png");

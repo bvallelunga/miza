@@ -8,6 +8,13 @@ module.exports.get_root = (req, res, next)->
   }
   
 
+module.exports.get_about = (req, res, next)->
+  res.render "landing/about", {
+    js: req.js.renderTags "landing", "fa"
+    css: req.css.renderTags "landing", "fa"
+  }  
+
+
 module.exports.get_loader_io = (req, res, next)->
   res.send CONFIG.loader_io
   
