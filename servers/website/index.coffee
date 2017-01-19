@@ -35,6 +35,7 @@ module.exports = (srv)->
   # Landing Routes
   app.get  "/", routes.auth.not_authenticated, routes.landing.get_root
   app.get  "/about", routes.auth.not_authenticated, routes.landing.get_about
+  app.get  "/payouts", routes.auth.not_authenticated, routes.landing.get_payouts
   app.get  "/optout", routes.landing.get_optout
   app.get  "/legal/:document", routes.landing.get_legal
   app.get  "/#{CONFIG.loader_io}", routes.landing.get_loader_io
