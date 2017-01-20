@@ -16,11 +16,11 @@ module.exports.get_about = (req, res, next)->
   } 
   
 
-module.exports.get_payouts = (req, res, next)->
-  res.render "landing/payouts", {
+module.exports.get_monetize = (req, res, next)->
+  res.render "landing/monetize", {
     js: req.js.renderTags "landing", "fa"
     css: req.css.renderTags "landing", "fa"
-    title: "Payouts"
+    title: "Monetize"
   }  
 
 
