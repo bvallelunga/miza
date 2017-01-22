@@ -19,6 +19,7 @@ $ ->
     form = $(this)
     hint = form.find(".error").text ""
     button = form.find("button")
+    funding = form.find(".funding").val()
     original = button.text()
     error_handler = (message)->
       hint.text message
@@ -29,6 +30,9 @@ $ ->
     Stripe.card.createToken form, (status, response)->
       if response.error?
         return error_handler response.error.message
+        
+      if funding? and response.card.funding != funding
+        return error_handler "Please make sure you are using a #{funding} card."
         
       response._csrf = config.csrf
       $.post form.attr("action"), response, (response)->
@@ -44,7 +48,7 @@ $ ->
         }
         
         window.location.href = response.next
-        
+       
       .fail (error)->
         json = error.responseJSON
         error_handler json.message
