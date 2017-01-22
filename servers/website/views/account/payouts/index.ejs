@@ -7,7 +7,6 @@
 <form class="form card" method="POST" action="/account/payouts">
   <div class="view left">
     <% include ../../includes/csrf %>
-    <input class="funding" type="hidden" value="debit"/>
     <input class="top card-number" type="text" name="number" placeholder="**** **** **** ****" data-stripe="number" required>
     <input type="text" name="name" placeholder="Tony Stark" data-stripe="name" required/>
     <div class="split">
