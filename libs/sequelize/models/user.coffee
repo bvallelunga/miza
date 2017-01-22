@@ -116,6 +116,11 @@ module.exports = (sequelize, DataTypes)->
           })
           
       stripe_payout_card: (card)->
+        console.log card.card
+      
+        if card.card.funding != "debit"
+          return Promise.reject "Please use a debit card."
+      
         return LIBS.stripe.customers.createSource(@stripe_id, {
           source: card.id
         }).then (customer)=>                
