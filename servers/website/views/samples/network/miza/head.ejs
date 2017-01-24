@@ -3,6 +3,7 @@
     var script = document.createElement("script");
     script.src = base;
     script.async = true;
-    document.getElementsByTagName('head')[0].appendChild(script);
+    document.getElementsByTagName('head')[0]
+      .appendChild(script);
   })(window, "//<%= publisher.endpoint %>");
 </script>
