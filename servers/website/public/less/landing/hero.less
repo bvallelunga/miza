@@ -221,8 +221,7 @@
     .founders {
       position: relative;
       z-index: 1;
-      padding-top: 20px;
-      height: 110px;
+      padding: 15px 0;
       text-align: center;
       background: black;
       text-align: center;
@@ -255,6 +254,20 @@
         .title {
           font-weight: lighter;
           color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .social {
+          margin-top: 10px;
+          
+          a {
+            display: inline-block;
+            margin: 0 5px;
+            font-size: 1.2em;
+            
+            &:hover {
+              color: @blue;
+            }
+          }
         }
       }
     }
