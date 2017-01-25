@@ -41,7 +41,7 @@ module.exports.get_dashboard = (req, res, next)->
     return res.redirect "#{dashboard_path}/analytics"  
   
   if req.publisher.is_demo
-    ads_domain = req.get("host")
+    ads_domain = req.hostname
   
   switch dashboard
     when "setup"
