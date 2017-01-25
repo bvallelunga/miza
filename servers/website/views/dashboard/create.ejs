@@ -1,8 +1,8 @@
 <% include ../includes/start %>
 <% include ../includes/header %>
-<div class="container large-2">
+<div class="container">
   <% include ../includes/logo %>
-  <div class="preselect">
+  <div class="preselect hidden">
     <span>
       Please select a <%= company %> product. <strong>If you are a<br>
       Carbon Ads publisher select PROTECT.</strong>
@@ -30,16 +30,17 @@
       </div>
     </div>
   </div>
-  <div class="finish hidden">
+  <div class="finish">
     <span>
-      <span class="select_back fa fa-arrow-left"></span>
-      Almost done! Just need a couple<br>more details about your account.
+<!--       <span class="select_back fa fa-arrow-left"></span> -->
+      Let's get started! We just need a<br>couple details about your account.
     </span>
     <form class="form" method="POST" action="/dashboard/new">
       <% include ../includes/csrf %>
-      <input class="select_value" type="hidden" name="publisher_product" required/>
+      <input class="select_value" type="hidden" name="publisher_product" value="network" required/>
       <input class="name top" type="text" name="publisher_name" placeholder="Publisher Name" required/>
       <input class="email" type="url" name="publisher_domain" placeholder="http://publisher.com" required/>
+<!--
       <div class="group publisher_industry">
         <div class="fa fa-sort"></div>
         <select class="input" name="publisher_industry" required>
@@ -49,6 +50,7 @@
           <% }) %>
         </select>
       </div>
+-->
       <div class="group">
         <div class="fa fa-sort"></div>
         <select class="input bottom" name="publisher_miza_endpoint" required>

@@ -80,7 +80,14 @@ module.exports.get_dashboard = (req, res, next)->
       
     LIBS.models.Publisher.findAll({
       where: {
-        is_activated: true
+        $or: [
+          {
+            is_activated: true
+          }, 
+          {
+            owner_id: req.user.id
+          }
+        ]
       }
       order: [
         ['fee', 'DESC']
