@@ -2,8 +2,7 @@ module.exports.get_root = (req, res, next)->
   res.render "landing/demo/index", {
     js: req.js.renderTags "landing"
     css: req.css.renderTags "landing", "fa"
-    title: "Demo"
-    user: LIBS.models.defaults.demo_user
+    title: "Live Demo"
   }
 
 
@@ -15,6 +14,5 @@ module.exports.get_miza = (req, res, next)->
   res.render "landing/demo/tester", {
     publisher: req.publisher
     demo: req.params.demo
-    title: "Demo"
     user: LIBS.models.defaults.demo_user
   }
