@@ -1,27 +1,63 @@
-<div class="company">
-  <div class="container">
-    <h3>Intelligent Ad Detection</h3>
-    <p>
-      Our system will automatically detect ads from your existing ad networks. 
-      When an ad blocker is active, <%= company %> will replace those 
-      blocked ads with ones from our protected network.
-    </p>
+<div id="product" class="supports">
+  <h2>
+    <%= company %> works seamlessly with the
+    networks you already use!<br>
+    <span>no additional infrastructure needed</span>
+  </h2>
+  <div class="images">
+    <img src="/imgs/networks/sterra.png?<%= random %>"/>
+    <img src="/imgs/networks/rail.png?<%= random %>"/>
+    <img src="/imgs/networks/ad_sense.png?<%= random %>"/>
+    <img src="/imgs/networks/dfp.png?<%= random %>"/>
+    <img src="/imgs/networks/roll.png?<%= random %>"/>
+    <img src="/imgs/networks/carbon.png?<%= random %>"/>
+    <img src="/imgs/networks/buff.png?<%= random %>"/>
   </div>
+</div>
+<div class="product">
   <div class="container">
-    <h3>Stylishly Unobtrusive Ads</h3>
-    <p>
-      Ads from the <%= company %> Network catch a user's eye without ruining their 
-      experience on your site. We strive to create win-win solutions for you and your visitors.
-    </p>
+    <div class="ifelse">
+      if <span class="red">AD BLOCKER</span>
+      activate <span class="blue"><%= company %></span>:
+    </div>
   </div>
-  <div class="container">
-    <h3>Premium Demand Partners</h3>
-    <p>
-      Your ad blocked visitors are emerging as a premium audience resulting 
-      in strong CPMs. Our demand partners are excited about connecting with
-      people previously unreachable. For more about payouts, visit
-      our <a href="/monetize">monetization page</a>.
-    </p>
+  <div class="section">
+    <div class="information left">
+      <h3 class="blue">Intelligent Ad Detection</h3>
+      <p>
+        Our system will automatically detect ads
+        from your existing ad networks. When an ad blocker is active,
+        <%= company %> will replace those blocked ads with ones from our
+        protected network.
+      </p>
+    </div>
+    <div class="graphic right" style="background-image: url('/imgs/products/detection.jpg?<%= random %>')"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="section">
+    <div class="information right">
+      <h3 class="green">Stylishly Unobtrusive Ads</h3>
+      <p>
+        Ads from the <%= company %> Network catch a user's eye without
+        ruining their experience on your site. We strive to create
+        win-win solutions for you and your visitors.
+      </p>
+    </div>
+    <div class="graphic left" style="background-image: url('/imgs/products/stylish.jpg?<%= random %>')"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="section">
+    <div class="information left">
+      <h3 class="purple">Premium Demand Partners</h3>
+      <p>
+        Your ad blocked visitors are emerging as a premium audience resulting 
+        in strong CPMs. Our demand partners are excited about connecting with
+        people previously unreachable. For more about payouts, visit
+        our <a href="/monetize">monetization page</a>.
+      </p>
+    </div>
+    <div class="graphic right" style="background-image: url('/imgs/products/demand.jpg?<%= random %>')"></div>
+    <div class="clear"></div>
   </div>
 </div>
 <div class="request_demo">
