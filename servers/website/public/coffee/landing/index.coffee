@@ -22,7 +22,7 @@ $ ->
     
   blocker_check (is_blocker)->
     $(".hero.demo .modal .title span")
-      .text("#{ if is_blocker then "ENABLED" else "DISABLED"  }")
+      .text("#{ if is_blocker then "MIZA" else "ADSENSE"  }")
       .addClass("#{ if is_blocker then "enabled" else "disabled"  }")
   
 
