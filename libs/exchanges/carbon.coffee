@@ -91,6 +91,7 @@ collect_content = ($)->
     data.height = $image.get(0).height * 1.5
     data.link = url_format $image.attr("src")
     data.target = url_format $image.parents("a").attr("href")
+    data.text = $image.parents("a").next("a").text()
         
     # Find Beacons
     data.beacons = ($("img").filter ->

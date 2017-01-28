@@ -20,7 +20,7 @@ API.iframe = function(element) {
   var random = "f" + Math.random().toString(36).substring(7)
   
   iframe.style.outline = "none";
-  iframe.style.border = "solid 1px #ccc";
+  iframe.style.border = "none";
   iframe.style.display = "none";
   iframe.className = random
   iframe.src = API.url("a", false, false, {

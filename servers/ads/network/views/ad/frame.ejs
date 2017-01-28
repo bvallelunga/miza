@@ -2,7 +2,7 @@
   <head>
     <style>
       html, body {
-        background: #f8f8f8;
+        background: white;
         padding: 0;
         margin: 0;
         overflow: hidden;
@@ -10,7 +10,23 @@
       
       img {
         width: 100%;
-        height: 100%;
+        margin: 0 auto;
+        display: block;
+      }
+      
+      a {
+        width: 100%;
+        color: black;
+        text-decoration: none;
+        display: inline-block;
+      }
+      
+      a:hover {
+        text-decoration: underline;
+      }
+      
+      a div {
+        margin-top: 15px;
       }
     </style>
     <script>
@@ -19,8 +35,8 @@
       window.parent.window.postMessage({
         name: "frame.show",
         frame: "<%= frame %>",
-        width: <%= payload.width %>,
-        height: <%= payload.height %>
+        width: <%= payload.width + (!!payload.text ? 25 : 0) %>,
+        height: <%= payload.height + (!!payload.text ? 100 : 0) %>
       }, "*")
     </script>
   </head>
@@ -29,8 +45,16 @@
       <a target="_blank" href="/<%= new Buffer(payload.target).toString("base64") %>?link">
         <img src="<%= payload.link %>"/>
       </a>
+      <a target="_blank" href="/<%= new Buffer(payload.target).toString("base64") %>?link">
+        <% if(!!payload.text) { %>
+          <div><%= payload.text %></div>
+        <% } %>
+      </a>
     <% } else { %> 
       <img src="<%= payload.link %>"/>
+      <% if(!!payload.text) { %>
+        <div><%= payload.text %></div>
+      <% } %>
     <% } %>
     <% payload.beacons.forEach(function(beacon) { %>
       <img src="/<%= new Buffer(beacon).toString("base64") %>" width="0" height="0" style="display:none" />
