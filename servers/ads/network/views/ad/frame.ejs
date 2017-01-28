@@ -26,10 +26,10 @@
       }
       
       a div {
-        margin-top: 10px;
         font-family: "Arial";
-        padding: 5px;
+        padding: 10px;
         box-sizing: border-box;
+        font-size: 14px;
       }
     </style>
     <script>
@@ -38,8 +38,8 @@
       window.parent.window.postMessage({
         name: "frame.show",
         frame: "<%= frame %>",
-        width: <%= payload.width + (!!payload.text ? 25 : 0) %>,
-        height: <%= payload.height + (!!payload.text ? 100 : 0) %>
+        width: <%= payload.width + (!!payload.text ? 15 : 0) %>,
+        height: <%= payload.height + (!!payload.text ? 90 : 0) %>
       }, "*")
     </script>
   </head>
