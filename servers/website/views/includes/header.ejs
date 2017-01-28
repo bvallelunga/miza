@@ -2,7 +2,7 @@
   <% if(user && user.is_admin) { %>
     <a class="inverse" href="/admin">Admin Center</a>
   <% } %>
-  <% if(user) { %>
+  <% if(user && !user.is_demo) { %>
     <a href="/dashboard">Dashboard</a>
     <span>
       <a class="main" href="/account">Account</a>

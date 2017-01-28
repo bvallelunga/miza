@@ -1,0 +1,138 @@
+@import '../libs/all';
+@import '../global/colors';
+
+.hero.about {
+  overflow: visible;
+  background: white;
+  .box-shadow(none);
+  
+  &:before {
+    background: none;
+    top: 0;
+    bottom: 0;
+    left:  -100px;
+    right:  -100px;
+    transform: none;
+    opacity: 1;
+    .box-shadow(inset 0 100px 180px white);
+  }
+  
+  .brief {
+    text-align: center;
+    font-weight: lighter;
+    margin: 10px auto 50px;
+    width: 80%;
+    
+    h2 {
+      font-size: 2.5em;
+      color: black;
+      margin: 0 0 10px 0;
+      font-weight: lighter;
+      font-family: "Ubuntu";
+    }
+    
+    p {
+      font-size: 1.5em;
+      margin: 0;
+      color: #8B9BAD;
+    }
+  }
+  
+  .founders-image {
+    width: 100%;
+    height: 400px;
+    background: url("/imgs/founders.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+  }
+  
+  .founders {
+    position: relative;
+    z-index: 1;
+    padding: 15px 0;
+    text-align: center;
+    background: black;
+    text-align: center;
+    
+    &:before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      top: -115px;
+      width: 100%;
+      height: 115px;
+      left: 0;
+      right: 0;
+      background: url("/imgs/landmarks.png");
+      background-repeat: repeat-x;
+      background-position: center top;
+      background-size: 1280px;
+    }
+    
+    .founder {
+      display: inline-block;
+      margin: 0 150px;
+      font-size: 1.25em;
+      
+      .name {
+        color: white;
+        font-weight: bold;
+      }
+      
+      .title {
+        font-weight: lighter;
+        color: rgba(255, 255, 255, 0.6);
+      }
+      
+      .social {
+        margin-top: 10px;
+        
+        a {
+          display: inline-block;
+          margin: 0 5px;
+          font-size: 1.2em;
+          
+          &:hover {
+            color: @blue;
+          }
+        }
+      }
+    }
+  }
+  
+  .navigation {            
+    .logo {
+      color: @blue;
+      text-shadow: none;
+    }
+    
+    .left .shortcuts a {
+      color: #536170;
+      text-shadow: none;
+    }
+    
+    .fixed-side-nav { 
+      a {
+        background: @blue;
+        color: white;
+        
+        &:not(.inverse):hover {
+          color: white;
+          background: @blue;
+        }
+        
+        &.inverse {
+          background: transparent;
+          color: @blue;
+          text-shadow: none;
+          
+          &:hover {
+            text-decoration: underline;
+            .box-shadow(none);
+          }
+        }
+      }
+    }
+  }
+}

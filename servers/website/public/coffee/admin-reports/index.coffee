@@ -51,8 +51,8 @@ class ReportsDashboard
   
   
   load_default: ->
-    $(".range-display .text").text "Today"
-    @start = moment().startOf("day").toDate()
+    $(".range-display .text").text "This Month"
+    @start = moment().startOf("month").toDate()
     @end = moment().endOf("day").toDate()
     @metrics @start, @end
     

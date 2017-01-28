@@ -85,3 +85,5 @@ module.exports.get_not_found = (req, res, next)->
     css: req.css.renderTags "modal"
   }
   
+  
+module.exports.demo = require "./demo"

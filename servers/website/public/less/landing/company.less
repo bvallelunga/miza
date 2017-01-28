@@ -1,9 +1,12 @@
+@import '../libs/all';
+@import '../global/colors';
+
 .company {  
   padding: 40px 0;
   
   .container {
     width: 900px;
-    padding: 20px 0;
+    padding: 25px 0;
   }
   
   h3 {
@@ -16,12 +19,20 @@
   }
   
   p {
-    font-size: 1.25em;
+    font-size: 1.6em;
     color: #8B9BAD;
     font-weight: lighter;
     
     strong {
       color: darken(#8B9BAD, 5%);
+    }
+    
+    a {
+      color: @blue;
+      
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }

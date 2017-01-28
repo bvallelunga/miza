@@ -39,6 +39,8 @@ module.exports = (srv)->
   app.get  "/optout", routes.landing.get_optout
   app.get  "/legal/:document", routes.landing.get_legal
   app.get  "/#{CONFIG.loader_io}", routes.landing.get_loader_io
+  app.get  "/demo", routes.landing.demo.get_root
+  app.get  "/demo/:demo", routes.landing.demo.get_miza
   app.post "/optout", routes.landing.post_optout
   app.post "/access/request", routes.auth.not_authenticated, routes.landing.post_beta
   
@@ -107,17 +109,6 @@ module.exports = (srv)->
   app.post "/dashboard/:publisher/members/add", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.members.add
   app.post "/dashboard/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.settings.post
   app.post "/dashboard/:publisher/abtest", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.abtest.post
-  
-  
-  # Github Marketing
-  app.post  "/github/hook/:invite", routes.github.fetch, routes.github.hook
-  
-  
-  # Demo Routes
-  app.get "/demo", routes.demo.set_user, routes.demo.get_root
-  app.get "/demo/wordpress", routes.demo.get_wordpress
-  app.get "/demo/:product", routes.demo.set_user, routes.demo.get_miza
-  app.get "/demo/:product/:demo", routes.demo.set_user, routes.demo.get_miza
   
   
   # Error Handlers
