@@ -2,7 +2,7 @@
 @import '../global/colors';
 
 .hero.demo {
-  min-height: 0;
+  margin-bottom: -50px;
   background: rgba(138,39,230,1);
   background: -moz-radial-gradient(center, ellipse cover, rgba(138,39,230,1) 0%, rgba(100,21,173,1) 100%);
   background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(138,39,230,1)), color-stop(100%, rgba(100,21,173,1)));
@@ -22,13 +22,21 @@
   
   .bg-footer {
     position: absolute;
-    bottom: -40px;
-    left: -100px;
-    right: -100px;
-    height: 150px;
+    bottom: -170px;
+    height: 300px;
+    width: 55%;
     background: #F9FAFB;
-    transform: rotate(-2.5deg);
     .box-shadow(0 -1px 0 0 rgba(0,0,0,0.25));
+    
+    &.lefter {
+      left: -10px;
+      transform: rotate(-10.5deg);
+    }
+    
+    &.righter {
+      right: -10px;
+      transform: rotate(10.5deg);
+    }
   }
   
   .brief {
@@ -42,13 +50,13 @@
       font-size: 2.5em;
       color: white;
       margin: 0 0 10px 0;
-      font-weight: lighter;
+      font-weight: normal;
     }
     
     p {
-      font-size: 1.5em;
+      color: rgba(255,255,255,0.8);
+      font-size: 1.8em;
       margin: 0;
-      color: rgba(0,0,0,0.8);
     }
   }
   
