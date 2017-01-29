@@ -23,6 +23,9 @@ module.exports.post = (req, res, next)->
     
     else
       return next "Please select an industry."
+      
+  if not req.body.publisher_miza_endpoint
+    return next "Please select a DNS option."
 
   Publisher.create({
     product: req.body.publisher_product
