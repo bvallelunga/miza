@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes)->
         value = phoneFormatter.normalize value
         @setDataValue 'phone', value
     }
+    paypal: DataTypes.STRING
     stripe_id: DataTypes.STRING
     stripe_card: {
       type: DataTypes.JSONB

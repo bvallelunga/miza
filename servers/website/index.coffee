@@ -66,7 +66,6 @@ module.exports = (srv)->
   app.post "/account/notifications", routes.auth.is_authenticated, routes.account.notifications.post
   app.post "/account/password", routes.auth.is_authenticated, routes.account.password.post
   app.post "/account/billing", routes.auth.is_authenticated, routes.account.billing.post
-  app.post "/account/payouts", routes.auth.is_authenticated, routes.account.payouts.post
   
   
   # Admin 3rd Party Dashboards

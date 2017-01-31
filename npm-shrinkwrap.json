@@ -270,6 +270,11 @@
       "from": "bson@>=0.4.21 <0.5.0",
       "resolved": "https://registry.npmjs.org/bson/-/bson-0.4.23.tgz"
     },
+    "buffer-crc32": {
+      "version": "0.2.13",
+      "from": "buffer-crc32@>=0.2.3 <0.3.0",
+      "resolved": "https://registry.npmjs.org/buffer-crc32/-/buffer-crc32-0.2.13.tgz"
+    },
     "buffer-more-ints": {
       "version": "0.0.2",
       "from": "buffer-more-ints@0.0.2",
@@ -2021,6 +2026,11 @@
       "from": "path-to-regexp@0.1.7",
       "resolved": "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-0.1.7.tgz"
     },
+    "paypal-rest-sdk": {
+      "version": "1.7.1",
+      "from": "paypal-rest-sdk@latest",
+      "resolved": "https://registry.npmjs.org/paypal-rest-sdk/-/paypal-rest-sdk-1.7.1.tgz"
+    },
     "pg": {
       "version": "6.1.0",
       "from": "pg@>=6.0.3 <7.0.0",
@@ -2703,6 +2713,11 @@
       "version": "1.0.0",
       "from": "utils-merge@1.0.0",
       "resolved": "https://registry.npmjs.org/utils-merge/-/utils-merge-1.0.0.tgz"
+    },
+    "uuid": {
+      "version": "2.0.3",
+      "from": "uuid@>=2.0.1 <3.0.0",
+      "resolved": "https://registry.npmjs.org/uuid/-/uuid-2.0.3.tgz"
     },
     "v8flags": {
       "version": "2.0.11",

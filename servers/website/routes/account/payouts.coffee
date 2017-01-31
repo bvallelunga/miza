@@ -1,5 +1,7 @@
 module.exports.post = (req, res, next)->
-  req.user.stripe_payout_card(req.body).then ->
+  req.user.update({
+    paypal: req.body.paypal
+  }).then ->
     res.json {
       success: true
       message: "Your payout information has been updated!"

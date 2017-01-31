@@ -10,6 +10,7 @@ module.exports = {
   github: require("./github")()
   cloudflare: require("./cloudflare")()
   intercom: require("./intercom")()
+  paypal: require("./paypal")()
   queue: require "./queue"
   slack: require "./slack"
   helpers: require "./helpers"

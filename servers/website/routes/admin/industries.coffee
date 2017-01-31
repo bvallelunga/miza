@@ -3,7 +3,11 @@ module.exports.get = (req, res, next)->
     order: [
       ['name', 'ASC']
     ]
-  }).then (industries)->
+  }).map (industry)->
+    console.log typeof industry.cpm
+    return industry
+  
+  .then (industries)->
     res.render "admin/industries", {
       js: req.js.renderTags "modal"
       css: req.css.renderTags "modal", "admin", "fa"

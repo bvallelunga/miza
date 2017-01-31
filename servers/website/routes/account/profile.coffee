@@ -3,6 +3,7 @@ module.exports.post = (req, res, next)->
     name: req.body.name
     email: req.body.email
     phone: req.body.phone or null
+    paypal: req.body.paypal or null
   }).then ->
     res.json {
       success: true

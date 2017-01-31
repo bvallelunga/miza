@@ -15,12 +15,12 @@
       <td><input type="tel" name="phone" placeholder="Phone number (optional, for support)" value="<%= user.phone || "" %>"/></td>
     </tr>
     <tr>
-      <td class="title">Billing Card</td>
-      <td><input disabled value="<%= user.stripe_card || "NONE" %>"/></td>
+      <td class="title">Payouts PayPal</td>
+      <td><input type="email" name="paypal" placeholder="PayPal Email address" value="<%= user.paypal || "" %>"/></td>
     </tr>
     <tr>
-      <td class="title">Payout Card</td>
-      <td><input disabled value="<%= user.stripe_payout || "NONE" %>"/></td>
+      <td class="title">Billing Card</td>
+      <td><input disabled value="<%= user.stripe_card || "NONE" %>"/></td>
     </tr>
   </table>
   <button class="button" type="submit">Update Profile</button>
