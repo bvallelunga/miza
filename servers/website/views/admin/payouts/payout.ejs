@@ -20,7 +20,7 @@
           <td><input class="only input" type="text" name="fee" value="<%= payout.fee * 100 %>" step="1" max="100"/></td>
         </tr>
         <tr>
-          <td class="title">Revenue Sources</td>
+          <td class="title">Sources</td>
           <td>
             <table>
               <tr>
@@ -83,9 +83,7 @@
       </thead>
       <tbody>
         <% publishers.forEach(function(publisher) { 
-          source = ((publisher.report.impressions/payout.impressions) || 0) * payout.source_amount
-          revenue = source * payout.fee
-          payout = source * (1-payout.fee)
+          segment = (publisher.report.impressions/payout.impressions) || 0
         %>
           <tr class="publisher inactive <%= publisher.key %>">
             <td><a href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.full_name() %></a></td>
@@ -93,8 +91,8 @@
             <td><a href="mailto:<%= publisher.owner.email %>"><%= publisher.owner.name %></a></td>
             <td><%= numeral(publisher.report.impressions).format("0[.]0a") %></td>
             <td><%= numeral(publisher.report.clicks).format("0[.]0a") %></td>
-            <td class="green"><%= numeral(revenue).format("$0[,]000a") %></td>
-            <td class="red"><%= numeral(payout).format("$0[,]000a") %></td>
+            <td class="green"><%= numeral(payout.revenue_amount * segment).format("$0[,]000a") %></td>
+            <td class="red"><%= numeral(payout.transfer_amount * segment).format("$0[,]000a") %></td>
           </tr>
         <% }) %>
       </tbody>
