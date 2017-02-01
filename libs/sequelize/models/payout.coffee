@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes)->
     transfer_amount: {
       type: DataTypes.BIGINT
       defaultValue: 0
-      get: ->      
+      get: ->
         return Number @getDataValue("transfer_amount")
     }
     fee: {
@@ -60,13 +60,27 @@ module.exports = (sequelize, DataTypes)->
     }
     
     instanceMethods: {
+      reports_query: ->
+        return {
+          interval: "day"
+          paid_at: null
+          product: "network"
+          created_at: {
+            $gte: @start_at
+            $lte: @end_at
+          }
+        }
+        
+      publisher_query: ->
+        return {
+          is_demo: false
+          is_activated: true
+          product: "network"
+        }
+    
       publishers: ->
         LIBS.models.Publisher.findAll({
-          where: {
-           is_demo: false
-           is_activated: true
-           product: "network"
-          }
+          where: @publisher_query()
           paranoid: false
           order: [
             ['name', 'ASC']
@@ -76,28 +90,19 @@ module.exports = (sequelize, DataTypes)->
             as: "owner"
           }]
         }).map (publisher)=>
-          publisher.reports({
-            interval: "day"
-            paid_at: null
-            created_at: {
-              $gte: @start_at
-              $lte: @end_at
-            }
-          }).then (report)->
+          publisher.reports(@reports_query()).then (report)->
             publisher.report = report.totals
             return publisher
+            
+        .then (publishers)=>
+          @publishers = publishers
+          return publishers
       
-      update_counts: ->
-        LIBS.models.PublisherReport.findAll({
-          where: {
-            interval: "day"
-            paid_at: null
-            created_at: {
-              $gte: @start_at
-              $lte: @end_at
-            }
-          }
-        }).then (reports)->      
+      update_counts: ->     
+        @publishers().map (publisher)->
+          return publisher.report
+        
+        .then (reports)->      
           LIBS.models.PublisherReport.merge reports
           
         .then (report)=>
@@ -109,6 +114,15 @@ module.exports = (sequelize, DataTypes)->
           @revenue_amount = @source_amount * @fee
           @transfer_amount = @source_amount * (1-@fee)
           @save()
+          
+        .then (payout)=>
+          Promise.map @publishers, (publisher)->
+            segment = (publisher.report.impressions / payout.impressions) or 0
+            publisher.report.revenue_amount = payout.revenue_amount * segment
+            publisher.report.transfer_amount = payout.transfer_amount * segment
+            return publisher
+          .then ->
+            return payout
     }
     
     hooks: {        

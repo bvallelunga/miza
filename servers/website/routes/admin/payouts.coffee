@@ -21,16 +21,13 @@ module.exports.get_root = (req, res, next)->
  
    
 module.exports.get_create = (req, res, next)->  
-  Promise.props({
-    publishers: req.payout.publishers()
-    payout: req.payout.update_counts()
-  }).then (props)->
+  req.payout.update_counts().then ->
     res.render "admin/payouts/payout", {
       js: req.js.renderTags "modal", "admin-payouts"
       css: req.css.renderTags "modal", "admin", "fa", "dashboard"
       title: "Admin Payouts"
-      payout: props.payout
-      publishers: props.publishers
+      payout: req.payout
+      publishers: req.payout.publishers
     } 
   
   .catch next

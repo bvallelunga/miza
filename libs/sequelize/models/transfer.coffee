@@ -15,13 +15,13 @@ module.exports = (sequelize, DataTypes)->
       get: ->      
         return Number @getDataValue("amount")
     }
-    impression_count: {
+    impressions: {
       type: DataTypes.DECIMAL(15)
       defaultValue: 0
       get: ->      
         return Number @getDataValue("impression_count")
     }
-    click_count: {
+    clicks: {
       type: DataTypes.DECIMAL(15)
       defaultValue: 0
       get: ->      
