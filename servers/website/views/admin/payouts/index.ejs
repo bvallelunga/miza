@@ -1,0 +1,58 @@
+<% include ../../includes/start %>
+<% include ../../includes/header %>
+<div class="container side short left">
+  <span class="red">
+    Please be careful when creating new payouts!
+  </span>
+  <form class="form" method="POST" action="/admin/payouts/create">
+    <% include ../../includes/csrf %>
+    <div>
+      <input class="start_date" type="hidden" name="start_at"/>
+      <input class="end_date" type="hidden" name="end_at"/>
+      <div class="group range-picker">
+        <input class="name only" type="text" name="name" placeholder="Payout Range" autofill="false" required/>
+        <span class="fa fa-calendar"></span>
+      </div>
+    </div>
+    <button class="button" type="submit">Create Payout</button>
+    <div class="error"></div>
+  </form>
+</div>
+<div class="container form-table payouts side long right">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Revenue ($)</th>
+        <th>Payout ($)</th>
+        <th>Impressions</th>
+        <th>Clicks</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% payouts.forEach(function(payout, i) { %>
+        <tr>
+          <td>
+            <% if(!payout.is_transfered) { %>
+              <a href="/admin/payouts/<%= payout.id %>">
+                <%- payout.name.replace(/ /g, "&nbsp;") %>
+              </a>
+            <% } else { %> 
+              <%- payout.name.replace(/ /g, "&nbsp;") %>
+            <% } %> 
+          </td>
+          <td class="<%= payout.is_transfered ? "blue": "orange" %>">
+            <%= payout.is_transfered ? "Transfered": "Pending" %>
+          </td>
+          <td class="green"><%= numeral(payout.revenue_amount).format("$0.00a") %></td>
+          <td class="red"><%= numeral(payout.transfer_amount || 0).format("$0.00a") %></td>
+          <td><%= numeral(payout.impressions).format("0[.]0a") %></td>
+          <td><%= numeral(payout.clicks).format("0[.]0a") %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<% include ../../includes/end %>

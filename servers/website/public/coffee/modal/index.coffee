@@ -1,7 +1,7 @@
 $ ->
   title = document.title.split(" | ")[0].split(" ").join("_")
 
-  $("form").on "submit", (e)->
+  $("form:not(.ignore)").on "submit", (e)->
     e.preventDefault()
     e.stopPropagation()
   
