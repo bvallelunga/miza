@@ -7,8 +7,8 @@
       <div class="title">Please Confirm Transfers</div>
       <div class="metrics">
         <div class="core metric">
-          <div class="primary"><%= numeral(payout.revenue_amount).format("$0[,]000a") %></div>
-          <div class="secondary">Miza Revenue (MR)</div>
+          <div class="primary"><%= numeral(payout.transfer_amount).format("$0[,]000a") %></div>
+          <div class="secondary">Payout Amount</div>
         </div>
       </div>
       <form class="form" method="POST" action="/admin/payouts/<%= payout.id %>/transfer">
