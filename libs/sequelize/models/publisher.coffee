@@ -107,6 +107,10 @@ module.exports = (sequelize, DataTypes)->
           as: 'events' 
         }
         
+        models.Publisher.hasMany models.Transfer, { 
+          as: 'transfers' 
+        }
+        
         models.Publisher.belongsTo models.Industry, { 
           as: 'industry' 
         }

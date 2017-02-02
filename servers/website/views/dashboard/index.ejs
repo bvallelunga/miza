@@ -79,14 +79,12 @@
           </a>
         </li>
       <% } else if(publisher.product == "network") { %>
-<!--
         <li class="<%= isActive(dashboard, "payouts") %>">
           <a href="<%= dashboard_path %>/payouts">
             <span class="fa fa-bank"></span>
             Payouts
           </a>
         </li>
--->
       <% } %>
       <li class="<%= isActive(dashboard, "members") %>">
         <a href="<%= dashboard_path %>/members">

@@ -62,8 +62,15 @@ module.exports.get_dashboard = (req, res, next)->
       
   
   Promise.resolve().then ->
-    if dashboard != "setup"
+    if not (dashboard == "payouts" and req.publisher.product == "network")
       return Promise.resolve()
+      
+    req.publisher.getTransfers({
+      where: {
+        is_transferred: true
+      }
+    }).then (transfers)->
+      req.publisher.transfers = transfers
   
   .then ->
     if dashboard != "members"
