@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes)->
     start_at: DataTypes.DATE
     end_at: DataTypes.DATE
     name: DataTypes.STRING
-    payout_at: DataTypes.DATE
+    note: DataTypes.STRING
+    transferred_at: DataTypes.DATE
     sources: {
       type: DataTypes.JSONB
       defaultValue: []
@@ -46,7 +47,7 @@ module.exports = (sequelize, DataTypes)->
       get: ->      
         return Number @getDataValue("clicks")
     }
-    is_transfered: { 
+    is_transferred: { 
       type: DataTypes.BOOLEAN
       defaultValue: false
     } 
@@ -71,6 +72,7 @@ module.exports = (sequelize, DataTypes)->
           }
         }
         
+      
       publisher_query: ->
         return {
           is_demo: false
@@ -78,6 +80,7 @@ module.exports = (sequelize, DataTypes)->
           product: "network"
         }
     
+      
       publishers: ->
         LIBS.models.Publisher.findAll({
           where: @publisher_query()
@@ -97,6 +100,7 @@ module.exports = (sequelize, DataTypes)->
         .then (publishers)=>
           @publishers = publishers
           return publishers
+      
       
       update_counts: ->     
         @publishers().map (publisher)->
@@ -123,11 +127,48 @@ module.exports = (sequelize, DataTypes)->
             return publisher
           .then ->
             return payout
+            
+      
+      create_transfers: ->
+        if @is_transferred
+          return Promise.reject "Payout already transfered!"
+      
+        Promise.map @publishers, (publisher)=>
+          LIBS.models.Transfer.findOrCreate {
+            individualHooks: true
+            where: {
+              user_id: publisher.owner_id
+              publisher_id: publisher.id
+              payout_id: @id
+              is_transferred: false
+            }
+            defaults: {
+              type: "payout"
+              impressions: publisher.report.impressions
+              clicks: publisher.report.clicks
+              amount: publisher.report.transfer_amount
+              note: @note
+            }
+          }
+          
+        .then (transfers)=>
+          LIBS.models.PublisherReport.update({
+            paid_at: new Date()
+          }, {
+            where: @reports_query() 
+          }).then -> transfers
+        
+        .then (transfers)=>
+          @is_transferred = true
+          @transfered_at = new Date()
+          @save().then -> transfers
+          
     }
     
     hooks: {        
       beforeCreate: (payout, options)->
         payout.fee = 0.6
+        payout.note = "Thank you for using Miza!"
         
     }
   }

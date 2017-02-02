@@ -1,23 +1,47 @@
 <% include ../../includes/start %>
 <% include ../../includes/header %>
+<% if(!payout.is_transferred) { %>
+  <div class="payouts-confirm">
+    <a class="back fa fa-close" href="/admin/payouts/<%= payout.id %>"></a>
+    <div class="container payouts">
+      <div class="title">Please Confirm Transfers</div>
+      <div class="metrics">
+        <div class="core metric">
+          <div class="primary"><%= numeral(payout.revenue_amount).format("$0[,]000a") %></div>
+          <div class="secondary">Miza Revenue (MR)</div>
+        </div>
+      </div>
+      <form class="form" method="POST" action="/admin/payouts/<%= payout.id %>/transfer">
+        <% include ../../includes/csrf %>
+        <button class="button" type="submit">Transfer Funds</button>
+        <div class="error"></div>
+      </form>
+    </div>
+  </div>
+<% } %>
 <a class="back fa fa-arrow-circle-left" href="/admin/payouts"></a>
 <div class="payouts container">
-  
   <div class="top-bar">
     <div class="name left"><%= payout.name %></div>
-    <div class="buttons right">
-      <a class="button green" href="/admin/payouts/<%= payout.id %>/transfer">Transfer</a>
-      <a class="button red" href="/admin/payouts/<%= payout.id %>/delete">Delete</a>
-    </div>
+    <% if(!payout.is_transferred) { %>
+      <div class="buttons right">
+        <div class="button green transfer-button">Transfer</div>
+        <a class="button red" href="/admin/payouts/<%= payout.id %>/delete">Delete</a>
+      </div>
+    <% } %>
     <div class="clear"></div>
   </div>
   <div class="block">
-    <form class="form left" method="POST" action="/admin/payouts/<%= payout.id %>">
+    <form class="form left" method="POST" action="/admin/payouts/<%= payout.id %>" disabled>
       <% include ../../includes/csrf %>
       <table>
         <tr>
           <td class="title">Fee (%)</td>
           <td><input class="only input" type="text" name="fee" value="<%= payout.fee * 100 %>" step="1" max="100"/></td>
+        </tr>
+        <tr>
+          <td class="title">Note</td>
+          <td><textarea class="only input textarea" type="text" name="note"/><%= payout.note %></textarea>
         </tr>
         <tr>
           <td class="title">Sources</td>
@@ -37,8 +61,10 @@
           </td>
         </tr>
       </table>
-      <button class="button" type="submit">Update Payout</button>
-      <div class="error"></div>
+      <% if(!payout.is_transferred) { %>
+        <button class="button" type="submit">Update Payout</button>
+        <div class="error"></div>
+      <% } %>
     </form>
     <div class="metrics right">
       <div class="core metric">
@@ -48,11 +74,11 @@
       <div class="secondaries">
         <div class="row">
           <div class="metric">
-            <div class="primary"><%= numeral(payout.transfer_amount).format("$0[,]000a") %></div>
+            <div class="primary red"><%= numeral(payout.transfer_amount).format("$0[,]000a") %></div>
             <div class="secondary">Payout Amount</div>
           </div>
           <div class="metric">
-            <div class="primary"><%= numeral(payout.source_amount).format("$0[,]000a") %></div>
+            <div class="primary purple"><%= numeral(payout.source_amount).format("$0[,]000a") %></div>
             <div class="secondary">Source Amount</div>
           </div>
           <div class="metric">
@@ -82,17 +108,33 @@
         </tr>
       </thead>
       <tbody>
-        <% publishers.forEach(function(publisher) { %>
-          <tr class="publisher inactive <%= publisher.key %>">
-            <td><a href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.full_name() %></a></td>
-            <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
-            <td><a href="mailto:<%= publisher.owner.email %>"><%= publisher.owner.name %></a></td>
-            <td><%= numeral(publisher.report.impressions).format("0[.]0a") %></td>
-            <td><%= numeral(publisher.report.clicks).format("0[.]0a") %></td>
-            <td class="green"><%= numeral(publisher.report.revenue_amount).format("$0[,]000a") %></td>
-            <td class="red"><%= numeral(publisher.report.transfer_amount).format("$0[,]000a") %></td>
-          </tr>
-        <% }) %>
+        <% if(payout.is_transferred) { %>
+          <% transfers.forEach(function(transfer) { 
+            segment = (transfer.impressions / payout.impressions) || 0
+          %>
+            <tr class="publisher inactive <%= transfer.publisher.key %>">
+              <td><a href="/dashboard/<%= transfer.publisher.key %>/analytics"><%= transfer.publisher.full_name() %></a></td>
+              <td><a target="_blank" href="http://<%= transfer.publisher.domain %>"><%= transfer.publisher.domain %></a></td>
+              <td><a href="mailto:<%= transfer.user.email %>"><%= transfer.user.name %></a></td>
+              <td><%= numeral(transfer.impressions).format("0[.]0a") %></td>
+              <td><%= numeral(transfer.clicks).format("0[.]0a") %></td>
+              <td class="green"><%= numeral(payout.revenue_amount * segment).format("$0[,]000a") %></td>
+              <td class="red"><%= numeral(transfer.amount).format("$0[,]000a") %></td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <% publishers.forEach(function(publisher) { %>
+            <tr class="publisher inactive <%= publisher.key %>">
+              <td><a href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.full_name() %></a></td>
+              <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
+              <td><a href="mailto:<%= publisher.owner.email %>"><%= publisher.owner.name %></a></td>
+              <td><%= numeral(publisher.report.impressions).format("0[.]0a") %></td>
+              <td><%= numeral(publisher.report.clicks).format("0[.]0a") %></td>
+              <td class="green"><%= numeral(publisher.report.revenue_amount).format("$0[,]000a") %></td>
+              <td class="red"><%= numeral(publisher.report.transfer_amount).format("$0[,]000a") %></td>
+            </tr>
+          <% }) %>
+        <% } %>
       </tbody>
     </table>
   </div>

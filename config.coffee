@@ -91,10 +91,10 @@ module.exports = ->
       public: process.env.STRIPE_PUBLIC
     }
     
-    paypayl: {
+    paypal: {
       mode: process.env.PAYPAL_MODE
-      id: process.env.PAYPAL_ID
-      secret: process.env.PAYPAL_SECRET
+      client_id: process.env.PAYPAL_ID
+      client_secret: process.env.PAYPAL_SECRET
     }
     
     changelog: "ypg6GJ"

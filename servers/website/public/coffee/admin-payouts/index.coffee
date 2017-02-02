@@ -1,4 +1,7 @@
 $ ->  
+  $(".transfer-button").click ->
+    $(".payouts-confirm").show()
+
   $(".range-picker").dateRangePicker({
     showShortcuts: false
     showTopbar: false

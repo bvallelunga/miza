@@ -137,7 +137,7 @@ module.exports = (sequelize, DataTypes)->
           ['created_at', 'DESC']
         ]
                 
-        LIBS.models.PublisherReport.findAll(full_query).then (reports)->      
+        LIBS.models.PublisherReport.findAll(full_query).then (reports)->  
           Promise.map reports, (report)->
             return LIBS.models.PublisherReport.merge [report]
            

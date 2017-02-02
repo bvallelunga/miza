@@ -89,8 +89,9 @@ module.exports = (srv)->
   app.get  "/admin/payouts", routes.auth.is_admin, routes.admin.payouts.get_root
   app.get  "/admin/payouts/:payout", routes.auth.is_admin, routes.admin.payouts.has_payout, routes.admin.payouts.get_create
   app.get  "/admin/payouts/:payout/delete", routes.auth.is_admin, routes.admin.payouts.has_payout, routes.admin.payouts.get_delete
-  app.post "/admin/payouts/create", routes.auth.is_admin, routes.admin.payouts.post_generate
-  app.post "/admin/payouts/:payout", routes.auth.is_admin, routes.admin.payouts.has_payout, routes.admin.payouts.post_create
+  app.post "/admin/payouts/create", routes.auth.is_admin, routes.admin.payouts.post_create
+  app.post "/admin/payouts/:payout", routes.auth.is_admin, routes.admin.payouts.has_payout, routes.admin.payouts.post_update
+  app.post "/admin/payouts/:payout/transfer", routes.auth.is_admin, routes.admin.payouts.has_payout, routes.admin.payouts.post_transfer
   app.post "/admin/invites", routes.auth.is_admin, routes.admin.invites.post
   app.post "/admin/industries/update", routes.auth.is_admin, routes.admin.industries.update
   app.post "/admin/industries/create", routes.auth.is_admin, routes.admin.industries.create

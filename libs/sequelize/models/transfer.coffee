@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes)->
     }
     paypal: {
       type: DataTypes.STRING
-      allowNull: false
     }
     amount: {
       type: DataTypes.DECIMAL(15)
@@ -19,14 +18,20 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.DECIMAL(15)
       defaultValue: 0
       get: ->      
-        return Number @getDataValue("impression_count")
+        return Number @getDataValue("impressions")
     }
     clicks: {
       type: DataTypes.DECIMAL(15)
       defaultValue: 0
       get: ->      
-        return Number @getDataValue("click_count")
+        return Number @getDataValue("clicks")
     }
+    note: DataTypes.STRING
+    transferred_at: DataTypes.DATE
+    is_transferred: { 
+      type: DataTypes.BOOLEAN
+      defaultValue: false
+    } 
   }, {    
     classMethods: {      
       associate: (models)->
@@ -36,6 +41,10 @@ module.exports = (sequelize, DataTypes)->
         
         models.Transfer.belongsTo models.User, { 
           as: 'user' 
+        }
+        
+        models.Transfer.belongsTo models.Payout, { 
+          as: 'payout' 
         }
     }
   }

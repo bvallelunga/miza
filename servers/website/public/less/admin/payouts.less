@@ -13,6 +13,39 @@
   }
 }
 
+.payouts-confirm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 1;
+  display: none;
+  
+  .payouts.container {
+    .title {
+      font-size: 2em;
+      margin: 50px 0 30px;
+    }
+    
+    .button {
+      font-size: 1.5em;
+      opacity: 1;
+      background: @green;
+      width: 250px;
+      
+      &:hover {
+        background: darken(@green, 5%);
+      }
+    }
+    
+    .metrics .core  .primary {
+      color: @green;
+    }      
+  }
+}
+
 .payouts.container {
   padding-top: 100px;
   width: 1200px;
@@ -29,33 +62,35 @@
       font-weight: lighter;
       margin: 0 5px;
     }
-    
-    .buttons {      
-      .button {
-        width: initial;
-        height: initial;
-        display: inline-block;
-        padding: 10px 15px;
-        margin: -10px 5px -0 5px;
-        font-size: 1em;
-        opacity: 0.6;
-        .border-radius(3px);
-        .transition();
-        
-        &:hover {
-          opacity: 1;
-        }
-        
-        &.green {
-          background: @green;
-        }
-        
-        &.red {
-          background: darken(@red, 5%);
-        }
+  }
+  
+  .buttons {      
+    .button {
+      width: initial;
+      height: initial;
+      display: inline-block;
+      padding: 10px 15px;
+      margin: -10px 5px -0 5px;
+      font-size: 1em;
+      opacity: 0.6;
+      cursor: pointer;
+      .border-radius(3px);
+      .transition();
+      
+      &:hover {
+        opacity: 1;
+      }
+      
+      &.green {
+        background: @green;
+      }
+      
+      &.red {
+        background: darken(@red, 5%);
       }
     }
   }
+
   
   .block {
     padding-top: 80px;
@@ -89,6 +124,14 @@
         
         .metric {
           width: 24%;
+          
+          .red {
+            color: @red;
+          }
+          
+          .purple {
+            color: @purple;
+          }
         }
       }
     }
@@ -102,7 +145,7 @@
         font-size: 1.2em;
         
         td {
-          padding-bottom: 20px;
+          padding-bottom: 10px;
           
           &.title {
             padding-top: 15px;
@@ -112,11 +155,17 @@
             margin: 0;
           }
           
+          textarea {
+            height: 100px;
+            margin: 0;
+          }
+          
           table td {
-            padding: 2.5px;
+            padding: 2.5px 0;
             
             &:first-child {
               width: 60%;
+              padding-right: 5px;
             }
           }
         }
