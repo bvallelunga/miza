@@ -16,7 +16,7 @@
         <td>$<%= transfer.amount %></td>
         <td><%= transfer.is_transferred ? "Transferred" : "Pending" %></td>
         <td><%= transfer.paypal %></td>
-        <td><%= moment(transfer.transferred_at).format("MMM Do, YYYY") %></td>
+        <td><%= transfer.transferred_at ? moment(transfer.transferred_at).format("MMM Do, YYYY") : "" %></td>
       </tr>
     <% }) %>
   </tbody>
