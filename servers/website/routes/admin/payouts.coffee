@@ -53,7 +53,10 @@ module.exports.get_create = (req, res, next)->
   }
   
 
-module.exports.get_delete = (req, res, next)->  
+module.exports.get_delete = (req, res, next)->
+  if req.payout.is_transferred
+    return res.redirect "/admin/payouts"
+  
   req.payout.destroy().then ->
     res.redirect "/admin/payouts"
     

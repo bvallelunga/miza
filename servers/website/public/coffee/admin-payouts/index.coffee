@@ -6,7 +6,7 @@ $ ->
     showShortcuts: false
     showTopbar: false
     autoClose: true
-    format: 'MMM DD, YYYY'
+    format: 'MMM D, YYYY'
     separator: '  -  '
     startOfWeek: 'monday'
     language:'en'
