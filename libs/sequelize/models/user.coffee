@@ -169,6 +169,7 @@ module.exports = (sequelize, DataTypes)->
               phone: @phone
               stripe: @stripe_id
               card: !!@stripe_card
+              paypal: @paypal
             }
           }
     
