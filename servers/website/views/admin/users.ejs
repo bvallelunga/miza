@@ -9,8 +9,8 @@
     return !user.is_admin
   }).length
   
-  cards_entered = users.filter(function(user) {
-    return !!user.stripe_card
+  paypals = users.filter(function(user) {
+    return !!user.paypal
   }).length
 %>
 <div class="container form-table users">
@@ -27,9 +27,9 @@
       <strong>Admins</strong>
       (<%= admins_only %>)
     </span>
-    <span data-filter="card">
-      <strong>Cards Entered</strong>
-      (<%= cards_entered %>)
+    <span data-filter="paypal">
+      <strong>PayPal</strong>
+      (<%= paypals %>)
     </span>
   </div>
   <table>
@@ -37,7 +37,7 @@
       <tr>
         <th>Name</th>
         <th>Email</th>
-        <th>Card Info</th>
+        <th>PayPal</th>
         <th>Admin Contact</th>
         <th>Access</th>
         <th>Joined</th>
@@ -48,11 +48,11 @@
       <% users.forEach(function(user, i) { %>
         <tr class="
           <%= user.is_admin ? "admin" : "user" %>
-          <%= !!user.stripe_card ? "card" : "" %>
+          <%= !!user.paypal ? "paypal" : "" %>
         ">
           <td><%= user.name %></td>
           <td><a href="mailto:<%= user.email %>"><%= user.email %></a></td>
-          <td class="<%= user.stripe_card ? "green" : "red" %>"><%= user.stripe_card || "No Card" %></td>
+          <td class="<%= user.paypal ? "green" : "red" %>"><%= user.paypal || "No PayPal" %></td>
           <td><%= user.admin_contact ? user.admin_contact.name : "" %></td>
           <td><%= user.is_admin ? "Admin" : "User" %></td>
           <td><%= moment(user.created_at).format("MMM Do, YYYY") %></td>

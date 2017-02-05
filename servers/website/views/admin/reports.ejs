@@ -40,7 +40,7 @@
         <th>Publisher</th>
         <th>Domain</th>
         <th>Owner</th>
-        <th>Card</th>
+        <th>Payout/Billing</th>
         <th>CPM</th>
         <th>PI</th>
         <th>PC</th>
@@ -54,10 +54,10 @@
           <td><a href="/dashboard/<%= publisher.key %>/analytics"><%= publisher.full_name() %></a></td>
           <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
           <td><a href="mailto:<%= publisher.owner.email %>"><%= publisher.owner.name %></a></td>
-          <% if(publisher.product) { %>
+          <% if(publisher.product == "protect") { %>
             <td class="<%= publisher.owner.stripe_card ? "green" : "red" %>"><%= publisher.owner.stripe_card || "No Card" %></td>
           <% } else { %> 
-            <td class="<%= publisher.owner.stripe_payout ? "green" : "red" %>"><%= publisher.owner.stripe_payout || "No Card" %></td>
+            <td class="<%= publisher.owner.paypal ? "green" : "red" %>"><%= publisher.owner.paypal || "No PayPal" %></td>
           <% } %>
           <td class="cpm data"></td>
           <td class="impressions data">---</td>
