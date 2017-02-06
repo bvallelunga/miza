@@ -133,7 +133,10 @@ module.exports = (sequelize, DataTypes)->
         if @is_transferred
           return Promise.reject "Payout already transfered!"
       
-        Promise.map @publishers, (publisher)=>
+        Promise.filter @publishers, (publisher)->
+          return publisher.report.transfer_amount > 0
+        
+        .map (publisher)=>
           LIBS.models.Transfer.findOrCreate {
             individualHooks: true
             where: {
