@@ -303,6 +303,7 @@ module.exports = (sequelize, DataTypes)->
                 coverage: @coverage_ratio * 100
                 activated: @is_activated
                 card: !!@owner.stripe_card
+                paypal: !!@owner.paypal
                 product: @product
                 admin: if @admin_contact? then @admin_contact.name else null
                 total_page_views: numeral(reports.totals.pings_all).format("0[,]000")
