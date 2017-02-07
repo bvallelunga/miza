@@ -60,24 +60,6 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.BOOLEAN
       defaultValue: false
     }
-    coverage_ratio: {
-      type: DataTypes.DECIMAL(3,2)
-      defaultValue: 1
-      validate: {
-        min: {
-          args: [ 0 ]
-          msg: "Coverage must be greater than or equal to 0%"
-        }
-        max: {
-          args: [ 1 ]
-          msg: "Coverage must be less than or equal to 100%"
-        }
-      }
-      get: ->      
-        return Number @getDataValue("coverage_ratio")
-   
-    }
-    abtest: DataTypes.JSONB
     config: {
       type: DataTypes.JSONB
       defaultValue: {}
@@ -304,7 +286,7 @@ module.exports = (sequelize, DataTypes)->
               custom_attributes: {
                 industry: if @industry? then  @industry.name else null
                 fee: @fee * 100
-                coverage: @coverage_ratio * 100
+                coverage: @config.coverage * 100
                 activated: @is_activated
                 card: !!@owner.stripe_card
                 paypal: @owner.paypal
@@ -326,23 +308,24 @@ module.exports = (sequelize, DataTypes)->
             charset: 'alphabetic'
           }).toLowerCase()
           publisher.endpoint = publisher.create_endpoint()
-          
-        if not publisher.config?
-          publisher.config = {
-            abtest: {
-              coverage: 1
-            }
+            
+      
+      beforeCreate: (publisher)->
+        publisher.config = {
+          abtest: {
             coverage: 1
-            refresh: {
-              enabled: true
-              interval: 60
-            }
           }
-          
+          coverage: 1
+          refresh: {
+            enabled: true
+            interval: 60
+          }
+        }
+
           
       beforeUpdate: (publisher)->
         publisher.endpoint = publisher.create_endpoint()
-          
+
       
       afterCreate: (publisher)->
         publisher.heroku_add(publisher.endpoint)
@@ -352,7 +335,7 @@ module.exports = (sequelize, DataTypes)->
 
         
       afterUpdate: (publisher)->
-        if publisher.endpoint != publisher.previous("endpoint")
+        if not publisher.miza_endpoint and publisher.endpoint != publisher.previous("endpoint")
           publisher.heroku_add(publisher.endpoint)
           
         if not publisher.is_demo and publisher.is_activated and publisher.changed("is_activated")

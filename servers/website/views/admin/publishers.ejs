@@ -62,7 +62,6 @@
           <th>Admin Contact</th>
           <th class="dynamic">Industry</th>
           <th class="dynamic">Endpoint Issued</th>
-          <th class="dynamic number">Coverage (%)</th>
           <th class="dynamic number">Fee (%)</th>
         </tr>
       </thead>
@@ -100,8 +99,7 @@
                 </select>
               </div>
             </td>
-            <td><input class="only number" type="number" name="publishers[<%= i %>][coverage]" value="<%= publisher.coverage_ratio * 100 %>" placeholder="Coverage" min="0" step="1" max="100" required></td>
-            <td><input class="only number" type="number" name="publishers[<%= i %>][fee]" value="<%= publisher.fee * 100 %>" placeholder="Fee" min="0" step="1" max="100" required></td>
+            <td><input class="only number" type="<%= publisher.product == "protect" ? "number" : "hidden" %>" name="publishers[<%= i %>][fee]" value="<%= publisher.fee * 100 %>" placeholder="Fee" min="0" step="1" max="100" required></td>
           </tr>
         <% }) %>
       </tbody>
