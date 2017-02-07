@@ -16,7 +16,7 @@ module.exports.abtest = (req, res, next)->
     if publisher.is_demo
       endpoint = "#{publisher.key}.#{CONFIG.web_server.domain}"
     
-    res.redirect "#{req.protocol}://#{endpoint}"
+    res.redirect "#{req.headers["HTTP_X_FORWARDED_PROTO"] or req.protocol}://#{endpoint}"
     
   .catch next
 
