@@ -335,13 +335,13 @@ module.exports = (sequelize, DataTypes)->
 
         
       afterUpdate: (publisher)->
-        if not publisher.miza_endpoint and publisher.endpoint != publisher.previous("endpoint")
+        if not publisher.miza_endpoint and publisher.changed("endpoint")
           publisher.heroku_add(publisher.endpoint)
           
         if not publisher.is_demo and publisher.is_activated and publisher.changed("is_activated")
           publisher.publisher_activated()
             
-        if publisher.miza_endpoint != publisher.previous("miza_endpoint")
+        if publisher.changed("miza_endpoint")
           if publisher.miza_endpoint
             publisher.cloudflare_add publisher.endpoint
             

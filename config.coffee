@@ -112,7 +112,7 @@ module.exports = ->
     ]
     
     disable: {
-      cloudflare: true and is_dev
+      cloudflare: false and is_dev
       heroku: true and is_dev
       queue: false and is_dev
       slack: true and is_dev
