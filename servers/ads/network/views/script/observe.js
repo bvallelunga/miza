@@ -1,6 +1,11 @@
-API.observables = [
-  ".adsbygoogle", ".dp-ad-chrome iframe", "#_carbonads_js"
-].join(",")
+API.observables = {
+  query: [
+    ".adsbygoogle", ".dp-ad-chrome iframe", "#_carbonads_js"
+  ].join(","),
+  xpaths: [
+    "//body//script[contains(., 'OA_show')]/parent::*"
+  ].join(" | ")
+}
 
 
 API.observe_init = function() {
@@ -8,9 +13,27 @@ API.observe_init = function() {
   API.start_observing()
 }
 
+API.fetch_xpath = function() {
+  if(!API.observables.xpaths)  return []
+  
+  var elements = []
+  var nodes = document.evaluate(API.observables.xpaths, document, null, XPathResult.ANY_TYPE, null)
+  var result = nodes.iterateNext()
+  
+  while (result) {
+    elements.push(result)
+    result = nodes.iterateNext()
+  } 
+  
+  return elements;
+}
+
 
 API.fetch_current = function() {
-  var elements = API.to_array(API.document.querySelectorAll(API.observables))
+  var query_elements = API.to_array(API.document.querySelectorAll(API.observables.query))
+  var xpath_elements = API.fetch_xpath();
+  var elements = query_elements.concat(xpath_elements);
+  
   elements.filter(function(element) {
     return !element.attributes["m-ignore"]
   }).forEach(API.migrate)
