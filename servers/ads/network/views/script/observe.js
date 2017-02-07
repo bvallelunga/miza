@@ -3,7 +3,8 @@ API.observables = {
     ".adsbygoogle", ".dp-ad-chrome iframe", "#_carbonads_js"
   ].join(","),
   xpaths: [
-    "//body//script[contains(., 'OA_show')]/parent::*"
+    "//body//script[contains(., 'OA_show')]/parent::*",
+    "//body//script[contains(., 'Criteo.DisplayAd')]"
   ].join(" | ")
 }
 
@@ -61,6 +62,8 @@ API.start_observing = function() {
       parent.style.position = "relative"
       parent.style.minHeight = event.data.height + "px"
       parent.style.minWidth = event.data.width + "px"
+      parent.style.width = "100%"
+      parent.style.height = "100%"
       element.style.position = "absolute"
       element.style.top = "50%"
       element.style.left = "50%"
@@ -89,5 +92,7 @@ API.observer = function() {
 
 API.migrate = function(element) {
   var iframe = API.iframe(element);
-  element.parentNode.replaceChild(iframe, element);
+  var div = API.document.createElement("div")
+  div.appendChild(iframe)
+  element.parentNode.replaceChild(div, element)
 }
