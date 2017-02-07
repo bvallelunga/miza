@@ -36,6 +36,7 @@
         right: 0;
         z-index: 1;
         background: white;
+        max-height: 60px;
       }
       
       a:hover div {
@@ -48,8 +49,8 @@
       window.parent.window.postMessage({
         name: "frame.show",
         frame: "<%= frame %>",
-        width: <%= payload.width %>,
-        height: <%= payload.height + (!!payload.text ? 60 : 0) %>
+        width: <%= payload.width - 10 %>,
+        height: <%= payload.height + (!!payload.text ? 40 : 0) %>
       }, "*")
       
       <% if(publisher.config.refresh.enabled) { %>
