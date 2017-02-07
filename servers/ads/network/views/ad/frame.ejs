@@ -44,7 +44,7 @@
     </style>
     <script>
       window["<%= publisher.key %>"] = { in_frame: true };      
-      <%- miza_script %>
+      
       window.parent.window.postMessage({
         name: "frame.show",
         frame: "<%= frame %>",
@@ -53,10 +53,12 @@
       }, "*")
       
       <% if(publisher.config.refresh.enabled) { %>
-        setTimeout(function() {
+        window.setTimeout(function() {
           window.location.reload()
         }, <%- publisher.config.refresh.interval * 1000 %>);
       <% } %>
+      
+      <%- miza_script %>
     </script>
   </head>
   <body>
