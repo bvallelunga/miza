@@ -1,2 +1,2 @@
-npm prune;
-npm shrinkwrap;
+#npm prune;
+#npm shrinkwrap;
