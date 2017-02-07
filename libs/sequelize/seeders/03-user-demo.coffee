@@ -44,7 +44,6 @@ create_publishers = (models)->
       defaults: {
         name: "Network Demo"
         is_demo: true
-        industry_id: 2
         product: "network"
       }
     }) 

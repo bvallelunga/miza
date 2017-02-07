@@ -13,11 +13,21 @@
     <tr>
       <td class="title">Coverage</td>
       <td class="slider">
-        <div class="slider-range" data-min="0" data-max="100" data-value="<%= publisher.coverage_ratio * 100 %>"></div>
-        <input class="slider-input" type="hidden" name="coverage" value="<%= publisher.coverage_ratio %>">
-        <div class="slider-display value"></div>
+        <div class="slider-range" data-min="0" data-max="100" data-value="<%= publisher.config.coverage * 100 %>"></div>
+        <input class="slider-input" type="hidden" name="config_coverage" value="<%= publisher.config.coverage %>">
+        <div class="slider-display value" data-rules="" data-postfix="%"></div>
       </td>
     </tr>
+    <% if(publisher.product == "network") { %>
+      <tr>
+      <td class="title">Ad Refresh</td>
+      <td class="slider">
+        <div class="slider-range" data-min="0" data-step="10" data-max="120" data-value="<%= publisher.config.refresh.interval %>"></div>
+        <input class="slider-input" type="hidden" name="config_refresh" value="<%= publisher.config.refresh.interval %>">
+        <div class="slider-display value" data-rules="0:Disabled" data-postfix=" secs"></div>
+      </td>
+    </tr>
+    <% } %>
     <% if(publisher.industry) { %>
       <tr>
         <td class="title">Industry</td>

@@ -41,6 +41,7 @@ module.exports = (srv)->
   app.get  "/#{CONFIG.loader_io}", routes.landing.get_loader_io
   app.get  "/demo", routes.landing.demo.get_root
   app.get  "/demo/:demo", routes.landing.demo.get_miza
+  app.get  "/demo/:demo/:product", routes.landing.demo.get_miza
   app.post "/optout", routes.landing.post_optout
   app.post "/access/request", routes.auth.not_authenticated, routes.landing.post_beta
   

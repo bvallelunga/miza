@@ -4,8 +4,8 @@ randomstring = require "randomstring"
 
   
 module.exports.abtest = (req, res, next)->
-  abtest = req.publisher.abtest.coverage
-  alt_publisher = req.publisher.abtest.alt_publisher
+  abtest = req.publisher.config.abtest.coverage
+  alt_publisher = req.publisher.config.abtest.alt_publisher
 
   if abtest > Math.random()
     return next()
@@ -26,7 +26,7 @@ module.exports.script = (req, res, next)->
     req.publisher.endpoint = req.get("host")
 
   res.render "carbon/script", {
-    enabled: req.publisher.coverage_ratio > Math.random() and req.miza_enabled
+    enabled: req.publisher.config.coverage > Math.random() and req.miza_enabled
     random_slug: randomstring.generate(15)
     publisher: req.publisher
     network: LIBS.models.defaults.carbon_network

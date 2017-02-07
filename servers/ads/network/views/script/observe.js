@@ -11,7 +11,9 @@ API.observe_init = function() {
 
 API.fetch_current = function() {
   var elements = API.to_array(API.document.querySelectorAll(API.observables))
-  elements.forEach(API.migrate)
+  elements.filter(function(element) {
+    return !element.attributes["m-ignore"]
+  }).forEach(API.migrate)
 }
 
 

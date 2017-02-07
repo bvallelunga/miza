@@ -51,6 +51,12 @@
         width: <%= payload.width %>,
         height: <%= payload.height + (!!payload.text ? 60 : 0) %>
       }, "*")
+      
+      <% if(publisher.config.refresh.enabled) { %>
+        setTimeout(function() {
+          window.location.reload()
+        }, <%- publisher.config.refresh.interval * 1000 %>);
+      <% } %>
     </script>
   </head>
   <body>

@@ -78,6 +78,10 @@ module.exports = (sequelize, DataTypes)->
    
     }
     abtest: DataTypes.JSONB
+    config: {
+      type: DataTypes.JSONB
+      defaultValue: {}
+    }
   }, {    
     classMethods: {      
       associate: (models)->
@@ -322,6 +326,18 @@ module.exports = (sequelize, DataTypes)->
             charset: 'alphabetic'
           }).toLowerCase()
           publisher.endpoint = publisher.create_endpoint()
+          
+        if not publisher.config?
+          publisher.config = {
+            abtest: {
+              coverage: 1
+            }
+            coverage: 1
+            refresh: {
+              enabled: true
+              interval: 60
+            }
+          }
           
           
       beforeUpdate: (publisher)->
