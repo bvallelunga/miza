@@ -48,9 +48,13 @@ module.exports.get_dashboard = (req, res, next)->
       js.push "code"
       css.push "code"
       
-    when "members", "settings", "abtest"
+    when "members", "abtest"
       js.push "modal", "range-slider"
       css.push "range-slider"
+      
+    when "settings"
+      js.push "modal", "range-slider", "tooltip"
+      css.push "range-slider", "tooltip"
 
     when "analytics"
       js.push "dashboard-analytics", "tooltip", "date-range"

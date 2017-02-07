@@ -11,7 +11,10 @@
       <td><input type="url" name="publisher_domain" value="http://<%= publisher.domain %>" placeholder="http://techcrunch.com" required></td>
     </tr>
     <tr>
-      <td class="title">Coverage</td>
+      <td class="title">
+        Coverage 
+        <span class="info fa fa-info-circle tooltip" title="Control the percent of your user base<br>that recieves <%=company %> services."></span>
+      </td>
       <td class="slider">
         <div class="slider-range" data-min="0" data-max="100" data-value="<%= publisher.config.coverage * 100 %>"></div>
         <input class="slider-input" type="hidden" name="config_coverage" value="<%= publisher.config.coverage %>">
@@ -20,7 +23,10 @@
     </tr>
     <% if(publisher.product == "network") { %>
       <tr>
-      <td class="title">Ad Refresh</td>
+      <td class="title">
+        Ad Refresh 
+        <span class="info tooltip fa fa-info-circle" title="The interval at which your ad units refresh. The lower<br>the interval the more impressions you will have."></span>
+      </td>
       <td class="slider">
         <div class="slider-range" data-min="0" data-step="10" data-max="120" data-value="<%= publisher.config.refresh.interval %>"></div>
         <input class="slider-input" type="hidden" name="config_refresh" value="<%= publisher.config.refresh.interval %>">
