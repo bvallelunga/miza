@@ -6,6 +6,7 @@ randomstring = require "randomstring"
 module.exports.abtest = (req, res, next)->
   abtest = req.publisher.config.abtest.coverage
   alt_publisher = req.publisher.config.abtest.alt_publisher
+  protocol = req.headers["HTTP_X_FORWARDED_PROTO"] or req.protocol
 
   if abtest > Math.random()
     return next()
@@ -16,7 +17,7 @@ module.exports.abtest = (req, res, next)->
     if publisher.is_demo
       endpoint = "#{publisher.key}.#{CONFIG.web_server.domain}"
     
-    res.redirect "#{req.headers["HTTP_X_FORWARDED_PROTO"] or req.protocol}://#{endpoint}"
+    res.redirect "#{protocol}://#{endpoint}"
     
   .catch next
 
