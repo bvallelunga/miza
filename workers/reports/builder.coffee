@@ -14,11 +14,12 @@ module.exports = require("../template") {
     }]
   }).map (publisher)->           
     publisher.pending_events().then (report)->      
-      report.fee = publisher.fee
-      report.product = publisher.product  
+      report.product = publisher.product
+      report.fee = 0
       report.cpm = 0
       
       if publisher.product == "protect"
+        report.fee = publisher.fee
         report.cpm = publisher.industry.cpm   
      
       return report

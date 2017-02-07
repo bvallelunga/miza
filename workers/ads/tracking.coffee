@@ -46,7 +46,6 @@ require("../../startup") true, ->
       }
       
       if not event.publisher.is_activated
-        # Intercom updates
         LIBS.models.Publisher.update {
           is_activated: true
         }, {
