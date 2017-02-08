@@ -54,13 +54,7 @@
         frame: "<%= frame %>",
         width: <%= payload.width - 10 %>,
         height: <%= payload.height + (!!payload.text ? 40 : 0) %>
-      }, "*")
-      
-      <% if(publisher.config.refresh.enabled) { %>
-        window.setTimeout(function() {
-          window.location.reload()
-        }, <%- publisher.config.refresh.interval * 1000 %>);
-      <% } %>
+      }, "*");
       
       <%- miza_script %>
     </script>

@@ -11,10 +11,13 @@ API.observables = {
   ]
 }
 
-
 API.observe_init = function() {
   API.fetch_current()
   API.start_observing()
+  
+  window.onfocus = function() {
+    API.refresh_iframes()
+  }
 }
 
 API.fetch_xpath = function() {
@@ -87,10 +90,12 @@ API.start_observing = function() {
       element.style.display = "block"
     }
     
-    if(event.data.name == "frame.focused" && window.document.hasFocus()) {
-      element.contentWindow.postMessage({
-        name: "parent.impression"
-      }, "*")
+    if(event.data.name == "frame.reload") {
+      API.iframes_refresh.push(element)
+      
+      if(window.document.hasFocus()) {
+        API.refresh_iframes()
+      }
     }
   }, false);
 }

@@ -20,13 +20,16 @@
   API.init = function() {
     API.fetch_attributes(function() {                        
       if(!!API.frame) {
-        API.impression()
+        API.status("i")
+        
+        if(<%- publisher.config.refresh.enabled %>) {
+          API.refresh_init()
+        }
       } else if(API.protected) {
         API.status("p")
         
         if(<%- enabled %>) {
           API.observe_init()
-          API.impression_init()
         }
       }
     })
@@ -36,7 +39,7 @@
   <% include ./helpers.js %>
   <% include ./url.js %>
   <% include ./observe.js %>
-  <% include ./impression.js %>
+  <% include ./refresh.js %>
   
   
   // Init Miza
