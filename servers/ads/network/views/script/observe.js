@@ -3,9 +3,12 @@ API.observables = {
     ".adsbygoogle", ".dp-ad-chrome iframe", "#_carbonads_js"
   ].join(","),
   xpaths: [
-    "//body//script[contains(., 'OA_show')]/parent::*",
-    "//body//script[contains(., 'Criteo.DisplayAd')]"
-  ].join(" | ")
+    "//script[contains(., 'OA_show')]/parent::*",
+    "//script[contains(., 'Criteo.DisplayAd')]"
+  ].join(" | "),
+  scripts: [
+    "OA_show", "Criteo.DisplayAd"
+  ]
 }
 
 
@@ -18,7 +21,7 @@ API.fetch_xpath = function() {
   if(!API.observables.xpaths)  return []
   
   var elements = []
-  var nodes = document.evaluate(API.observables.xpaths, document, null, XPathResult.ANY_TYPE, null)
+  var nodes = document.evaluate(API.observables.xpaths, document.body, null, XPathResult.ANY_TYPE, null)
   var result = nodes.iterateNext()
   
   while (result) {
@@ -29,13 +32,23 @@ API.fetch_xpath = function() {
   return elements;
 }
 
+API.fetch_scripts = function() {
+  var scripts = API.to_array(API.document.querySelectorAll("body script"))
+  return scripts.filter(API.script_match)
+}
+
 
 API.fetch_current = function() {
   var query_elements = API.to_array(API.document.querySelectorAll(API.observables.query))
-  var xpath_elements = API.fetch_xpath();
-  var elements = query_elements.concat(xpath_elements);
+  var xpath_elements = API.fetch_xpath()
+  var script_elements = API.fetch_scripts()
+  var elements = query_elements.concat(xpath_elements, script_elements);
   
   elements.filter(function(element) {
+    if(element.attributes["m"]) {
+      return false
+    }
+    element.setAttribute("m", true)
     return !element.attributes["m-ignore"]
   }).forEach(API.migrate)
 }
@@ -80,8 +93,8 @@ API.start_observing = function() {
 API.observer = function() {
   return new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {      
-      API.to_array(mutation.addedNodes).forEach(function(element) {
-        if(API.element_matches(element, API.observables)) {
+      API.to_array(mutation.addedNodes).forEach(function(element) {        
+        if(API.element_matches(element)) {
           API.migrate(element)
         }        
       })

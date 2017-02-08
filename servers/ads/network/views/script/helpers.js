@@ -1,5 +1,5 @@
 API.iframe = function(element) {
-  var parent = element.parentNode
+  var parent = element.parentNode || {}
   var width = element.offsetWidth || parent.offsetWidth
   var height = element.offsetHeight || parent.offsetHeight
   
@@ -34,7 +34,6 @@ API.iframe = function(element) {
   return iframe
 }
 
-
 API.blocker_check = function(window, callback) {
   var test = document.createElement('div')
   test.innerHTML = '&nbsp;'
@@ -57,17 +56,41 @@ API.tag_name = function(element) {
 
 API.to_array = function(array_like) {
   return Array().slice.call(array_like || [])
-} 
+}
+
+API.script_match = function(element) {
+  for(var i = 0; i < API.observables.scripts.length; i++) {
+    var script = API.observables.scripts[i]
+    
+    if(element.innerHTML.indexOf(script) > -1) {
+      return true
+    }
+  }
+  
+  return false
+}  
 
 
-API.element_matches = function(element,selector) {  
-  if(typeof element.matches == 'function')
-    return element.matches(selector)
+API.element_matches = function(element) {  
+  if(typeof element.matches == 'function') {
+    if(element.matches(API.observables.query)) {
+      return true
+    }
+  }
 
-  if(typeof element.matchesSelector == 'function')
-    return element.matchesSelector(selector)
+  if(typeof element.matchesSelector == 'function') {
+    if(element.matchesSelector(API.observables.query)) {
+      return true
+    }
+  }
+  
+  if((element.tagName || "").toLowerCase() == "script" && !element.src) {    
+    if(API.script_match(element)) {
+      return true
+    }
+  }
 
-  var matches = (element.document || element.ownerDocument).querySelectorAll(selector)
+  var matches = (element.document || element.ownerDocument).querySelectorAll(API.observables.query)
   var i = 0
 
   while (matches[i] && matches[i] !== element) {
