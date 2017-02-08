@@ -3,8 +3,8 @@ API.observables = {
     ".adsbygoogle", ".dp-ad-chrome iframe", "#_carbonads_js"
   ].join(","),
   xpaths: [
-    "//script[contains(., 'OA_show')]/parent::*",
-    "//script[contains(., 'Criteo.DisplayAd')]"
+    "//body//script[contains(., 'OA_show')]/parent::*",
+    "//body//script[contains(., 'Criteo.DisplayAd')]"
   ].join(" | "),
   scripts: [
     "OA_show", "Criteo.DisplayAd"
