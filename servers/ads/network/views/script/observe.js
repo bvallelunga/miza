@@ -64,13 +64,13 @@ API.start_observing = function() {
   })
   
   window.addEventListener("message", function(event) {
+    var element = API.document.querySelector("." + event.data.frame)
+    
     if(event.data.name == "frame.remove") {
-      var element = API.document.querySelector("." + event.data.frame)
       element.parentNode.parentNode.removeChild(element.parentNode)
     }
     
     if(event.data.name == "frame.show") {
-      var element = API.document.querySelector("." + event.data.frame)
       var parent = element.parentNode
       parent.style.position = "relative"
       parent.style.minHeight = event.data.height + "px"
@@ -85,6 +85,12 @@ API.start_observing = function() {
       element.width = event.data.width
       element.height = event.data.height
       element.style.display = "block"
+    }
+    
+    if(event.data.name == "frame.focused" && window.document.hasFocus()) {
+      element.contentWindow.postMessage({
+        name: "parent.impression"
+      }, "*")
     }
   }, false);
 }

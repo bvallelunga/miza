@@ -1,3 +1,5 @@
+API.iframes = []
+
 API.iframe = function(element) {
   var parent = element.parentNode || {}
   var width = element.offsetWidth || parent.offsetWidth
@@ -31,6 +33,8 @@ API.iframe = function(element) {
     height: height,
     frame: random
   })
+  
+  API.iframes.push(iframe)
   return iframe
 }
 

@@ -45,7 +45,9 @@
       }
     </style>
     <script>
-      window["<%= publisher.key %>"] = { in_frame: true };      
+      window["<%= publisher.key %>"] = { 
+        frame: "<%= frame %>"
+      };      
       
       window.parent.window.postMessage({
         name: "frame.show",

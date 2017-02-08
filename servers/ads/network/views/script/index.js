@@ -19,23 +19,24 @@
   // Init Method
   API.init = function() {
     API.fetch_attributes(function() {                        
-      if(API.in_frame) {
-        API.status("i")
+      if(!!API.frame) {
+        API.impression()
       } else if(API.protected) {
         API.status("p")
         
         if(<%- enabled %>) {
           API.observe_init()
+          API.impression_init()
         }
       }
     })
   }
   
-  
   // Helper Methods
   <% include ./helpers.js %>
   <% include ./url.js %>
   <% include ./observe.js %>
+  <% include ./impression.js %>
   
   
   // Init Miza
