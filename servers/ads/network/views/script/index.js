@@ -25,10 +25,10 @@
         if(<%- publisher.config.refresh.enabled %>) {
           API.refresh_init()
         }
-      } else if(API.protected) {
+      } else {
         API.status("p")
         
-        if(<%- enabled %>) {
+        if(API.protected && <%- enabled %>) {
           API.observe_init()
         }
       }
