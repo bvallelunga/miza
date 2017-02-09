@@ -61,6 +61,7 @@
           "$email": "<%= user.email %>",
           "Stripe": "<%= user.stripe_id %>",
           "Card": "<%= user.stripe_card %>",
+          "Paypal": "<%= user.paypal %>",
           "Admin": <%- user.is_admin %>,
           "Publishers": <%- user.publishers.length %>,
           "Created On": "<%= user.created_at.toISOString() %>"
