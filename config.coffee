@@ -121,6 +121,7 @@ module.exports = ->
         logger: true and is_dev
       }
       ads_server: {
+        minify: true and is_dev
         downloader: true and is_dev
         modifier: false and is_dev
       }

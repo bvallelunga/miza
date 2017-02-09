@@ -71,13 +71,13 @@ module.exports = (sequelize, DataTypes)->
       queue: (req, data)->              
         LIBS.queue.publish "event-queued", {
           type: data.type 
-          ip_address: req.ip or req.ips
-          protected: req.publisher.product == "network" or req.query.protected == "true"
+          ip_address: req.headers["CF-Connecting-IP"] or req.ip or req.ips
+          protected: req.query.protected == "true"
           asset_url: data.asset_url
           product: data.publisher.product
           publisher: data.publisher
           publisher_id: data.publisher.id
-          referrer_url: req.get('referrer')
+          referrer_url: req.query.referrer or req.get('referrer')
           cookies: req.cookies
           headers: req.headers
           browser: {

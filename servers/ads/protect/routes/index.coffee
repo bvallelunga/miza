@@ -7,6 +7,11 @@ module.exports.abtest = (req, res, next)->
   abtest = req.publisher.config.abtest.coverage
   alt_publisher = req.publisher.config.abtest.alt_publisher
   protocol = req.headers["HTTP_X_FORWARDED_PROTO"] or req.protocol
+  
+  if req.headers["CF-Visitor"]?
+    protocol = req.headers["CF-Visitor"]["scheme"]
+  
+  console.log protocol
 
   if abtest > Math.random()
     return next()

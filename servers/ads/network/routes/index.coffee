@@ -13,15 +13,15 @@ module.exports.script = (req, res, next)->
     enabled: req.publisher.config.coverage > Math.random() and req.miza_enabled
     random_slug: randomstring.generate(15)
     publisher: req.publisher
+    referrer: req.get('referrer')
   }, (error, code)->
     if error?
       console.error error.stack
       code = ""
     
-    if CONFIG.is_dev
-      req.miza_script = code
-  
-    else
+    req.miza_script = code
+    
+    if not CONFIG.disable.ads_server.minify
       req.miza_script = uglifyJS.minify(code, {
         fromString: true
       }).code
@@ -31,8 +31,7 @@ module.exports.script = (req, res, next)->
     
 module.exports.script_send = (req, res, next)->
   res.send req.miza_script
-    
- 
+
  
 module.exports.ad_frame = (req, res, next)->
   LIBS.exchanges.fetch(req).then (payload)->
@@ -53,7 +52,7 @@ module.exports.ad_frame = (req, res, next)->
 module.exports.proxy = (req, res, next)->
   proxy.path(req.get('host'), req.path).then (path)->
     return proxy.downloader path, req.query, {
-      referer: req.get('referrer')
+      referer: req.query.referrer or req.get('referrer')
       "user-agent": req.get("user-agent")
     }
     
