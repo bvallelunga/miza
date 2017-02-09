@@ -28,9 +28,9 @@
         <span class="info tooltip fa fa-info-circle" title="The interval at which your ad units refresh. The lower<br>the interval the more impressions you will have.<br>Drag to 0 to disable ad refresh."></span>
       </td>
       <td class="slider">
-        <div class="slider-range" data-min="0" data-step="10" data-max="120" data-value="<%= publisher.config.refresh.interval %>"></div>
+        <div class="slider-range" data-min="10" data-step="10" data-max="120" data-value="<%= publisher.config.refresh.interval %>"></div>
         <input class="slider-input" type="hidden" name="config_refresh" value="<%= publisher.config.refresh.interval %>">
-        <div class="slider-display value" data-rules="0:Disabled" data-postfix=" secs"></div>
+        <div class="slider-display value" data-rules="10:Disabled" data-postfix=" secs"></div>
       </td>
     </tr>
     <% } %>

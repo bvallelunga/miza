@@ -5,7 +5,7 @@ module.exports.post = (req, res, next)->
   
   req.publisher.config.coverage = Number(req.body.config_coverage)/100
   req.publisher.config.refresh = {
-    enabled: Number(req.body.config_refresh) > 0
+    enabled: Number(req.body.config_refresh) > 10
     interval: Number req.body.config_refresh
   }
 
