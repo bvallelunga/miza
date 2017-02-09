@@ -8,6 +8,8 @@ module.exports.abtest = (req, res, next)->
   alt_publisher = req.publisher.config.abtest.alt_publisher
   protocol = req.headers["HTTP_X_FORWARDED_PROTO"] or req.protocol
   
+  console.log protocol, req.protocol, req.secure
+  
   if req.headers["CF-Visitor"]?
     protocol = req.headers["CF-Visitor"]["scheme"]
   
