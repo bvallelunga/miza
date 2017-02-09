@@ -137,6 +137,8 @@ module.exports = (sequelize, DataTypes)->
           return publisher.report.transfer_amount > 0
         
         .map (publisher)=>
+          LIBS.mixpanel.people.track_charge publisher.owner_id, publisher.report.revenue_amount
+        
           LIBS.models.Transfer.findOrCreate {
             individualHooks: true
             where: {
