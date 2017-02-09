@@ -328,10 +328,11 @@ module.exports = (sequelize, DataTypes)->
 
       
       afterCreate: (publisher)->
-        publisher.heroku_add(publisher.endpoint)
-        
         if publisher.miza_endpoint
           publisher.cloudflare_add publisher.endpoint
+        
+        else
+          publisher.heroku_add(publisher.endpoint)
 
         
       afterUpdate: (publisher)->
