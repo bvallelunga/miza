@@ -9,6 +9,9 @@ module.exports.has_payout = (req, res, next)->
     Promise.resolve().then ->
       if payout.is_transferred
         payout.getTransfers({
+          order: [
+            ['created_at', 'DESC']
+          ]
           include: [
             {
               model: LIBS.models.Publisher
