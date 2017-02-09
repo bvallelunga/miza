@@ -11,8 +11,6 @@ module.exports.abtest = (req, res, next)->
   if req.get("referrer").slice(0,5) == "https"
     protocol = "https"
   
-  console.log protocol
-
   if abtest > Math.random()
     return next()
     
