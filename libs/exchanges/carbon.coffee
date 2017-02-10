@@ -15,34 +15,30 @@ module.exports = ->
   Promise.resolve().then ->
     carbon_keys = Object.keys(carbon_ads)
     
-    if Math.random() < CARBON_CONFIG.use_cache and carbon_keys.length >= 1#CARBON_CONFIG.min_ads_cache
-      setTimeout fetch, 10
+    if Math.random() < CARBON_CONFIG.use_cache and carbon_keys.length >= CARBON_CONFIG.min_ads_cache
+      LIBS.queue.publish "carbon-mimic", {}
       return carbon_ads[carbon_keys[Math.floor(Math.random() * carbon_keys.length)]]
 
-    return fetch()
-
-
-fetch = ->
-  fetch_content().then (payload)->
-    if not payload.link
-      return Promise.reject "Miza: Could not parse ad"
-      
-    new Promise (res, rej)->
-      request {
-        method: "GET"
-        encoding: null
-        url: payload.link
-        followAllRedirects: true
-      }, (error, response, body)->
-        if error? then return rej error
+    fetch_content().then (payload)->
+      if not payload.link
+        return Promise.reject "Miza: Could not parse ad"
         
-        key = payload.link
-        payload.link = "data:" + response.headers["content-type"] + ";base64," + new Buffer(body).toString('base64')
-        carbon_ads[key] = payload
-        res payload
+      new Promise (res, rej)->
+        request {
+          method: "GET"
+          encoding: null
+          url: payload.link
+          followAllRedirects: true
+        }, (error, response, body)->
+          if error? then return rej error
+          
+          key = payload.link
+          payload.link = "data:" + response.headers["content-type"] + ";base64," + new Buffer(body).toString('base64')
+          carbon_ads[key] = payload
+          res payload
 
 
-fetch_content = ->
+module.exports.fetch_content = fetch_content = ->
   new Promise (res, rej)->
     download_list = []
     

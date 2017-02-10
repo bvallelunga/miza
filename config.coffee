@@ -139,7 +139,7 @@ module.exports = ->
       }  
       carbon: {
         use_cache: 0.7
-        min_ads_cache: 3
+        min_ads_cache: 2
       }
     }
     
