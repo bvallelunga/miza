@@ -137,6 +137,10 @@ module.exports = ->
         publisher: process.env.SMAATO_PUB
         adspace: process.env.SMAATO_SPACE
       }  
+      carbon: {
+        use_cache: 0.7
+        min_ads_cache: 3
+      }
     }
     
     general: {

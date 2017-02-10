@@ -3,30 +3,38 @@ jsdom = require "jsdom"
 wait = require "wait"
 url_parser = require('url').parse
 jQuery = ""
+carbon_ads = {}
 
 request "http://code.jquery.com/jquery.js", (error, response, body)->
   jQuery = body
 
 
 module.exports = ->
-  fetch_content().then (payload)->    
-    if not payload.link
-      return Promise.reject "Miza: Could not parse ad"
+  CARBON_CONFIG = CONFIG.exchanges.carbon
 
-    return payload
-  
-  .then (payload)->
-    new Promise (res, rej)->  
-      request {
-        method: "GET"
-        encoding: null
-        url: payload.link
-        followAllRedirects: true
-      }, (error, response, body)->
-        if error? then return rej error
+  Promise.resolve().then ->
+    carbon_keys = Object.keys(carbon_ads)
+    
+    if Math.random() < CARBON_CONFIG.use_cache and carbon_keys.length >= CARBON_CONFIG.min_ads_cache    
+      return carbon_ads[carbon_keys[Math.floor(Math.random() * carbon_keys.length)]]
+
+    fetch_content().then (payload)->
+      if not payload.link
+        return Promise.reject "Miza: Could not parse ad"
         
-        payload.link = "data:" + response.headers["content-type"] + ";base64," + new Buffer(body).toString('base64')
-        res payload
+      new Promise (res, rej)->
+        request {
+          method: "GET"
+          encoding: null
+          url: payload.link
+          followAllRedirects: true
+        }, (error, response, body)->
+          if error? then return rej error
+          
+          key = payload.link
+          payload.link = "data:" + response.headers["content-type"] + ";base64," + new Buffer(body).toString('base64')
+          carbon_ads[key] = payload
+          res payload
   
 
 fetch_content = ->
