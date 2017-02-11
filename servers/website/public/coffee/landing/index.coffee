@@ -1,5 +1,6 @@
 $ ->
   go_quotes()
+  blocker true
   old_product = ""
   
   $(".products .product").click ->
@@ -18,13 +19,23 @@ $ ->
   $(".products .information .close").click ->
     $(".products .product").removeClass "active"
     $(".products .information").slideUp 500
-    
-    
-  blocker_check (is_blocker)->
-    $(".hero.demo .modal .title span")
-      .text("#{ if is_blocker then "MIZA" else "ADSENSE"  }")
-      .addClass("#{ if is_blocker then "enabled" else "disabled"  }")
   
+
+blocker_status = null
+blocker = (disable=false)->
+  blocker_check (is_blocker)->
+    if blocker_status != is_blocker
+      $(".hero.demo .modal .title span")
+        .text("#{ if is_blocker then "MIZA" else "ADSENSE"  }")
+        .removeClass("enabled disabled")
+        .addClass("#{ if is_blocker then "enabled" else "disabled"  }")
+        
+      if not disable
+        $(".iframe").attr("src", $('.iframe').attr("src"))
+      
+    blocker_status = is_blocker
+    setTimeout blocker, 500
+
 
 go_quotes = ->  
   if window.quotes_called?
@@ -49,14 +60,8 @@ in_view = ($element, callback)->
   
   
 blocker_check = (callback)->
-  test = document.createElement('div')
-  test.innerHTML = '&nbsp;'
-  test.className = 'adsbox googleads carbonads adsbygoogle'
-  document.body.appendChild(test)
-  
-  setTimeout ->
-    ghostry = document.querySelector("#ghostery-box")
-    callback test.offsetHeight == 0 or !!ghostry
-    test.remove()
-    
-  , 300
+  $.ajax({
+    url: "https://pagead2.googlesyndication.com/pagead/osd.js"
+    dataType: "jsonp"
+  }).fail (error)->
+    callback error.status != 200
