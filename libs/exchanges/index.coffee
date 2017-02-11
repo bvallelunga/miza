@@ -3,7 +3,7 @@ module.exports = {
   smaato: require "./smaato"
   carbon: require "./carbon"
   fetch: (req)->
-    LIBS.exchanges.carbon().catch ->  
+    LIBS.exchanges.carbon(req).catch ->  
       LIBS.exchanges.smaato({
         referer: req.get('referrer')
         "user-agent": req.get("user-agent")

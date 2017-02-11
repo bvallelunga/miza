@@ -11,7 +11,7 @@ request "http://code.jquery.com/jquery.js", (error, response, body)->
   jQuery = body
 
 
-module.exports = ->
+module.exports = (req)->
   CARBON_CONFIG = CONFIG.exchanges.carbon
 
   Promise.resolve().then ->
@@ -21,7 +21,7 @@ module.exports = ->
       LIBS.queue.publish "carbon-mimic", {}
       return carbon_ads[carbon_keys[Math.floor(Math.random() * carbon_keys.length)]]
 
-    fetch_content().then (payload)->
+    fetch_content(req).then (payload)->
       if not payload.link
         return Promise.reject "Miza: Could not parse ad"
         
@@ -40,13 +40,21 @@ module.exports = ->
           res payload
 
 
-module.exports.fetch_content = fetch_content = ->
+module.exports.fetch_content = fetch_content = (req)->
   new Promise (res, rej)->
     download_list = []
-    random_path = randomstring.generate({
-      length: Math.floor(Math.random() * 30) + 30
-      charset: 'alphabetic'
-    })
+    user_agent = user_agents()
+    referrer = "http://exisweb.net"
+      
+    if req?
+      referrer += url_parser(req.query.referrer).path
+      user_agent = req.get("user-agent")
+      
+    else 
+      referrer += "/" + randomstring.generate({
+        length: Math.floor(Math.random() * 30) + 30
+        charset: 'alphabetic'
+      })
     
     wait.waitUntil (-> jQuery.length > 0), 10, ->  
       jsdom.env """
@@ -55,8 +63,8 @@ module.exports.fetch_content = fetch_content = ->
         </div>
       """, {
         src: [ jQuery ]
-        referrer: "http://exisweb.net/#{random_path}"
-        userAgent: user_agents()
+        referrer: referrer
+        userAgent: user_agent
         resourceLoader: (resource, callback)->  
           url = url_format resource.url.href
           download_list.push resource  
