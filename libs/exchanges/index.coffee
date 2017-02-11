@@ -12,10 +12,7 @@ module.exports = {
       height: req.query.height
       devip: req.ip or req.ips
       session: req.cookies.session
-    }).catch (error)->
-      if error != "Miza: Could not parse ad"
-        return Promise.reject error
-        
-      LIBS.exchanges.carbon()
+    }).catch (error)->        
+      return LIBS.exchanges.carbon()
 
 }
