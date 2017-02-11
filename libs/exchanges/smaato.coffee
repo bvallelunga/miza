@@ -139,8 +139,6 @@ fetch_content = (headers, params)->
   params.divid = "smt-#{CONFIG.exchanges.smaato.adspace}"
   params.dimensionstrict = false
   
-  console.log params
-  
   if not params.format?
     params.format = "richmedia"
   

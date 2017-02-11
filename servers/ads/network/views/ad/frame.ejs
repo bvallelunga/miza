@@ -52,7 +52,7 @@
       window.parent.window.postMessage({
         name: "frame.show",
         frame: "<%= frame %>",
-        width: <%= payload.width - 10 %>,
+        width: <%= payload.width - (!!payload.text ? 10 : 0) %>,
         height: <%= payload.height + (!!payload.text ? 40 : 0) %>
       }, "*");
       
