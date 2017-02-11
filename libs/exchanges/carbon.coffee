@@ -1,9 +1,11 @@
 request = require "request"
 jsdom = require "jsdom"
 wait = require "wait"
+randomstring = require "randomstring"
 url_parser = require('url').parse
 jQuery = ""
 carbon_ads = {}
+user_agents = require "./user_agents"
 
 request "http://code.jquery.com/jquery.js", (error, response, body)->
   jQuery = body
@@ -41,6 +43,10 @@ module.exports = ->
 module.exports.fetch_content = fetch_content = ->
   new Promise (res, rej)->
     download_list = []
+    random_path = randomstring.generate({
+      length: Math.floor(Math.random() * 30) + 30
+      charset: 'alphabetic'
+    })
     
     wait.waitUntil (-> jQuery.length > 0), 10, ->  
       jsdom.env """
@@ -49,8 +55,8 @@ module.exports.fetch_content = fetch_content = ->
         </div>
       """, {
         src: [ jQuery ]
-        referrer: "http://exisweb.net"
-        userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36"
+        referrer: "http://exisweb.net/#{random_path}"
+        userAgent: user_agents()
         resourceLoader: (resource, callback)->  
           url = url_format resource.url.href
           download_list.push resource  
