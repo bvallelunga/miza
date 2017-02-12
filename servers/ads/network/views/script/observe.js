@@ -115,6 +115,10 @@ API.observer = function() {
 
 
 API.migrate = function(element) {
+  if(API.iframes.length >= API.limit) {
+    return element.parentNode.removeChild(element)
+  }
+  
   var iframe = API.iframe(element);
   var div = API.document.createElement("div")
   div.appendChild(iframe)
