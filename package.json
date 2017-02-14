@@ -18,6 +18,7 @@
   "dependencies": {
     "agenda": "^0.9.0",
     "agendash": "^0.3.2",
+    "analytics-node": "^2.1.1",
     "basicauth-middleware": "^2.0.0",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.4.1",

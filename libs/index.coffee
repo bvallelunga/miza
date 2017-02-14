@@ -11,6 +11,7 @@ module.exports = {
   cloudflare: require("./cloudflare")()
   intercom: require("./intercom")()
   paypal: require("./paypal")()
+  segment: require("./segment")()
   queue: require "./queue"
   slack: require "./slack"
   helpers: require "./helpers"
