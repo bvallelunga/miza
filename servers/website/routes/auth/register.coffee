@@ -18,7 +18,10 @@ module.exports.post = (req, res, next)->
     where: {
       email: email
     }
-  }).then (accesses)->    
+  }).then (accesses)-> 
+    if accesses.length == 0
+      return next "Sorry, Miza is invite only at this point. Please reach out to our team for an invite!"
+  
     admin_contact = null
     admin_contacts = accesses.filter (access)->
       return access.admin_contact_id?  
