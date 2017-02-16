@@ -12,7 +12,7 @@
   </div>
   <div class="publishers">
     <% if(!user.is_demo) { %>
-      <a href="/dashboard/new">
+      <a href="/publisher/new">
         <span class="fa fa-plus"></span>
         New Publisher
       </a>
@@ -25,7 +25,7 @@
     <% } %>
     <% (props.publishers || user.publishers).forEach(function(pub) { %>
       <% if (pub.id != publisher.id) { %>
-        <a class="publisher-link" href="/dashboard/<%= pub.key %>/<%= dashboard %>">
+        <a class="publisher-link" href="/publisher/<%= pub.key %>/<%= dashboard %>">
           <%= pub.full_name() %>
         </a>
       <% } %>

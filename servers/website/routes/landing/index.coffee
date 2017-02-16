@@ -77,6 +77,10 @@ module.exports.post_beta = (req, res, next)->
     text: "#{req.body.name} (#{req.body.email}, #{req.body.phone}) who is the #{req.body.title} of #{req.body.website} requested a demo."
   }
   
+  
+module.exports.get_dashboard = (req, res, next)->
+  res.redirect "/#{req.user.type}"
+  
 
 module.exports.get_not_found = (req, res, next)->
   res.status(404).render "landing/error", {

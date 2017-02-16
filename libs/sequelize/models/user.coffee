@@ -23,6 +23,13 @@ module.exports = (sequelize, DataTypes)->
         @setDataValue 'password', @hash(value) 
     }
     name: DataTypes.STRING 
+    type: { 
+      type: DataTypes.STRING,
+      allowNull: false
+      validate: {
+        isIn: [['publisher', 'advertiser']]
+      }
+    }
     phone: {
       type: DataTypes.STRING
       set: (value)->

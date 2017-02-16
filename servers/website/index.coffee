@@ -9,7 +9,6 @@ module.exports = (srv)->
   # 3rd Party Ignore Routes  
   scheduler_regex = new RegExp "^((?!#{[
     "/admin/vendor"
-    "/github/hook"
   ].join("|")})[\\s\\S])*$"
 
 
@@ -101,20 +100,24 @@ module.exports = (srv)->
   
   
   # Dashboard Routes
-  app.get  "/dashboard", routes.auth.is_authenticated, routes.dashboard.get_root
-  app.get  "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.create.get
-  app.get  "/dashboard/:publisher", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_root
-  app.get  "/dashboard/:publisher/:dashboard", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.get_dashboard
-  app.get  "/dashboard/:publisher/billing/logs", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.billing.logs
-  app.get  "/dashboard/:publisher/billing/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.billing.metrics
-  app.get  "/dashboard/:publisher/analytics/logs", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.analytics.logs
-  app.get  "/dashboard/:publisher/analytics/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.analytics.metrics
-  app.get  "/dashboard/:publisher/members/invite/:invite/remove", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.members.remove_invite
-  app.get  "/dashboard/:publisher/members/member/:member/remove", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.members.remove_member
-  app.post "/dashboard/new", routes.auth.is_authenticated, routes.dashboard.create.post
-  app.post "/dashboard/:publisher/members/add", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.members.add
-  app.post "/dashboard/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.settings.post
-  app.post "/dashboard/:publisher/abtest", routes.auth.is_authenticated, routes.auth.has_publisher, routes.dashboard.abtest.post
+  app.get "/dashboard", routes.auth.is_authenticated, routes.landing.get_dashboard
+  
+  
+  # Publisher Routes
+  app.get  "/publisher", routes.auth.is_authenticated, routes.publisher.get_root
+  app.get  "/publisher/new", routes.auth.is_authenticated, routes.publisher.create.get
+  app.get  "/publisher/:publisher", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.get_root
+  app.get  "/publisher/:publisher/:dashboard", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.get_dashboard
+  app.get  "/publisher/:publisher/billing/logs", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.billing.logs
+  app.get  "/publisher/:publisher/billing/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.billing.metrics
+  app.get  "/publisher/:publisher/analytics/logs", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.analytics.logs
+  app.get  "/publisher/:publisher/analytics/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.analytics.metrics
+  app.get  "/publisher/:publisher/members/invite/:invite/remove", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.members.remove_invite
+  app.get  "/publisher/:publisher/members/member/:member/remove", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.members.remove_member
+  app.post "/publisher/new", routes.auth.is_authenticated, routes.publisher.create.post
+  app.post "/publisher/:publisher/members/add", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.members.add
+  app.post "/publisher/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.settings.post
+  app.post "/publisher/:publisher/abtest", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.abtest.post
   
   
   # Error Handlers

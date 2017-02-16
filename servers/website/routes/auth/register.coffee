@@ -1,7 +1,7 @@
 module.exports.get = (req, res, next)->
   res.render "auth/register", {
     js: req.js.renderTags "modal"
-    css: req.css.renderTags "modal"
+    css: req.css.renderTags "modal", "fa"
     title: "Sign Up"
     name: req.query.name or ""
     email: req.query.email or ""
@@ -11,8 +11,8 @@ module.exports.get = (req, res, next)->
 module.exports.post = (req, res, next)-> 
   email = req.body.email.toLowerCase().trim()
   
-  if req.body.password != req.body.confirm_password
-    return next "Passwords do not match"
+  if not req.body.type?
+    return next "Please select your user type."
  
   LIBS.models.UserAccess.findAll({
     where: {
@@ -34,6 +34,7 @@ module.exports.post = (req, res, next)->
       password: req.body.password
       name: req.body.name
       phone: req.body.phone or null
+      type: req.body.type
       admin_contact_id: admin_contact
       is_admin: (accesses.filter (access)->
         return access.is_admin

@@ -8,22 +8,22 @@ module.exports.get_root = (req, res, next)->
       }
     }).then (publisher)->
       if not publisher?
-        return res.redirect "/dashboard"
+        return res.redirect "/publisher"
         
-      res.redirect "/dashboard/#{publisher.key}/#{req.query.page or "analytics"}"
+      res.redirect "/publisher/#{publisher.key}/#{req.query.page or "analytics"}"
 
   if req.user.publishers.length == 0
-    return res.redirect "/dashboard/new"
+    return res.redirect "/publisher/new"
     
-  res.redirect "/dashboard/#{req.user.publishers[0].key}/analytics"
+  res.redirect "/publisher/#{req.user.publishers[0].key}/analytics"
   
 
 
 module.exports.get_dashboard = (req, res, next)->
-  js = ["dashboard"]
-  css = ["dashboard", "fa"]
+  js = ["publisher"]
+  css = ["publisher", "fa"]
   dashboard = req.params.dashboard
-  dashboard_path = "/dashboard/#{req.publisher.key}"
+  dashboard_path = "/publisher/#{req.publisher.key}"
   dashboards = [
     "setup", "analytics", "members", "settings"
   ]
@@ -57,11 +57,11 @@ module.exports.get_dashboard = (req, res, next)->
       css.push "range-slider", "tooltip"
 
     when "analytics"
-      js.push "dashboard-analytics", "tooltip", "date-range"
+      js.push "publisher-analytics", "tooltip", "date-range"
       css.push "tooltip", "date-range"
       
     when "billing", "payouts"
-      js.push "dashboard-billing", "tooltip"
+      js.push "publisher-billing", "tooltip"
       css.push "tooltip"
       
   
@@ -113,7 +113,7 @@ module.exports.get_dashboard = (req, res, next)->
     show_guide = req.query.new_publisher? or req.session.new_publisher
     req.session.new_publisher = false
   
-    res.render "dashboard/index", {
+    res.render "publisher/index", {
       js: req.js.renderTags.apply(req.js, js)
       css: req.css.renderTags.apply(req.css, css)
       title: "#{dashboard_title} Dashboard"

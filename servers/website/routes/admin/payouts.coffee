@@ -48,7 +48,7 @@ module.exports.get_root = (req, res, next)->
 module.exports.get_create = (req, res, next)->
   res.render "admin/payouts/payout", {
     js: req.js.renderTags "modal", "admin-payouts"
-    css: req.css.renderTags "modal", "admin", "fa", "dashboard"
+    css: req.css.renderTags "modal", "admin", "fa", "publisher"
     title: "Admin Payouts"
     payout: req.payout
     publishers: req.payout.publishers

@@ -27,27 +27,6 @@ require("../../startup") true, ->
       device.battery.charging_time = Number(device.battery.charging_time)
       device.battery.level = Number(device.battery.level)
       
-      # Segment Tracking 
-      LIBS.segment.ads.track {
-        userId: "ads.#{event.ip_address}"
-        event: "EVENT.#{asset_type}"
-        properties: {
-          browser: browser.name
-          browser_version: browser.version
-          referrer: event.referrer_url
-          screen_width: browser.demensions.width
-          screen_height: browser.demensions.height
-          os: device.os.name
-          city: geo_location.city
-          product: event.publisher.product
-          protected: event.protected
-          asset_type: event.type
-          publisher_id: event.publisher_id
-          publisher_name: event.publisher.name
-          publisher_key: event.publisher.key
-        }
-      }
-      
       # Mixpanel tracking
       LIBS.mixpanel.track "ADS.EVENT.#{asset_type}", {
         distinct_id: "ads.#{event.ip_address}"

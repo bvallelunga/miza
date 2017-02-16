@@ -26,6 +26,6 @@ module.exports.simulate = (req, res, next)->
     
     req.session.user = user.id
     req.session.simulate = true
-    res.redirect "/dashboard"
+    res.redirect "/#{user.type}"
     
   .catch next

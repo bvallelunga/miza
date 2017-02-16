@@ -21,20 +21,6 @@ module.exports = (models)->
         product: "protect"
       }
     })
-    github_user: models.User.findOne({
-      where: {
-        email: "github@miza.io"
-      }
-      include: [{
-        model: models.Publisher
-        as: "publishers"
-      }]
-    })
-    github_publisher_industry: models.Industry.findOne({
-      where: {
-        name: "Carbon Dev Circle"
-      }
-    })
     networks: models.Network.findAll()
     carbon_network: models.Network.findOne({
       where: {

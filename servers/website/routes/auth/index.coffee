@@ -31,7 +31,7 @@ module.exports.not_authenticated = (req, res, next)->
   if req.user.is_admin
     return res.redirect "/admin"
   
-  res.redirect "/dashboard"
+  res.redirect "/#{user.type}"
 
 
 module.exports.is_authenticated = (req, res, next)->
@@ -69,7 +69,7 @@ module.exports.has_publisher = (req, res, next)->
   
   .then (publisher)->
     if not publisher?
-      return res.redirect "/dashboard"
+      return res.redirect "/#{user.type}"
       
     publisher.associations({
       owner: true

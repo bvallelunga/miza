@@ -7,9 +7,16 @@
     <div>
       <input class="top" type="text" name="name" value="<%= name %>" placeholder="Name" required/>
       <input type="email" name="email" value="<%= email %>" placeholder="Email address" required/>
-      <input type="tel" name="phone" placeholder="Phone number (optional, for support)"/>
       <input type="password" name="password" placeholder="Password" required/>
-      <input class="bottom" type="password" name="confirm_password" placeholder="Confirm Password" required/>
+      <input type="tel" name="phone" placeholder="Phone number (optional, for support)"/>
+      <div class="group">
+        <div class="fa fa-sort"></div>
+        <select class="input bottom" name="type" required>
+          <option disabled="true" selected>I am a...</option>
+          <option value="publisher">Publisher</option>
+          <option value="advertiser">Advertiser</option>
+        </select>
+      </div>
     </div>
     <div class="checkbox-group">
       <input id="terms-checkbox" type="checkbox" required/>

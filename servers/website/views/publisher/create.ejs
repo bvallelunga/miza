@@ -1,0 +1,25 @@
+<% include ../includes/start %>
+<% include ../includes/header %>
+<div class="container">
+  <span>
+    Let's get started! We just need a<br>couple details about your account.
+  </span>
+  <form class="form" method="POST" action="/publisher/new">
+    <% include ../includes/csrf %>
+    <input class="select_value" type="hidden" name="publisher_product" value="network" required/>
+    <input class="name top" type="text" name="publisher_name" placeholder="Publisher Name" required/>
+    <input class="email" type="url" name="publisher_domain" placeholder="http://publisher.com" required/>
+    <div class="group">
+      <div class="fa fa-sort"></div>
+      <select class="input bottom" name="publisher_miza_endpoint" required>
+        <option disabled="true" selected>Have access to your DNS?</option>
+        <option value="false">Yes I do</option>
+        <option value="true">No I don't</option>
+      </select>
+    </div>
+    <button class="button" type="submit">Create Publisher Account</button>
+    <div class="error"></div>
+  </form>
+</div>
+<% include ../includes/footer %>
+<% include ../includes/end %>

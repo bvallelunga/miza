@@ -5,7 +5,7 @@ module.exports.get = (req, res, next)->
       private: false
     }
   }).then (industries)->
-    res.render "dashboard/create", {
+    res.render "publisher/create", {
       js: req.js.renderTags "modal"
       css: req.css.renderTags "modal", "fa"
       title: "Create Publisher"
@@ -39,7 +39,7 @@ module.exports.post = (req, res, next)->
     req.user.addPublisher(publisher).then ->
       res.json {
         success: true
-        next: "/dashboard/#{publisher.key}/setup?new_publisher"
+        next: "/publisher/#{publisher.key}/setup?new_publisher"
       }
     
   .catch next

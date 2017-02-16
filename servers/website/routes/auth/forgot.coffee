@@ -78,7 +78,7 @@ module.exports.reset_post = (req, res, next)->
       res.json {
         success: true
         message: "Your password has been updated!"
-        next: "/dashboard"
+        next: "/#{user.type}"
       }
       
     .catch next

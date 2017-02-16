@@ -45,5 +45,5 @@ module.exports.post = (req, res, next)->
   .then ->
     res.json {
       success: true
-      next: "/dashboard"
+      next: "/#{user.type}"
     }

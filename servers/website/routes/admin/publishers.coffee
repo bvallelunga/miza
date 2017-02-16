@@ -2,11 +2,6 @@ module.exports.get = (req, res, next)->
   Promise.props({
     industries: LIBS.models.Industry.findAll()
     publishers: LIBS.models.Publisher.findAll({
-      where: {
-        owner_id: {
-          $ne: LIBS.models.defaults.github_user.id
-        }
-      }
       order: [
         ['is_activated', 'DESC']
         ['fee', 'DESC']
