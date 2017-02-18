@@ -179,6 +179,13 @@ module.exports = ->
       from: "Support <support@miza.io>"
     }
     
+    keen: {
+      read_key: process.env.KEEN_READ_KEY
+      write_key: process.env.KEEN_WRITE_KEY
+      master_key: process.env.KEEN_MASTER_KEY
+      project: process.env.KEEN_PROJECT
+    }
+    
     promises: {
       warnings: false
       longStackTraces: true
