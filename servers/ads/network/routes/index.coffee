@@ -13,7 +13,7 @@ module.exports.script = (req, res, next)->
     enabled: req.publisher.config.coverage > Math.random() and req.miza_enabled and req.publisher.is_demo # Remove when going back up again
     random_slug: randomstring.generate(15)
     publisher: req.publisher
-    referrer: req.get('referrer')
+    page_url: req.get('referrer')
   }, (error, code)->
     if error?
       console.error error.stack
@@ -52,7 +52,7 @@ module.exports.ad_frame = (req, res, next)->
 module.exports.proxy = (req, res, next)->
   proxy.path(req.get('host'), req.path).then (path)->
     return proxy.downloader path, req.query, {
-      referer: req.query.referrer or req.get('referrer')
+      referer: req.query.page_url
       "user-agent": req.get("user-agent")
     }
     
@@ -75,12 +75,11 @@ module.exports.proxy = (req, res, next)->
     if data.to_cache
       LIBS.redis.set data.key, JSON.stringify data
 
-    if data.media == "link"
-      LIBS.models.Event.queue(req, {
-        type: "click"
-        asset_url: data.href
-        publisher: req.publisher
-      })
+    LIBS.ads.track req, {
+      type: data.media
+      asset_url: data.href
+      publisher: req.publisher
+    }
       
   
   .catch next

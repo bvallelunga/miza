@@ -7,7 +7,7 @@ API.url_attributes = {
   "components": [],
   "do_not_track": false,
   "r": "<%= random_slug %>",
-  "referrer": "<%= referrer %>" || window.location.href,
+  "page_url": "<%= page_url %>" || window.location.href,
   "protected": API.protected
 }
 

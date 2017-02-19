@@ -1,5 +1,6 @@
 module.exports = {
   sequelize: require("./sequelize")
+  ads: require("./ads")
   redis: require("./redis")()
   heroku: require("./heroku")()
   stripe: require("./stripe")()
@@ -11,7 +12,6 @@ module.exports = {
   cloudflare: require("./cloudflare")()
   intercom: require("./intercom")()
   paypal: require("./paypal")()
-  segment: require("./segment")()
   keen: require("./keen")()
   queue: require "./queue"
   slack: require "./slack"

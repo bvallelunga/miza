@@ -9,7 +9,7 @@ module.exports.check = (req, res, next)->
 module.exports.ping = (req, res, next)->
   res.end utils.pixel_tracker
   
-  LIBS.models.Event.queue req, {
+  LIBS.ads.track req, {
     type: "ping"
     publisher: req.publisher
   }
@@ -18,7 +18,7 @@ module.exports.ping = (req, res, next)->
 module.exports.impression = (req, res, next)->
   res.end utils.pixel_tracker
   
-  LIBS.models.Event.queue req, {
+  LIBS.ads.track req, {
     type: "impression"
     publisher: req.publisher
   }

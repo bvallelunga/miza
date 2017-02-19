@@ -81,10 +81,6 @@ module.exports = ->
       return logging_defaults.development
     )()
     
-    segment: {
-      ads: "RGlX75t0P0VyFWWXHfDlxYHkf5JPVer3"
-    }
-    
     mixpanel: {
       key: process.env.MIXPANEL
       secret: process.env.MIXPANEL_SECRET
