@@ -12,6 +12,7 @@ module.exports = {
   intercom: require("./intercom")()
   paypal: require("./paypal")()
   segment: require("./segment")()
+  keen: require("./keen")()
   queue: require "./queue"
   slack: require "./slack"
   helpers: require "./helpers"

@@ -180,10 +180,10 @@ module.exports = ->
     }
     
     keen: {
-      read_key: process.env.KEEN_READ_KEY
-      write_key: process.env.KEEN_WRITE_KEY
-      master_key: process.env.KEEN_MASTER_KEY
-      project: process.env.KEEN_PROJECT
+      readKey: process.env.KEEN_MASTER_KEY
+      writeKey: process.env.KEEN_MASTER_KEY
+      masterKey: process.env.KEEN_MASTER_KEY
+      projectId: process.env.KEEN_PROJECT
     }
     
     promises: {
