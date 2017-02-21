@@ -79,7 +79,13 @@ module.exports.post_beta = (req, res, next)->
   
   
 module.exports.get_dashboard = (req, res, next)->
-  res.redirect "/#{req.user.type}"
+  if not req.user.is_admin
+    return res.redirect "/#{req.user.type}"
+    
+  res.render "landing/dashboard", {
+    title: "Dashboard"
+    css: req.css.renderTags "admin", "fa"
+  }
   
 
 module.exports.get_not_found = (req, res, next)->
