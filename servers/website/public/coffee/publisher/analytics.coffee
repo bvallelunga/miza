@@ -32,7 +32,7 @@ class Dashboard
             inner: false
             tick: {
               outer: false
-              format: d3.format(".2s")
+              #format: d3.format(".2s")
             }
           }
         }
