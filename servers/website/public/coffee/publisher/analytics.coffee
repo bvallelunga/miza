@@ -32,7 +32,8 @@ class Dashboard
             inner: false
             tick: {
               outer: false
-              #format: d3.format(".2s")
+              format: (x)-> 
+                return if parseInt(x) == x then x else null
             }
           }
         }
