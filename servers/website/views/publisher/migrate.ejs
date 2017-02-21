@@ -3,21 +3,30 @@
 <div class="container migrate">
   <div class="header logo">Welcome to <span><%= company %> Network</span></div>
   <div class="subheader">
-    <%= company %> Network is an a full end-to-end ad network that serves
-    stylishly unobtrusive ads that generate high CPM payouts. Your ad blocked
-    visitors is a premium audience that advertisers want to sell to.
+    A full end-to-end ad network that serves
+    unobtrusive ads that will not be detected by blockers. Your ad blocked
+    visitors are a premium audience that our advertisers dying to sell to.
+  </div>
+  <div class="migration">
+    <form method="POST" action="<%= path %>">
+      <% include ../includes/csrf %>
+      <button type="submit">
+        Migrate Your Account <span class="fa fa-arrow-right"></span>
+      </button>
+    </form>
   </div>
   <div class="product">
     <div class="section">
       <div class="information right">
-        <h3 class="green">Stylishly Unobtrusive Ads</h3>
+        <h3 class="purple">Premium Payouts</h3>
         <p>
-          Ads from the <%= company %> Network catch a user's eye without
-          ruining their experience on your site. We strive to create
-          win-win solutions for you and your visitors.
+          Your ad blocked visitors are emerging as a premium audience resulting 
+          in strong CPMs. Our demand partners are excited about connecting with
+          people previously unreachable. For more about payouts, visit
+          our <a href="/monetize">monetization page</a>.
         </p>
       </div>
-      <div class="graphic left" style="background-image: url('/imgs/products/stylish.jpg?<%= random %>')"></div>
+      <div class="graphic left" style="background-image: url('/imgs/products/demand.jpg?<%= random %>')"></div>
       <div class="clear"></div>
     </div>
     <div class="section">
@@ -35,15 +44,14 @@
     </div>
     <div class="section">
       <div class="information right">
-        <h3 class="purple">Premium Demand Partners</h3>
+        <h3 class="green">Stylishly Unobtrusive Ads</h3>
         <p>
-          Your ad blocked visitors are emerging as a premium audience resulting 
-          in strong CPMs. Our demand partners are excited about connecting with
-          people previously unreachable. For more about payouts, visit
-          our <a href="/monetize">monetization page</a>.
+          Ads from the <%= company %> Network catch a user's eye without
+          ruining their experience on your site. We strive to create
+          win-win solutions for you and your visitors.
         </p>
       </div>
-      <div class="graphic left" style="background-image: url('/imgs/products/demand.jpg?<%= random %>')"></div>
+      <div class="graphic left" style="background-image: url('/imgs/products/stylish.jpg?<%= random %>')"></div>
       <div class="clear"></div>
     </div>
   </div>

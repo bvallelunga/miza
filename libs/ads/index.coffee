@@ -30,7 +30,7 @@ module.exports.build_event = (req, data)->
       key: data.publisher.key
     }
     page_url: {
-      raw: req.query.page_url
+      raw: req.query.page_url or req.get("referrer")
     }
     cookies: req.cookies
     headers: req.headers

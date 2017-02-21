@@ -33,12 +33,12 @@ module.exports = (srv)->
   
   # Landing Routes
   app.get  "/", routes.auth.not_authenticated, routes.landing.get_root
-  app.get  "/about", routes.auth.not_authenticated, routes.landing.get_about
-  app.get  "/monetize", routes.auth.not_authenticated, routes.landing.get_monetize
+  app.get  "/about", routes.landing.get_about
+  app.get  "/monetize", routes.landing.get_monetize
   app.get  "/optout", routes.auth.not_authenticated, routes.landing.get_optout
   app.get  "/legal/:document", routes.landing.get_legal
   app.get  "/#{CONFIG.loader_io}", routes.landing.get_loader_io
-  app.get  "/demo", routes.auth.not_authenticated, routes.landing.demo.get_root
+  app.get  "/demo", routes.landing.demo.get_root
   app.get  "/demo/:demo", routes.landing.demo.get_miza
   app.get  "/demo/:demo/:product", routes.landing.demo.get_miza
   app.post "/optout", routes.auth.not_authenticated, routes.landing.post_optout
@@ -103,7 +103,7 @@ module.exports = (srv)->
   app.get  "/publisher", routes.auth.is_authenticated, routes.publisher.get_root
   app.get  "/publisher/new", routes.auth.is_authenticated, routes.publisher.create.get
   app.get  "/publisher/:publisher", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.get_root
-  app.get  "/publisher/:publisher/migrate", routes.auth.is_authenticated, routes.publisher.migrate.get
+  app.get  "/publisher/:publisher/migrate", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.migrate.get
   app.get  "/publisher/:publisher/:dashboard", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.get_dashboard
   app.get  "/publisher/:publisher/analytics/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.analytics.get
   app.get  "/publisher/:publisher/members/invite/:invite/remove", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.members.remove_invite
@@ -111,7 +111,7 @@ module.exports = (srv)->
   app.post "/publisher/new", routes.auth.is_authenticated, routes.publisher.create.post
   app.post "/publisher/:publisher/members/add", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.members.add
   app.post "/publisher/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.settings.post
-  
+  app.post "/publisher/:publisher/migrate", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.migrate.post
   
   # Error Handlers
   app.get "*", routes.landing.get_not_found

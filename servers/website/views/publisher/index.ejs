@@ -52,12 +52,14 @@
           Analytics
         </a>
       </li>
-      <li class="<%= isActive(dashboard, "payouts") %>">
-        <a href="<%= dashboard_path %>/payouts">
-          <span class="fa fa-bank"></span>
-          Payouts
-        </a>
-      </li>
+      <% if(publisher.product != "protect") { %>
+        <li class="<%= isActive(dashboard, "payouts") %>">
+          <a href="<%= dashboard_path %>/payouts">
+            <span class="fa fa-bank"></span>
+            Payouts
+          </a>
+        </li>
+      <% } %>
       <li class="<%= isActive(dashboard, "members") %>">
         <a href="<%= dashboard_path %>/members">
           <span class="fa fa-users"></span>

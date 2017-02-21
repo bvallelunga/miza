@@ -8,7 +8,7 @@ $ ->
     form = $(this)
     hint = form.find(".error").text ""
     button = form.find("button")
-    original = button.text()
+    original = button.html()
     
     button.addClass("loading").text("sending")
   
@@ -31,7 +31,7 @@ $ ->
       hint.text json.message
       form.find(".password").val ""
       form.find(".csrf").val json.csrf
-      button.text(original).removeClass "loading"
+      button.html(original).removeClass "loading"
       
       Intercom "trackEvent", "WEB.Form.#{title}", {
         success: false

@@ -68,7 +68,7 @@ module.exports.has_publisher = (req, res, next)->
   
   .then (publisher)->
     if not publisher?
-      return res.redirect "/#{user.type}"
+      return res.redirect "/#{req.user.type}"
       
     publisher.associations({
       owner: true

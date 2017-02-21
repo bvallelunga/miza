@@ -19,7 +19,7 @@ module.exports.get_root = (req, res, next)->
 
 
 module.exports.get_dashboard = (req, res, next)->
-  if req.publisher.product == "protect"
+  if not req.publisher.is_demo and req.publisher.product == "protect"
     return res.redirect "/publisher/#{req.publisher.key}/migrate"
 
   js = ["publisher"]
