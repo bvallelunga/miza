@@ -242,6 +242,10 @@ module.exports = (sequelize, DataTypes)->
             property_name: "publisher.id",
             operator: "eq",
             property_value: @id
+          }, {
+            property_name: "publisher.key",
+            operator: "eq",
+            property_value: @key
           }]
         }
         

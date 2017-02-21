@@ -5,6 +5,7 @@
   .date-picker-wrapper.date-dropdown {
     right: 0 !important;
     left: inherit !important;
+    .box-shadow(-10px 10px 20px white);
     .border-radius(5px 0 5px 5px);
   }
   
@@ -41,24 +42,28 @@
     }
     
     &.half {
-      width: 49.5%;
+      width: 50%;
     }
     
     &.thirds {
       width: 33%;
     }
     
+    &.fourth {
+      width: 25%;
+    }
+    
     .chart-wrapper.padding .chart {
       padding: 20px 10px;
+      
+      .keen-dataviz .keen-dataviz-title {
+        margin: -10px 0 10px;
+      }
     }
     
     .chart.fill {
       background: #F3F4F7;
       .border-radius(5px);
-      
-      .keen-dataviz .keen-dataviz-title {
-        margin: -10px 0 15px;
-      }
     }
   }
 }  

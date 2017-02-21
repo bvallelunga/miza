@@ -1,6 +1,6 @@
 module.exports.get = (req, res, next)->
   res.render "publisher/migrate", {
-    js: "publisher"
-    css: "publisher", "fa"
+    js: req.js.renderTags "publisher"
+    css: req.css.renderTags "publisher", "fa"
     title: "Migration Dashboard"
   }

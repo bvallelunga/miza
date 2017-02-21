@@ -46,6 +46,17 @@ module.exports.get = (req, res, next)->
         "property_value": "ping"
       }]
     }
+    protection_count:  query "count", {
+      filters: [{
+        "operator": "eq"
+        "property_name": "type"
+        "property_value": "ping"
+      }, {
+        "operator": "eq"
+        "property_name": "protected"
+        "property_value": true
+      }]
+    }
     devices_chart: query "count", {
       group_by: [
         "user_agent.parsed.os.family"
@@ -67,6 +78,8 @@ module.exports.get = (req, res, next)->
       }]
     }
   }).then (props)->
+    props.protection_count.result.result = Math.floor props.protection_count.result.result/props.view_count.result.result * 100
+  
     res.json(props)
     
   .catch next

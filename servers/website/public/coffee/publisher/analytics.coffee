@@ -17,7 +17,7 @@ class Dashboard
       .el('.chart.impressions')
       .height(250)
       .type('area-spline')
-      .title("Paid Impressions")
+      .title(" ")
       .chartOptions({
         axis: {
           x: {
@@ -32,6 +32,7 @@ class Dashboard
             inner: false
             tick: {
               outer: false
+              format: d3.format(".2s")
             }
           }
         }
@@ -49,17 +50,17 @@ class Dashboard
     # Impression Chart
     @charts.impression_count = new Keen.Dataviz()
       .el('.chart.impression-count')
-      .height(250)
-      .title('Paid Impressions')
+      .height(200)
+      .title('Impressions')
       .type('metric')
-      .colors(['#FE6672'])
+      .colors([ '#3edf86' ])
       .prepare()
       
     # Click Count
     @charts.click_count = new Keen.Dataviz()
       .el('.chart.click-count')
-      .height(250)
-      .title('Paid Clicks')
+      .height(200)
+      .title('Clicks')
       .type('metric')
       .colors(['#8A8AD6'])
       .prepare()
@@ -68,10 +69,20 @@ class Dashboard
     # Views Count
     @charts.view_count = new Keen.Dataviz()
       .el('.chart.visitors-count')
-      .height(250)
+      .height(200)
       .title('Page Views')
       .type('metric')
       .colors(['#EEB058'])
+      .prepare()
+      
+      
+    # Protection Rate
+    @charts.protection_count = new Keen.Dataviz()
+      .el('.chart.protection-count')
+      .height(200)
+      .title('Ad Blocker (%)')
+      .type('metric')
+      .colors(['#FE6672'])
       .prepare()
       
       
