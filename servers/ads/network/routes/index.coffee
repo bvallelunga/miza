@@ -76,7 +76,7 @@ module.exports.proxy = (req, res, next)->
       LIBS.redis.set data.key, JSON.stringify data
 
     LIBS.ads.track req, {
-      type: data.media
+      type: if data.media == "link" then "click" else "asset"
       asset_url: data.href
       publisher: req.publisher
     }

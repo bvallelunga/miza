@@ -1,8 +1,7 @@
 # Imports
 useragent = require 'user-agent-parser'
 
-module.exports.track = (req, data)->
-  agent = useragent req.headers['user-agent']
+module.exports.build_event = (req, data)->
   demensions = {}
   battery = {}
   
@@ -19,7 +18,7 @@ module.exports.track = (req, data)->
       level: Number(req.query.battery.level)
     }
 
-  event = {
+  return {
     type: data.type 
     ip_address: req.headers["CF-Connecting-IP"] or req.ip or req.ips
     protected: req.query.protected == "true"
@@ -72,6 +71,11 @@ module.exports.track = (req, data)->
       }]
     }
   }
+
+
+module.exports.track = (req, data)->
+  agent = useragent req.headers['user-agent']
+  event = LIBS.ads.build_event req, data
   
   # Keen Tracking
   LIBS.keen.tracking.addEvent "ads.event", event
@@ -82,8 +86,8 @@ module.exports.track = (req, data)->
     distinct_id: "ads.#{event.ip_address}"
     $browser: agent.browser.name
     $browser_version: agent.browser.version
-    $screen_width: demensions.width
-    $screen_height: demensions.height
+    $screen_width: event.user_agent.client.browser.demensions.width
+    $screen_height: event.user_agent.client.browser.demensions.height
     $os: agent.os.name
     "Product": event.product
     "Protected": event.protected
@@ -92,4 +96,10 @@ module.exports.track = (req, data)->
     "Publisher Name": event.publisher.name
     "Publisher Key": event.publisher.key
   }
+  
+  # Activate Publisher 
+  if not data.publisher.is_activated
+    data.publisher.update({
+      is_activated: true
+    })
   

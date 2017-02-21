@@ -5,7 +5,6 @@ module.exports.get_root = (req, res, next)->
   }
   
 
-module.exports.reports = require "./reports"
 module.exports.invites = require "./invites"
 module.exports.publishers = require "./publishers"
 module.exports.industries = require "./industries"

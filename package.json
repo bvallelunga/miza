@@ -43,6 +43,7 @@
     "js-base64": "^2.1.9",
     "jsdom": "https://registry.npmjs.org/jsdom/-/jsdom-7.2.2.tgz",
     "keen-analysis": "^1.2.2",
+    "keen-js": "^3.4.1",
     "keen-tracking": "^1.0.3",
     "knex": "^0.11.9",
     "less": "2.7.1",

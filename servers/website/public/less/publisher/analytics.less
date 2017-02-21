@@ -1,131 +1,11 @@
 @import '../libs/all';
 @import '../global/colors';
 
-.billing-dashboard,
-.payouts-dashboard {
-  .metrics {    
-    width: 100%;
-    text-align: center;
-    
-    .metric.core {
-      width: 100%;
-      
-      .primary {
-        color: @green;
-      }
-      
-      .notes {
-        font-size: 0.65em;
-        font-weight: bold;
-        color: @blue;
-      }
-    }
-  }
-  
-  .payouts-table {
-    td:first-child, th:first-child {
-      width: 30% !important;
-    }
-    
-    td:nth-child(2), th:nth-child(2) {
-      width: 12% !important;
-    }
-    
-    td:nth-child(3), th:nth-child(3) {
-      width: 12% !important;
-    }
-    
-    td:nth-child(4), th:nth-child(4) {
-      width: 30% !important;
-    }
-  }
-  
-  .billing-table {
-    margin-bottom: 50px;
-    
-    .light {
-      color: #AFBACD;
-    }
-    
-    .text-left {
-      text-align: left;
-      font-weight: bold;
-    }
-    
-    .text-right {
-      text-align: right;
-      font-weight: bold;
-    }
-    
-    .loading td {
-      font-weight: bold;
-    }
-    
-    .owed-metric {
-      color: darken(@green, 15%);
-    }
-    
-    table tbody tr td {
-      font-weight: normal;
-    }
-    
-    thead th:first-child {
-      width: 250px;
-    }
-  }
-  
-  .logs-table {
-    tr td, tr th {    
-      &:nth-child(1) {
-        width: 30%
-      }
-      
-      &:nth-child(2) {
-        width: 15%
-      }
-      
-      &:nth-child(3) {
-        width: 15%;
-      } 
-      
-      
-      &:nth-child(4) {
-        width: 20%;
-      } 
-      
-      &:nth-child(5) {
-        width: 20%;
-      } 
-    }
-    
-    tr td:nth-child(2)  {
-      color: @green;
-    }
-    
-    tr td:nth-child(3) {
-      text-transform: capitalize; 
-    }
-    
-    tr.succeeded td:nth-child(3) {
-      color: @blue;
-    }
-    
-    tr.failed td:nth-child(3) {
-      color: @red;
-    }
-    
-    tr.refunded td:nth-child(3) {
-      color: @orange;
-    }
-  }
-}
-
 .analytics-dashboard {
   .date-picker-wrapper.date-dropdown {
     right: 0 !important;
     left: inherit !important;
     .border-radius(5px 0 5px 5px);
-    .box-shadow(-30px 30px 20px white);
   }
   
   
@@ -142,98 +22,52 @@
 }
 
 .metrics {
+  text-align: center;
   margin-bottom: 65px;
   .clearfix();
   
   .metric {
     display: inline-block;
-    text-align: center;
+    padding: 5px;
+    float: left;
+    .box-sizing(border-box);
     
-    .primary {
-      font-size: 5em;
-      font-weight: bold;
-      color: @blue;
-      text-shadow: 1px 2px 0 rgba(0,0,0,0.1);
+    &.main {
+      margin-bottom: 15px;
     }
     
-    .secondary {
-      font-size: 1.2em;
-      color: #b6b6b6;
+    &.full {
+      width: 100%;
     }
-  }
-  
-  .core {
-    width: 55%;
-    font-size: 1.55em;
-  }
-  
-  .secondaries {  
-    width: 45%;
-        
-    .row {
-      padding: 25px 0;
-      border-bottom: solid 1px #f6f6f6;
+    
+    &.half {
+      width: 49.5%;
+    }
+    
+    &.thirds {
+      width: 33%;
+    }
+    
+    .chart-wrapper.padding .chart {
+      padding: 20px 10px;
+    }
+    
+    .chart.fill {
+      background: #F3F4F7;
+      .border-radius(5px);
       
-      &:first-child {
-        padding-top: 0;
-      }
-      
-      &:last-child {
-        border: none;
-      }
-      
-      .metric {
-        font-size: 0.7em;
-        width: 49%;
-        
-        .primary {
-          color: darken(@blue, 25%);
-        }
+      .keen-dataviz .keen-dataviz-title {
+        margin: -10px 0 15px;
       }
     }
   }
 }  
 
-
-.logs-table {
-  width: 100%;
-  text-align: left;
-  font-size: 1.25em;
-  border-spacing: 0;
-  
-  th {
-    padding: 10px 8px;
-    border-bottom: solid 1px #EDF1F5;
-  }
-  
-  td {
-    font-size: 0.95em;
-    padding: 12px 8px;
-    vertical-align: text-top;
-    font-weight: lighter;
-    
-    &:first-child, &:nth-child(2), 
-    &:nth-child(3) {
-      text-transform: capitalize;
-    }
-    
-    &:nth-child(4) {
-      word-wrap: break-word;
-      word-break: break-all;
-    } 
-  }
-  
-  tr:last-child td {
-    border: none;
-  }
+.c3 .c3-axis-x path, .c3 .c3-axis-x line {
+  stroke: rgba(0,0,0,0.35);
 }
 
-.logs-table-message {
-  width: 100%;
-  text-align: center;
-  color: #999;
-  font-size: 1.5em;
-  padding: 25px 0;
-  font-weight: lighter;
+.c3 .c3-axis-y path, .c3 .c3-axis-y line {
+  stroke: transparent;
 }
 

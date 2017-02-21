@@ -75,8 +75,6 @@ module.exports = (srv)->
   app.get  "/admin", routes.auth.is_admin, routes.admin.get_root
   app.get  "/admin/invites", routes.auth.is_admin, routes.admin.invites.get
   app.get  "/admin/invites/remove/:invite", routes.auth.is_admin, routes.admin.invites.remove
-  app.get  "/admin/reports", routes.auth.is_admin, routes.admin.reports.get
-  app.get  "/admin/reports/metrics", routes.auth.is_admin, routes.admin.reports.metrics
   app.get  "/admin/industries", routes.auth.is_admin, routes.admin.industries.get
   app.get  "/admin/users", routes.auth.is_admin, routes.admin.users.get
   app.get  "/admin/users/:user/simulate", routes.auth.is_admin, routes.admin.users.simulate
@@ -105,17 +103,14 @@ module.exports = (srv)->
   app.get  "/publisher", routes.auth.is_authenticated, routes.publisher.get_root
   app.get  "/publisher/new", routes.auth.is_authenticated, routes.publisher.create.get
   app.get  "/publisher/:publisher", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.get_root
+  app.get  "/publisher/:publisher/migrate", routes.auth.is_authenticated, routes.publisher.migrate.get
   app.get  "/publisher/:publisher/:dashboard", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.get_dashboard
-  app.get  "/publisher/:publisher/billing/logs", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.billing.logs
-  app.get  "/publisher/:publisher/billing/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.billing.metrics
-  app.get  "/publisher/:publisher/analytics/logs", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.analytics.logs
-  app.get  "/publisher/:publisher/analytics/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.analytics.metrics
+  app.get  "/publisher/:publisher/analytics/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.analytics.get
   app.get  "/publisher/:publisher/members/invite/:invite/remove", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.members.remove_invite
   app.get  "/publisher/:publisher/members/member/:member/remove", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.members.remove_member
   app.post "/publisher/new", routes.auth.is_authenticated, routes.publisher.create.post
   app.post "/publisher/:publisher/members/add", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.members.add
   app.post "/publisher/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.settings.post
-  app.post "/publisher/:publisher/abtest", routes.auth.is_authenticated, routes.auth.has_publisher, routes.publisher.abtest.post
   
   
   # Error Handlers

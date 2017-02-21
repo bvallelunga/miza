@@ -36,12 +36,7 @@
   <%- include("./guide/" + publisher.product) %>
 <% } %>
 <div class="container">
-  <% if(publisher.product == "protect") { %>
-    <% include ./payment_warning %>
-  <% } else if(publisher.product == "network") { %> 
-    <% include ./payout_warning %>
-  <%} %>
-  
+  <% include ./payout_warning %>
   <div class="sidebar left">
     <% include ../includes/logo %>
     <ul>
@@ -57,35 +52,12 @@
           Analytics
         </a>
       </li>
-      <% if(publisher.product == "protect") {  %>
-        <% 
-          networks = (props.publishers || user.publishers).filter(function(pub) {
-            return pub.product == "network" && pub.owner_id == publisher.owner_id
-          }) 
-           
-          if(networks.length > 0) {
-        %>
-        <li class="<%= isActive(dashboard, "abtest") %>">
-          <a href="<%= dashboard_path %>/abtest">
-            <span class="fa fa-toggle-on"></span>
-            A/B Test
-          </a>
-        </li>
-        <% } %>
-        <li class="<%= isActive(dashboard, "billing") %>">
-          <a href="<%= dashboard_path %>/billing">
-            <span class="fa fa-credit-card"></span>
-            Billing
-          </a>
-        </li>
-      <% } else if(publisher.product == "network") { %>
-        <li class="<%= isActive(dashboard, "payouts") %>">
-          <a href="<%= dashboard_path %>/payouts">
-            <span class="fa fa-bank"></span>
-            Payouts
-          </a>
-        </li>
-      <% } %>
+      <li class="<%= isActive(dashboard, "payouts") %>">
+        <a href="<%= dashboard_path %>/payouts">
+          <span class="fa fa-bank"></span>
+          Payouts
+        </a>
+      </li>
       <li class="<%= isActive(dashboard, "members") %>">
         <a href="<%= dashboard_path %>/members">
           <span class="fa fa-users"></span>

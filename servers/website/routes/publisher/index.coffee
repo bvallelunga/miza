@@ -16,26 +16,22 @@ module.exports.get_root = (req, res, next)->
     return res.redirect "/publisher/new"
     
   res.redirect "/publisher/#{req.user.publishers[0].key}/analytics"
-  
 
 
 module.exports.get_dashboard = (req, res, next)->
+  if req.publisher.product == "protect"
+    return res.redirect "/publisher/#{req.publisher.key}/migrate"
+
   js = ["publisher"]
   css = ["publisher", "fa"]
   dashboard = req.params.dashboard
   dashboard_path = "/publisher/#{req.publisher.key}"
   dashboards = [
-    "setup", "analytics", "members", "settings"
+    "setup", "analytics", "members", "settings", "payouts"
   ]
   ads_domain = CONFIG.ads_server.domain
   dashboard_title = (dashboard.split(' ').map (word) -> 
     return word[0].toUpperCase() + word[1..-1].toLowerCase()).join ' '
-
-  if req.publisher.product == "protect"
-    dashboards.push "abtest", "billing"
-    
-  if req.publisher.product == "network"
-    dashboards.push "payouts"
 
   if dashboard not in dashboards
     return res.redirect "#{dashboard_path}/analytics"  
@@ -48,7 +44,7 @@ module.exports.get_dashboard = (req, res, next)->
       js.push "code"
       css.push "code"
       
-    when "members", "abtest"
+    when "members"
       js.push "modal", "range-slider"
       css.push "range-slider"
       
@@ -57,16 +53,14 @@ module.exports.get_dashboard = (req, res, next)->
       css.push "range-slider", "tooltip"
 
     when "analytics"
-      js.push "publisher-analytics", "tooltip", "date-range"
-      css.push "tooltip", "date-range"
-      
-    when "billing", "payouts"
-      js.push "publisher-billing", "tooltip"
-      css.push "tooltip"
+      js.push "tooltip", "keen", "date-range"
+      css.push "tooltip", "keen", "date-range"
       
   
   Promise.resolve().then ->
-    if not (dashboard == "payouts" and req.publisher.product == "network")
+    req.publisher.transfers = []
+  
+    if dashboard == "payouts"
       return Promise.resolve()
       
     req.publisher.getTransfers({
@@ -123,16 +117,20 @@ module.exports.get_dashboard = (req, res, next)->
       guide: show_guide
       changelog: true
       props: props
-      billed_on: moment(LIBS.helpers.past_date "month", null, 1).add(4, "day").format("MMM D") 
-      payout_on: moment(LIBS.helpers.past_date "month", null, 1).add(10, "day").format("MMM D") 
+      config: {
+        publisher: req.publisher.key
+        keen: {
+          projectId: CONFIG.keen.projectId
+          readKey: req.publisher.config.keen
+        }
+      }
     }
     
   .catch next
   
   
 module.exports.create = require "./create"
-module.exports.abtest = require "./abtest"
-module.exports.settings = require "./settings"
 module.exports.analytics = require "./analytics"
-module.exports.billing = require "./billing"
+module.exports.migrate = require "./migrate"
+module.exports.settings = require "./settings"
 module.exports.members = require "./members"

@@ -28,17 +28,6 @@ create_publishers = (models)->
   Promise.all [
     models.Publisher.findOrCreate({
       where: {
-        domain: "protect.miza.io"
-      },
-      defaults: {
-        name: "Protect Demo"
-        is_demo: true
-        industry_id: 2
-        product: "protect"
-      }
-    }),
-    models.Publisher.findOrCreate({
-      where: {
         domain: "network.miza.io"
       },
       defaults: {

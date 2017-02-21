@@ -217,7 +217,7 @@ module.exports = (sequelize, DataTypes)->
               return LIBS.cloudflare.deleteDNS record
               
         .catch(console.error)
-        
+  
         
       heroku_add: (endpoint)->
         LIBS.heroku.add_domain(endpoint)
@@ -232,6 +232,21 @@ module.exports = (sequelize, DataTypes)->
       publisher_activated: ->
         LIBS.slack.message {
           text: "#{@name} publisher is now activate! <#{CONFIG.web_server.host}/publisher/#{@key}/analytics|Publisher Analytics>"
+        }
+        
+        
+      keen_generate: ->
+        @config.keen = LIBS.keen.scopeKey {
+          allowed_operations: ["read"],
+          filters: [{
+            property_name: "publisher.id",
+            operator: "eq",
+            property_value: @id
+          }]
+        }
+        
+        @update {
+          config: @config
         }
 
         
@@ -312,6 +327,7 @@ module.exports = (sequelize, DataTypes)->
       
       beforeCreate: (publisher)->
         publisher.config = {
+          keen: null
           abtest: {
             coverage: 1
           }
@@ -322,17 +338,19 @@ module.exports = (sequelize, DataTypes)->
           }
         }
 
-          
-      beforeUpdate: (publisher)->
-        publisher.endpoint = publisher.create_endpoint()
-
       
       afterCreate: (publisher)->
+        publisher.keen_generate()
+      
         if publisher.miza_endpoint
           publisher.cloudflare_add publisher.endpoint
         
         else
           publisher.heroku_add(publisher.endpoint)
+
+
+      beforeUpdate: (publisher)->
+        publisher.endpoint = publisher.create_endpoint()
 
         
       afterUpdate: (publisher)->

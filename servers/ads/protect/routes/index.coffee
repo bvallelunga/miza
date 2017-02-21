@@ -79,12 +79,11 @@ module.exports.proxy = (req, res, next)->
     if data.to_cache
       LIBS.redis.set data.key, JSON.stringify data
     
-    if data.media == "link"
-      LIBS.models.Event.queue(req, {
-        type: "click"
-        asset_url: data.href
-        publisher: req.publisher
-      })
+    LIBS.ads.track req, {
+      type: if data.media == "link" then "click" else "asset"
+      asset_url: data.href
+      publisher: req.publisher
+    }
       
   
   .catch next

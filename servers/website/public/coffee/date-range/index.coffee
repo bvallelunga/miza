@@ -1,81 +1,40 @@
-analyticsLogs = ->
-  $.get("#{location.pathname}/logs", {
-    date: new Date()
-  }).done (logs)->
-    now = new Date()
-    setTimeout analyticsLogs, 5000
-    
-    $(".logs-table-message")
-      .toggle(logs.length == 0)
-      .text "We don't have any logs yet for your account."
-    
-    $(".logs-table tbody").html logs.map (log)->
-      created = new Date log.created_at
-          
-      return $("""
-        <tr>
-          <td>#{log.type}</td>
-          <td>#{log.browser}</td>
-          <td>#{log.os}</td>
-          <td>#{moment.duration(created - now).humanize(true)}</td>
-        </tr>
-      """)
-
-      
-class ReportsDashboard
+window.DatePicker = class DatePicker
 
   override: null
   start: null
   end: null
+  callback: null
+  container: null
+  
+  constructor: (container, callback)->
+    @container = container
+    @callback = callback
+    @load_default()
+    @configure_datepicker()
 
-  metrics: (start, end, clear=true)->
+
+  metrics: (start, end)->
     @start = start
     @end = end
-    days = moment.duration(end-start).asDays()
-    today = new Date()
     
-    if clear
-      @clear_metrics()
-      
-    $(".metrics-warning").toggle days < 2
-    $(".fa-calendar").hide()
-    $(".fa-refresh").show()
-
-    $.get("#{location.pathname}/metrics", {
-      start_date: start
-      end_date: end
-    }).done (data)=>
-      $(".fa-calendar").show()
-      $(".fa-refresh").hide()
-      
-      @display_metrics data
-
+    if @callback?
+      $(".fa-calendar").hide()
+      $(".fa-refresh").show()
   
-  clear_metrics: ->
-    $(".ctr-metric").text "---"
-    $(".impressions-metric").text "---"
-    $(".clicks-metric").text "---"
-    $(".views-metric").text "---"
-    $(".blocked-metric").text "---"
-
-  
-  display_metrics: (metrics)->
-    $(".ctr-metric").text metrics.ctr
-    $(".impressions-metric").text metrics.impressions
-    $(".clicks-metric").text metrics.clicks
-    $(".views-metric").text metrics.views
-    $(".blocked-metric").text metrics.blocked
+      @callback start, end, ->
+        $(".fa-calendar").show()
+        $(".fa-refresh").hide()
   
   
   load_default: ->
     $(".range-display .text").text "This Month"
     @start = moment().startOf("month").toDate()
-    @end = moment().endOf("day").toDate()
+    @end = moment().endOf("month").toDate()
     @metrics @start, @end
     
     setInterval =>
-      @metrics @start, @end, false
-    , 30000
+      @metrics @start, @end
+    , 60000
   
   
   build_shortcut: (name, formatted, ranges)->
@@ -91,6 +50,7 @@ class ReportsDashboard
     _this = @
   
     $(".range-display").dateRangePicker({
+      container: @container
       showShortcuts: true
       showTopbar: false
       autoClose: true
@@ -98,9 +58,7 @@ class ReportsDashboard
       separator: ' <strong>to</strong> '
       startOfWeek: 'monday'
       language:'en'
-      endDate: moment().format "MMM DD, YYYY"
       extraClass: "date-dropdown"
-      container: ".analytics-dashboard"
       customOpenAnimation: (cb)->
         $(@).fadeIn(0, cb)
       
@@ -139,17 +97,17 @@ class ReportsDashboard
         
         @build_shortcut "Week", "This Week", [
           moment().isoWeekday(1).startOf("isoweek").toDate()
-          moment().endOf("day").toDate()
+          moment().endOf("week").toDate()
         ]
         
         @build_shortcut "Month", "This Month", [
           moment().startOf("month").toDate()
-          moment().endOf("day").toDate()
+          moment().endOf("month").toDate()
         ]
         
         @build_shortcut "Year", "This Year", [
           moment().startOf("year").toDate()
-          moment().endOf("day").toDate()
+          moment().endOf("year").toDate()
         ]
       ]
     }).bind 'datepicker-open', (event, obj)->    
@@ -162,11 +120,4 @@ class ReportsDashboard
       start = moment(obj.date1).startOf("day").toDate()
       end = moment(obj.date2).endOf("day").toDate()
       @metrics start, end
-
-  
-$ ->  
-  dashboard = new ReportsDashboard() 
-  dashboard.load_default()
-  dashboard.configure_datepicker()
-  analyticsLogs()
   
