@@ -10,7 +10,7 @@
   <div class="migration">
     <form method="POST" action="<%= path %>">
       <% include ../includes/csrf %>
-      <button type="submit">
+      <button type="submit" data-waiting="migrating account...">
         Migrate Your Account <span class="fa fa-arrow-right"></span>
       </button>
     </form>

@@ -9,8 +9,9 @@ $ ->
     hint = form.find(".error").text ""
     button = form.find("button")
     original = button.html()
+    waiting = button.data("waiting") or "sending"
     
-    button.addClass("loading").text("sending")
+    button.addClass("loading").html(waiting)
   
     $.post(form.attr("action"), form.serialize(), (response)->  
       if response.message?

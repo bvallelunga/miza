@@ -3,7 +3,7 @@ module.exports.get = (req, res, next)->
     return res.redirect "/publisher/#{req.publisher.key}/analytics"
 
   res.render "publisher/migrate", {
-    js: req.js.renderTags "publisher", "modal"
+    js: req.js.renderTags "modal"
     css: req.css.renderTags "publisher", "fa", "landing"
     title: "Migration Dashboard"
   }
@@ -15,7 +15,7 @@ module.exports.post = (req, res, next)->
   }).then ->
     res.json {
       success: true
-      next: "/publisher/#{req.publisher.key}/setup"
+      next: "/publisher/#{req.publisher.key}/setup?new_publisher"
     }
     
   .catch next
