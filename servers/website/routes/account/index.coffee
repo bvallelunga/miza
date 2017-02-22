@@ -1,6 +1,6 @@
 module.exports.get_root = (req, res, next)->
-  js = ["publisher", "modal"]
-  css = ["publisher", "fa"]
+  js = ["dashboard", "modal"]
+  css = ["dashboard", "fa"]
   dashboard = req.params.dashboard
   dashboards = [
     "profile", "notifications", "billing", "password"

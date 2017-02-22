@@ -2,7 +2,7 @@
 @import '../global/colors';
 
 .container {
-  width: 1100px;
+  width: 960px;
   margin: 0 auto;
   padding: 100px 0;
   position: relative;
@@ -36,7 +36,7 @@
   }
 }
 
-.publishers_list {
+.company_list {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -69,12 +69,12 @@
   &:hover {
     .box-shadow(30px 30px 20px white);
      
-    .publishers {
+    .companies {
       display: block;
     }
   }
   
-  .publishers {
+  .companies {
     border-top: solid 2px rgba(0,0,0,0.05);
     display: none;
     max-height: 250px;
@@ -164,7 +164,7 @@
 }
 
 .display {
-  width: 920px;
+  width: 780px;
   position: relative;
   
   h2 {
@@ -232,9 +232,35 @@
   form {    
     width: 70%;
     
+    input:disabled {
+      background: transparent;
+      border-color: transparent;
+      padding-left: 0;
+      .box-shadow(none);
+    }
+    
     table {
       width: 100%;
       margin-bottom: 20px;
+      
+      td {
+        padding: 10px 0;
+        
+        &.title {
+          width: 30%;
+          font-size: 1.2em;
+          
+          .info {
+            color: @text_weak;
+            cursor: pointer;
+            margin-left: 5px;
+            
+            &:hover {
+              color: black;
+            }
+          }
+        }
+      } 
     }
     
     .error {
@@ -418,155 +444,6 @@
     .slider-display {
       background: none;
       color: @blue;
-    }
-  }
-  
-  &.abtest-dashboard {
-    form {
-      margin-top: 50px;
-      
-      .publisher {
-        margin-bottom: 20px;
-        font-size: 1.2em;
-      }
-      
-      button {
-        margin-bottom: 15px; 
-      }
-    }
-  }
-  
-  &.members-dashboard {
-    form.invite table td:first-child {
-      width: 75%;
-      padding-right: 5px;
-    }
-    
-    .members-table {
-      width: 70%;
-      font-size: 1.2em;
-      
-      td {
-        padding: 12px 0;
-        
-        &.member {
-          color: @blue;
-        }
-        
-        &.owner {
-          color: @green;
-        }
-        
-        &.invite {
-          color: @text_weak;
-        }
-        
-        &:last-child {
-          text-align: right;
-        }
-      }
-    }
-  }
-
-  &.settings-dashboard {
-    button {
-      margin-bottom: 15px; 
-    }
-    
-    form table { 
-      td {
-        padding: 10px 0;
-        
-        &.title {
-          width: 30%;
-          font-size: 1.2em;
-          
-          .info {
-            color: @text_weak;
-            cursor: pointer;
-            margin-left: 5px;
-            
-            &:hover {
-              color: black;
-            }
-          }
-        }
-        
-        input:disabled {
-          background: transparent;
-          border-color: transparent;
-          padding-left: 0;
-          .box-shadow(none);
-        }
-      } 
-    }
-    
-    .slider {
-      padding: 20px 0 10px;
-   
-      .slider-range {
-        width: 75%;
-        float: left;
-      }
-      
-      .slider-display {
-        width: 20%;
-        float: right;
-        padding: 0;
-        text-align: right;
-        margin-top: -3px;
-        font-size: 1.2em;
-      } 
-    }
-  }
-  
-  &.setup-dashboard {
-    .networks {
-      margin: 10px -10px -10px -10px;
-      .clearfix();
-      
-      .network {
-        position: relative;
-        cursor: pointer;
-        width: 180px;
-        padding: 15px 20px;
-        margin: 10px;
-        text-align: center;
-        background: #FDFDFD;
-        border: solid 2px rgba(0,0,0,0.05);
-        display: inline-block;
-        .border-radius(4px);
-        
-        &:not(.disabled):hover, &.active {
-          border-color: @blue;
-        }
-        
-        &.disabled {
-          opacity: 0.5;
-          cursor: default;
-        }
-        
-        .soon {
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 100px;
-          font-size: 1em;
-        }
-        
-        .image {
-          height: 120px;
-          background-position: center center;
-          background-repeat: no-repeat;
-          background-size: contain;
-        }
-        
-        .name {
-          margin-top: 20px;
-          font-size: 1.2em;
-          font-weight: bold;
-        }
-      }
     }
   }
 }

@@ -51,7 +51,7 @@ class Dashboard
     # Impression Chart
     @charts.impression_count = new Keen.Dataviz()
       .el('.chart.impression-count')
-      .height(200)
+      .height(180)
       .title('Impressions')
       .type('metric')
       .colors([ '#2CCA73' ])
@@ -60,7 +60,7 @@ class Dashboard
     # Click Count
     @charts.click_count = new Keen.Dataviz()
       .el('.chart.click-count')
-      .height(200)
+      .height(180)
       .title('Clicks')
       .type('metric')
       .colors(['#8A8AD6'])
@@ -70,7 +70,7 @@ class Dashboard
     # Views Count
     @charts.view_count = new Keen.Dataviz()
       .el('.chart.visitors-count')
-      .height(200)
+      .height(180)
       .title('Page Views')
       .type('metric')
       .colors(['#EEB058'])
@@ -80,7 +80,7 @@ class Dashboard
     # CTR Rate
     @charts.ctr_count = new Keen.Dataviz()
       .el('.chart.ctr-count')
-      .height(200)
+      .height(180)
       .title('Click Through Rate')
       .type('metric')
       .colors(['#00BBDE'])
@@ -93,7 +93,7 @@ class Dashboard
     # Protection Rate
     @charts.protection_count = new Keen.Dataviz()
       .el('.chart.protection-count')
-      .height(200)
+      .height(180)
       .title('Ad Blocker Adoption')
       .type('metric')
       .colors(['#FE6672'])

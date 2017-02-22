@@ -1,0 +1,34 @@
+@import '../libs/all';
+@import '../global/colors';
+
+.display.members-dashboard {
+  form.invite table td:first-child {
+    width: 75%;
+    padding-right: 5px;
+  }
+  
+  .members-table {
+    width: 70%;
+    font-size: 1.2em;
+    
+    td {
+      padding: 12px 0;
+      
+      &.member {
+        color: @blue;
+      }
+      
+      &.owner {
+        color: @green;
+      }
+      
+      &.invite {
+        color: @text_weak;
+      }
+      
+      &:last-child {
+        text-align: right;
+      }
+    }
+  }
+}
