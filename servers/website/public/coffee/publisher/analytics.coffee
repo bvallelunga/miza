@@ -54,7 +54,7 @@ class Dashboard
       .height(200)
       .title('Impressions')
       .type('metric')
-      .colors([ '#3edf86' ])
+      .colors([ '#2CCA73' ])
       .prepare()
       
     # Click Count
@@ -77,13 +77,29 @@ class Dashboard
       .prepare()
       
       
+    # CTR Rate
+    @charts.ctr_count = new Keen.Dataviz()
+      .el('.chart.ctr-count')
+      .height(200)
+      .title('Click Through Rate')
+      .type('metric')
+      .colors(['#00BBDE'])
+      .chartOptions({ 
+        suffix: "%" 
+      })
+      .prepare()
+    
+    
     # Protection Rate
     @charts.protection_count = new Keen.Dataviz()
       .el('.chart.protection-count')
       .height(200)
-      .title('Ad Blocker (%)')
+      .title('Ad Blocker Adoption')
       .type('metric')
       .colors(['#FE6672'])
+      .chartOptions({ 
+        suffix: "%" 
+      })
       .prepare()
       
       

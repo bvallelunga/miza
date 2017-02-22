@@ -1,5 +1,5 @@
 module.exports.get = (req, res, next)->
-  client = LIBS.keen.KeenAnalysis(req.publisher.config.keen)
+  client = LIBS.keen.scopedAnalysis(req.publisher.config.keen)
   
   query = (operation, query)->
     query.event_collection = "ads.event"
@@ -79,6 +79,13 @@ module.exports.get = (req, res, next)->
     }
   }).then (props)->
     props.protection_count.result.result = Math.floor props.protection_count.result.result/props.view_count.result.result * 100
+    props.ctr_count = {
+      success: true
+      result: {
+        query: props.protection_count.result.query
+        result: Math.floor props.click_count.result.result/props.impression_count.result.result * 100
+      }
+    }
   
     res.json(props)
     
