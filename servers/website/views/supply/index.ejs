@@ -1,7 +1,7 @@
 <% include ../includes/start %>
 <div class="company_list">
   <div class="current">
-    <%= publisher.full_name() %>
+    <%= publisher.name %>
     <span class="fa fa-sort"></span>
   </div>
   <div class="companies">
@@ -20,7 +20,7 @@
     <% (props.publishers || user.publishers).forEach(function(pub) { %>
       <% if (pub.id != publisher.id) { %>
         <a class="company-link" href="/supply/<%= pub.key %>/<%= dashboard %>">
-          <%= pub.full_name() %>
+          <%= pub.name %>
         </a>
       <% } %>
     <% }) %>

@@ -102,11 +102,7 @@ module.exports = (sequelize, DataTypes)->
         }
 
     }
-    instanceMethods: {
-      full_name: ->
-        return "#{@name} (#{@product[0].toUpperCase()})"
-      
-      
+    instanceMethods: {      
       extract_domain: (website)->
         domain = url.parse website.toLowerCase()
         hostname = (domain.hostname || domain.pathname).split(".").slice(-2).join(".")
@@ -344,13 +340,13 @@ module.exports = (sequelize, DataTypes)->
 
       
       afterCreate: (publisher)->
-        publisher.keen_generate()
+        publisher.keen_generate().then ->
       
-        if publisher.miza_endpoint
-          publisher.cloudflare_add publisher.endpoint
-        
-        else
-          publisher.heroku_add(publisher.endpoint)
+          if publisher.miza_endpoint
+            publisher.cloudflare_add publisher.endpoint
+          
+          else
+            publisher.heroku_add(publisher.endpoint)
 
 
       beforeUpdate: (publisher)->

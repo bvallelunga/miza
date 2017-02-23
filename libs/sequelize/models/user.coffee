@@ -173,6 +173,7 @@ module.exports = (sequelize, DataTypes)->
                 id: publisher.key
               }
             custom_attributes: {
+              type: @type
               phone: @phone
               stripe: @stripe_id
               card: !!@stripe_card

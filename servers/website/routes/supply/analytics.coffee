@@ -9,12 +9,6 @@ module.exports.get = (req, res, next)->
         success: true
         result: response
       }
-    
-    .catch (error)->
-      return {
-        success: false
-        error: "No data available"
-      }
   
   Promise.props({
     impressions_chart: query "count", {
@@ -77,14 +71,15 @@ module.exports.get = (req, res, next)->
         "property_value": "impression"
       }]
     }
+    ctr_count: {
+      success: true
+      result: {}
+    }
   }).then (props)->
     props.protection_count.result.result = Math.floor props.protection_count.result.result/props.view_count.result.result * 100
-    props.ctr_count = {
-      success: true
-      result: {
-        query: props.protection_count.result.query
-        result: Math.floor props.click_count.result.result/props.impression_count.result.result * 100
-      }
+    props.ctr_count.result = {
+      query: props.protection_count.result.query
+      result: Math.floor props.click_count.result.result/props.impression_count.result.result * 100
     }
   
     res.json(props)
