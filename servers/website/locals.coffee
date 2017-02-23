@@ -49,6 +49,8 @@ module.exports = (req, res, next)->
     "logo" : "#{res.locals.host}/imgs/logo.png?#{res.locals.random}"
     "graph": "#{res.locals.host}/imgs/graph.png?#{res.locals.random}"
   }
+  res.locals.isActive = (a, b)->
+    return if a == b then "active" else ""
     
   # Next
   if not req.user?
