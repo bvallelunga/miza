@@ -1,5 +1,5 @@
 <% include ../../includes/start %>
-<% include ../../includes/header %>
+<% include ../../includes/navigation %>
 <% if(!payout.is_transferred) { %>
   <div class="payouts-confirm">
     <a class="back fa fa-close" href="/admin/payouts/<%= payout.id %>"></a>
@@ -113,7 +113,7 @@
             segment = (transfer.impressions / payout.impressions) || 0
           %>
             <tr class="publisher inactive <%= transfer.publisher.key %>">
-              <td><a href="/publisher/<%= transfer.publisher.key %>/analytics"><%= transfer.publisher.full_name() %></a></td>
+              <td><a href="/supply/<%= transfer.publisher.key %>/analytics"><%= transfer.publisher.full_name() %></a></td>
               <td><a target="_blank" href="http://<%= transfer.publisher.domain %>"><%= transfer.publisher.domain %></a></td>
               <td><a href="mailto:<%= transfer.user.email %>"><%= transfer.user.name %></a></td>
               <td><%= numeral(transfer.impressions).format("0[.]0a") %></td>
@@ -125,7 +125,7 @@
         <% } else { %>
           <% publishers.forEach(function(publisher) { %>
             <tr class="publisher inactive <%= publisher.key %>">
-              <td><a href="/publisher/<%= publisher.key %>/analytics"><%= publisher.full_name() %></a></td>
+              <td><a href="/supply/<%= publisher.key %>/analytics"><%= publisher.full_name() %></a></td>
               <td><a target="_blank" href="http://<%= publisher.domain %>"><%= publisher.domain %></a></td>
               <td><a href="mailto:<%= publisher.owner.email %>"><%= publisher.owner.name %></a></td>
               <td><%= numeral(publisher.report.impressions).format("0[.]0a") %></td>

@@ -1,10 +1,10 @@
 <% include ../includes/start %>
-<% include ../includes/header %>
+<% include ../includes/navigation %>
 <div class="container">
   <span>
     Let's get started! We just need a<br>couple details about your account.
   </span>
-  <form class="form" method="POST" action="/publisher/new">
+  <form class="form" method="POST" action="<%= path %>">
     <% include ../includes/csrf %>
     <input class="select_value" type="hidden" name="publisher_product" value="network" required/>
     <input class="name top" type="text" name="publisher_name" placeholder="Publisher Name" required/>

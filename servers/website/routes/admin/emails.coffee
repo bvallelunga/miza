@@ -50,6 +50,7 @@ module.exports.get = (req, res, next)->
     css: req.css.renderTags "modal", "admin"
     title: "Admin Emails"
     templates: Object.keys LIBS.emails.templates
+    dashboard: "admin"
   } 
 
 

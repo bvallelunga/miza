@@ -138,7 +138,7 @@ class Dashboard
   
   
   update: (timeframe, finished)->
-    $.get("/publisher/#{config.publisher}/analytics/metrics", {
+    $.get("/supply/#{config.publisher}/analytics/metrics", {
       timeframe: timeframe
     }).done (response)=>
       for name, data of response

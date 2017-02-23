@@ -3,8 +3,7 @@
 
 .container {
   width: 1000px;
-  margin: 0 auto;
-  padding-top: 100px;
+  margin: 40px auto;
   text-align: center;
   
   h1.logo {
@@ -22,10 +21,11 @@
       padding: 15px 20px;
       margin: 20px 20px;
       text-align: center;
-      background: #FDFDFD;
-      border: solid 2px rgba(0,0,0,0.05);
+      background: white;
+      border: solid 1px rgba(0,0,0,0.11);
       display: inline-block;
       .border-radius(4px);
+      .box-shadow(0 3px 6px 1px rgba(0,0,0,0.03));
       
       &:hover {
         border-color: @blue;
@@ -48,17 +48,15 @@
 
   &.side {
     width: 49%;
-    padding: 100px 40px;
+    padding: 20px;
     .box-sizing(border-box);
     
     &.short {
       width: 35% !important;
-      padding: 100px 20px 0 40px;
     }
     
     &.long {
-      width: 64% !important;
-      padding: 100px 40px 0 20px;
+      width: 63% !important;
     }
   }
 }

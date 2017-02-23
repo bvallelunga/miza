@@ -36,7 +36,7 @@ module.exports.add = (req, res, next)->
   .then ->
     res.json {
       success: true
-      next: "/publisher/#{req.publisher.key}/members"
+      next: "/supply/#{req.publisher.key}/members"
     }  
     
   .catch next 
@@ -44,23 +44,23 @@ module.exports.add = (req, res, next)->
 
 module.exports.remove_invite = (req, res, next)->
   if not req.user.is_admin and req.user.id != req.publisher.owner_id
-    return res.redirect "/publisher/#{req.publisher.key}/members"
+    return res.redirect "/supply/#{req.publisher.key}/members"
 
   LIBS.models.UserAccess.destroy({
     where: {
       id: req.params.invite
     }
   }).then ->
-    res.redirect "/publisher/#{req.publisher.key}/members"
+    res.redirect "/supply/#{req.publisher.key}/members"
     
   .catch next 
     
 
 module.exports.remove_member = (req, res, next)->
   if not req.user.is_admin and (req.user.id != req.publisher.owner_id or req.params.member == req.publisher.owner_id)
-    return res.redirect "/publisher/#{req.publisher.key}/members"
+    return res.redirect "/supply/#{req.publisher.key}/members"
   
   req.publisher.removeMember(req.params.member).then ->
-    res.redirect "/publisher/#{req.publisher.key}/members"
+    res.redirect "/supply/#{req.publisher.key}/members"
     
   .catch next 

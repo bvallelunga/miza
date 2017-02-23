@@ -17,7 +17,8 @@ module.exports.get_root = (req, res, next)->
     js: req.js.renderTags.apply(req.js, js)
     css: req.css.renderTags.apply(req.css, css)
     title: "Account Settings"
-    dashboard: dashboard
+    dashboard: "account"
+    subdashboard: dashboard
   }
   
   

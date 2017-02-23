@@ -1,9 +1,17 @@
-.scheduler-iframe {
-  position: fixed;
-  z-index: 0;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
+.scheduler {
+  header.navigation {
+    position: relative;
+    z-index: 1;
+    border-bottom: solid 1px rgba(0,0,0,0.1) !important;
+  }
+  
+  .scheduler-iframe {
+    position: fixed;
+    z-index: 0;
+    top: 54px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
 }

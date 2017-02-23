@@ -19,6 +19,7 @@ module.exports.get = (req, res, next)->
       css: req.css.renderTags "modal", "admin"
       title: "Admin Grant Access"
       invites: invites
+      dashboard: "admin"
     }
 
 

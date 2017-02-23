@@ -42,6 +42,7 @@ module.exports.get_root = (req, res, next)->
       css: req.css.renderTags "modal", "admin", "fa", "date-range"
       title: "Admin Payouts"
       payouts: payouts
+      dashboard: "admin"
     } 
  
    
@@ -53,6 +54,7 @@ module.exports.get_create = (req, res, next)->
     payout: req.payout
     publishers: req.payout.publishers
     transfers: req.payout.transfers
+    dashboard: "admin"
   }
   
 

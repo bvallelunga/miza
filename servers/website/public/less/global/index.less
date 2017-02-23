@@ -14,7 +14,7 @@ body {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   min-width: 1150px;
   position: relative;
-  background: white;
+  background: #F1F5F9;
   color: @text;
   .reset-box-model();
 
@@ -99,6 +99,90 @@ body {
       position: absolute;
       top: -12px;
       right: -25px;
+    }
+  }
+  
+  header.navigation {
+    padding: 10px 20px;
+    width: 100%;
+    border-bottom: solid 1px rgba(0,0,0,0.1);
+    
+    &.none {
+      border-bottom: none;
+      
+      .logo {
+        color: @blue;
+      }
+      
+      .links a {
+        color: #424770;
+        
+        &:hover {
+          background: rgba(0,0,0,0.025);
+        }
+        
+        &.active {
+          background: rgba(0,0,0,0.05);
+        }
+      }
+    }
+    
+    &.demand {
+      background: #E6525A;
+    }
+    
+    &.supply {
+      background: #1F8CEB;
+    }
+    
+    .logo {
+      color: white;
+      font-size: 2em;
+      position: relative;
+      top: 3px;
+      margin-right: 25px;
+    }
+    
+    .spacer {
+      position: relative;
+      top: -2px;
+      width: 6px;
+      height: 6px;
+      background: rgba(0,0,0,0.2);
+      margin: 0 4px;
+      display: inline-block;
+      .border-radius(50%);
+    }
+    
+    .links {
+      position: relative;
+      display: inline-block;
+      font-family: "Ubuntu";
+      
+      a {
+        display: inline-block;
+        margin: 0 2px;
+        font-size: 1.2em;
+        color: white;
+        font-weight: lighter;
+        padding: 7px 10px;
+        .border-radius(3px);
+        
+        &.active {
+          background: rgba(0,0,0,0.2);
+        }
+        
+        &:hover {
+          background: rgba(0,0,0,0.1);
+        }
+        
+        span {
+          position: relative;
+          top: -1px;
+          margin-right: 5px;
+          font-size: 0.8em;
+        }
+      }
     }
   }
   

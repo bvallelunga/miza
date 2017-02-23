@@ -29,6 +29,7 @@ module.exports.get = (req, res, next)->
       title: "Admin Publishers"
       publishers: props.publishers
       industries: props.industries
+      dashboard: "admin"
     }
     
   .catch next

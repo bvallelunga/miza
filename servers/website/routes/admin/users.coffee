@@ -14,6 +14,7 @@ module.exports.get = (req, res, next)->
       css: req.css.renderTags "modal", "admin", "fa"
       title: "Admin Users"
       users: users
+      dashboard: "admin"
     }
     
   .catch next

@@ -2,7 +2,7 @@ module.exports = {
   
   landing:    require "./landing"
   auth:       require "./auth"
-  publisher:  require "./publisher"
+  supply:     require "./supply"
   admin:      require "./admin"
   account:    require "./account"
   demand:     require "./demand"

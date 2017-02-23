@@ -1,5 +1,5 @@
 <% include ../includes/start %>
-<% include ../includes/header %>
+<% include ../includes/navigation %>
 <div class="container side short left">
   <span class="red">
     Please be careful when creating new industries!
@@ -21,7 +21,7 @@
     <div class="error"></div>
   </form>
 </div>
-<div class="container form-table side long right">
+<div class="container form-table side long left">
   <form class="form" method="POST" action="/admin/industries/update">
     <% include ../includes/csrf %>
     <table>

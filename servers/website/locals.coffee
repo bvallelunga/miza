@@ -45,6 +45,7 @@ module.exports = (req, res, next)->
   res.locals.support_phone_clean = CONFIG.general.support.phone.replace(/\D+/g, '')
   res.locals.numeral = numeral
   res.locals.moment = moment
+  res.locals.dashboard = ""
   res.locals.media = {
     "logo" : "#{res.locals.host}/imgs/logo.png?#{res.locals.random}"
     "graph": "#{res.locals.host}/imgs/graph.png?#{res.locals.random}"

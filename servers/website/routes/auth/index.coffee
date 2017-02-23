@@ -30,7 +30,7 @@ module.exports.not_authenticated = (req, res, next)->
   if req.user.is_admin
     return res.redirect "/admin"
   
-  res.redirect "/#{user.type}"
+  res.redirect "/#{req.user.type}"
 
 
 module.exports.is_authenticated = (req, res, next)->

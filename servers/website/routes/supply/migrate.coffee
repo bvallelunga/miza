@@ -1,6 +1,6 @@
 module.exports.get = (req, res, next)->
   if req.publisher.product != "protect"
-    return res.redirect "/publisher/#{req.publisher.key}/analytics"
+    return res.redirect "/supply/#{req.publisher.key}/analytics"
 
   res.render "publisher/migrate", {
     js: req.js.renderTags "modal"
@@ -15,7 +15,7 @@ module.exports.post = (req, res, next)->
   }).then ->
     res.json {
       success: true
-      next: "/publisher/#{req.publisher.key}/setup?new_publisher"
+      next: "/supply/#{req.publisher.key}/setup?new_publisher"
     }
     
   .catch next

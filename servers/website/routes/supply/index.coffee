@@ -8,24 +8,24 @@ module.exports.get_root = (req, res, next)->
       }
     }).then (publisher)->
       if not publisher?
-        return res.redirect "/publisher"
+        return res.redirect "/supply"
         
-      res.redirect "/publisher/#{publisher.key}/#{req.query.page or "analytics"}"
+      res.redirect "/supply/#{publisher.key}/#{req.query.page or "analytics"}"
 
   if req.user.publishers.length == 0
-    return res.redirect "/publisher/new"
+    return res.redirect "/supply/new"
     
-  res.redirect "/publisher/#{req.user.publishers[0].key}/analytics"
+  res.redirect "/supply/#{req.user.publishers[0].key}/analytics"
 
 
 module.exports.get_dashboard = (req, res, next)->
   if not req.publisher.is_demo and req.publisher.product == "protect"
-    return res.redirect "/publisher/#{req.publisher.key}/migrate"
+    return res.redirect "/supply/#{req.publisher.key}/migrate"
 
-  js = ["dashboard", "publisher"]
-  css = ["dashboard", "publisher", "fa"]
+  js = ["dashboard", "supply"]
+  css = ["dashboard", "supply", "fa"]
   dashboard = req.params.dashboard
-  dashboard_path = "/publisher/#{req.publisher.key}"
+  dashboard_path = "/supply/#{req.publisher.key}"
   dashboards = [
     "setup", "analytics", "members", "settings", "payouts"
   ]
@@ -110,7 +110,7 @@ module.exports.get_dashboard = (req, res, next)->
     show_guide = req.query.new_publisher? or req.session.new_publisher
     req.session.new_publisher = false
   
-    res.render "publisher/index", {
+    res.render "supply/index", {
       js: req.js.renderTags.apply(req.js, js)
       css: req.css.renderTags.apply(req.css, css)
       title: "#{dashboard_title} Dashboard"
