@@ -1,12 +1,11 @@
-<h2>Members</h2>
 <% if(!user.is_demo && (user.is_admin || user.id == publisher.owner.id)) { %>
-  <span>
-    Members will be able to view the setup guide, analytics/billing dashboards
-    and change settings. <strong>They will not be able to add/remove members,</strong>
-    only the owner has such privileges.
-  </span>
-  <br><br>
   <form class="form invite" method="POST" action="<%= dashboard_path %>/members/add">
+    <span>
+      Members will be able to view the setup guide, analytics/billing dashboards
+      and change settings. <strong>They will not be able to add/remove members,</strong>
+      only the owner has such privileges.
+    </span>
+    <br><br><br>
     <% include ../../includes/csrf %>
     <table>
       <tr>
@@ -15,33 +14,33 @@
       </tr>
     </table>
     <div class="clear error"></div>
+    <table class="members-table">
+      <% props.invites.forEach(function(invite) { %>
+        <tr>
+          <td class="invite"><%= invite.email %></td>
+          <td class="invite">pending</td>
+          <% if(!user.is_demo && (user.is_admin || user.id == publisher.owner.id)) { %>
+            <td>
+              <a class="red" href="<%= dashboard_path %>/members/invite/<%= invite.id %>/remove">Remove</a>
+            </td>
+          <% } %>
+        </tr>
+      <% }) %>
+      <% props.members.forEach(function(member) { %>
+        <tr>
+          <td><%= member.name %></td>
+          <td class="<%= member.id == publisher.owner.id ? "owner" : "member" %>">
+            <%= member.id == publisher.owner.id ? "owner" : "member" %>
+          </td>
+          <% if(!user.is_demo && (user.is_admin || user.id == publisher.owner.id)) { %>
+            <td>
+              <% if(member.id != publisher.owner.id) { %>
+                <a class="red" href="<%= dashboard_path %>/members/member/<%= member.id %>/remove">remove</a>
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+      <% }) %>
+    </table>
   </form>
 <% } %>
-<table class="members-table">
-  <% props.invites.forEach(function(invite) { %>
-    <tr>
-      <td class="invite"><%= invite.email %></td>
-      <td class="invite">pending</td>
-      <% if(!user.is_demo && (user.is_admin || user.id == publisher.owner.id)) { %>
-        <td>
-          <a class="red" href="<%= dashboard_path %>/members/invite/<%= invite.id %>/remove">Remove</a>
-        </td>
-      <% } %>
-    </tr>
-  <% }) %>
-  <% props.members.forEach(function(member) { %>
-    <tr>
-      <td><%= member.name %></td>
-      <td class="<%= member.id == publisher.owner.id ? "owner" : "member" %>">
-        <%= member.id == publisher.owner.id ? "owner" : "member" %>
-      </td>
-      <% if(!user.is_demo && (user.is_admin || user.id == publisher.owner.id)) { %>
-        <td>
-          <% if(member.id != publisher.owner.id) { %>
-            <a class="red" href="<%= dashboard_path %>/members/member/<%= member.id %>/remove">remove</a>
-          <% } %>
-        </td>
-      <% } %>
-    </tr>
-  <% }) %>
-</table>

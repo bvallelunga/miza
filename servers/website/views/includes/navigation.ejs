@@ -1,0 +1,61 @@
+<div class="navigation <%= type %>">
+  <div class="left">
+    <% include ./logo %>
+    <div class="links">
+      <% if(type == "demand") { %>
+        <a href="<%= dashboard_path %>/dashboard" class="<%= isActive(dashboard, "dashboard") %>">
+          <span class="fa fa-th-large"></span>
+          Dashboard
+        </a>
+        <a href="<%= dashboard_path %>/campaigns" class="<%= isActive(dashboard, "campaigns") %>">
+          <span class="fa fa-folder"></span>
+          Campaigns
+        </a>
+        <a href="<%= dashboard_path %>/units" class="<%= isActive(dashboard, "units") %>">
+          <span class="fa fa-tags"></span>
+          Ad Units
+        </a>
+        <a href="<%= dashboard_path %>/settings" class="<%= isActive(dashboard, "settings") %>">
+          <span class="fa fa-cog"></span>
+          Settings
+        </a>
+      <% } else if(type == "supply") {  %>
+        <a href="<%= dashboard_path %>/setup" class="<%= isActive(dashboard, "setup") %>">
+          <span class="fa fa-bars"></span>
+          Setup
+        </a>
+        <a href="<%= dashboard_path %>/analytics" class="<%= isActive(dashboard, "analtyics") %>">
+          <span class="fa fa-pie-chart"></span>
+          Analytics
+        </a>
+        <a href="<%= dashboard_path %>/payouts" class="<%= isActive(dashboard, "payouts") %>">
+          <span class="fa fa-bank"></span>
+          Payouts
+        </a>
+        <a href="<%= dashboard_path %>/members" class="<%= isActive(dashboard, "members") %>">
+          <span class="fa fa-users"></span>
+          Members
+        </a>
+        <a href="<%= dashboard_path %>/settings" class="<%= isActive(dashboard, "settings") %>">
+          <span class="fa fa-cog"></span>
+          Settings
+        </a>
+      <% } %>
+    </div>
+  </div>
+  <div class="right links">
+    <% if(user.is_admin) { %>
+      <a href="/admin">
+        Admin Center
+      </a>
+      <span class="spacer"></span>
+    <% } %>
+    <a href="/account">
+      Profile
+    </a>
+    <a href="/logout">
+      Logout
+    </a>
+  </div>
+  <div class="clear"></div>
+</div>

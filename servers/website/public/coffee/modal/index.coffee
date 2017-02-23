@@ -29,7 +29,7 @@ $ ->
     
     ).fail (error)->
       json = error.responseJSON
-      hint.text json.message
+      hint.text(json.message).show()
       form.find(".password").val ""
       form.find(".csrf").val json.csrf
       button.html(original).removeClass "loading"

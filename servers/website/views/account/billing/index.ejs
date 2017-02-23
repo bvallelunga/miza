@@ -1,10 +1,8 @@
-<h2>Update Billing Information</h2>
-<span>
-  Please add a credit/debit card that we can charge your account with. 
-  <strong>You will NOT be charged immediately!</strong> The start of billing
-  cycles are at the beginning of the month.
-</span><br><br>
 <form class="form card" method="POST" action="/account/billing">
+  <span>
+    Please add a credit/debit card that we can charge your account with. 
+    <strong>You will NOT be charged immediately!</strong>
+  </span><br><br><br>
   <div class="view left">
     <% include ../../includes/csrf %>
     <input class="top card-number" type="text" name="number" placeholder="**** **** **** ****" data-stripe="number" required>

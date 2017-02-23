@@ -1,10 +1,4 @@
 <% include ../includes/start %>
-<% include ../includes/header %>
-<%  
-  function isActive(a, b) {
-    return a == b ? "active" : ""
-  }
-%>
 <div class="company_list">
   <div class="current">
     <%= publisher.full_name() %>
@@ -35,47 +29,13 @@
 <% if(guide) { %>
   <%- include("./guide/" + publisher.product) %>
 <% } %>
-<div class="container">
+<% include ../includes/navigation %>
+<div class="container <%= dashboard_size %>">
   <% include ./payout_warning %>
-  <div class="sidebar left">
-    <% include ../includes/logo %>
-    <ul>
-      <li class="<%= isActive(dashboard, "setup") %>">
-        <a href="<%= dashboard_path %>/setup">
-          <span class="fa fa-bars"></span>
-          Setup
-        </a>
-      </li>
-      <li class="<%= isActive(dashboard, "analytics") %>">
-        <a href="<%= dashboard_path %>/analytics">
-          <span class="fa fa-pie-chart"></span>
-          Analytics
-        </a>
-      </li>
-      <% if(publisher.product != "protect") { %>
-        <li class="<%= isActive(dashboard, "payouts") %>">
-          <a href="<%= dashboard_path %>/payouts">
-            <span class="fa fa-bank"></span>
-            Payouts
-          </a>
-        </li>
-      <% } %>
-      <li class="<%= isActive(dashboard, "members") %>">
-        <a href="<%= dashboard_path %>/members">
-          <span class="fa fa-users"></span>
-          Members
-        </a>
-      </li>
-      <li class="<%= isActive(dashboard, "settings") %>">
-        <a href="<%= dashboard_path %>/settings">
-          <span class="fa fa-cog"></span>
-          Settings
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="display right <%= dashboard %>-dashboard">
+  <div class="display full <%= dashboard %>-dashboard">
     <%- include("./" + dashboard + "/index") %>
   </div>
+  <div class="clear"></div>
 </div>
+<% include ../includes/footer %>
 <% include ../includes/end %>

@@ -23,8 +23,8 @@ module.exports.get_dashboard = (req, res, next)->
     return res.redirect "/demand/#{ ADVERTISER }/#{dashboard}/#{DASHBOARDS[dashboard][0]}"
 
   res.render "demand/index", {
-    js: req.js.renderTags "demand"
-    css: req.css.renderTags "demand", "fa"
+    js: req.js.renderTags "demand", "dashboard"
+    css: req.css.renderTags "demand", "fa", "dashboard"
     title: "Demand Dashboard"
     type: "demand"
     dashboard: dashboard

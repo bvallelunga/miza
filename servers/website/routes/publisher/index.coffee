@@ -29,6 +29,7 @@ module.exports.get_dashboard = (req, res, next)->
   dashboards = [
     "setup", "analytics", "members", "settings", "payouts"
   ]
+  dashboard_size = ""
   ads_domain = CONFIG.ads_server.domain
   dashboard_title = (dashboard.split(' ').map (word) -> 
     return word[0].toUpperCase() + word[1..-1].toLowerCase()).join ' '
@@ -41,6 +42,7 @@ module.exports.get_dashboard = (req, res, next)->
   
   switch dashboard
     when "setup"
+      dashboard_size = "medium"
       js.push "code"
       css.push "code"
       
@@ -60,9 +62,10 @@ module.exports.get_dashboard = (req, res, next)->
   Promise.resolve().then ->
     req.publisher.transfers = []
   
-    if dashboard == "payouts"
+    if dashboard != "payouts"
       return Promise.resolve()
       
+    dashboard_size = "large"
     req.publisher.getTransfers({
       include: [{
         model: LIBS.models.Payout
@@ -117,6 +120,9 @@ module.exports.get_dashboard = (req, res, next)->
       guide: show_guide
       changelog: true
       props: props
+      type: "supply"
+      dashboard_size: dashboard_size
+      publisher: req.publisher
       config: {
         publisher: req.publisher.key
         keen: {

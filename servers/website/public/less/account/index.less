@@ -1,0 +1,56 @@
+@import '../libs/all';
+@import '../global/colors';
+
+.card { 
+  width: 100%;
+     
+  .view {
+    width: 49%;
+  }
+  
+  input, .input {
+    border-top-width: 0;
+    .border-radius(0);
+    
+    &.only {
+      border-top-width: 1px;
+      margin-bottom: 15px;
+      .border-radius(5px);
+    }
+    
+    &.top {
+      margin: 0;
+      border-top-width: 1px;
+      .border-radius(5px 5px 0 0);
+    }
+    
+    &.bottom {
+      margin-bottom: 15px;
+      .border-radius(0 0 5px 5px);
+    }
+  }
+  
+  .stripe {
+    width: 150px;
+    margin: 20px auto;
+    display: block;
+    
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.split input {
+  width: 50%;
+  display: inline-block;
+  
+  &.left {
+    .border-radius(0 0 0 5px);
+    border-right: none;
+  }
+  
+  &.right {
+    .border-radius(0 0 5px 0);
+  }
+}

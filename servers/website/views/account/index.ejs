@@ -1,13 +1,23 @@
 <% include ../includes/start %>
-<% include ../includes/header %>
-<%  
-  function isActive(a, b) {
-    return a == b ? "active" : ""
-  }
-%>
-<div class="container">  
-  <div class="sidebar left">
-    <% include ../includes/logo %>
+<div class="navigation <%= type %>">
+  <div class="right links">
+    <% if(user.is_admin) { %>
+      <a href="/admin">
+        Admin Center
+      </a>
+      <span class="spacer"></span>
+    <% } %>
+    <a href="/account">
+      Profile
+    </a>
+    <a href="/logout">
+      Logout
+    </a>
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="container">
+  <div class="sidebar">
     <ul>
       <li class="<%= isActive(dashboard, "profile") %>">
         <a href="/account/profile">
@@ -27,16 +37,20 @@
           Notifications
         </a>
       </li>
-      <li class="<%= isActive(dashboard, "billing") %>">
-        <a href="/account/billing">
-          <span class="fa fa-credit-card"></span>
-          Billing
-        </a>
-      </li>
+      <% if(user.is_admin || user.type == "demand") { %>
+        <li class="<%= isActive(dashboard, "billing") %>">
+          <a href="/account/billing">
+            <span class="fa fa-credit-card"></span>
+            Billing
+          </a>
+        </li>
+      <% } %>
     </ul>
   </div>
-  <div class="display right settings-dashboard">
+  <div class="display">
     <%- include("./" + dashboard + "/index") %>
   </div>
+  <div class="clear"></div>
 </div>
+<% include ../includes/footer %>
 <% include ../includes/end %>
