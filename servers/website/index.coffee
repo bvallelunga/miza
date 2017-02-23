@@ -99,6 +99,10 @@ module.exports = (srv)->
   app.get "/dashboard", routes.auth.is_authenticated, routes.landing.get_dashboard
   
   
+  # Demand Partner Routes
+  app.get "/demand", routes.auth.is_authenticated, routes.demand.get_root
+  
+  
   # Publisher Routes
   app.get  "/publisher", routes.auth.is_authenticated, routes.publisher.get_root
   app.get  "/publisher/new", routes.auth.is_authenticated, routes.publisher.create.get

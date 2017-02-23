@@ -1,9 +1,10 @@
 module.exports = {
   
-  landing:   require "./landing"
-  auth:      require "./auth"
-  publisher: require "./publisher"
-  admin:     require "./admin"
-  account:   require "./account"
+  landing:    require "./landing"
+  auth:       require "./auth"
+  publisher:  require "./publisher"
+  admin:      require "./admin"
+  account:    require "./account"
+  demand:     require "./demand"
   
 }
