@@ -299,6 +299,7 @@ module.exports = (sequelize, DataTypes)->
               created_at: @created_at
               name: @name
               custom_attributes: {
+                type: "publisher"
                 industry: if @industry? then  @industry.name else null
                 fee: @fee * 100
                 coverage: @config.coverage * 100

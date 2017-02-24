@@ -5,6 +5,22 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
       allowNull: false
     }
+    stripe_card: {
+      type: DataTypes.JSONB
+      get: ->
+        card = @getDataValue "stripe_card"
+        if not card? then return null
+        
+        return "#{card.brand} #{card.last4}"
+        
+      set: (value)->
+        LIBS.slack.message {
+          text: "#{@name} updated his billing information"
+        }
+        
+        @setDataValue 'stripe_card', value
+  
+    }
     paypal: {
       type: DataTypes.STRING
     }
@@ -32,11 +48,19 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.BOOLEAN
       defaultValue: false
     } 
+    config: {
+      type: DataTypes.JSONB
+      defaultValue: {}
+    }
   }, {    
     classMethods: {      
       associate: (models)->
         models.Transfer.belongsTo models.Publisher, { 
           as: 'publisher' 
+        }
+        
+        models.Transfer.belongsTo models.Advertiser, { 
+          as: 'advertiser' 
         }
         
         models.Transfer.belongsTo models.User, { 
