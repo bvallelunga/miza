@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING,
       allowNull: false
       validate: {
-        isIn: [['publisher', 'advertiser']]
+        isIn: [['supply', 'demand']]
       }
     }
     phone: {
