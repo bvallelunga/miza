@@ -1,3 +1,6 @@
+@import '../libs/all';
+@import '../global/colors';
+
 table.dataTable {
   font-size: 14px;
   
@@ -16,6 +19,14 @@ table.dataTable {
   thead th, thead td,
   tbody th, tbody td {
     padding: 10px 15px;
+    
+    a {
+      color: @blue;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
   
   tbody tr.selected {

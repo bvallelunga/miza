@@ -17,9 +17,17 @@ $ ->
       'checkboxes': {
         'selectRow': true
       }
+    }, {
+      'targets': 1,
+      'render': ( data, type, row, meta )->
+        data = '<a href="' + window.location.pathname + '/' + row[0] + '">' + data + '</a>'
+        return data;
     }]
     'order': [[1, 'asc']]
   })
   
   search.keyup ->
     table.column(1).search(search.val()).draw()
+    
+  $('.display .table-body table').on "click", "tr", ->
+    window.location.href = $(this).data("href")
