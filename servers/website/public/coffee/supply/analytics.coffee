@@ -16,7 +16,7 @@ class Dashboard
     @charts.impressions_chart = new Keen.Dataviz()
       .el('.chart.impressions')
       .height(250)
-      .type('area-spline')
+      .type('areachart')
       .title(" ")
       .chartOptions({
         axis: {
@@ -38,7 +38,7 @@ class Dashboard
           }
         }
         point: {
-          show: false
+          show: true
         }
         tooltip: {
           format: {
@@ -154,6 +154,9 @@ class Dashboard
   
 
 $ ->
+  if not $(".display").hasClass "analytics-dashboard"
+    return
+  
   dashboard = new Dashboard()
   
   Keen.ready ->

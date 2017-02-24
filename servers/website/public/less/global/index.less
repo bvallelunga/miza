@@ -159,6 +159,10 @@ body {
       display: inline-block;
       font-family: "Ubuntu";
       
+      &.right {
+        margin-top: 3px;
+      }
+      
       a {
         display: inline-block;
         margin: 0 2px;
@@ -279,6 +283,11 @@ body {
     margin: 0;
     .box-shadow(0 0 0px 1000px #fafbfc inset);
     .border-radius(5px);
+    
+    &.white {
+      background: white;
+      .box-shadow(0 0 0px 1000px white inset);
+    }
     
     &:disabled, &.disabled {
       color: rgba(0,0,0,0.5);

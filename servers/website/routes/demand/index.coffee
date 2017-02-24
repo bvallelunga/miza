@@ -1,33 +1,42 @@
 ADVERTISER = 1
 DASHBOARDS = {
-  "dashboard": [
-    "analytics", "payments"
-  ]
-  "campaigns": []
-  "units": []
-  "settings": []
+  analytics: require "./analytics"
+  campaigns: require "./campaigns"
+  units:     require "./units"
+  settings:  require "./settings"
 }
 
 module.exports.get_root = (req, res, next)->   
-  res.redirect "/demand/#{ ADVERTISER }/dashboard/analytics"
-
+  res.redirect "/demand/#{ ADVERTISER }/analytics"
+  
+  
+module.exports.fetch_data = (req, res, next)->
+  req.data = {
+    js: [ "demand", "dashboard" ]
+    css: [ "demand", "fa", "dashboard" ]
+  }
+  req.dashboard = req.params.dashboard or null
+  req.subdashboard = req.params.subdashboard or null
+  
+  if not (dashboard = DASHBOARDS[req.dashboard])?
+    return res.redirect "/demand/#{ ADVERTISER }/analytics"
+    
+  dashboard.fetch req, res, next
+  
 
 module.exports.get_dashboard = (req, res, next)->
-  dashboard = req.params.dashboard or null
-  subdashboard = req.params.subdashboard or null
-  
-  if not DASHBOARDS[dashboard]?
-    return res.redirect "/demand/#{ ADVERTISER }/dashboard/analytics"
-  
-  else if DASHBOARDS[dashboard].length > 0 and DASHBOARDS[dashboard].indexOf(subdashboard) == -1
-    return res.redirect "/demand/#{ ADVERTISER }/#{dashboard}/#{DASHBOARDS[dashboard][0]}"
-
-  res.render "demand/index", {
-    js: req.js.renderTags "demand", "dashboard"
-    css: req.css.renderTags "demand", "fa", "dashboard"
+  data = {
     title: "Demand Dashboard"
     type: "demand"
-    dashboard: dashboard
-    subdashboard: subdashboard
+    dashboard: req.dashboard
+    subdashboard: req.subdashboard
     dashboard_path: "/demand/#{ ADVERTISER }"
+    dashboard_width: ""
   }
+  
+  for key, value of req.data
+    data[key] = value
+
+  data.js = req.js.renderTags.apply(req.js, data.js)
+  data.css = req.css.renderTags.apply(req.css, data.css)
+  res.render "demand/index", data

@@ -1,6 +1,6 @@
 API.networks = [
   {
-    id: "<%= network.id %>",
+    id: "5",
     enabled: <%- enabled %>,
     entry_js: window["_carbonads"],
     entry_url: {
@@ -9,11 +9,11 @@ API.networks = [
     entry_css: {
       base: "carbon",
       query: "#_carbonads_js",
-      container: API.id + "_<%= network.id %>_c",
+      container: API.id + "_5_c",
       container_flush: "#carbonads",
       parent: true,
-      duplicates_regex: new RegExp(API.id + "_<%= network.id %>_[0-9]"),
-      duplicates: "div[id*=" + API.id + "_<%= network.id %>_], div#carbonads"
+      duplicates_regex: new RegExp(API.id + "_5_[0-9]"),
+      duplicates: "div[id*=" + API.id + "_5_], div#carbonads"
     },
     tester_url: /(carbon)|(fusionads)|(buysellads)|(adsafeprotected)/gi
   }

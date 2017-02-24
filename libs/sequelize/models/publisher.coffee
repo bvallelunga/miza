@@ -84,15 +84,6 @@ module.exports = (sequelize, DataTypes)->
           as: 'owner' 
         }
         
-        models.Publisher.belongsToMany models.Network, {
-          as: 'networks'
-          through: "NetworkPublisher"
-        }
-        
-        models.Publisher.hasMany models.Event, { 
-          as: 'events' 
-        }
-        
         models.Publisher.hasMany models.Transfer, { 
           as: 'transfers' 
         }
@@ -116,68 +107,6 @@ module.exports = (sequelize, DataTypes)->
         return "#{@key}.#{@domain}"
       
       
-      reports: (query, full_query={})->
-        query.publisher_id = @id
-        full_query.where = query
-        full_query.order = [
-          ['created_at', 'DESC']
-        ]
-                
-        LIBS.models.PublisherReport.findAll(full_query).then (reports)->  
-          Promise.map reports, (report)->
-            return LIBS.models.PublisherReport.merge [report]
-           
-        .then (reports)->        
-          Promise.props {
-            all: reports
-            totals: LIBS.models.PublisherReport.merge reports
-          }
-            
-       
-      pending_events: ->
-        Promise.props({
-          publisher_id: @id
-          events: LIBS.models.Event.findAll({
-            attributes: [ "id" ]
-            where: {
-              publisher_id: @id
-              reported_at: null
-            }
-          })
-          impressions: LIBS.models.Event.count({
-            where: {
-              publisher_id: @id
-              protected: true
-              type: "impression"
-              reported_at: null
-            }
-          })
-          clicks: LIBS.models.Event.count({
-            where: {
-              publisher_id: @id
-              protected: true
-              type: "click"
-              reported_at: null
-            }
-          })
-          pings: LIBS.models.Event.count({
-            where: {
-              publisher_id: @id
-              protected: true
-              type: "ping"
-              reported_at: null
-            }
-          })
-          pings_all: LIBS.models.Event.count({
-            where: {
-              publisher_id: @id
-              type: "ping"
-              reported_at: null
-            }
-          })
-        })  
-    
-        
       cloudflare_add: (endpoint)->
         if CONFIG.disable.cloudflare
           return Promise.resolve()

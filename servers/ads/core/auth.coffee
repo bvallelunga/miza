@@ -8,10 +8,6 @@ module.exports.has_publisher = (req, res, next)->
     where: {      
       key: domains[0]
     }
-    include: [{
-      model: LIBS.models.Network
-      as: "networks"
-    }]
   }).then (publisher)->  
     if not publisher?
       return res.end CONFIG.ads_server.denied.message

@@ -21,16 +21,7 @@ module.exports = (models)->
         product: "protect"
       }
     })
-    networks: models.Network.findAll()
-    carbon_network: models.Network.findOne({
-      where: {
-        slug: "carbon"
-      }
-    })
   }).then (defaults)->
-    defaults.network_ids = defaults.networks.map (network)->
-      return network.id
-      
     defaults.demo_publishers = {
       protect: defaults.demo_publisher_protect
       network: defaults.demo_publisher_network

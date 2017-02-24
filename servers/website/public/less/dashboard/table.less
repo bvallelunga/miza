@@ -1,0 +1,77 @@
+@import '../libs/all';
+@import '../global/colors';
+
+.container .display.table {
+  .table-navigation {
+    padding: 15px 15px 25px 15px;
+    
+    .corner-link {
+      background: @green;
+      padding: 8px 12px;
+      color: white;
+      border: solid 1px rgba(0,0,0,0.15);
+      border-bottom-width: 2px;
+      .border-radius(3px);
+      
+      &:hover {
+        background: darken(@green, 5%);
+      }
+      
+      span {
+        margin-right: 5px;
+      }
+    }
+  }
+  
+  .table-header {
+    background: #fbfbff;
+    border-top: solid 1px rgba(0,0,0,0.03);
+    border-bottom: solid 1px rgba(0,0,0,0.03);
+    padding: 12px 15px;
+    .clearfix();
+    
+    .actions {      
+      .action {
+        cursor: pointer;
+        padding: 8px 10px;
+        background: white;
+        display: inline-block;
+        border: solid 1px rgba(0,0,0,0.1);
+        border-bottom-width: 2px;
+        margin-right: 6px;
+        color: rgba(0,0,0,0.5);
+        .border-radius(4px);
+        .box-shadow(0 3px 6px 1px rgba(0,0,0,0.03));
+        
+        span {
+          margin-right: 5px;
+        }
+        
+        &:hover {
+          color: @blue;
+          border-color: @blue;
+        }
+      }
+    }
+  }
+  
+  .search-box {
+    position: relative;
+    width: 250px;
+    
+    .fa {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      color: rgba(0,0,0,0.3);
+    }
+    
+    input {
+      background: white;
+      padding: 9px 10px 9px 35px;
+      border: solid 1px rgba(0,0,0,0.1);
+      .border-radius(4px);
+      .box-shadow(0 3px 6px 1px rgba(0,0,0,0.03));
+    }
+  }
+}
