@@ -272,28 +272,26 @@ body {
     opacity: .8;
   }
   
-  input, .input,
+  input:not([type="checkbox"]), .input,
   textarea, .textarea {
-    &:not([type="checkbox"]) {
-      width: 100%;
-      background: #fafbfc;
-      color: #3b5468;
-      border: 1px solid #dde5ed;
-      font-size: 16px;
-      padding: 16px 15px 14px;
-      margin: 0;
-      .box-shadow(0 0 0px 1000px #fafbfc inset);
-      .border-radius(5px);
-      
-      &.white {
-        background: white;
-        .box-shadow(0 0 0px 1000px white inset);
-      }
-      
-      &:disabled, &.disabled {
-        color: rgba(0,0,0,0.5);
-        cursor: not-allowed;
-      }
+    width: 100%;
+    background: #fafbfc;
+    color: #3b5468;
+    border: 1px solid #dde5ed;
+    font-size: 16px;
+    padding: 16px 15px 14px;
+    margin: 0;
+    .box-shadow(0 0 0px 1000px #fafbfc inset);
+    .border-radius(5px);
+    
+    &.white {
+      background: white;
+      .box-shadow(0 0 0px 1000px white inset);
+    }
+    
+    &:disabled, &.disabled {
+      color: rgba(0,0,0,0.5);
+      cursor: not-allowed;
     }
   }
             

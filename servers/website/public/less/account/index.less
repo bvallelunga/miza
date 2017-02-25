@@ -8,7 +8,7 @@
     width: 49%;
   }
   
-  input, .input {
+  input:not([type="checkbox"]), .input {
     border-top-width: 0;
     .border-radius(0);
     
@@ -41,7 +41,7 @@
   }
 }
 
-.split input {
+.split input:not([type="checkbox"]) {
   width: 50%;
   display: inline-block;
   

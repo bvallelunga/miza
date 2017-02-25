@@ -1,9 +1,11 @@
 module.exports.fetch = (req, res, next)->
-  req.data.js.push("date-range", "data-table")
-  req.data.css.push("date-range", "data-table")
+  req.data.js.push("date-range")
+  req.data.css.push("date-range")
   req.data.dashboard_width = "medium"
   
   if not req.subdashboard
+    req.data.js.push("data-table")
+    req.data.css.push("data-table")
     req.subdashboard = "listing"
     
   else 
