@@ -1,1 +1,64 @@
+<<<<<<< HEAD
 <%- include("./" + subdashboard + "/index.ejs") %>
+=======
+<div class="display full table">
+  <div class="table-navigation">
+    <div class="left range-display">
+      <span class="fa fa-calendar"></span>
+      <span class="fa fa-spin fa-refresh" style="display:none"></span>
+      <span class="text"></span>
+    </div>
+    <a class="corner-link right" href="<%= path %>/create">
+      <span class="fa fa-plus"></span>
+      New Campaign
+    </a>
+    <div class="clear"></div>
+  </div>
+  <div class="table-header">
+    <div class="actions left">
+      <div class="action">
+        <span class="fa fa-play"></span>
+        Run
+      </div>
+      <div class="action">
+        <span class="fa fa-pause"></span>
+        Pause
+      </div>
+      <div class="action">
+        <span class="fa fa-archive"></span>
+        Archive
+      </div>
+    </div>
+    <div class="search-box right">
+      <div class="fa fa-search"></div>
+      <input type="text" class="white" placeholder="Search...."/>
+    </div>
+  </div>
+  <div class="table-body">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Campaign Name</th>
+          <th>Status</th>
+          <th>Budget</th>
+          <th>Impressions</th>
+          <th>Clicks</th>
+          <th>Spend</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td>asdfasdf</td>
+          <td>asdfasdf</td>
+          <td>asdfasdf</td>
+          <td>asdfasdf</td>
+          <td>asdfasdf</td>
+          <td>asdfasdf</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+>>>>>>> parent of fb3055a... making progress on campaigns

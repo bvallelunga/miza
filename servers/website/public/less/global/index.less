@@ -293,6 +293,17 @@ body {
       color: rgba(0,0,0,0.5);
       cursor: not-allowed;
     }
+    
+    &[type="checkbox"] {
+      width: inherit;
+      background: inherit;
+      color: @blue;
+      border: none;
+      padding: inherit;
+      margin: inherit;
+      .box-shadow(none);
+      .border-radius(0);
+    }
   }
             
   button, .button {
