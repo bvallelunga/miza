@@ -1,5 +1,5 @@
 ADVERTISER = 1
-DASHBOARDS = {
+module.exports = DASHBOARDS = {
   analytics: require "./analytics"
   campaigns: require "./campaigns"
   units:     require "./units"

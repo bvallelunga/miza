@@ -21,7 +21,10 @@ window.DatePicker = class DatePicker
       $(".fa-calendar").hide()
       $(".fa-refresh").show()
   
-      @callback start, end, ->
+      @callback {
+        start: start, 
+        end: end
+      }, ->
         $(".fa-calendar").show()
         $(".fa-refresh").hide()
   

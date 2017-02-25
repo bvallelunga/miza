@@ -160,8 +160,5 @@ $ ->
   dashboard = new Dashboard()
   
   Keen.ready ->
-    new DatePicker ".analytics-dashboard", (start, end, finished)->
-      dashboard.update {
-        start: start
-        end: end
-      }, finished
+    new DatePicker ".analytics-dashboard", (dates, finished)->
+      dashboard.update dates, finished

@@ -100,10 +100,12 @@ module.exports = (srv)->
   
   
   # Demand Partner Routes
-  app.get "/demand", routes.auth.is_authenticated, routes.demand.get_root
-  app.get "/demand/:advertiser", routes.auth.is_authenticated, routes.demand.get_root
-  app.get "/demand/:advertiser/:dashboard", routes.auth.is_authenticated, routes.demand.fetch_data, routes.demand.get_dashboard
-  app.get "/demand/:advertiser/:dashboard/:subdashboard", routes.auth.is_authenticated, routes.demand.fetch_data, routes.demand.get_dashboard
+  app.get  "/demand", routes.auth.is_authenticated, routes.demand.get_root
+  app.get  "/demand/:advertiser", routes.auth.is_authenticated, routes.demand.get_root
+  app.get  "/demand/:advertiser/:dashboard", routes.auth.is_authenticated, routes.demand.fetch_data, routes.demand.get_dashboard
+  app.get  "/demand/:advertiser/:dashboard/:subdashboard", routes.auth.is_authenticated, routes.demand.fetch_data, routes.demand.get_dashboard
+  app.post "/demand/:advertiser/campaigns/list", routes.auth.is_authenticated, routes.demand.campaigns.post_list
+  app.post "/demand/:advertiser/campaigns/update", routes.auth.is_authenticated, routes.demand.campaigns.post_updates
   
   
   # Publisher Routes

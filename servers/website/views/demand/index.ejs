@@ -1,7 +1,7 @@
 <% include ../includes/start %>
 <% include ../includes/navigation %>
 
-<div class="container <%= dashboard_width %> <%= dashboard %>-dashboard">
+<div class="container <%= dashboard_width %> <%= dashboard + (!!subdashboard ? ("-" + subdashboard) : "") %>-dashboard">
   <%- include("./" + dashboard + "/index.ejs") %>
   <div class="clear"></div>
 </div>
