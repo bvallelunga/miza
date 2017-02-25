@@ -8,8 +8,13 @@ module.exports.fetch = (req, res, next)->
     req.data.css.push("data-table")
     req.subdashboard = "listing"
     
-  else 
+  else if req.subdashboard == "create" 
+    req.data.js.push("modal")
     req.subdashboard = "builder"
+    req.data.dashboard_width = "small"
+    
+  else
+    req.subdashboard = "analytics"
   
   next()
   

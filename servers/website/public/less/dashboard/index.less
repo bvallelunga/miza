@@ -125,6 +125,14 @@
   width: 720px;
   margin: 40px auto 0;
   
+  &.small {
+    width: 620px;
+    
+    .display {
+      width: 450px;
+    }
+  }
+  
   &.medium {
     width: 820px;
     
@@ -305,10 +313,21 @@
       .group {
         position: relative;
         
+        &.left-align {          
+          .fa, a {
+            left: 15px;
+            right: initial;
+          }
+          
+          input {
+            padding-left: 35px;
+          }
+        }
+        
         .fa, a {
           position: absolute;
-          font-size: 1.5em;
-          top: 15px;
+          font-size: 1.2em;
+          top: 18px;
           right: 15px;
           color: rgba(0,0,0,0.1);
           z-index: 1;

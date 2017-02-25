@@ -1,0 +1,73 @@
+@import '../libs/all';
+@import '../global/colors';
+
+.container .display.builder {  
+  .date-picker-wrapper.date-dropdown {
+    margin-top: 0;
+    .box-shadow(1px 1px 3px rgba(0,0,0,0.3));
+  }
+  
+  form {
+    padding: 0;
+  }
+  
+  .section {
+    padding: 30px 20px 50px 20px;
+    border-top: solid 1px rgba(0,0,0,0.05);
+    
+    &:first-child {
+      margin: 0;
+      padding-top: 20px;
+      border-top: none;
+    }
+        
+    .header {
+      font-size: 1.8em;
+      color: black;
+      margin-bottom: 20px;
+      font-family: "Ubuntu";
+    }
+    
+    table {
+      td {
+        padding: 5px 0;
+      }
+    }
+    
+    .selection { 
+      width: 100%;
+      text-align: center;
+             
+      .option {
+        position: relative;
+        cursor: pointer;
+        width: 160px;
+        padding: 15px 20px;
+        margin: 30px 20px 0;
+        text-align: center;
+        background: white;
+        border: solid 1px rgba(0,0,0,0.11);
+        display: inline-block;
+        .border-radius(4px);
+        .box-shadow(0 3px 6px 1px rgba(0,0,0,0.03));
+        
+        &:hover, &.active {
+          border-color: @blue;
+        }
+        
+        .fa {
+          margin: 15px 0;
+          font-size: 3.5em;
+          color: @blue;
+          text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+        }
+        
+        .name {
+          margin-top: 20px;
+          font-size: 1.2em;
+          font-weight: bold;
+        }
+      }
+    }
+  }  
+}
