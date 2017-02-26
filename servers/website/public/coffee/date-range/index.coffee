@@ -4,13 +4,11 @@ window.DatePicker = class DatePicker
   start: null
   end: null
   callback: null
-  container: null
   
   constructor: (container, callback)->
-    @container = container
     @callback = callback
     @load_default()
-    @configure_datepicker()
+    @configure_datepicker(container)
 
 
   metrics: (start, end)->
@@ -49,11 +47,11 @@ window.DatePicker = class DatePicker
     }
     
   
-  configure_datepicker: ->
+  configure_datepicker: (container)->
     _this = @
   
     $(".range-display").dateRangePicker({
-      container: @container
+      container: container
       showShortcuts: true
       showTopbar: false
       autoClose: true

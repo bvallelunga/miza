@@ -19,7 +19,7 @@ class Dashboard
     @$search.keyup =>
       @data_table.column(1).search(@$search.val()).draw()
       
-    @date_range = new DatePicker ".campaigns-dashboard", @update.bind @
+    @date_range = new DatePicker ".campaigns-listing-dashboard", @update.bind @
     
     $(".actions .action").click (e)=>
       campaigns = @data_table.column(0).checkboxes.selected()
@@ -37,7 +37,7 @@ class Dashboard
       "paging":   false
       "ordering": false
       "info":     false
-      "search": false
+      "search":   false
       'columnDefs': [{
         'targets': 0,
         'checkboxes': {

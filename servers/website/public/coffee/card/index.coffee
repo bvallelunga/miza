@@ -17,11 +17,11 @@ $ ->
     e.stopPropagation()
     
     form = $(this)
-    hint = form.find(".error").text ""
+    hint = form.find(".error").text("").hide()
     button = form.find("button")
     original = button.text()
     error_handler = (message)->
-      hint.text message
+      hint.text(message).show()
       button.text(original).removeClass "loading"
     
     button.addClass("loading").text("sending")

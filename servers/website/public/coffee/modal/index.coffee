@@ -6,7 +6,7 @@ $ ->
     e.stopPropagation()
   
     form = $(this)
-    hint = form.find(".error").text ""
+    hint = form.find(".error").text("").hide()
     button = form.find("button")
     original = button.html()
     waiting = button.data("waiting") or "sending"
