@@ -1,7 +1,9 @@
 $ ->
   go_quotes()
-  blocker true
   old_product = ""
+  
+  if $(".hero").hasClass "demo"
+    blocker true
   
   $(".products .product").click ->
     product = $(this).data("product")
