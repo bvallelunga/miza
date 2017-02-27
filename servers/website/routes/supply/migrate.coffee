@@ -2,9 +2,9 @@ module.exports.get = (req, res, next)->
   if req.publisher.product != "protect"
     return res.redirect "/supply/#{req.publisher.key}/analytics"
 
-  res.render "publisher/migrate", {
+  res.render "supply/migrate", {
     js: req.js.renderTags "modal"
-    css: req.css.renderTags "publisher", "fa", "landing"
+    css: req.css.renderTags "supply", "fa", "landing"
     title: "Migration Dashboard"
   }
   

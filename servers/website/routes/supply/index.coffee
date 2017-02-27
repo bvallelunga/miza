@@ -42,15 +42,16 @@ module.exports.get_dashboard = (req, res, next)->
   
   switch dashboard
     when "setup"
-      dashboard_size = "medium"
       js.push "code"
       css.push "code"
       
     when "members"
+      dashboard_size = "small"
       js.push "modal", "range-slider"
       css.push "range-slider"
       
     when "settings"
+      dashboard_size = "small"
       js.push "modal", "range-slider", "tooltip"
       css.push "range-slider", "tooltip"
 
