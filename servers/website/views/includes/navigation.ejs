@@ -44,19 +44,27 @@
     </div>
   </div>
   <div class="right links">
-    <% if(user.is_admin) { %>
-      <a href="/admin" class="<%= isActive(dashboard, "admin") %>">
-        Admin Center
+    <% if(user) { %>
+      <% if(user.is_admin) { %>
+        <a href="/admin" class="<%= isActive(dashboard, "admin") %>">
+          Admin Center
+        </a>
+      <% } %>
+      <a href="/dashboard" class="<%= isActive(dashboard, "dashboard") %>">
+        Dashboard
       </a>
+      <span class="spacer"></span>
+      <a href="/account" class="<%= isActive(dashboard, "account") %>">
+        Account
+      </a>
+      <a href="/logout">
+        Logout
+      </a>
+    <% } else { %>
+      <a href="/login">Log In</a>
+      <span class="spacer"></span>
+      <a href="/">Request Demo</a>
     <% } %>
-    <a href="/dashboard">Dashboard</a>
-    <span class="spacer"></span>
-    <a href="/account" class="<%= isActive(dashboard, "account") %>">
-      Profile
-    </a>
-    <a href="/logout">
-      Logout
-    </a>
   </div>
   <div class="clear"></div>
 </header>

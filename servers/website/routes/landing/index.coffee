@@ -85,6 +85,7 @@ module.exports.get_dashboard = (req, res, next)->
   res.render "landing/dashboard", {
     title: "Dashboard"
     css: req.css.renderTags "admin", "fa"
+    dashboard: "dashboard"
   }
   
 
