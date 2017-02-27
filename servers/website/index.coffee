@@ -1,6 +1,6 @@
 express = require 'express'
 session = require 'express-session'
-routes = require "./routes"
+routes = require("./routes")()
 Agendash = require "agendash"
 app = express()
 
@@ -27,6 +27,7 @@ module.exports = (srv)->
   
   
   # Load User & Locals
+  app.use routes.router
   app.use routes.auth.load_user
   app.use require "./locals"
   
