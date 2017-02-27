@@ -213,36 +213,23 @@ module.exports = (sequelize, DataTypes)->
             id: @key
           }
             
-        @associations().then =>
-          @reports({
-            paid_at: null
-            interval: "day"
-            created_at: {
-              $gte: moment().startOf("month").toDate()
-              $lte: moment().endOf("month").toDate()
+        @associations().then =>            
+          return {
+            id: @key
+            created_at: @created_at
+            name: @name
+            custom_attributes: {
+              type: "publisher"
+              industry: if @industry? then  @industry.name else null
+              fee: @fee * 100
+              coverage: @config.coverage * 100
+              activated: @is_activated
+              card: !!@owner.stripe_card
+              paypal: @owner.paypal
+              product: @product
+              admin: if @admin_contact? then @admin_contact.name else null
             }
-          }).then (reports)=>             
-            return {
-              id: @key
-              monthly_spend: reports.totals.owed
-              created_at: @created_at
-              name: @name
-              custom_attributes: {
-                type: "publisher"
-                industry: if @industry? then  @industry.name else null
-                fee: @fee * 100
-                coverage: @config.coverage * 100
-                activated: @is_activated
-                card: !!@owner.stripe_card
-                paypal: @owner.paypal
-                product: @product
-                admin: if @admin_contact? then @admin_contact.name else null
-                total_page_views: numeral(reports.totals.pings_all).format("0[,]000")
-                miza_protection: numeral(reports.totals.protected).format("0[.]0%")
-                protected_clicks: numeral(reports.totals.clicks).format("0[,]000")
-                protected_impressions: numeral(reports.totals.impressions).format("0[,]000")
-              }
-            }
+          }
       
     }
     hooks: {
