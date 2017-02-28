@@ -62,7 +62,7 @@
           <th>Admin Contact</th>
           <th class="dynamic">Industry</th>
           <th class="dynamic">Endpoint Issued</th>
-          <th class="dynamic number">Fee (%)</th>
+          <th class="dynamic number">Discount (%)</th>
         </tr>
       </thead>
       <tbody>
@@ -79,16 +79,21 @@
             <td class="<%= publisher.is_activated ? "green" : "red" %>"><%= publisher.is_activated ? "Activated" : "Not Activated" %></td>
             <td><%= publisher.admin_contact ? publisher.admin_contact.name : "" %></td>
             <td>
-              <% if(publisher.product == "protect") { %>
-                <div class="group">
-                  <div class="fa fa-sort"></div>
-                  <select class="input only" name="publishers[<%= i %>][industry]" required>
-                    <% industries.forEach(function(industry) { %>
+              <div class="group">
+                <div class="fa fa-sort"></div>
+                <select class="input only" name="publishers[<%= i %>][industry]" required>
+                  <% if(!publisher.industry_id) { %>
+                    <option value="" selected>UNKNOWN</option>
+                  <% } %>
+                  <% industries.forEach(function(industry) { %>
+                    <% if(publisher.industry_id) { %>
                       <option value="<%= industry.id %>" <%= industry.id == publisher.industry.id ? "selected" : "" %>><%= industry.name %></option>
-                    <% }) %>
-                  </select>
-                </div>
-              <% } %>
+                    <% } else { %> 
+                        <option value="<%= industry.id %>"><%= industry.name %></option>
+                    <% } %>
+                  <% }) %>
+                </select>
+              </div>
             </td>
             <td>
               <div class="group">
@@ -99,7 +104,9 @@
                 </select>
               </div>
             </td>
-            <td><input class="only number" type="<%= publisher.product == "protect" ? "number" : "hidden" %>" name="publishers[<%= i %>][fee]" value="<%= publisher.fee * 100 %>" placeholder="Fee" min="0" step="1" max="100" required></td>
+            <td>
+              <input class="only number" type="number" name="publishers[<%= i %>][fee]" value="<%= 100 - (publisher.fee * 100) %>" placeholder="Fee" min="0" step="1" max="100" required>
+            </td>
           </tr>
         <% }) %>
       </tbody>

@@ -28,6 +28,19 @@
       color: black;
       margin-bottom: 20px;
       font-family: "Ubuntu";
+      
+      span {
+        color: @blue;
+        margin: 0 2px;
+        
+        span {
+          cursor: pointer;
+          
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
     }
     
     table {
@@ -43,31 +56,56 @@
       .option {
         position: relative;
         cursor: pointer;
-        width: 160px;
+        width: 125px;
         padding: 15px 20px;
-        margin: 30px 20px 0;
+        margin: 25px 8px 0;
         text-align: center;
         background: white;
         border: solid 1px rgba(0,0,0,0.11);
         display: inline-block;
+        .transition();
         .border-radius(4px);
         .box-shadow(0 3px 6px 1px rgba(0,0,0,0.03));
         
-        &:hover, &.active {
-          border-color: @blue;
+        &:hover {
+          border-color: @green;
         }
         
-        .fa {
-          margin: 15px 0;
-          font-size: 3.5em;
-          color: @blue;
+        &.active {
+          .transform(scale(1.05));
+          
+          background: @green;
+          border: solid 1px rgba(0,0,0,0.15);
+          
+          .name {
+            color: rgba(0,0,0,0.5);
+          }
+          
+          .fa, .metric {
+            color: white;
+          }
+        }
+        
+        .fa, .metric {
+          margin: 10px 0 20px;
+          font-size: 2.5em;
+          color: @green;
           text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+          
+          &.metric {
+            font-family: "Ubuntu";
+            
+            span {
+              margin-top: 5px;
+              font-size: 0.4em;
+              display: block;
+              color: @text_weak;
+            }
+          }
         }
         
         .name {
-          margin-top: 20px;
           font-size: 1.2em;
-          font-weight: bold;
         }
       }
     }

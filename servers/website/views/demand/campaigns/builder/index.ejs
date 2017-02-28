@@ -6,6 +6,7 @@
           <td class="title">Campaign Name</td>
           <td><input class="top" type="text" name="name" placeholder="Campaign Name" required/></td>
         </tr>
+<!--
         <tr>
           <td class="title">Daily Budget</td>
           <td>
@@ -15,43 +16,55 @@
             </div>
           </td>
         </tr>
+-->
         <tr>
           <td class="title">Start Date</td>
           <td><input class="top range-display" type="text" name="start_date" placeholder="MM-DD-YYYY" required/></td>
         </tr>
         <tr>
           <td class="title">End Date</td>
-          <td><input class="top range-display" type="text" name="end_date" placeholder="MM-DD-YYYY" required/></td>
+          <td><input class="top range-display" type="text" name="end_date" placeholder="MM-DD-YYYY (OPTIONAL)"/></td>
         </tr>
       </table>
     </div>
     <div class="section">
-      <div class="header">Pricing Model</div>
-      <div class="selection">
-        <div class="option active" data-value="cpm">
-          <div class="fa fa-globe"></div>
-          <div class="name">CPM</div>
+      <div class="header">
+        Select Audience <span>(<span class="selection-shortcut" data-for="audience">select all</span>)</span>
+      </div>
+      <div id="audience" class="selection" data-select="multi">
+        <div class="option" data-value="1">
+          <div class="metric">
+            $5 <span>CPM</span>
+          </div>
+          <div class="name">Technology</div>
         </div>
-        <div class="option" data-value="CPC">
-          <div class="fa fa-mouse-pointer"></div>
-          <div class="name">CPC</div>
+        <div class="option" data-value="3">
+          <div class="metric">
+            $3.5 <span>CPM</span>
+          </div>
+          <div class="name">Politics</div>
         </div>
-        <input name="campaign_type" type="hidden" value="cpm"/>
+        <div class="option" data-value="4">
+          <div class="metric">
+            $4 <span>CPM</span>
+          </div>
+          <div class="name">News Agg.</div>
+        </div>
+        <div class="option" data-value="5">
+          <div class="metric">
+            $2 <span>CPM</span>
+          </div>
+          <div class="name">Blogs</div>
+        </div>
+        <input name="campaign_types" type="hidden" value="cpm"/>
       </div>
     </div>
     <div class="section">
-      <div class="header">Targeting</div>
-      <div class="selection">
-        <div class="option active" data-value="cpm">
-          <div class="fa fa-globe"></div>
-          <div class="name">CPM</div>
-        </div>
-        <div class="option" data-value="CPC">
-          <div class="fa fa-mouse-pointer"></div>
-          <div class="name">CPC</div>
-        </div>
-        <input name="campaign_type" type="hidden" value="cpm"/>
-      </div>
+      <% include ../../../includes/csrf %>
+      <button type="submit" class="button">
+        Create Campaign <span class="fa fa-arrow-right"></span>
+      </button>
+      <div class="error"></div>
     </div>
   </form>
 </div>

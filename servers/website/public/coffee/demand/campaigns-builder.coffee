@@ -17,10 +17,29 @@ $ ->
       extraClass: "date-dropdown"
     })
     
+  $(".selection-shortcut").click ->
+    $parent = $("##{$(@).data("for")}")
+    value = $parent.find(".option").addClass("active").map ->
+      return $(@).data("value")
+    
+    .get().join(",")
+    $parent.find("input").val value
+  
   
   $(".selection .option").click ->
     $option = $(this)
     $parent = $option.parents(".selection")
-    $input = $parent.find("input").val $option.data("value")
-    $parent.find(".option").removeClass "active"
-    $option.addClass "active"
+    type = $parent.data("select")
+    
+    if type == "single"
+      $parent.find("input").val $option.data("value")
+      $parent.find(".option").removeClass "active"
+      $option.addClass "active"
+      
+    else if type == "multi"
+      $option.toggleClass "active"      
+      value = $parent.find(".option.active").map ->
+        return $(@).data("value")
+      
+      .get().join(",")
+      $parent.find("input").val value
