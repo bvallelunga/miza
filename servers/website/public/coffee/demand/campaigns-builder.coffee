@@ -58,6 +58,7 @@ class Dashboard
       $industry = $("#industry_#{$option.data("value")}")
       $industry.toggle value
       $industry.find(".activated_input").val value
+      $industry.find("select").attr "required", value
 
 
 $ ->

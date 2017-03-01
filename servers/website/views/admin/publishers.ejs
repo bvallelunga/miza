@@ -83,7 +83,7 @@
                 <div class="fa fa-sort"></div>
                 <select class="input only" name="publishers[<%= i %>][industry]" required>
                   <% if(!publisher.industry_id) { %>
-                    <option value="" selected>UNKNOWN</option>
+                    <option disabled value="" selected>UNKNOWN</option>
                   <% } %>
                   <% industries.forEach(function(industry) { %>
                     <% if(publisher.industry_id) { %>

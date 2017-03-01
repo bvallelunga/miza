@@ -46,8 +46,8 @@
             <td class="impressions">
               <div class="group">
                 <div class="fa fa-sort"></div>
-                <select class="input only" name="industries[<%= i %>][impressions]" required>
-                  <option disabled="disabled" selected>Quantity</option>
+                <select class="input only" name="industries[<%= i %>][impressions]">
+                  <option disabled="disabled" value="" selected>Quantity</option>
                   <% for(var i = 0; i < 2500000; i += 100000) { %>
                     <option value="<%= i + 100000  %>"><%= numeral(i + 100000).format('0,0') %></option>
                   <% } %>
