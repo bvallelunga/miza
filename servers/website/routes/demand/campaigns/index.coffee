@@ -12,13 +12,8 @@ module.exports.fetch = (req, res, next)->
     else if req.subdashboard == "create" 
       req.data.js.push("modal")
       req.subdashboard = "builder"
-      req.data.dashboard_width = "small"
       
-      return LIBS.models.Industry.findAll({
-        where: {
-          private: false
-        }
-      }).then (industries)->
+      return LIBS.models.Industry.listed().then (industries)->
         req.data.industries = industries
       
     else

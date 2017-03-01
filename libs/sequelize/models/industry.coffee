@@ -20,6 +20,14 @@ module.exports = (sequelize, DataTypes)->
       defaultValue: false
     }
   }, {
+    classMethods: {
+      listed: ->
+        LIBS.models.Industry.findAll({
+          where: {
+            private: false
+          }
+        })
+    }
     hooks: {            
       afterUpdate: (industry)->                     
         LIBS.models.IndustryAudit.create({

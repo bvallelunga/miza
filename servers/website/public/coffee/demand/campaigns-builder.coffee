@@ -34,8 +34,18 @@ class Dashboard
      
     $(".selection-shortcut").click ->
       _this.option_selected $channel_options, true
+    
+    $impressions_table.find("select").change ->
+      _this.impressions_updated $(@)
 
-
+  
+  impressions_updated: ($select)->
+    $tr = $select.parents("tr")
+    CPM = Number $tr.data("cpm")
+    IMPRESSIONS = Number $select.val()
+    $tr.find(".total").text numeral(CPM * (IMPRESSIONS/1000)).format("$0,000")
+  
+  
   option_selected: ($options, force=null)->
     $options.toggleClass "active", force
     show_table = $channel_options.filter(".active").length > 0
@@ -44,8 +54,10 @@ class Dashboard
     
     $(".selection .option").each ->
       $option = $(@)
+      value = $option.hasClass("active")
       $industry = $("#industry_#{$option.data("value")}")
-      $industry.toggle $option.hasClass("active")
+      $industry.toggle value
+      $industry.find(".activated_input").val value
 
 
 $ ->

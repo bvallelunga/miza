@@ -3,25 +3,14 @@
     <div class="section">
       <table>
         <tr>
-          <td class="title">Campaign Name</td>
-          <td><input class="top" type="text" name="name" placeholder="Campaign Name" required/></td>
-        </tr>
-<!--
-        <tr>
-          <td class="title">Daily Budget</td>
-          <td>
-            <div class="group left-align">
-              <div class="fa fa-dollar"></div>
-              <input class="top" type="number" name="daily_budget" placeholder="5" required/>
-            </div>
-          </td>
-        </tr>
--->
-        <tr>
+          <td class="title">Campaign Name<span>REQUIRED</span></td>
+          <td></td>
           <td class="title">Start Date<span>OPTIONAL</span></td>
           <td><input class="top range-display" type="text" name="start_date" placeholder="MM-DD-YYYY"/></td>
         </tr>
         <tr>
+          <td><input class="top name_campaign" type="text" name="name" placeholder="New Branding Initiative" required/></td>
+          <td></td>
           <td class="title">End Date<span>OPTIONAL</span></td>
           <td><input class="top range-display" type="text" name="end_date" placeholder="MM-DD-YYYY"/></td>
         </tr>
@@ -66,7 +55,7 @@
               </div>
               imps.
             </td>
-            <td class="metric text-right">$0</td>
+            <td class="total metric text-right">$0</td>
           </tr>
         <% }) %>
       </table>
