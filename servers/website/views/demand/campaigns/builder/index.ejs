@@ -18,7 +18,7 @@
     </div>
     <div class="section">
       <div class="header">
-        Channels <span>(<span class="selection-shortcut" data-for="audience">select all</span>)</span>
+        Industries <span>(<span class="selection-shortcut" data-for="audience">select all</span>)</span>
       </div>
       <div id="audience" class="selection" data-select="multi">
         <% industries.forEach(function(industry) { %>
@@ -34,33 +34,42 @@
     <div class="section">
       <div class="header">Impressions</div>
       <table class="impressions_table hidden">
-        <% industries.forEach(function(industry, i) { %>
-          <tr id="industry_<%= industry.id %>" class="hidden" data-cpm="<%= industry.cpm %>">
-            <input type="hidden" name="industries[<%= i %>][id]" value="<%= industry.id %>" required>
-            <input type="hidden" class="activated_input" name="industries[<%= i %>][activated]" value="false"/>
-            <td class="title"><%= industry.name %></td>
-            <td class="metric">
-              $<%= industry.cpm %>
-              <span>CPM</span>
-            </td>
-            <td class="impressions">
-              <div class="group">
-                <div class="fa fa-sort"></div>
-                <select class="input only" name="industries[<%= i %>][impressions]">
-                  <option disabled="disabled" value="" selected>Quantity</option>
-                  <% for(var i = 0; i < 2500000; i += 100000) { %>
-                    <option value="<%= i + 100000  %>"><%= numeral(i + 100000).format('0,0') %></option>
-                  <% } %>
-                </select>
-              </div>
-              imps.
-            </td>
-            <td class="total metric text-right">$0</td>
+        <thead>
+          <tr>
+            <th><span>Industry</span></th>
+            <th><span>Model</span></th>
+            <th class="impressions"><span>Est. Impressions</span></th>
+            <th><span>Cost</span></th>
           </tr>
-        <% }) %>
+        </thead>
+        <tbody>
+          <% industries.forEach(function(industry, i) { %>
+            <tr id="industry_<%= industry.id %>" class="hidden" data-cpm="<%= industry.cpm %>">
+              <input type="hidden" name="industries[<%= i %>][id]" value="<%= industry.id %>" required>
+              <input type="hidden" class="activated_input" name="industries[<%= i %>][activated]" value="false"/>
+              <td class="title"><%= industry.name %></td>
+              <td class="metric text-center">
+                $<%= industry.cpm %>
+                <span>CPM</span>
+              </td>
+              <td class="impressions">
+                <div class="group">
+                  <div class="fa fa-sort"></div>
+                  <select class="input only" name="industries[<%= i %>][impressions]">
+                    <option disabled="disabled" value="" selected>Quantity</option>
+                    <% for(var i = 0; i < 2500000; i += 100000) { %>
+                      <option value="<%= i + 100000  %>"><%= numeral(i + 100000).format('0,0') %></option>
+                    <% } %>
+                  </select>
+                </div>
+              </td>
+              <td class="total metric text-right">$0</td>
+            </tr>
+          <% }) %>
+        </tbody>
       </table>
       <div class="impressions_empty">
-        Please Select A Channel
+        Please Select An Industry
       </div>
     </div>
     <div class="section">
