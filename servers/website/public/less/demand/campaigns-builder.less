@@ -4,18 +4,29 @@
 .container.campaigns-builder-dashboard .display {
   
   .section {
-    .impressions_table {
-      td {
-        padding: 10px;
+    .impressions_table {  
+      .title {
+        width: 25%;
       }
-      
+          
       .metric {
+        width: 18%;
         color: @green;
         font-family: "Ubuntu";
         font-size: 1.3em;
         
         span {
           color: @text_weak;
+        }
+      }
+      
+      .impressions {
+        width: 220px;
+        
+        .group {
+          width: 130px;
+          display: inline-block;
+          margin-right: 5px;
         }
       }
     }
