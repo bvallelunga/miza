@@ -12,6 +12,9 @@ module.exports.load_user = (req, res, next)->
     include: [{
       model: LIBS.models.Publisher
       as: "publishers"
+    }, {
+      model: LIBS.models.Advertiser
+      as: "advertisers"
     }]
   }).then (user)->
     req.user = user
@@ -45,41 +48,3 @@ module.exports.is_admin = (req, res, next)->
     return req._routes.landing.get_not_found(req, res)
   
   next()
-    
-
-module.exports.has_publisher = (req, res, next)->
-  Promise.resolve().then ->
-    return req.user.publishers.filter (publisher)->
-      return publisher.key == req.params.publisher
-  
-  .then (matches)->
-    if matches.length > 0
-      return matches[0]
-      
-    else if req.user.is_admin
-      return LIBS.models.Publisher.findOne({
-        where: {
-          key: req.params.publisher
-        }
-        paranoid: false
-      })
-      
-    return null
-  
-  .then (publisher)->
-    if not publisher?
-      return res.redirect "/#{req.user.type}"
-      
-    publisher.associations({
-      owner: true
-      industry: true
-    }).then ->
-      publisher.intercom().then (intercom)->
-        req.publisher = publisher
-        res.locals.publisher = publisher
-        res.locals.intercom.company = intercom
-          
-        next()
-    
-  .catch next
-  

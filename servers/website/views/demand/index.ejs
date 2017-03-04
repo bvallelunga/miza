@@ -1,6 +1,34 @@
 <% include ../includes/start %>
 <% include ../includes/navigation %>
-
+<% if(user.is_admin) { %>
+  <div class="company_list">
+    <div class="current">
+      <%= advertiser.name %>
+      <span class="fa fa-sort"></span>
+    </div>
+    <div class="companies">
+      <% if(!user.is_demo) { %>
+        <a href="/demand/new">
+          <span class="fa fa-plus"></span>
+          New Advertiser
+        </a>
+      <% } %>
+      <% if(user.is_admin) { %>
+        <div class="group">
+          <span class="fa fa-search"></span>
+          <input class="company-search" placeholder="Name"/>
+        </div>
+      <% } %>
+      <% advertisers.forEach(function(adv) { %>
+        <% if (adv.id != advertiser.id) { %>
+          <a class="company-link" href="/demand/<%= adv.key %>/<%= dashboard %>">
+            <%= adv.name %>
+          </a>
+        <% } %>
+      <% }) %>
+    </div>
+  </div>
+<% } %>
 <div class="container <%= dashboard_width %> <%= dashboard + (!!subdashboard ? ("-" + subdashboard) : "") %>-dashboard">
   <%- include("./" + dashboard + "/index.ejs") %>
   <div class="clear"></div>

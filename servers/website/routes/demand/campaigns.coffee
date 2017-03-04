@@ -32,26 +32,8 @@ module.exports.post_updates = (req, res, next)->
   
   
 module.exports.post_list = (req, res, next)->
-  res.json {
-    success: true
-    results: [
-      {
-        id: 3
-        name: "Test"
-        status: "In Review"
-        budget: 10
-        impressions: 1,500
-        clicks: 50
-        spend: 6.77
-      },
-      {
-        id: 10
-        name: "ABC"
-        status: "In Review"
-        budget: 10
-        impressions: 1,500
-        clicks: 50
-        spend: 6.77
-      }
-    ]
-  }
+  req.advertiser.getCampaigns().then (campaigns)->
+    res.json {
+      success: true
+      results: campaigns
+    }

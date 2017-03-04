@@ -17,14 +17,18 @@
       </div>
       <div class="group left-align">
         <div class="fa fa-dollar"></div>
-        <input class="bottom number" type="number" name="cpm" placeholder="CPM" min="0" step="0.01" required>
+        <input class="number" type="number" name="cpm" placeholder="CPM" min="0" step="0.01" required>
+      </div>
+      <div class="group left-align">
+        <div class="fa fa-crosshairs"></div>
+        <input class="number bottom" type="text" name="max_impressions" placeholder="Max Impressions" required>
       </div>
     </div>
     <button class="button" type="submit">Create Industry</button>
     <div class="error"></div>
   </form>
 </div>
-<div class="container form-table side long left">
+<div class="container form-table side long left industries">
   <form class="form" method="POST" action="/admin/industries/update">
     <% include ../includes/csrf %>
     <table>
@@ -33,6 +37,7 @@
           <th>Industry</th>
           <th>Listing</th>
           <th class="number">CPM ($)</th>
+          <th class="number">Max Impressions</th>
         </tr>
       </thead>
       <tbody>
@@ -52,7 +57,13 @@
             <td>
               <div class="group left-align">
                 <div class="fa fa-dollar"></div>
-                <input class="only number" type="number" name="industries[<%= i %>][cpm]" value="<%= industry.cpm %>" placeholder="CPM" min="0" step="0.01" required>
+                <input class="only number" type="text" data-number="2" name="industries[<%= i %>][cpm]" value="<%= industry.cpm %>" placeholder="CPM" required>
+              </div>
+            </td>
+            <td>
+              <div class="group left-align">
+                <div class="fa fa-crosshairs"></div>
+                <input class="only number" type="text" name="industries[<%= i %>][max_impressions]" value="<%= industry.max_impressions %>" placeholder="Max Impressions"  required>
               </div>
             </td>
           </tr>

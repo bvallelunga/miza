@@ -1,7 +1,5 @@
 url = require 'url'
 randomstring = require "randomstring"
-moment = require "moment"
-numeral = require "numeral"
 
 module.exports = (sequelize, DataTypes)->
 

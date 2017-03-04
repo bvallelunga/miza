@@ -12,14 +12,6 @@ module.exports = (sequelize, DataTypes)->
         if not card? then return null
         
         return "#{card.brand} #{card.last4}"
-        
-      set: (value)->
-        LIBS.slack.message {
-          text: "#{@name} updated his billing information"
-        }
-        
-        @setDataValue 'stripe_card', value
-  
     }
     paypal: {
       type: DataTypes.STRING
@@ -69,6 +61,10 @@ module.exports = (sequelize, DataTypes)->
         
         models.Transfer.belongsTo models.Payout, { 
           as: 'payout' 
+        }
+        
+        models.Transfer.belongsTo models.Campaign, { 
+          as: 'campaign'
         }
     }
   }

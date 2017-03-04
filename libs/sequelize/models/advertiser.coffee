@@ -1,7 +1,5 @@
 url = require 'url'
 randomstring = require "randomstring"
-moment = require "moment"
-numeral = require "numeral"
 
 module.exports = (sequelize, DataTypes)->
 
@@ -53,6 +51,14 @@ module.exports = (sequelize, DataTypes)->
         
         models.Advertiser.hasMany models.Transfer, { 
           as: 'transfers' 
+        }
+        
+        models.Advertiser.hasMany models.Campaign, { 
+          as: 'campaigns' 
+        }
+        
+        models.Advertiser.hasMany models.Creative, { 
+          as: 'industries'
         }
 
     }
@@ -122,23 +128,22 @@ module.exports = (sequelize, DataTypes)->
       
     }
     hooks: {
-      beforeValidate: (publisher)->
-        if not publisher.key?
-          publisher.key = randomstring.generate({
+      beforeValidate: (advertiser)->
+        if not advertiser.key?
+          advertiser.key = randomstring.generate({
             length: Math.floor(Math.random() * 4) + 4
             charset: 'alphabetic'
           }).toLowerCase()
-          publisher.endpoint = publisher.create_endpoint()
             
       
-      beforeCreate: (publisher)->
-        publisher.config = {
+      beforeCreate: (advertiser)->
+        advertiser.config = {
           keen: null
         }
-
+  
       
-      afterCreate: (publisher)->
-        publisher.keen_generate()
+      afterCreate: (advertiser)->
+        advertiser.keen_generate()
 
     }
   }

@@ -29,6 +29,7 @@ $ ->
     
     ).fail (error)->
       json = error.responseJSON
+      window.config.csrf = json.csrf
       hint.text(json.message).show()
       form.find(".password").val ""
       form.find(".csrf").val json.csrf

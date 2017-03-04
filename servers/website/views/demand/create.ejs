@@ -1,0 +1,16 @@
+<% include ../includes/start %>
+<% include ../includes/navigation %>
+<div class="container">
+  <span>
+    Let's get started! We just need a<br>couple details about your account.
+  </span>
+  <form class="form" method="POST" action="<%= path %>">
+    <% include ../includes/csrf %>
+    <input class="name top" type="text" name="name" placeholder="Advertiser Name" required/>
+    <input class="email bottom" type="url" name="domain" placeholder="http://advertiser.com" required/>
+    <button class="button" type="submit">Create Advertiser Account</button>
+    <div class="error"></div>
+  </form>
+</div>
+<% include ../includes/footer %>
+<% include ../includes/end %>

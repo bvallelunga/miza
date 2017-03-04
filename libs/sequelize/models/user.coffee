@@ -95,6 +95,11 @@ module.exports = (sequelize, DataTypes)->
           through: "UserPublisher"
         }
         
+        models.User.belongsToMany models.Advertiser, {
+          as: 'advertisers'
+          through: "UserAdvertiser"
+        }
+        
         models.User.belongsTo models.User, { 
           as: 'admin_contact' 
         }

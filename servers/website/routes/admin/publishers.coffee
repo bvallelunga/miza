@@ -4,7 +4,6 @@ module.exports.get = (req, res, next)->
     publishers: LIBS.models.Publisher.findAll({
       order: [
         ['is_activated', 'DESC']
-        ['fee', 'DESC']
         ['name', 'ASC']
       ]
       include: [

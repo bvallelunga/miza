@@ -1,17 +1,6 @@
 moment = require "moment"
 
 module.exports.get_root = (req, res, next)->
-  if req.query.id?
-    return LIBS.models.Publisher.findOne({
-      where: {
-        id: req.query.id
-      }
-    }).then (publisher)->
-      if not publisher?
-        return res.redirect "/supply"
-        
-      res.redirect "/supply/#{publisher.key}/#{req.query.page or "analytics"}"
-
   if req.user.publishers.length == 0
     return res.redirect "/supply/new"
     
@@ -135,7 +124,8 @@ module.exports.get_dashboard = (req, res, next)->
     
   .catch next
   
-  
+
+module.exports.auth = require "./auth"
 module.exports.create = require "./create"
 module.exports.analytics = require "./analytics"
 module.exports.migrate = require "./migrate"

@@ -102,26 +102,30 @@ module.exports = (srv)->
   
   # Demand Partner Routes
   app.get  "/demand", routes.auth.is_authenticated, routes.demand.get_root
-  app.get  "/demand/:advertiser", routes.auth.is_authenticated, routes.demand.get_root
-  app.get  "/demand/:advertiser/:dashboard", routes.auth.is_authenticated, routes.demand.fetch_data, routes.demand.get_dashboard
-  app.get  "/demand/:advertiser/:dashboard/:subdashboard", routes.auth.is_authenticated, routes.demand.fetch_data, routes.demand.get_dashboard
-  app.post "/demand/:advertiser/campaigns/list", routes.auth.is_authenticated, routes.demand.campaigns.post_list
-  app.post "/demand/:advertiser/campaigns/update", routes.auth.is_authenticated, routes.demand.campaigns.post_updates
+  app.get  "/demand/new", routes.auth.is_authenticated, routes.demand.create.get
+  app.get  "/demand/:advertiser", routes.auth.is_authenticated, routes.demand.auth, routes.demand.get_root
+  app.get  "/demand/:advertiser/:dashboard", routes.auth.is_authenticated, routes.demand.auth, routes.demand.fetch_data, routes.demand.get_dashboard
+  app.get  "/demand/:advertiser/:dashboard/:subdashboard", routes.auth.is_authenticated, routes.demand.auth, routes.demand.fetch_data, routes.demand.get_dashboard
+  app.post "/demand/new", routes.auth.is_authenticated, routes.demand.create.post
+  app.post "/demand/:advertiser/campaigns/create", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaign.post_create
+  app.post "/demand/:advertiser/campaigns/list", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaigns.post_list
+  app.post "/demand/:advertiser/campaigns/update", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaigns.post_updates
   
   
   # Publisher Routes
   app.get  "/supply", routes.auth.is_authenticated, routes.supply.get_root
   app.get  "/supply/new", routes.auth.is_authenticated, routes.supply.create.get
-  app.get  "/supply/:publisher", routes.auth.is_authenticated, routes.auth.has_publisher, routes.supply.get_root
-  app.get  "/supply/:publisher/migrate", routes.auth.is_authenticated, routes.auth.has_publisher, routes.supply.migrate.get
-  app.get  "/supply/:publisher/:dashboard", routes.auth.is_authenticated, routes.auth.has_publisher, routes.supply.get_dashboard
-  app.get  "/supply/:publisher/analytics/metrics", routes.auth.is_authenticated, routes.auth.has_publisher, routes.supply.analytics.get
-  app.get  "/supply/:publisher/members/invite/:invite/remove", routes.auth.is_authenticated, routes.auth.has_publisher, routes.supply.members.remove_invite
-  app.get  "/supply/:publisher/members/member/:member/remove", routes.auth.is_authenticated, routes.auth.has_publisher, routes.supply.members.remove_member
+  app.get  "/supply/:publisher", routes.auth.is_authenticated, routes.supply.auth, routes.supply.get_root
+  app.get  "/supply/:publisher/migrate", routes.auth.is_authenticated, routes.supply.auth, routes.supply.migrate.get
+  app.get  "/supply/:publisher/:dashboard", routes.auth.is_authenticated, routes.supply.auth, routes.supply.get_dashboard
+  app.get  "/supply/:publisher/analytics/metrics", routes.auth.is_authenticated, routes.supply.auth, routes.supply.analytics.get
+  app.get  "/supply/:publisher/members/invite/:invite/remove", routes.auth.is_authenticated, routes.supply.auth, routes.supply.members.remove_invite
+  app.get  "/supply/:publisher/members/member/:member/remove", routes.auth.is_authenticated, routes.supply.auth, routes.supply.members.remove_member
   app.post "/supply/new", routes.auth.is_authenticated, routes.supply.create.post
-  app.post "/supply/:publisher/members/add", routes.auth.is_authenticated, routes.auth.has_publisher, routes.supply.members.add
-  app.post "/supply/:publisher/settings", routes.auth.is_authenticated, routes.auth.has_publisher, routes.supply.settings.post
-  app.post "/supply/:publisher/migrate", routes.auth.is_authenticated, routes.auth.has_publisher, routes.supply.migrate.post
+  app.post "/supply/:publisher/members/add", routes.auth.is_authenticated, routes.supply.auth, routes.supply.members.add
+  app.post "/supply/:publisher/settings", routes.auth.is_authenticated, routes.supply.auth, routes.supply.settings.post
+  app.post "/supply/:publisher/migrate", routes.auth.is_authenticated, routes.supply.auth, routes.supply.migrate.post
+  
   
   # Error Handlers
   app.get "*", routes.landing.get_not_found

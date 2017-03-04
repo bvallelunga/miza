@@ -20,6 +20,7 @@ module.exports.update = (req, res, next)->
     return LIBS.models.Industry.update({
       name: industry.name
       cpm: Number industry.cpm
+      max_impressions: Number industry.max_impressions
       private: industry.private == "true"
     }, {
       returning: false
@@ -43,6 +44,7 @@ module.exports.create = (req, res, next)->
     name: req.body.name
     cpm: Number req.body.cpm
     private: req.body.private == "true"
+    max_impressions: Number req.body.max_impressions
   }).then ->
     res.json {
       success: true
