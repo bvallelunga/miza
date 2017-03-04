@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes)->
   return sequelize.define "CampaignIndustry", {
     active: {
       type: DataTypes.BOOLEAN
-      defaultValue: true
+      defaultValue: false
     }
     impressions_requested: {
       type: DataTypes.DECIMAL(15)
@@ -43,6 +43,30 @@ module.exports = (sequelize, DataTypes)->
       get: ->      
         return Number @getDataValue("refunded")
     }
+    name: DataTypes.STRING
+    cpm: {
+      type: DataTypes.DECIMAL(6,3)
+      defaultValue: 0
+      allowNull: false
+      validate: {
+        min: {
+          args: [ 0 ]
+          msg: "CPM must be greater than or equal to 0"
+        }
+      }
+      get: ->      
+        return Number @getDataValue("cpm")
+    }
+    quoted: {
+      type: DataTypes.VIRTUAL
+      get: ->      
+        return @get("cpm_impression") * @get("impressions_requested")
+    }
+    cpm_impression: {
+      type: DataTypes.VIRTUAL
+      get: ->      
+        return @get("cpm") / 1000
+    }
     config: {
       type: DataTypes.JSONB
       defaultValue: {}
@@ -60,7 +84,11 @@ module.exports = (sequelize, DataTypes)->
         
         models.CampaignIndustry.belongsTo models.Industry, { 
           as: 'industy' 
-        }
-
+        }  
+    }
+    hooks: {
+      beforeValidate: (campaignIndustry)->
+        campaignIndustry.impressions_needed = campaignIndustry.impressions_requested - campaignIndustry.impressions
+          
     }
   }

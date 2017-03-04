@@ -20,7 +20,14 @@ module.exports = (sequelize, DataTypes)->
       }
     }
     start_date: DataTypes.DATE
-    end_date: DataTypes.DATE
+    end_date: {
+      type: DataTypes.DATE
+      validate: {
+        isAfter: (end_date)->
+          if @start_date and end_date < @start_date
+            throw new Error "Campaign End Date must come after the Start Date"
+      }
+    }
     paid: {
       type: DataTypes.DECIMAL(13,2)
       defaultValue: 0

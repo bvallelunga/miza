@@ -19,10 +19,7 @@ module.exports.fetch = (req, res, next)->
     else
       req.subdashboard = "analytics"
     
-  .then ->
-    next() 
-     
-  .catch next
+  .then(-> next()).catch next
   
   
 module.exports.post_updates = (req, res, next)->

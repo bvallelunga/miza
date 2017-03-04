@@ -14,7 +14,7 @@ class Dashboard
     _this = @
   
     $(".range-display").each ->
-      $(this).dateRangePicker({
+      $(@).dateRangePicker({
         container: ".container .display"
         showShortcuts: false
         showTopbar: false
@@ -24,7 +24,7 @@ class Dashboard
         format: 'MM-DD-YYYY'
         startOfWeek: 'monday'
         language:'en'
-        startDate: moment().format('MM-DD-YYYY')
+        startDate: $(@).data("start-date")
         extraClass: "date-dropdown"
       })
       
