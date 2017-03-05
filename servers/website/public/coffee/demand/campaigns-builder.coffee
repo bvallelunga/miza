@@ -1,13 +1,13 @@
 class Dashboard
 
-  $industry_options = []
-  $impressions_table = null
-  $impressions_empty = null
+  $industry_options: []
+  $impressions_table: null
+  $impressions_empty: null
 
   constructor: ->
-    $industry_options = $(".selection .option")
-    $impressions_table = $(".impressions_table")
-    $impressions_empty = $(".impressions_empty")
+    @$industry_options = $(".selection .option")
+    @$impressions_table = $(".impressions_table")
+    @$impressions_empty = $(".impressions_empty")
     @bind()
   
   bind: ->
@@ -28,14 +28,14 @@ class Dashboard
         extraClass: "date-dropdown"
       })
       
-    $industry_options.click ->
+    _this.$industry_options.click ->
       _this.option_selected $(@)
       
      
     $(".selection-shortcut").click ->
       _this.option_selected $industry_options, true
     
-    $impressions_table.find("select").change ->
+    @$impressions_table.find("select").change ->
       _this.impressions_updated $(@)
 
   
@@ -48,9 +48,9 @@ class Dashboard
   
   option_selected: ($options, force=null)->
     $options.toggleClass "active", force
-    show_table = $industry_options.filter(".active").length > 0
-    $impressions_table.toggle show_table
-    $impressions_empty.toggle not show_table
+    show_table = @$industry_options.filter(".active").length > 0
+    @$impressions_table.toggle show_table
+    @$impressions_empty.toggle not show_table
     
     $(".selection .option").each ->
       $option = $(@)

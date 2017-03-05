@@ -371,4 +371,29 @@ body {
     outline: none;
     border: none;
   }
+  
+  .uploadcare-widget {
+    width: 100%;
+    font-size: 16px;
+        
+    .uploadcare-widget-text,
+    .uploadcare-widget-status {
+      display: none !important;
+    }
+    
+    .uploadcare-widget-button {
+      .button;
+      text-align: center;
+      padding: 15px 0 14px;
+      width: 100%;
+      
+      &.uploadcare-widget-button-remove {
+        background: @red; 
+      }
+      
+      &.uploadcare-widget-button-cancel {
+        background: #C3C3C3;
+      }
+    }
+  }
 }

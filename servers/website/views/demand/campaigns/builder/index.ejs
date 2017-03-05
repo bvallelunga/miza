@@ -17,6 +17,30 @@
       </table>
     </div>
     <div class="section">
+      <div class="header">Creative</div>
+      <div class="left split fourty">
+        <table>
+          <tr>
+            <td><input class="top" type="text" name="creative[title]" placeholder="Title"/></td>
+          </tr>
+          <tr>
+            <td><textarea class="top input" type="text" name="creative[description]" placeholder="Description"></textarea></td>
+          </tr>
+          <tr>
+            <td>
+              <input type="hidden" role="uploadcare-uploader" data-crop="300:250" data-images-only="true" data-clearable />
+              <br><br>
+              <span>Please make sure the image is <strong>300 x 250</strong>.</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="right split sixity">
+        
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="section">
       <div class="header">
         Industries <span>(<span class="selection-shortcut" data-for="audience">select all</span>)</span>
       </div>
@@ -45,7 +69,7 @@
         <tbody>
           <% industries.forEach(function(industry, i) { %>
             <tr id="industry_<%= industry.id %>" class="hidden" data-cpm="<%= industry.cpm %>">
-              <input type="hidden" name="targeting[<%= i %>][id]" value="<%= industry.id %>" required>
+              <input type="hidden" name="targeting[<%= i %>][industry]" value="<%= industry.id %>" required>
               <input type="hidden" class="activated_input" name="targeting[<%= i %>][activated]" value="false"/>
               <td class="title"><%= industry.name %></td>
               <td class="metric text-center">
@@ -89,3 +113,37 @@
     </div>
   </form>
 </div>
+<script>
+  UPLOADCARE_LOCALE = "en";
+  UPLOADCARE_TABS = "file url gdrive dropbox skydrive box";
+  UPLOADCARE_PUBLIC_KEY = "39cde2ac83d04e6dbd0a";
+</script>
+<script charset="utf-8" src="//ucarecdn.com/libs/widget/2.10.3/uploadcare.full.min.js"></script>
+<style>
+ .uploader-demo-crazy .uploadcare-widget-button-open {
+  cursor: pointer;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+  padding: 9px 14px;
+  background-color: #e22092;
+  background: linear-gradient(#e85eac, #e02a91);
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  -webkit-transition: -webkit-transform .25s;
+     -moz-transition: -moz-transform .25s;
+          transition: transform .25s;
+}
+.uploader-demo-crazy .uploadcare-widget-button-open:hover {
+  background: linear-gradient(#e14296, #d71876);
+  -webkit-transform: scale(1.05);
+     -moz-transform: scale(1.05);
+          transform: scale(1.05);
+}
+.uploader-demo-crazy .uploadcare-widget-dragndrop-area {
+  line-height: 3.4;
+  margin-top: -1.8em;
+}
+ 
+</style>

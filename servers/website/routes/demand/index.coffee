@@ -2,7 +2,6 @@ module.exports = DASHBOARDS = {
   analytics: require "./analytics"
   campaigns: require "./campaigns"
   campaign:  require "./campaign"
-  creatives: require "./creatives"
   settings:  require "./settings"
   auth:      require "./auth"
   create:    require "./create"

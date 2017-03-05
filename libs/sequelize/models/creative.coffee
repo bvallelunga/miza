@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes)->
   }, {    
     classMethods: {      
       associate: (models)->        
-        models.CampaignIndustry.belongsTo models.Advertiser, { 
+        models.Creative.belongsTo models.Advertiser, { 
           as: 'advertiser' 
         }
 
