@@ -32,10 +32,6 @@ window.DatePicker = class DatePicker
     @start = moment().startOf("month").toDate()
     @end = moment().endOf("month").toDate()
     @metrics @start, @end
-    
-    setInterval =>
-      @metrics @start, @end
-    , 60000
   
   
   build_shortcut: (name, formatted, ranges)->

@@ -1,17 +1,21 @@
+request = require "request"
+
 module.exports = (sequelize, DataTypes)->
 
   return sequelize.define "Creative", {
-    title: { 
+    link: { 
       type: DataTypes.STRING
       allowNull: false
     }
-    description: { 
-      type: DataTypes.STRING
-      allowNull: false
-    }
+    description: DataTypes.STRING
+    title: DataTypes.STRING
     image: { 
       type: DataTypes.BLOB("long")
       allowNull: false
+    }
+    trackers: {
+      type: DataTypes.JSONB
+      defaultValue: []
     }
     config: {
       type: DataTypes.JSONB
@@ -22,6 +26,10 @@ module.exports = (sequelize, DataTypes)->
       associate: (models)->        
         models.Creative.belongsTo models.Advertiser, { 
           as: 'advertiser' 
+        }
+        
+        models.Creative.belongsTo models.Campaign, { 
+          as: 'campaign' 
         }
 
     }

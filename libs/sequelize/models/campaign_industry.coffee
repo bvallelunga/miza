@@ -83,7 +83,7 @@ module.exports = (sequelize, DataTypes)->
         }
         
         models.CampaignIndustry.belongsTo models.Industry, { 
-          as: 'industy' 
+          as: 'industry' 
         }  
     }
     hooks: {

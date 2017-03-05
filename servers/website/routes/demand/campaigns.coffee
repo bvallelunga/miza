@@ -2,6 +2,9 @@ module.exports.fetch = (req, res, next)->
   req.data.js.push("date-range")
   req.data.css.push("date-range")
   req.data.dashboard_width = "medium"
+  req.data.config = {
+    advertiser: req.advertiser.key
+  }
   
   Promise.resolve().then ->
     if not req.subdashboard

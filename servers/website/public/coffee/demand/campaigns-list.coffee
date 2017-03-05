@@ -24,7 +24,7 @@ class Dashboard
     $(".actions .action").click (e)=>
       campaigns = @data_table.column(0).checkboxes.selected()
       
-      $.post("#{window.location.pathname}/update", {
+      $.post("/demand/#{config.advertiser}/campaigns/update", {
         _csrf: config.csrf
         action: $(e.currentTarget).data("action")
         campaigns: $.makeArray campaigns
@@ -66,7 +66,7 @@ class Dashboard
     @dates = dates
     @data_table.clear()
   
-    $.post("#{window.location.pathname}/list", {
+    $.post("/demand/#{config.advertiser}/campaigns/list", {
       _csrf: config.csrf
       dates: dates
     }).done (response)=>
