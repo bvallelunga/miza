@@ -37,3 +37,5 @@ module.exports.post_list = (req, res, next)->
       success: true
       results: campaigns
     }
+    
+  .catch next
