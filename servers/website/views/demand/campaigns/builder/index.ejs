@@ -18,11 +18,14 @@
     </div>
     <div class="section">
       <div class="header">Creative</div>
+      <div>
+        <%= company %> supports the IAB <strong>300 x 250</strong> format. After 
+        uploading your image, you will have the ability to crop and resize your image.
+        Please note the description field is optional.
+      </div>
+      <br>
       <div class="left split fourty">
         <table>
-          <tr>
-            <td><%= company %> supports the IAB <strong>300 x 250</strong> format. After uploading your image, you can crop/resize.</td>
-          </tr>
           <tr>
             <td>
               <input class="simulator-image" type="hidden" role="uploadcare-uploader" data-image-shrink="1024x1024 80%"
@@ -47,6 +50,8 @@
         </div>
       </div>
       <div class="clear"></div>
+      <br><br>
+      <textarea class="input" type="text" name="creative[impression_trackers]" placeholder="Impression Trackers - One per line"></textarea>
     </div>
     <div class="section">
       <div class="header">
