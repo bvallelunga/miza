@@ -10,8 +10,8 @@ module.exports.get = (req, res, next)->
     }]
   }).then (users)->
     res.render "admin/users", {
-      js: req.js.renderTags "modal", "admin-table"
-      css: req.css.renderTags "modal", "admin", "fa"
+      js: req.js.renderTags "modal", "admin-table", "fa"
+      css: req.css.renderTags "modal", "admin"
       title: "Admin Users"
       users: users
       dashboard: "admin"

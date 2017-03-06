@@ -31,10 +31,10 @@ module.exports.post_create = (req, res, next)->
     
     LIBS.models.Campaign.create({
       name: req.body.name
-      type: "prepaid"
+      type: "standard"
       status: "draft"
-      start_date: start_date
-      end_date: end_date
+      start_at: start_date
+      end_at: end_date
       advertiser_id: req.advertiser.id
     }).then (campaign)->
       Promise.props({
@@ -61,8 +61,6 @@ module.exports.post_create = (req, res, next)->
             res response.body
         
         .then (image)->
-          console.log image
-        
           LIBS.models.Creative.create({
             advertiser_id: req.advertiser.id
             campaign_id: campaign.id

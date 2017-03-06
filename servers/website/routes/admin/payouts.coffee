@@ -38,8 +38,8 @@ module.exports.has_payout = (req, res, next)->
 module.exports.get_root = (req, res, next)->
   LIBS.models.Payout.findAll().then (payouts)->
     res.render "admin/payouts/index", {
-      js: req.js.renderTags "modal", "admin-payouts", "date-range"
-      css: req.css.renderTags "modal", "admin", "fa", "date-range"
+      js: req.js.renderTags "modal", "admin-payouts", "date-range", "fa"
+      css: req.css.renderTags "modal", "admin", "date-range"
       title: "Admin Payouts"
       payouts: payouts
       dashboard: "admin"
@@ -48,8 +48,8 @@ module.exports.get_root = (req, res, next)->
    
 module.exports.get_create = (req, res, next)->
   res.render "admin/payouts/payout", {
-    js: req.js.renderTags "modal", "admin-payouts"
-    css: req.css.renderTags "modal", "admin", "fa", "publisher"
+    js: req.js.renderTags "modal", "admin-payouts", "fa"
+    css: req.css.renderTags "modal", "admin", "publisher"
     title: "Admin Payouts"
     payout: req.payout
     publishers: req.payout.publishers

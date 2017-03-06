@@ -23,8 +23,8 @@ module.exports.get = (req, res, next)->
     })
   }).then (props)->  
     res.render "admin/publishers", {
-      js: req.js.renderTags "modal", "admin-table"
-      css: req.css.renderTags "modal", "admin", "fa"
+      js: req.js.renderTags "modal", "admin-table", "fa"
+      css: req.css.renderTags "modal", "admin"
       title: "Admin Publishers"
       publishers: props.publishers
       industries: props.industries

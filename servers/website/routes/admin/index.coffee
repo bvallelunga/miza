@@ -1,6 +1,7 @@
 module.exports.get_root = (req, res, next)->
   res.render "admin/index", {
-    css: req.css.renderTags "admin", "fa"
+    js: req.js.renderTags "fa"
+    css: req.css.renderTags "admin"
     title: "Admin Center"
     dashboard: "admin"
   }

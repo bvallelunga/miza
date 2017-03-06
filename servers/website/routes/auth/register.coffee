@@ -1,7 +1,7 @@
 module.exports.get = (req, res, next)->
   res.render "auth/register", {
-    js: req.js.renderTags "modal"
-    css: req.css.renderTags "modal", "fa"
+    js: req.js.renderTags "modal", "fa"
+    css: req.css.renderTags "modal"
     title: "Sign Up"
     name: req.query.name or ""
     email: req.query.email or ""

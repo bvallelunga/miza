@@ -57,10 +57,15 @@ module.exports = (sequelize, DataTypes)->
       get: ->      
         return Number @getDataValue("cpm")
     }
-    quoted: {
+    budget: {
       type: DataTypes.VIRTUAL
       get: ->      
         return @get("cpm_impression") * @get("impressions_requested")
+    }
+    spend: {
+      type: DataTypes.VIRTUAL
+      get: ->      
+        return @get("cpm_impression") * @get("impressions")
     }
     cpm_impression: {
       type: DataTypes.VIRTUAL

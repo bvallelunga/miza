@@ -4,14 +4,14 @@ request = require "request"
 module.exports.get_root = (req, res, next)->
   res.render "landing/home", {
     js: req.js.renderTags "landing", "fa"
-    css: req.css.renderTags "landing", "fa"
+    css: req.css.renderTags "landing"
   }
   
 
 module.exports.get_about = (req, res, next)->
   res.render "landing/about", {
     js: req.js.renderTags "landing", "fa"
-    css: req.css.renderTags "landing", "fa"
+    css: req.css.renderTags "landing"
     title: "About Us"
   } 
   
@@ -19,7 +19,7 @@ module.exports.get_about = (req, res, next)->
 module.exports.get_monetize = (req, res, next)->
   res.render "landing/monetize", {
     js: req.js.renderTags "landing", "fa"
-    css: req.css.renderTags "landing", "fa"
+    css: req.css.renderTags "landing"
     title: "Monetize"
   }  
 
@@ -84,7 +84,8 @@ module.exports.get_dashboard = (req, res, next)->
     
   res.render "landing/dashboard", {
     title: "Dashboard"
-    css: req.css.renderTags "admin", "fa"
+    js: req.js.renderTags "fa"
+    css: req.css.renderTags "admin"
     dashboard: "dashboard"
   }
   

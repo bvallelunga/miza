@@ -11,8 +11,8 @@ module.exports.get_dashboard = (req, res, next)->
   if not req.publisher.is_demo and req.publisher.product == "protect"
     return res.redirect "/supply/#{req.publisher.key}/migrate"
 
-  js = ["dashboard", "supply"]
-  css = ["dashboard", "supply", "fa"]
+  js = ["dashboard", "supply", "fa"]
+  css = ["dashboard", "supply"]
   dashboard = req.params.dashboard
   dashboard_path = "/supply/#{req.publisher.key}"
   dashboards = [

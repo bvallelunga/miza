@@ -26,13 +26,31 @@ module.exports.fetch = (req, res, next)->
   
   
 module.exports.post_updates = (req, res, next)->
-  res.json {
-    success: true
-  }
+  LIBS.models.Campaign.update({
+    status: req.body.action
+  }, {
+    individualHooks: true
+    where: {
+      advertiser_id: req.advertiser.id
+      id: {
+        $in: req.body.campaigns
+      }
+    }
+  }).then ->
+    res.json {
+      success: true
+    }
+  
+  .catch next
   
   
 module.exports.post_list = (req, res, next)->
-  req.advertiser.getCampaigns().then (campaigns)->
+  req.advertiser.getCampaigns({
+    include: [{
+      model: LIBS.models.CampaignIndustry
+      as: "industries"
+    }]
+  }).then (campaigns)->
     res.json {
       success: true
       results: campaigns

@@ -76,7 +76,7 @@
             <th><span>Industry</span></th>
             <th><span>Model</span></th>
             <th class="impressions"><span>Est. Impressions</span></th>
-            <th><span>Cost</span></th>
+            <th><span>Spend</span></th>
           </tr>
         </thead>
         <tbody>
@@ -118,11 +118,18 @@
       </div>
     </div>
     <div class="section">
-      <% include ../../../includes/csrf %>
-      <button type="submit" class="button">
-        Create Campaign <span class="fa fa-arrow-right"></span>
-      </button>
-      <div class="error"></div>
+      <div class="split half left quote-box">
+        <div class="quote">$0.00</div>
+        <div class="information">TOTAL SPEND</div>
+      </div>
+      <div class="split half right">
+        <% include ../../../includes/csrf %>
+        <button type="submit" class="button">
+          Create Campaign <span class="fa fa-arrow-right"></span>
+        </button>
+        <div class="error"></div>
+      </div>
+      <div class="clear"></div>
     </div>
   </form>
 </div>

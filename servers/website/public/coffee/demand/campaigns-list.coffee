@@ -53,10 +53,10 @@ class Dashboard
         { "data": "id" },
         { "data": "name" },
         { "data": "status" },
-        { "data": "impressions" },
-        { "data": "clicks" }
-        { "data": "paid" },
-        { "data": "refunded" }
+        { "data": "metrics.impressions" },
+        { "data": "metrics.clicks" }
+        { "data": "metrics.budget" },
+        { "data": "metrics.spend" }
       ]
       'order': [[1, 'asc']]
     })

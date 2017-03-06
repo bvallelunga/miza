@@ -1,3 +1,46 @@
-<div class="display full">
+<div class="sidebar">
+  <ul>
+    <li class="active">
+      <a href="/demand/<%= advertiser.id %>/settings">
+        <span class="fa fa-user-circle"></span>
+        Profile
+      </a>
+    </li>
+    <li>
+      <a href="/demand/<%= advertiser.id %>/settings/payments">
+        <span class="fa fa-dollar"></span>
+        Payments
+      </a>
+    </li>
+    <% if(user.is_admin || user.id == advertiser.owner_id) { %>
+      <li>
+        <a href="/account/billing">
+          <span class="fa fa-credit-card"></span>
+          Update Card
+        </a>
+      </li>
+    <% } %>
+  </ul>
+</div>
+<div class="display">
+  <form class="form" method="POST" action="<%= dashboard_path %>/settings">
+    <% include ../../includes/csrf %>
+    <table>
+      <tr>
+        <td class="title">Name</td>
+        <td><input type="text" name="name" value="<%= advertiser.name %>" placeholder="Tech Crunch" required></td>
+      </tr>
+      <tr>
+        <td class="title">Website</td>
+        <td><input type="url" name="domain" value="http://<%= advertiser.domain %>" placeholder="http://techcrunch.com" required></td>
+      </tr>
+      <tr>
+        <td class="title">Account Owner</td>
+        <td><input type="text" value="<%= advertiser.owner.name %>" disabled></td>
+      </tr>
+    </table>
+    <button class="button" type="submit">Update Settings</button>
+    <div class="error"></div>
+  </form>
   
 </div>

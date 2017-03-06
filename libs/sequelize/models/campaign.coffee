@@ -1,3 +1,5 @@
+numeral = require "numeral"
+
 module.exports = (sequelize, DataTypes)->
 
   return sequelize.define "Campaign", {
@@ -9,7 +11,7 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
       allowNull: false
       validate: {
-        isIn: [['prepaid']]
+        isIn: [['standard']]
       }
     }
     status: {
@@ -19,12 +21,13 @@ module.exports = (sequelize, DataTypes)->
         isIn: [['draft', 'running', 'paused', 'archived', 'complete']]
       }
     }
-    start_date: DataTypes.DATE
-    end_date: {
+    paid_at: DataTypes.DATE
+    start_at: DataTypes.DATE
+    end_at: {
       type: DataTypes.DATE
       validate: {
         isAfter: (end_date)->
-          if @start_date and end_date < @start_date
+          if @start_at and end_date < @start_at
             throw new Error "Campaign End Date must come after the Start Date"
       }
     }
@@ -54,6 +57,42 @@ module.exports = (sequelize, DataTypes)->
       get: ->      
         return Number @getDataValue("refunded")
     }
+    budget: {
+      type: DataTypes.VIRTUAL
+      get: ->   
+        total = 0
+        
+        if not @get("industries")?
+          return total
+        
+        for industry in @get("industries")
+          total += industry.budget
+         
+        return total
+    }
+    spend: {
+      type: DataTypes.VIRTUAL
+      get: ->      
+        total = 0
+        
+        if not @get("industries")?
+          return total
+        
+        for industry in @get("industries")
+          total += industry.spend
+         
+        return total
+    }
+    metrics: {
+      type: DataTypes.VIRTUAL
+      get: ->      
+        return {
+          impressions: numeral(@get("impressions")).format("0[,]000")
+          clicks: numeral(@get("clicks")).format("0[,]000")
+          budget: numeral(@get("budget")).format("$0[,]000.00")
+          spend: numeral(@get("spend")).format("$0[,]000.00")
+        }
+    }
     config: {
       type: DataTypes.JSONB
       defaultValue: {}
@@ -64,6 +103,13 @@ module.exports = (sequelize, DataTypes)->
         models.Campaign.belongsTo models.Advertiser, { 
           as: 'advertiser' 
         }
-
+        
+        models.Campaign.hasMany models.CampaignIndustry, { 
+          as: 'industries' 
+        }
+        
+        models.Campaign.hasMany models.Creative, { 
+          as: 'creatives' 
+        }
     }
   }

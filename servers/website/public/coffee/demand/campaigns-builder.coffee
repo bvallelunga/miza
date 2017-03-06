@@ -35,7 +35,7 @@ class Dashboard
       
      
     $(".selection-shortcut").click ->
-      _this.option_selected $industry_options, true
+      _this.option_selected _this.$industry_options, true
     
     @$impressions_table.find("select").change ->
       _this.impressions_updated $(@)
@@ -64,11 +64,24 @@ class Dashboard
     @$simulator.find("img").attr("src", img).toggle(img.length > 0)
   
   
+  total_cost_update: ->
+    total = 0
+    
+    $(".selection .option.active").each ->
+      $industry = $("#industry_#{$(@).data("value")}")
+      CPM = Number $industry.data("cpm")
+      IMPRESSIONS = Number $industry.find("select").val()
+      total += CPM * (IMPRESSIONS/1000)
+      $(".quote-box .quote").text numeral(total).format("$0,000.00")     
+
+  
   impressions_updated: ($select)->
     $tr = $select.parents("tr")
     CPM = Number $tr.data("cpm")
     IMPRESSIONS = Number $select.val()
-    $tr.find(".total").text numeral(CPM * (IMPRESSIONS/1000)).format("$0,000")
+    COST = CPM * (IMPRESSIONS/1000)
+    $tr.find(".total").text numeral(COST).format("$0,000.00")
+    @total_cost_update()
   
   
   option_selected: ($options, force=null)->
@@ -84,6 +97,8 @@ class Dashboard
       $industry.toggle value
       $industry.find(".activated_input").val value
       $industry.find("select").attr "required", value
+      
+    @total_cost_update()
 
 
 $ ->

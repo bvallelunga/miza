@@ -1,6 +1,6 @@
 module.exports.get_root = (req, res, next)->
-  js = ["dashboard", "modal"]
-  css = ["dashboard", "fa", "account"]
+  js = ["dashboard", "modal", "fa"]
+  css = ["dashboard", "account"]
   dashboard = req.params.dashboard
   dashboards = [
     "profile", "notifications", "billing", "password"
@@ -10,7 +10,7 @@ module.exports.get_root = (req, res, next)->
     return res.redirect "/account/profile"  
     
   if dashboard in ["billing"]
-    js = ["publisher", "card"]
+    js = ["dashboard", "card", "fa"]
     res.locals.config.stripe_key = CONFIG.stripe.public
   
   res.render "account/index", {
