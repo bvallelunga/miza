@@ -1,3 +1,5 @@
+numeral = require "numeral"
+
 module.exports = (sequelize, DataTypes)->
 
   return sequelize.define "CampaignIndustry", {
@@ -71,6 +73,21 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.VIRTUAL
       get: ->      
         return @get("cpm") / 1000
+    }
+    metrics: {
+      type: DataTypes.VIRTUAL
+      get: ->      
+        return {
+          cpm: numeral(@get("cpm")).format("$0[,]000.00")
+          impressions: numeral(@get("impressions")).format("0[,]000")
+          impressions_needed: numeral(@get("impressions_needed")).format("0[,]000")
+          impressions_requested: numeral(@get("impressions_requested")).format("0[,]000")
+          clicks: numeral(@get("clicks")).format("0[,]000")
+          budget: numeral(@get("budget")).format("$0[,]000.00")
+          spend: numeral(@get("spend")).format("$0[,]000.00")
+          paid: numeral(@get("paid")).format("$0[,]000.00")
+          refunded: numeral(@get("refunded")).format("$0[,]000.00")
+        }
     }
     config: {
       type: DataTypes.JSONB

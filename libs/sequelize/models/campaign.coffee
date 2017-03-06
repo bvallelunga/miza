@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
       allowNull: false
       validate: {
-        isIn: [['draft', 'running', 'paused', 'archived', 'complete']]
+        isIn: [['running', 'paused', 'completed']]
       }
     }
     paid_at: DataTypes.DATE
@@ -91,6 +91,8 @@ module.exports = (sequelize, DataTypes)->
           clicks: numeral(@get("clicks")).format("0[,]000")
           budget: numeral(@get("budget")).format("$0[,]000.00")
           spend: numeral(@get("spend")).format("$0[,]000.00")
+          paid: numeral(@get("paid")).format("$0[,]000.00")
+          refunded: numeral(@get("refunded")).format("$0[,]000.00")
         }
     }
     config: {
@@ -111,5 +113,10 @@ module.exports = (sequelize, DataTypes)->
         models.Campaign.hasMany models.Creative, { 
           as: 'creatives' 
         }
+    }
+    validate: {
+      notCompleted: ->      
+        if @changed("status") and @previous("status") == "completed"
+          throw new Error "Campaign status can not be changed after it is complete."
     }
   }

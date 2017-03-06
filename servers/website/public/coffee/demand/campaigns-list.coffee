@@ -30,6 +30,13 @@ class Dashboard
         campaigns: $.makeArray campaigns
       }).done =>
         @update(@dates)
+      
+      .fail (error)->
+        message = error.responseJSON.message
+        
+        $(".container").prepend(
+          "<div class='warning orange'>#{message}</div>"
+        )
   
     
   build_table: ->

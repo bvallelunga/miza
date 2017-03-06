@@ -32,7 +32,7 @@ module.exports.post_create = (req, res, next)->
     LIBS.models.Campaign.create({
       name: req.body.name
       type: "standard"
-      status: "draft"
+      status: "paused"
       start_at: start_date
       end_at: end_date
       advertiser_id: req.advertiser.id
@@ -74,7 +74,7 @@ module.exports.post_create = (req, res, next)->
   .then (data)->
     res.json({
       success: true
-      next: "/demand/#{req.advertiser.key}/campaigns/#{data.campaign.id}"
+      next: "/demand/#{req.advertiser.key}/campaigns"
     })
     
   .catch next

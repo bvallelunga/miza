@@ -26,17 +26,37 @@ module.exports.fetch = (req, res, next)->
   
   
 module.exports.post_updates = (req, res, next)->
-  LIBS.models.Campaign.update({
-    status: req.body.action
-  }, {
-    individualHooks: true
-    where: {
-      advertiser_id: req.advertiser.id
-      id: {
-        $in: req.body.campaigns
+  req.advertiser.getOwner().then (owner)->
+    if req.body.action == "running" and not owner.stripe_card
+      return Promise.reject """
+        Please enter in your <a href="/account/billing">billing details</a> to start a campaign.
+      """
+    
+    if req.body.action == "delete"
+      return LIBS.models.Campaign.destroy({
+        individualHooks: true
+        where: {
+          advertiser_id: req.advertiser.id
+          id: {
+            $in: req.body.campaigns
+          }
+        }
+      })
+    
+    
+    LIBS.models.Campaign.findAll({
+      where: {
+        advertiser_id: req.advertiser.id
+        id: {
+          $in: req.body.campaigns
+        }
       }
-    }
-  }).then ->
+    }).each (campaign)->
+      campaign.update({
+        status: req.body.action
+      })
+  
+  .then ->
     res.json {
       success: true
     }
@@ -46,6 +66,22 @@ module.exports.post_updates = (req, res, next)->
   
 module.exports.post_list = (req, res, next)->
   req.advertiser.getCampaigns({
+    where: {
+      start_at: {
+        $or: [{
+          $gte: new Date req.body.dates.start
+        }, {
+          $eq: null
+        }]
+      }
+      end_at: {
+        $or: [{
+          $lte: new Date req.body.dates.end
+        }, {
+          $eq: null
+        }]
+      }
+    }
     include: [{
       model: LIBS.models.CampaignIndustry
       as: "industries"
