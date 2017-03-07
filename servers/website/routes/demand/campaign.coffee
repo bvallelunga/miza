@@ -7,6 +7,10 @@ module.exports.fetch = (req, res, next)->
       id: req.subdashboard or req.params.campaign
       advertiser_id: req.advertiser.id
     }
+    include: [{
+      model: LIBS.models.CampaignIndustry
+      as: "industries"
+    }]
   }).then (campaign)->
     if not campaign?
       return res.redirect "/demand/#{req.advertiser.key}/campaigns"
@@ -25,13 +29,10 @@ module.exports.fetch = (req, res, next)->
   
   
 module.exports.get_industries = (req, res, next)->
-  req.campaign.getIndustries().then (industries)->
-    res.json {
-      success: true
-      results: industries
-    }
-    
-  .catch next
+  res.json {
+    success: true
+    results: req.campaign.industries
+  }
   
 
 module.exports.get_charts = (req, res, next)->
@@ -74,15 +75,10 @@ module.exports.get_charts = (req, res, next)->
   
   
 module.exports.post_industries = (req, res, next)->
-  req.advertiser.getOwner().then (owner)->
+  Promise.resolve().then ->
     if not req.campaign.active
       return Promise.reject """
         Campaign must be running to modify a specific industry.
-      """
-      
-    if req.body.action == "running"  and not owner.stripe_card
-      return Promise.reject """
-        Please enter in your <a href="/account/billing?next=#{req.get("referrer")}">billing details</a> to start a campaign.
       """
       
     LIBS.models.CampaignIndustry.findAll({

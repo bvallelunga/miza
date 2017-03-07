@@ -20,7 +20,7 @@ class Dashboard
     @$search.keyup =>
       @data_table.column(1).search(@$search.val()).draw()
       
-    $(".actions .action").click (e)=>
+    $(".actions:not(.disabled) .action").click (e)=>
       industries = $.makeArray @data_table.column(0).checkboxes.selected()
       
       if industries.length == 0

@@ -27,12 +27,7 @@ module.exports.fetch = (req, res, next)->
   
   
 module.exports.post_updates = (req, res, next)->
-  req.advertiser.getOwner().then (owner)->
-    if req.body.action == "running" and not owner.stripe_card
-      return Promise.reject """
-        Please enter in your <a href="/account/billing?next=#{req.get("referrer")}">billing details</a> to start a campaign.
-      """
-    
+  Promise.resolve().then ->    
     if req.body.action == "delete"
       return LIBS.models.Campaign.destroy({
         individualHooks: true

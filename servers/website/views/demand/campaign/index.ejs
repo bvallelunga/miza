@@ -52,7 +52,7 @@
 
 <div class="display full table">
  <div class="table-header">
-    <div class="actions left">
+    <div class="actions left <%= campaign.status != "running" ? "disabled" : "" %>">
       <div class="action" data-action="running">
         <span class="fa fa-play"></span>
         Run

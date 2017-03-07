@@ -39,7 +39,20 @@
       border-top: none;
     }
     
-    .actions {      
+    .actions {  
+      &.disabled {
+        opacity: 0.5;
+        
+        .action {
+          cursor: no-drop;
+        }
+      }
+      
+      &:not(.disabled) .action:hover {
+        color: @blue;
+        border-color: @blue;
+      }
+          
       .action {
         cursor: pointer;
         padding: 8px 10px;
@@ -54,11 +67,6 @@
         
         span {
           margin-right: 5px;
-        }
-        
-        &:hover {
-          color: @blue;
-          border-color: @blue;
         }
       }
     }

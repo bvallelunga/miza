@@ -18,6 +18,11 @@ module.exports = (req, res, next)->
     return null
   
   .then (advertiser)->
+    advertiser.getOwner().then (owner)->
+      advertiser.owner = owner
+      return advertiser
+  
+  .then (advertiser)->
     if not advertiser?
       return res.redirect "/demand"
       
