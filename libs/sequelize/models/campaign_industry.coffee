@@ -97,6 +97,7 @@ module.exports = (sequelize, DataTypes)->
           spend: numeral(@get("spend")).format("$0[,]000.00")
           paid: numeral(@get("paid")).format("$0[,]000.00")
           refunded: numeral(@get("refunded")).format("$0[,]000.00")
+          progress: numeral(@get("impressions")/@get("impressions_requested")).format("0[.]0%")
         }
     }
     config: {
@@ -120,7 +121,11 @@ module.exports = (sequelize, DataTypes)->
     }
     hooks: {
       beforeValidate: (campaignIndustry)->
-        campaignIndustry.impressions_needed = campaignIndustry.impressions_requested - campaignIndustry.impressions
-          
+        campaignIndustry.impressions_needed = Math.max 0, campaignIndustry.impressions_requested - campaignIndustry.impressions
+        
+      beforeUpdate: (campaignIndustry)->
+        if campaignIndustry.impressions_needed == 0
+          campaignIndustry.status = "completed"
+
     }
   }
