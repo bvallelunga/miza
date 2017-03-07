@@ -36,6 +36,9 @@ module.exports = (sequelize, DataTypes)->
               $gt: 0
             }
           }
+          order: [
+            ['name', 'ASC']
+          ]
         })
     }
     hooks: {            

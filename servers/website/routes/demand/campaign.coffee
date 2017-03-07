@@ -10,9 +10,6 @@ module.exports.fetch = (req, res, next)->
     include: [{
       model: LIBS.models.CampaignIndustry
       as: "industries"
-      order: [
-        ['name', 'ASC']
-      ]
     }, {
       model: LIBS.models.Creative
       as: "creatives"
@@ -61,7 +58,8 @@ module.exports.post_update = (req, res, next)->
 module.exports.get_industries = (req, res, next)->
   res.json {
     success: true
-    results: req.campaign.industries
+    results: req.campaign.industries.sort (a, b)->
+      return a.name > b.name
   }
   
 
