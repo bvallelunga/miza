@@ -18,33 +18,37 @@
     height: 382px;
   }
   
-  .top-bar .section {
-    font-size: 1.2em;
-    padding: 20px;
+  .top-bar {
+    width: 100%;
     
-    .title {
-      color: black;
+    .section {
+      font-size: 1.2em;
+      padding: 20px;
       
-      &.cap {
-        text-transform: capitalize;
+      .title {
+        color: black;
+        
+        &.cap {
+          text-transform: capitalize;
+        }
+        
+        &.blue {
+          color: @blue;
+        }
+        
+        &.green {
+          color: @green;
+        }
       }
       
-      &.blue {
-        color: @blue;
+      .decription {
+        color: @text_weak;
+        margin-bottom: 5px;
       }
       
-      &.green {
-        color: @green;
+      .actions .action {
+        margin: 8px 5px 0 0;
       }
-    }
-    
-    .decription {
-      color: @text_weak;
-      margin-bottom: 5px;
-    }
-    
-    .actions .action {
-      margin: 8px 5px 0 0;
     }
   }
   

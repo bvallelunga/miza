@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes)->
         total = 0
         
         if not @get("industries")?
-          return total
+          return NaN
         
         for industry in @get("industries")
           total += industry.budget
@@ -83,12 +83,27 @@ module.exports = (sequelize, DataTypes)->
         total = 0
         
         if not @get("industries")?
-          return total
+          return NaN
         
         for industry in @get("industries")
           total += industry.spend
          
         return total
+    }
+    progress: {
+      type: DataTypes.VIRTUAL
+      get: ->      
+        total_requested = 0
+        total_impressions = 0
+        
+        if not @get("industries")?
+          return NaN
+        
+        for industry in @get("industries")
+          total_requested += industry.impressions_requested
+          total_impressions += industry.impressions
+         
+        return total_impressions/total_requested
     }
     metrics: {
       type: DataTypes.VIRTUAL
@@ -100,6 +115,7 @@ module.exports = (sequelize, DataTypes)->
           spend: numeral(@get("spend")).format("$0[,]000.00")
           paid: numeral(@get("paid")).format("$0[,]000.00")
           refunded: numeral(@get("refunded")).format("$0[,]000.00")
+          progress: numeral(@get("progress")).format("0[.]0%")
         }
     }
     config: {

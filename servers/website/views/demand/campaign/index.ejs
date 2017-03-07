@@ -1,46 +1,51 @@
 <a class="dashboard-back fa fa-arrow-left" href="/demand/<%= advertiser.key %>/campaigns"></a>
 
 <div class="display full">
-  <div class="top-bar">
-    <div class="section split eighteenth left">
-      <div class="decription">Name</div>
-      <div class="title"><%= campaign.name %></div>
-    </div>
-    <div class="section split eighteenth left">
-      <div class="decription">Status</div>
-      <div class="title cap"><%= campaign.status %></div>
-    </div>
-    <div class="section split eighteenth left">
-      <div class="decription">Budget</div>
-      <div class="title blue"><%= campaign.metrics.budget %></div>
-    </div>
-    <div class="section split eighteenth left">
-      <div class="decription">Spend</div>
-      <div class="title green"><%= campaign.metrics.spend %></div>
-    </div>
-    <div class="section split right">
-      <div class="actions campaign left">
-        <% if(campaign.status != "completed") { %>
-          <% if(campaign.status == "paused") { %>
-            <div class="action" data-action="running">
-              <span class="fa fa-play"></span>
-              Run
-            </div>
-          <% } else { %>
-            <div class="action" data-action="paused">
-              <span class="fa fa-pause"></span>
-              Pause
-            </div>
+  <table class="top-bar"> 
+    <tr>   
+      <td class="section">
+        <div class="decription">Name</div>
+        <div class="title"><%= campaign.name %></div>
+      </td>
+      <td class="section">
+        <div class="decription">Status</div>
+        <div class="title cap"><%= campaign.status %></div>
+      </td>
+      <td class="section">
+        <div class="decription">Progress</div>
+        <div class="title cap"><%= campaign.metrics.progress %></div>
+      </td>
+      <td class="section">
+        <div class="decription">Budget</div>
+        <div class="title blue"><%= campaign.metrics.budget %></div>
+      </td>
+      <td class="section">
+        <div class="decription">Spend</div>
+        <div class="title green"><%= campaign.metrics.spend %></div>
+      </td>
+      <td class="section">
+        <div class="actions campaign right">
+          <% if(campaign.status != "completed") { %>
+            <% if(campaign.status == "paused") { %>
+              <div class="action" data-action="running">
+                <span class="fa fa-play"></span>
+                Run
+              </div>
+            <% } else { %>
+              <div class="action" data-action="paused">
+                <span class="fa fa-pause"></span>
+                Pause
+              </div>
+            <% } %>
           <% } %>
-        <% } %>
-        <div class="action" data-action="delete">
-          <span class="fa fa-trash"></span>
-          Delete
+          <div class="action" data-action="delete">
+            <span class="fa fa-trash"></span>
+            Delete
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="clear"></div>
-  </div>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <div class="display split core-information left padded">
@@ -73,10 +78,15 @@
 
 <div class="display builder split simulator-container right">
   <div class="top-bar">
-    <div class="section">
+    <div class="section split half left">
       <div class="decription">Creative</div>
       <div class="title">300 x 250</div>
     </div>
+    <div class="section split half right">
+      <div class="decription">Format</div>
+      <div class="title">Image <%= campaign.creatives[0].description ? " + Text" : "" %></div>
+    </div>
+    <div class="clear"></div>
   </div>
   <br>
   <div class="simulator">

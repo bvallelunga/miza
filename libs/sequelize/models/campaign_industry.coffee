@@ -84,6 +84,11 @@ module.exports = (sequelize, DataTypes)->
       get: ->      
         return @get("cpm") / 1000
     }
+    progress: {
+      type: DataTypes.VIRTUAL
+      get: ->      
+        return @get("impressions")/@get("impressions_requested")
+    }
     metrics: {
       type: DataTypes.VIRTUAL
       get: ->      
@@ -97,7 +102,7 @@ module.exports = (sequelize, DataTypes)->
           spend: numeral(@get("spend")).format("$0[,]000.00")
           paid: numeral(@get("paid")).format("$0[,]000.00")
           refunded: numeral(@get("refunded")).format("$0[,]000.00")
-          progress: numeral(@get("impressions")/@get("impressions_requested")).format("0[.]0%")
+          progress: numeral(@get("progress")).format("0[.]0%")
         }
     }
     config: {

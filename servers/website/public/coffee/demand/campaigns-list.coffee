@@ -63,6 +63,7 @@ class Dashboard
         { "data": "id" },
         { "data": "name" },
         { "data": "status" },
+        { "data": "metrics.progress" },
         { "data": "metrics.impressions" },
         { "data": "metrics.clicks" }
         { "data": "metrics.budget" },
