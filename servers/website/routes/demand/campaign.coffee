@@ -10,6 +10,9 @@ module.exports.fetch = (req, res, next)->
     include: [{
       model: LIBS.models.CampaignIndustry
       as: "industries"
+      order: [
+        ['name', 'ASC']
+      ]
     }, {
       model: LIBS.models.Creative
       as: "creatives"
@@ -63,7 +66,7 @@ module.exports.get_industries = (req, res, next)->
   
 
 module.exports.get_charts = (req, res, next)->
-  client = LIBS.keen.scopedAnalysis CONFIG.keen.readKey #(req.advertiser.config.keen)
+  client = LIBS.keen.scopedAnalysis(req.advertiser.config.keen)
   
   query = (operation, query)->
     query.event_collection = "ads.event"
@@ -88,11 +91,11 @@ module.exports.get_charts = (req, res, next)->
           "click",
           "impression"
         ]
-      }]# , {
-#         "operator": "eq"
-#         "property_name": "campaign.id"
-#         "property_value": req.campaign.id
-#       }]
+      }, {
+        "operator": "eq"
+        "property_name": "campaign.id"
+        "property_value": req.campaign.id
+      }]
     }
   }).then (charts)->
     res.json(charts) 
