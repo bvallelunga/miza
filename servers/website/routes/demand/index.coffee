@@ -11,7 +11,7 @@ module.exports.get_root = (req, res, next)->
   if req.user.advertisers.length == 0
     return res.redirect "/demand/new"
     
-  res.redirect "/demand/#{req.user.advertisers[0].key}/analytics"
+  res.redirect "/demand/#{req.user.advertisers[0].key}/campaigns"
   
   
 module.exports.fetch_data = (req, res, next)->
@@ -24,7 +24,7 @@ module.exports.fetch_data = (req, res, next)->
   req.subdashboard = req.params.subdashboard or null
   
   if not (dashboard = DASHBOARDS[req.dashboard])?
-    return res.redirect "/demand/#{ req.advertiser.key }/analytics"
+    return res.redirect "/demand/#{ req.advertiser.key }/campaigns"
   
   Promise.resolve().then ->  
     if not req.user.is_admin
