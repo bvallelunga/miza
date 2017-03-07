@@ -6,30 +6,31 @@ module.exports.fetch = (req, res, next)->
     advertiser: req.advertiser.key
   }
   
-  Promise.resolve().then ->
-    if not req.subdashboard
-      req.data.js.push("data-table")
-      req.data.css.push("data-table")
-      req.subdashboard = "listing"
-      
-    else if req.subdashboard == "create" 
-      req.data.js.push("modal")
-      req.subdashboard = "builder"
-      
-      return LIBS.models.Industry.listed().then (industries)->
-        req.data.industries = industries
-      
-    else
-      req.subdashboard = "analytics"
+  if not req.subdashboard
+    req.data.js.push("data-table")
+    req.data.css.push("data-table")
+    req.subdashboard = "listing"
+    next()
     
-  .then(-> next()).catch next
+  else if req.subdashboard == "create" 
+    req.data.js.push("modal")
+    req.subdashboard = "builder"
+    
+    LIBS.models.Industry.listed().then (industries)->
+      req.data.industries = industries
+      next()
+    
+    .catch next
+    
+  else
+    res.redirect "/demand/#{req.advertiser.key}/campaigns"
   
   
 module.exports.post_updates = (req, res, next)->
   req.advertiser.getOwner().then (owner)->
     if req.body.action == "running" and not owner.stripe_card
       return Promise.reject """
-        Please enter in your <a href="/account/billing">billing details</a> to start a campaign.
+        Please enter in your <a href="/account/billing?next=#{req.get("referrer")}">billing details</a> to start a campaign.
       """
     
     if req.body.action == "delete"
@@ -52,9 +53,15 @@ module.exports.post_updates = (req, res, next)->
         }
       }
     }).each (campaign)->
-      campaign.update({
-        status: req.body.action
-      })
+      if campaign.status == "queued"
+        if req.body.action == "running"
+          campaign.start_at = new Date()
+          
+        else if req.body.action == "paused"
+          return Promise.reject "Queued campaigns can not be paused"
+        
+      campaign.status = req.body.action
+      campaign.save()
   
   .then ->
     res.json {

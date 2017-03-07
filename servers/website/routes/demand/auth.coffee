@@ -24,6 +24,7 @@ module.exports = (req, res, next)->
     advertiser.intercom().then (intercom)->
       req.advertiser = advertiser
       res.locals.advertiser = advertiser
+      res.locals.config.advertiser = advertiser.key
       res.locals.intercom.company = intercom
         
       next()

@@ -13,7 +13,7 @@ module.exports.post = (req, res, next)->
     res.json {
       success: true
       message: "Your password has been updated!"
-      next: "/account/password"
+      next: req.body.next or "/account/password"
     }
   
   .catch next

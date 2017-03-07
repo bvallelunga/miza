@@ -6,15 +6,9 @@
         Profile
       </a>
     </li>
-    <li>
-      <a href="/demand/<%= advertiser.id %>/settings/payments">
-        <span class="fa fa-dollar"></span>
-        Payments
-      </a>
-    </li>
     <% if(user.is_admin || user.id == advertiser.owner_id) { %>
       <li>
-        <a href="/account/billing">
+        <a href="/account/billing?next=<%= path %>">
           <span class="fa fa-credit-card"></span>
           Update Card
         </a>

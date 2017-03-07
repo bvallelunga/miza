@@ -6,7 +6,7 @@ module.exports.post = (req, res, next)->
   }).then ->
     res.json {
       success: true
-      next: "/account/notifications"
+      next: req.body.next or "/account/notifications"
     }
   
   .catch next

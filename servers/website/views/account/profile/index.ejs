@@ -1,5 +1,8 @@
 <form class="form" method="POST" action="/account/profile">
   <% include ../../includes/csrf %>
+  <% if(next) { %>
+    <input type="hidden" name="next" value="<%= next %>" required>
+  <% } %>
   <table>
     <tr>
       <td class="title">Full Name</td>

@@ -31,6 +31,7 @@ $ ->
         return error_handler response.error.message
         
       response._csrf = config.csrf
+      response.next = config.next
       $.post form.attr("action"), response, (response)->
         if response.message?
           alert response.message

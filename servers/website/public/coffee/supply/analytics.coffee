@@ -1,13 +1,10 @@
 class Dashboard 
 
-  client: null
-  collection: "ads.event"
   timeframe: {}
   charts: {}
   
   
   constructor: ->
-    @client = new Keen config.keen
     @build_charts()
     
   
@@ -16,7 +13,7 @@ class Dashboard
     @charts.impressions_chart = new Keen.Dataviz()
       .el('.chart.impressions')
       .height(250)
-      .type('areachart')
+      .type('area-spline')
       .title(" ")
       .chartOptions({
         axis: {

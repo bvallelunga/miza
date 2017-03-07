@@ -5,7 +5,7 @@ module.exports.post = (req, res, next)->
     res.json {
       success: true
       message: "Your payout information has been updated!"
-      next: "/account/profile"
+      next: req.body.next or "/account/profile"
     }
   
   .catch next

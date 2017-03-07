@@ -1,5 +1,8 @@
 <form class="form" method="POST" action="/account/password">
   <% include ../../includes/csrf %>
+  <% if(next) { %>
+    <input type="hidden" name="next" value="<%= next %>" required>
+  <% } %>
   <table>
     <tr>
       <td class="title">Old Password</td>

@@ -32,6 +32,9 @@ module.exports = (sequelize, DataTypes)->
         LIBS.models.Industry.findAll({
           where: {
             private: false
+            max_impressions: {
+              $gt: 0
+            }
           }
         })
     }

@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
       allowNull: false
     }
+    active: {
+      type: DataTypes.BOOLEAN
+      defaultValue: false
+    }
     type: {
       type: DataTypes.STRING
       allowNull: false
@@ -18,8 +22,11 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
       allowNull: false
       validate: {
-        isIn: [['running', 'paused', 'completed']]
+        isIn: [['queued', 'running', 'paused', 'completed']]
       }
+      set: (value)->
+        @setDataValue("status", value)
+        @setDataValue("active", value == "running")
     }
     paid_at: DataTypes.DATE
     start_at: DataTypes.DATE
@@ -115,8 +122,14 @@ module.exports = (sequelize, DataTypes)->
         }
     }
     validate: {
-      notCompleted: ->      
+      notCompleted: ->            
         if @changed("status") and @previous("status") == "completed"
           throw new Error "Campaign status can not be changed after it is complete."
+    }
+    hooks: {      
+      beforeDestroy: (campaign)->
+        campaign.getIndustries().each (industry)->
+          industry.destroy()
+          
     }
   }

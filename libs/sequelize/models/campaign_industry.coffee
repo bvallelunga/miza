@@ -7,6 +7,16 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.BOOLEAN
       defaultValue: false
     }
+    status: {
+      type: DataTypes.STRING
+      allowNull: false
+      validate: {
+        isIn: [['queued', 'running', 'paused', 'completed']]
+      }
+      set: (value)->
+        @setDataValue("status", value)
+        @setDataValue("active", value == "running")
+    }
     impressions_requested: {
       type: DataTypes.DECIMAL(15)
       defaultValue: 0

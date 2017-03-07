@@ -1,0 +1,87 @@
+<a class="dashboard-back fa fa-arrow-left" href="/demand/<%= advertiser.key %>/campaigns"></a>
+
+<div class="display full">
+  <div class="top-bar">
+    <div class="section split fourth left">
+      <div class="decription">Name</div>
+      <div class="title"><%= campaign.name %></div>
+    </div>
+    <div class="section split fourth left">
+      <div class="decription">Status</div>
+      <div class="title cap"><%= campaign.status %></div>
+    </div>
+    <div class="section split fourth left">
+      <div class="decription">Budget</div>
+      <div class="title blue"><%= campaign.metrics.budget %></div>
+    </div>
+    <div class="section split fourth left">
+      <div class="decription">Spend</div>
+      <div class="title green"><%= campaign.metrics.spend %></div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div class="display full">
+  <div class="top-bar">
+    <div class="section split fourth left">
+      <div class="decription">Impressions</div>
+      <div class="title"><%= campaign.metrics.impressions %></div>
+    </div>
+    <div class="section split fourth left">
+      <div class="decription">Clicks</div>
+      <div class="title cap"><%= campaign.metrics.clicks %></div>
+    </div>
+    <div class="section split fourth left">
+      <div class="decription">Start Date</div>
+      <div class="title"><%= moment(campaign.start_at).format("MMM DD, YYYY") %></div>
+    </div>
+    <div class="section split fourth left">
+      <div class="decription">End Date</div>
+      <div class="title"><%= campaign.end_at ? moment(campaign.end_at).format("MMM DD, YYYY") : "NONE" %></div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <br><br>
+  <div class="metric full main">
+    <div class="chart-wrapper">
+      <div class="chart impressions"></div>
+    </div>
+  </div>
+</div>
+
+<div class="display full table">
+ <div class="table-header">
+    <div class="actions left">
+      <div class="action" data-action="running">
+        <span class="fa fa-play"></span>
+        Run
+      </div>
+      <div class="action" data-action="paused">
+        <span class="fa fa-pause"></span>
+        Pause
+      </div>
+    </div>
+    <div class="search-box right">
+      <div class="fa fa-search"></div>
+      <input type="text" class="white" placeholder="Search...."/>
+    </div>
+  </div>
+  <div class="table-body">
+    <table class="hidden">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Industry</th>
+          <th>Status</th>
+          <th>Impressions</th>
+          <th>Clicks</th>
+          <th>CPM</th>
+          <th>Budget</th>
+          <th>Spend</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>

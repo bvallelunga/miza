@@ -3,7 +3,7 @@ module.exports.post = (req, res, next)->
     res.json {
       success: true
       message: "Your card has been added!"
-      next: "/account/profile"
+      next: req.body.next or "/account/profile"
     }
   
   .catch next

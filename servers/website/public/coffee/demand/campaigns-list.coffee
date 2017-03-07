@@ -22,12 +22,15 @@ class Dashboard
     @date_range = new DatePicker ".campaigns-listing-dashboard", @update.bind @
     
     $(".actions .action").click (e)=>
-      campaigns = @data_table.column(0).checkboxes.selected()
+      campaigns = $.makeArray @data_table.column(0).checkboxes.selected()
+      
+      if campaigns.length == 0
+        return
       
       $.post("/demand/#{config.advertiser}/campaigns/update", {
         _csrf: config.csrf
         action: $(e.currentTarget).data("action")
-        campaigns: $.makeArray campaigns
+        campaigns: campaigns
       }).done =>
         @update(@dates)
       
@@ -53,7 +56,7 @@ class Dashboard
       }, {
         'targets': 1,
         'render': ( data, type, row, meta )->
-          data = '<a href="' + window.location.pathname + '/' + row.id + '">' + data + '</a>'
+          data = "<a href='/demand/#{config.advertiser}/campaign/#{row.id}'>#{data}</a>"
           return data;
       }]
       "columns": [

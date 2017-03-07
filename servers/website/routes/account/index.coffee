@@ -12,6 +12,7 @@ module.exports.get_root = (req, res, next)->
   if dashboard in ["billing"]
     js = ["dashboard", "card", "fa"]
     res.locals.config.stripe_key = CONFIG.stripe.public
+    res.locals.config.next = req.query.next
   
   res.render "account/index", {
     js: req.js.renderTags.apply(req.js, js)
@@ -19,6 +20,7 @@ module.exports.get_root = (req, res, next)->
     title: "Account Settings"
     dashboard: "account"
     subdashboard: dashboard
+    next: req.query.next
   }
   
   

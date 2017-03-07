@@ -1,6 +1,111 @@
 moment = require "moment"
 request = require "request"
 
+module.exports.fetch = (req, res, next)->  
+  LIBS.models.Campaign.findOne({
+    where: {
+      id: req.subdashboard or req.params.campaign
+      advertiser_id: req.advertiser.id
+    }
+  }).then (campaign)->
+    if not campaign?
+      return res.redirect "/demand/#{req.advertiser.key}/campaigns"
+  
+    if req.data?
+      req.data.campaign = campaign
+      req.data.js.push "keen", "data-table"
+      req.data.css.push "keen", "data-table"
+  
+    req.campaign = campaign
+    req.subdashboard = null
+    res.locals.config.campaign = campaign.id
+    next()
+    
+  .catch next
+  
+  
+module.exports.get_industries = (req, res, next)->
+  req.campaign.getIndustries().then (industries)->
+    res.json {
+      success: true
+      results: industries
+    }
+    
+  .catch next
+  
+
+module.exports.get_charts = (req, res, next)->
+  client = LIBS.keen.scopedAnalysis(req.advertiser.config.keen)
+  
+  query = (operation, query)->
+    query.event_collection = "ads.event"
+    query.timeframe = {
+      start: req.campaign.start_at
+      end: req.campaign.end_at or moment(req.campaign.start_at).add(1, "month").toDate()
+    }
+    client.query(operation, query).then (response)->    
+      return {
+        success: true
+        result: response
+      }
+  
+  Promise.props({
+    impressions_chart: query "count", {
+      interval: "daily"
+      group_by: [ "type" ]
+      filters: [{
+        "operator": "in",
+        "property_name": "type",
+        "property_value": [
+          "click",
+          "impression"
+        ]
+      }, {
+        "operator": "eq"
+        "property_name": "campaign.id"
+        "property_value": req.campaign.id
+      }]
+    }
+  }).then (charts)->
+    res.json(charts) 
+  
+  .catch next
+  
+  
+  
+module.exports.post_industries = (req, res, next)->
+  req.advertiser.getOwner().then (owner)->
+    if not req.campaign.active
+      return Promise.reject """
+        Campaign must be running to modify a specific industry.
+      """
+      
+    if req.body.action == "running"  and not owner.stripe_card
+      return Promise.reject """
+        Please enter in your <a href="/account/billing?next=#{req.get("referrer")}">billing details</a> to start a campaign.
+      """
+      
+    LIBS.models.CampaignIndustry.findAll({
+      where: {
+        advertiser_id: req.advertiser.id
+        campaign_id: req.campaign.id
+        id: {
+          $in: req.body.industries
+        }
+      }
+    }).each (industry)->
+      industry.update({
+        status: req.body.action
+      })
+  
+  .then ->
+    res.json {
+      success: true
+    }
+  
+  .catch next
+
+
 module.exports.post_create = (req, res, next)->  
   if not req.body.creative.image_url.length > 0
     return next "Please make sure you have uploaded an image for your creative."
@@ -29,11 +134,13 @@ module.exports.post_create = (req, res, next)->
     end_date = moment(req.body.end_date, "MM-DD-YYYY")
     end_date = if end_date.isValid() then end_date.toDate() else null
     
+    status = if start_date then "queued" else "running"
+    
     LIBS.models.Campaign.create({
       name: req.body.name
       type: "standard"
-      status: "paused"
-      start_at: start_date
+      status: status
+      start_at: start_date or new Date()
       end_at: end_date
       advertiser_id: req.advertiser.id
     }).then (campaign)->
@@ -41,6 +148,7 @@ module.exports.post_create = (req, res, next)->
         campaign: campaign
         industries: Promise.map targeting, (target)->
           LIBS.models.CampaignIndustry.create({
+            status: campaign.status
             advertiser_id: req.advertiser.id
             campaign_id: campaign.id
             industry_id: target.industry.id
@@ -74,7 +182,7 @@ module.exports.post_create = (req, res, next)->
   .then (data)->
     res.json({
       success: true
-      next: "/demand/#{req.advertiser.key}/campaigns"
+      next: "/demand/#{req.advertiser.key}/campaign/#{data.campaign.id}"
     })
     
   .catch next
