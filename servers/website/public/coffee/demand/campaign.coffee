@@ -20,7 +20,23 @@ class Dashboard
     @$search.keyup =>
       @data_table.column(1).search(@$search.val()).draw()
       
-    $(".actions:not(.disabled) .action").click (e)=>
+    $(".campaign.actions .action").click (e)=>      
+      $.post("/demand/#{config.advertiser}/campaign/#{config.campaign}", {
+        _csrf: config.csrf
+        action: $(e.currentTarget).data("action")
+      }).done ->
+        window.location.reload()
+        
+      .fail (error)->
+        message = error.responseJSON.message
+        
+        $(".container").prepend(
+          "<div class='warning orange'>#{message}</div>"
+        )
+        
+        window.scrollTo(0,0);
+     
+    $(".industries.actions:not(.disabled) .action").click (e)=>
       industries = $.makeArray @data_table.column(0).checkboxes.selected()
       
       if industries.length == 0
@@ -95,10 +111,8 @@ class Dashboard
         point: {
           show: true
         }
-        tooltip: {
-          format: {
-            name: (name, ratio, id, index)-> "Impressions"
-          }
+        legend: {
+          show: false
         }
       })
       .prepare()
@@ -123,8 +137,6 @@ class Dashboard
         
         else 
           chart.message(data.error)
-    
-      finished()
 
 
 

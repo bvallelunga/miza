@@ -56,7 +56,7 @@ class Dashboard
       .replace(/&/g, '&amp;')
       .replace(/>/g, '&gt;')
       .replace(/</g, '&lt;')
-      .replace(/\n/g, '<br>');
+      .replace(/\n/g, '<br>')
   
     @$simulator.find("strong").toggle (text or img) == ""
     @$simulator.find("a").attr "href", $(".simulator-link").val() or "#"

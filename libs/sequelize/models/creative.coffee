@@ -8,6 +8,15 @@ module.exports = (sequelize, DataTypes)->
       allowNull: false
     }
     description: DataTypes.STRING
+    description_html: {
+      type: DataTypes.VIRTUAL
+      get: ->
+        return @get("description")
+          .replace(/&/g, '&amp;')
+          .replace(/>/g, '&gt;')
+          .replace(/</g, '&lt;')
+          .replace(/\n/g, '<br>')
+    }
     title: DataTypes.STRING
     image: { 
       type: DataTypes.BLOB("long")

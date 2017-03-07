@@ -10,12 +10,16 @@ module.exports.fetch = (req, res, next)->
     include: [{
       model: LIBS.models.CampaignIndustry
       as: "industries"
+    }, {
+      model: LIBS.models.Creative
+      as: "creatives"
     }]
   }).then (campaign)->
     if not campaign?
       return res.redirect "/demand/#{req.advertiser.key}/campaigns"
   
     if req.data?
+      req.data.dashboard_width = "large"
       req.data.campaign = campaign
       req.data.js.push "keen", "data-table"
       req.data.css.push "keen", "data-table"
@@ -27,7 +31,30 @@ module.exports.fetch = (req, res, next)->
     
   .catch next
   
+
+module.exports.post_update = (req, res, next)->
+  Promise.resolve().then ->
+    if req.body.action == "delete"
+      return req.campaign.destroy()
+      
+    if req.campaign.status == "queued"
+      if req.body.action == "running"
+        req.campaign.start_at = new Date()
+        
+      else if req.body.action == "paused"
+        return Promise.reject "Queued campaigns can not be paused"
+      
+    req.campaign.status = req.body.action
+    req.campaign.save()
   
+  .then ->
+    res.json {
+      success: true
+    }
+  
+  .catch next
+  
+
 module.exports.get_industries = (req, res, next)->
   res.json {
     success: true
@@ -36,11 +63,11 @@ module.exports.get_industries = (req, res, next)->
   
 
 module.exports.get_charts = (req, res, next)->
-  client = LIBS.keen.scopedAnalysis(req.advertiser.config.keen)
+  client = LIBS.keen.scopedAnalysis CONFIG.keen.readKey #(req.advertiser.config.keen)
   
   query = (operation, query)->
     query.event_collection = "ads.event"
-    query.timeframe = {
+    query.timeframe = "this_14_days" or {
       start: req.campaign.start_at
       end: req.campaign.end_at or moment(req.campaign.start_at).add(1, "month").toDate()
     }
@@ -61,11 +88,11 @@ module.exports.get_charts = (req, res, next)->
           "click",
           "impression"
         ]
-      }, {
-        "operator": "eq"
-        "property_name": "campaign.id"
-        "property_value": req.campaign.id
-      }]
+      }]# , {
+#         "operator": "eq"
+#         "property_name": "campaign.id"
+#         "property_value": req.campaign.id
+#       }]
     }
   }).then (charts)->
     res.json(charts) 

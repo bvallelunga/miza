@@ -5,7 +5,15 @@
   margin-bottom: 15px;
   
   &.table {
-    min-height: 350px;
+    min-height: 250px;
+  }
+  
+  &.split.core-information {
+    width: 62% !important;
+  }
+  
+  &.split.simulator-container {
+    width: 36% !important;
   }
   
   .top-bar .section {
@@ -31,6 +39,25 @@
     .decription {
       color: @text_weak;
       margin-bottom: 5px;
+    }
+    
+    .actions .action {
+      margin: 8px 5px 0 0;
+    }
+  }
+  
+  .simulator {
+    width: 300px;
+    height: 250px;
+    margin: 0 auto;
+    border: solid 1px #E2E2E2;
+    position: relative;
+    overflow: hidden;
+    .border-radius(4px);
+    
+    img, a div {
+      width: 100%;
+      display: block !important;
     }
   }
   

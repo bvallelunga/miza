@@ -2,27 +2,48 @@
 
 <div class="display full">
   <div class="top-bar">
-    <div class="section split fourth left">
+    <div class="section split eighteenth left">
       <div class="decription">Name</div>
       <div class="title"><%= campaign.name %></div>
     </div>
-    <div class="section split fourth left">
+    <div class="section split eighteenth left">
       <div class="decription">Status</div>
       <div class="title cap"><%= campaign.status %></div>
     </div>
-    <div class="section split fourth left">
+    <div class="section split eighteenth left">
       <div class="decription">Budget</div>
       <div class="title blue"><%= campaign.metrics.budget %></div>
     </div>
-    <div class="section split fourth left">
+    <div class="section split eighteenth left">
       <div class="decription">Spend</div>
       <div class="title green"><%= campaign.metrics.spend %></div>
+    </div>
+    <div class="section split right">
+      <div class="actions campaign left">
+        <% if(campaign.status != "completed") { %>
+          <% if(campaign.status == "paused") { %>
+            <div class="action" data-action="running">
+              <span class="fa fa-play"></span>
+              Run
+            </div>
+          <% } else { %>
+            <div class="action" data-action="paused">
+              <span class="fa fa-pause"></span>
+              Pause
+            </div>
+          <% } %>
+        <% } %>
+        <div class="action" data-action="delete">
+          <span class="fa fa-trash"></span>
+          Delete
+        </div>
+      </div>
     </div>
     <div class="clear"></div>
   </div>
 </div>
 
-<div class="display full">
+<div class="display split core-information left padded">
   <div class="top-bar">
     <div class="section split fourth left">
       <div class="decription">Impressions</div>
@@ -50,9 +71,28 @@
   </div>
 </div>
 
+<div class="display builder split simulator-container right">
+  <div class="top-bar">
+    <div class="section">
+      <div class="decription">Creative</div>
+      <div class="title">300 x 250</div>
+    </div>
+  </div>
+  <br>
+  <div class="simulator">
+    <a target="_blank" href="<%= campaign.creatives[0].link %>">
+      <img src="data:image;base64,<%= campaign.creatives[0].image.toString('base64') %>"/>
+      <% if(campaign.creatives[0].description) { %>
+        <div><%- campaign.creatives[0].description_html %></div>
+      <% } %>
+    </a>
+  </div>
+  <br>
+</div>
+
 <div class="display full table">
- <div class="table-header">
-    <div class="actions left <%= campaign.status != "running" ? "disabled" : "" %>">
+  <div class="table-header">
+    <div class="industries actions left <%= campaign.status != "running" ? "disabled" : "" %>">
       <div class="action" data-action="running">
         <span class="fa fa-play"></span>
         Run
