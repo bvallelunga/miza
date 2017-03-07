@@ -65,12 +65,22 @@ module.exports.get_industries = (req, res, next)->
 
 module.exports.get_charts = (req, res, next)->
   client = LIBS.keen.scopedAnalysis(req.advertiser.config.keen)
+  end_date = req.campaign.end_at
+  
+  if not end_date?
+    today = new Date()
+    shift = req.campaign.start_at
+    
+    if today > shift
+      shift = today
+    
+    end_date = moment(shift).add(1, "month").toDate()
   
   query = (operation, query)->
     query.event_collection = "ads.event"
     query.timeframe = "this_14_days" or {
       start: req.campaign.start_at
-      end: req.campaign.end_at or moment(req.campaign.start_at).add(1, "month").toDate()
+      end: end_date
     }
     client.query(operation, query).then (response)->    
       return {

@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes)->
       set: (value)->
         @setDataValue("status", value)
         @setDataValue("active", value == "running")
+        
+        if value == "complete" and not @get("end_at")
+          @setDataValue("end_at", new Date())
+          
     }
     paid_at: DataTypes.DATE
     start_at: DataTypes.DATE
