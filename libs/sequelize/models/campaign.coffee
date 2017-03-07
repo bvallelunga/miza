@@ -126,7 +126,14 @@ module.exports = (sequelize, DataTypes)->
         if @changed("status") and @previous("status") == "completed"
           throw new Error "Campaign status can not be changed after it is complete."
     }
-    hooks: {      
+    hooks: {
+      afterUpdate: (campaign)->
+        if campaign.changed("status")
+          campaign.getIndustries().each (industry)->
+            industry.status = campaign.status
+            industry.save()
+              
+            
       beforeDestroy: (campaign)->
         campaign.getIndustries().each (industry)->
           industry.destroy()
