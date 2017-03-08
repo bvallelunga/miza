@@ -1,4 +1,7 @@
 module.exports.get = (req, res, next)->
+  if req.user.advertisers.length > 0
+    return res.redirect "/demand"
+
   res.render "demand/create", {
     js: req.js.renderTags "modal"
     css: req.css.renderTags "modal", "fa"

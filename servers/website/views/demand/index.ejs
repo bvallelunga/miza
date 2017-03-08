@@ -7,12 +7,6 @@
       <span class="fa fa-sort"></span>
     </div>
     <div class="companies">
-      <% if(!user.is_demo) { %>
-        <a href="/demand/new">
-          <span class="fa fa-plus"></span>
-          New Advertiser
-        </a>
-      <% } %>
       <% if(user.is_admin) { %>
         <div class="group">
           <span class="fa fa-search"></span>

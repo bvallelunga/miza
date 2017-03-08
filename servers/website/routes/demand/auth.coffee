@@ -18,20 +18,18 @@ module.exports = (req, res, next)->
     return null
   
   .then (advertiser)->
+    if not advertiser?
+      return res.redirect "/demand" 
+  
     advertiser.getOwner().then (owner)->
       advertiser.owner = owner
-      return advertiser
-  
-  .then (advertiser)->
-    if not advertiser?
-      return res.redirect "/demand"
-      
-    advertiser.intercom().then (intercom)->
-      req.advertiser = advertiser
-      res.locals.advertiser = advertiser
-      res.locals.config.advertiser = advertiser.key
-      res.locals.intercom.company = intercom
-        
-      next()
+
+      advertiser.intercom().then (intercom)->
+        req.advertiser = advertiser
+        res.locals.advertiser = advertiser
+        res.locals.config.advertiser = advertiser.key
+        res.locals.intercom.company = intercom
+          
+        next()
     
   .catch next
