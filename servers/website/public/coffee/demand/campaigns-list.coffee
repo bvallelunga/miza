@@ -27,14 +27,21 @@ class Dashboard
       if campaigns.length == 0
         return
       
+      $spinner = $(e.currentTarget).find(".fa-spin").show()
+      $original = $(e.currentTarget).find(":not(.fa-spin)").hide()
+      
       $.post("/demand/#{config.advertiser}/campaigns/update", {
         _csrf: config.csrf
         action: $(e.currentTarget).data("action")
         campaigns: campaigns
       }).done =>
+        $spinner.hide()
+        $original.show()
         @update(@dates)
       
       .fail (error)->
+        $spinner.hide()
+        $original.show()
         message = error.responseJSON.message
         
         $(".container").prepend(

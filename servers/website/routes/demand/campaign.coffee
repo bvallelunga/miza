@@ -64,9 +64,7 @@ module.exports.get_industries = (req, res, next)->
   
 
 module.exports.get_charts = (req, res, next)->
-  ## TODO: Undo commented code so data is isolated 
-  ##       to advertiser and campaign
-  client = LIBS.keen.scopedAnalysis CONFIG.keen.readKey #(req.advertiser.config.keen)
+  client = LIBS.keen.scopedAnalysis req.advertiser.config.keen
   end_date = req.campaign.end_at
   
   if not end_date?
@@ -80,7 +78,7 @@ module.exports.get_charts = (req, res, next)->
   
   query = (operation, query)->
     query.event_collection = "ads.event"
-    query.timeframe = "this_14_days" or {
+    query.timeframe = {
       start: req.campaign.start_at
       end: end_date
     }
@@ -101,12 +99,11 @@ module.exports.get_charts = (req, res, next)->
           "click",
           "impression"
         ]
+      }, {
+        "operator": "eq"
+        "property_name": "campaign.id"
+        "property_value": req.campaign.id
       }]
-#       }, {
-#         "operator": "eq"
-#         "property_name": "campaign.id"
-#         "property_value": req.campaign.id
-#       }]
     }
   }).then (charts)->
     res.json(charts) 

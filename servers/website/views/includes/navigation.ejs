@@ -3,10 +3,6 @@
     <% include ./logo %>
     <div class="links">
       <% if(type == "demand") { %>
-        <a href="<%= dashboard_path %>/analytics" class="<%= isActive(dashboard, "analytics") %>">
-          <span class="fa fa-pie-chart"></span>
-          Analytics
-        </a>
         <a href="<%= dashboard_path %>/campaigns" class="<%= isActive(dashboard, "campaigns") %> <%= isActive(dashboard, "campaign") %>">
           <span class="fa fa-th-large"></span>
           Campaigns

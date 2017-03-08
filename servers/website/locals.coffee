@@ -1,5 +1,7 @@
 numeral = require "numeral"
 moment = require "moment"
+pluralize = require 'pluralize'
+tensify = require 'tensify'
 random_slug = Math.random().toString(36).substr(2, 20)
 
 module.exports = (req, res, next)->
@@ -45,6 +47,8 @@ module.exports = (req, res, next)->
   res.locals.support_phone_clean = CONFIG.general.support.phone.replace(/\D+/g, '')
   res.locals.numeral = numeral
   res.locals.moment = moment
+  res.locals.pluralize = pluralize
+  res.locals.tensify = tensify
   res.locals.dashboard = ""
   res.locals.referrer = req.get("referrer")
   res.locals.media = {

@@ -114,6 +114,7 @@ module.exports = (srv)->
   app.post "/demand/:advertiser/campaigns/update", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaigns.post_updates
   app.post "/demand/:advertiser/campaign/:campaign", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaign.fetch, routes.demand.campaign.post_update
   app.post "/demand/:advertiser/campaign/:campaign/industries", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaign.fetch, routes.demand.campaign.post_industries
+  app.post "/demand/:advertiser/billing/charges", routes.auth.is_authenticated, routes.demand.auth, routes.demand.billing.post_charges
   app.post "/demand/:advertiser/settings", routes.auth.is_authenticated, routes.demand.auth, routes.demand.settings.post_update
   
   

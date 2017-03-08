@@ -24,3 +24,13 @@ module.exports.fetch = (req, res, next)->
       req.advertiser.campaigns = campaigns
   
   .then(-> next()).catch next
+  
+  
+
+module.exports.post_charges = (req, res, next)->
+  req.advertiser.approve_spending().then ->
+    res.json({
+      sucess: true
+    })
+  
+  .catch next

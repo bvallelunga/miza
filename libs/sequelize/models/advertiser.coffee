@@ -133,6 +133,10 @@ module.exports = (sequelize, DataTypes)->
         @update {
           config: @config
         }
+        
+      approve_spending: ->
+        # TODO build STRIPE payments stuff
+        Promise.resolve()
 
         
       associations: (fetch)->

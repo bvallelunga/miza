@@ -29,17 +29,20 @@
             <% if(campaign.status == "running") { %>
               <div class="action" data-action="paused">
                 <span class="fa fa-pause"></span>
+                <span class="fa fa-spin fa-refresh" style="display:none"></span>
                 Pause
               </div>
             <% } else { %>
                <div class="action" data-action="running">
                 <span class="fa fa-play"></span>
+                <span class="fa fa-spin fa-refresh" style="display:none"></span>
                 Run
               </div>
             <% } %>
           <% } %>
           <div class="action" data-action="delete">
             <span class="fa fa-trash"></span>
+            <span class="fa fa-spin fa-refresh" style="display:none"></span>
             Delete
           </div>
         </div>
@@ -105,10 +108,12 @@
     <div class="industries actions left <%= campaign.status != "running" ? "disabled" : "" %>">
       <div class="action" data-action="running">
         <span class="fa fa-play"></span>
+        <span class="fa fa-spin fa-refresh" style="display:none"></span>
         Run
       </div>
       <div class="action" data-action="paused">
         <span class="fa fa-pause"></span>
+        <span class="fa fa-spin fa-refresh" style="display:none"></span>
         Pause
       </div>
     </div>

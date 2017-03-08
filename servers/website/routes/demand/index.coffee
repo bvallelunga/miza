@@ -1,5 +1,4 @@
 module.exports = DASHBOARDS = {
-  analytics: require "./analytics"
   campaigns: require "./campaigns"
   campaign:  require "./campaign"
   settings:  require "./settings"

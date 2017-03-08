@@ -20,7 +20,10 @@ class Dashboard
     @$search.keyup =>
       @data_table.column(1).search(@$search.val()).draw()
       
-    $(".campaign.actions .action").click (e)=>      
+    $(".campaign.actions .action").click (e)=>    
+      $spinner = $(e.currentTarget).find(".fa-spin").show()
+      $original = $(e.currentTarget).find(":not(.fa-spin)").hide()  
+      
       $.post("/demand/#{config.advertiser}/campaign/#{config.campaign}", {
         _csrf: config.csrf
         action: $(e.currentTarget).data("action")
@@ -28,6 +31,8 @@ class Dashboard
         window.location.reload()
         
       .fail (error)->
+        $spinner.hide()
+        $original.show()
         message = error.responseJSON.message
         
         $(".container").prepend(
@@ -41,12 +46,22 @@ class Dashboard
       
       if industries.length == 0
         return
+        
+      $spinner = $(e.currentTarget).find(".fa-spin").show()
+      $original = $(e.currentTarget).find(":not(.fa-spin)").hide()
       
       $.post("/demand/#{config.advertiser}/campaign/#{config.campaign}/industries", {
         _csrf: config.csrf
         action: $(e.currentTarget).data("action")
         industries: industries
-      }).done(=> @update()).fail (error)->
+      }).done =>
+        $spinner.hide()
+        $original.show()
+        @update()
+        
+      .fail (error)->
+        $spinner.hide()
+        $original.show()
         message = error.responseJSON.message
         
         $(".container").prepend(
