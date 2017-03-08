@@ -1,0 +1,52 @@
+<div class="display full">
+  <table class="top-bar"> 
+    <tr>   
+      <td class="section">
+        <div class="decription">
+          Billed Spend
+          <span class="info fa fa-info-circle tooltip" title="Total charges to your account."></span>
+        </div>
+        <div class="title green"><%= advertiser.metrics.billed_spend %></div>
+      </td>
+      <td class="section">
+        <div class="decription">
+          Pending Spend
+          <span class="info fa fa-info-circle tooltip" title="Billings that will be charged at the start of the next billing cycle."></span>
+        </div>
+        <div class="title blue"><%= advertiser.metrics.pending_spend %></div>
+      </td>
+      <td class="section">
+        <div class="decription">
+          Upcoming Charges
+          <span class="info fa fa-info-circle tooltip" title="Billings for on going campaigns that have not completed."></span>
+        </div>
+        <div class="title"><%= advertiser.metrics.upcoming_charges %></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="display full table-container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Method</th>
+        <th>Billed On</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% advertiser.transfers.forEach(function(transfer) { %>
+        <tr>
+          <td><%= transfer.name %></td>
+          <td><%= transfer.metrics.amount %></td>
+          <td><%= transfer.is_transferred ? "Transferred" : "Pending" %></td>
+          <td><%= transfer.stripe_card %></td>
+          <td><%= transfer.transferred_at ? moment(transfer.transferred_at).format("MMM Do, YYYY") : "" %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

@@ -1,5 +1,6 @@
 url = require 'url'
 randomstring = require "randomstring"
+numeral = require "numeral"
 
 module.exports = (sequelize, DataTypes)->
 
@@ -33,6 +34,57 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.JSONB
       defaultValue: {}
     }
+    billed_spend: {
+      type: DataTypes.VIRTUAL
+      get: ->      
+        total = 0
+        
+        if not @transfers?
+          return NaN
+        
+        for transfer in @transfers
+          if transfer.is_transferred
+            total += transfer.amount
+         
+        return total
+    }
+    pending_spend: {
+      type: DataTypes.VIRTUAL
+      get: ->      
+        total = 0
+        
+        if not @transfers?
+          return NaN
+        
+        for transfer in @transfers
+          if not transfer.is_transferred
+            total += transfer.amount
+         
+        return total
+    }
+    upcoming_charges: {
+      type: DataTypes.VIRTUAL
+      get: ->      
+        total = 0
+        
+        if not @campaigns?
+          return NaN
+        
+        for campaign in @campaigns
+          if campaign.status != "completed"
+            total += campaign.spend
+         
+        return total
+    }
+    metrics: {
+      type: DataTypes.VIRTUAL
+      get: ->      
+        return {
+          billed_spend: numeral(@billed_spend).format("$0[,]000.00")
+          pending_spend: numeral(@pending_spend).format("$0[,]000.00")
+          upcoming_charges: numeral(@upcoming_charges).format("$0[,]000.00")
+        }
+    }
   }, {    
     classMethods: {      
       associate: (models)->
@@ -55,10 +107,6 @@ module.exports = (sequelize, DataTypes)->
         
         models.Advertiser.hasMany models.Campaign, { 
           as: 'campaigns' 
-        }
-        
-        models.Advertiser.hasMany models.Creative, { 
-          as: 'industries'
         }
 
     }

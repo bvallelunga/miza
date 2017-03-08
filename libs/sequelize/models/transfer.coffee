@@ -1,6 +1,12 @@
+numeral = require "numeral"
+
 module.exports = (sequelize, DataTypes)->
   
   return sequelize.define "Transfer", {
+    name: { 
+      type: DataTypes.STRING
+      allowNull: false
+    }
     type: { 
       type: DataTypes.STRING
       allowNull: false
@@ -19,8 +25,13 @@ module.exports = (sequelize, DataTypes)->
     amount: {
       type: DataTypes.DECIMAL(15)
       defaultValue: 0
-      get: ->      
-        return Number @getDataValue("amount")
+      get: ->
+        scaler = 1
+      
+        if @type == "refund"
+          scaler = -1
+          
+        return scaler * Number @getDataValue("amount")
     }
     impressions: {
       type: DataTypes.DECIMAL(15)
@@ -43,6 +54,15 @@ module.exports = (sequelize, DataTypes)->
     config: {
       type: DataTypes.JSONB
       defaultValue: {}
+    }
+    metrics: {
+      type: DataTypes.VIRTUAL
+      get: ->      
+        return {
+          amount: numeral(@amount).format("$0[,]000.00")
+          impressions: numeral(@impressions).format("0[,]000")
+          clicks: numeral(@clicks).format("0[,]000")
+        }
     }
   }, {    
     classMethods: {      

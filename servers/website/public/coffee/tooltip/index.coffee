@@ -5,4 +5,4 @@ $ ->
     contentAsHTML: true
     delay: 100
     distance: 10
-  })
+  }).show()

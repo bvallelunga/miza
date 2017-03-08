@@ -72,37 +72,37 @@ module.exports = (sequelize, DataTypes)->
     budget: {
       type: DataTypes.VIRTUAL
       get: ->      
-        return @get("cpm_impression") * @get("impressions_requested")
+        return @cpm_impression * @impressions_requested
     }
     spend: {
       type: DataTypes.VIRTUAL
       get: ->      
-        return @get("cpm_impression") * @get("impressions")
+        return @cpm_impression * @impressions
     }
     cpm_impression: {
       type: DataTypes.VIRTUAL
       get: ->      
-        return @get("cpm") / 1000
+        return @cpm / 1000
     }
     progress: {
       type: DataTypes.VIRTUAL
       get: ->      
-        return @get("impressions")/@get("impressions_requested")
+        return @impressions/@impressions_requested
     }
     metrics: {
       type: DataTypes.VIRTUAL
       get: ->      
         return {
-          cpm: numeral(@get("cpm")).format("$0[,]000.00")
-          impressions: numeral(@get("impressions")).format("0[,]000")
-          impressions_needed: numeral(@get("impressions_needed")).format("0[,]000")
-          impressions_requested: numeral(@get("impressions_requested")).format("0[,]000")
-          clicks: numeral(@get("clicks")).format("0[,]000")
-          budget: numeral(@get("budget")).format("$0[,]000.00")
-          spend: numeral(@get("spend")).format("$0[,]000.00")
-          paid: numeral(@get("paid")).format("$0[,]000.00")
-          refunded: numeral(@get("refunded")).format("$0[,]000.00")
-          progress: numeral(@get("progress")).format("0[.]0%")
+          cpm: numeral(@cpm).format("$0[,]000.00")
+          impressions: numeral(@impressions).format("0[,]000")
+          impressions_needed: numeral(@impressions_needed).format("0[,]000")
+          impressions_requested: numeral(@impressions_requested).format("0[,]000")
+          clicks: numeral(@clicks).format("0[,]000")
+          budget: numeral(@budget).format("$0[,]000.00")
+          spend: numeral(@spend).format("$0[,]000.00")
+          paid: numeral(@paid).format("$0[,]000.00")
+          refunded: numeral(@refunded).format("$0[,]000.00")
+          progress: numeral(@progress).format("0[.]0%")
         }
     }
     config: {

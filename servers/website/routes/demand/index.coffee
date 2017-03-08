@@ -5,6 +5,7 @@ module.exports = DASHBOARDS = {
   settings:  require "./settings"
   auth:      require "./auth"
   create:    require "./create"
+  billing:   require "./billing"
 }
 
 module.exports.get_root = (req, res, next)->   

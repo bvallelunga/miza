@@ -73,10 +73,10 @@ module.exports = (sequelize, DataTypes)->
       get: ->   
         total = 0
         
-        if not @get("industries")?
+        if not @industries?
           return NaN
         
-        for industry in @get("industries")
+        for industry in @industries
           total += industry.budget
          
         return total
@@ -86,10 +86,10 @@ module.exports = (sequelize, DataTypes)->
       get: ->      
         total = 0
         
-        if not @get("industries")?
+        if not @industries?
           return NaN
         
-        for industry in @get("industries")
+        for industry in @industries
           total += industry.spend
          
         return total
@@ -100,10 +100,10 @@ module.exports = (sequelize, DataTypes)->
         total_requested = 0
         total_impressions = 0
         
-        if not @get("industries")?
+        if not @industries?
           return NaN
         
-        for industry in @get("industries")
+        for industry in @industries
           total_requested += industry.impressions_requested
           total_impressions += industry.impressions
          
@@ -113,13 +113,13 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.VIRTUAL
       get: ->      
         return {
-          impressions: numeral(@get("impressions")).format("0[,]000")
-          clicks: numeral(@get("clicks")).format("0[,]000")
-          budget: numeral(@get("budget")).format("$0[,]000.00")
-          spend: numeral(@get("spend")).format("$0[,]000.00")
-          paid: numeral(@get("paid")).format("$0[,]000.00")
-          refunded: numeral(@get("refunded")).format("$0[,]000.00")
-          progress: numeral(@get("progress")).format("0[.]0%")
+          impressions: numeral(@impressions).format("0[,]000")
+          clicks: numeral(@clicks).format("0[,]000")
+          budget: numeral(@budget).format("$0[,]000.00")
+          spend: numeral(@spend).format("$0[,]000.00")
+          paid: numeral(@paid).format("$0[,]000.00")
+          refunded: numeral(@refunded).format("$0[,]000.00")
+          progress: numeral(@progress).format("0[.]0%")
         }
     }
     config: {
