@@ -151,7 +151,7 @@ class Dashboard
   
 
 $ ->
-  if not $(".display").hasClass "analytics-dashboard"
+  if not $(".container").hasClass "analytics-dashboard"
     return
   
   dashboard = new Dashboard()
