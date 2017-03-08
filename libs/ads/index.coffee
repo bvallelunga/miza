@@ -29,6 +29,19 @@ module.exports.build_event = (req, data)->
       name: data.publisher.name
       key: data.publisher.key
     }
+    advertiser: {
+      id: null
+      name: null
+      key: null
+    }
+    campaign: {
+      id: null
+      name: null
+    }
+    creative: {
+      id: null
+      format: null
+    }
     page_url: {
       raw: req.query.page_url or req.get("referrer")
     }
