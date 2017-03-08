@@ -177,6 +177,9 @@ module.exports.post_create = (req, res, next)->
       start_at: start_date or new Date()
       end_at: end_date
       advertiser_id: req.advertiser.id
+      impressions_requested: targeting.reduce (t, s)-> 
+        return t.impressions + s.impressions
+  
     }).then (campaign)->
       Promise.props({
         campaign: campaign

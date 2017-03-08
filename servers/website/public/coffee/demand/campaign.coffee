@@ -88,9 +88,9 @@ class Dashboard
         { "data": "name" },
         { "data": "status" },
         { "data": "metrics.progress" },
-        { "data": "metrics.impressions_requested" },
         { "data": "metrics.impressions" },
         { "data": "metrics.clicks" }
+        { "data": "metrics.ctr" }
         { "data": "metrics.cpm" },
         { "data": "metrics.budget" },
         { "data": "metrics.spend" }

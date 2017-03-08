@@ -64,6 +64,11 @@ module.exports = (sequelize, DataTypes)->
           clicks: numeral(@clicks).format("0[,]000")
         }
     }
+    stripe_amount: {
+      type: DataTypes.VIRTUAL
+      get: ->      
+        return Math.floor @amount * 100
+    }
   }, {    
     classMethods: {      
       associate: (models)->

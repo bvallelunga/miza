@@ -23,7 +23,7 @@
         <div class="title"><%= advertiser.metrics.upcoming_charges %></div>
       </td>
       <td class="section">
-        <div class="actions billing right">
+        <div class="actions billing right <%= advertiser.pending_spend == 0 ? "disabled": "" %>">
           <div class="action" data-action="approve">
             <span class="fa fa-check"></span>
             <span class="fa fa-spin fa-refresh" style="display:none"></span>

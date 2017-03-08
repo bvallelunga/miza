@@ -73,6 +73,7 @@ class Dashboard
         { "data": "metrics.progress" },
         { "data": "metrics.impressions" },
         { "data": "metrics.clicks" }
+        { "data": "metrics.ctr" }
         { "data": "metrics.budget" },
         { "data": "metrics.spend" }
       ]

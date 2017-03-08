@@ -89,6 +89,11 @@ module.exports = (sequelize, DataTypes)->
       get: ->      
         return @impressions/@impressions_requested
     }
+    ctr: {
+      type: DataTypes.VIRTUAL
+      get: ->      
+        return @clicks/Math.max(@impressions or 1)
+    }
     metrics: {
       type: DataTypes.VIRTUAL
       get: ->      
@@ -103,6 +108,7 @@ module.exports = (sequelize, DataTypes)->
           paid: numeral(@paid).format("$0[,]000.00")
           refunded: numeral(@refunded).format("$0[,]000.00")
           progress: numeral(@progress).format("0[.]0%")
+          ctr: numeral(@ctr).format("0[.]0%")
         }
     }
     config: {
@@ -128,6 +134,7 @@ module.exports = (sequelize, DataTypes)->
       beforeValidate: (campaignIndustry)->
         campaignIndustry.impressions_needed = Math.max 0, campaignIndustry.impressions_requested - campaignIndustry.impressions
         
+      
       beforeUpdate: (campaignIndustry)->
         if campaignIndustry.impressions_needed == 0
           campaignIndustry.status = "completed"

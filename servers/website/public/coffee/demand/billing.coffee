@@ -1,7 +1,7 @@
 class Dashboard  
   
   constructor: ->         
-    $(".billing.actions .action").click (e)->   
+    $(".billing.actions:not(.disabled) .action").click (e)->   
       $spinner = $(@).find(".fa-spin").show()
       $original = $(@).find(":not(.fa-spin)").hide()
           
@@ -12,6 +12,8 @@ class Dashboard
         window.location.reload()
         
       .fail (error)->
+        $spinner.hide()
+        $original.show()
         message = error.responseJSON.message
         
         $(".container").prepend(

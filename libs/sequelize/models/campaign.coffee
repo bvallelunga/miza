@@ -49,6 +49,18 @@ module.exports = (sequelize, DataTypes)->
       get: ->      
         return Number @getDataValue("paid")
     }
+    impressions_requested: {
+      type: DataTypes.DECIMAL(15)
+      defaultValue: 0
+      get: ->      
+        return Number @getDataValue("impressions_requested")
+    }
+    impressions_needed: {
+      type: DataTypes.DECIMAL(15)
+      defaultValue: 0
+      get: ->      
+        return Number @getDataValue("impressions_needed")
+    }
     impressions: {
       type: DataTypes.DECIMAL(15)
       defaultValue: 0
@@ -96,30 +108,28 @@ module.exports = (sequelize, DataTypes)->
     }
     progress: {
       type: DataTypes.VIRTUAL
-      get: ->      
-        total_requested = 0
-        total_impressions = 0
-        
-        if not @industries?
-          return NaN
-        
-        for industry in @industries
-          total_requested += industry.impressions_requested
-          total_impressions += industry.impressions
-         
-        return total_impressions/total_requested
+      get: ->         
+        return @impressions/@impressions_requested
+    }
+    ctr: {
+      type: DataTypes.VIRTUAL
+      get: ->               
+        return @clicks/Math.max(@impressions or 1)
     }
     metrics: {
       type: DataTypes.VIRTUAL
       get: ->      
         return {
           impressions: numeral(@impressions).format("0[,]000")
+          impressions_needed: numeral(@impressions_needed).format("0[,]000")
+          impressions_requested: numeral(@impressions_requested).format("0[,]000")
           clicks: numeral(@clicks).format("0[,]000")
           budget: numeral(@budget).format("$0[,]000.00")
           spend: numeral(@spend).format("$0[,]000.00")
           paid: numeral(@paid).format("$0[,]000.00")
           refunded: numeral(@refunded).format("$0[,]000.00")
           progress: numeral(@progress).format("0[.]0%")
+          ctr: numeral(@ctr).format("0[.]0%")
         }
     }
     config: {
@@ -146,7 +156,16 @@ module.exports = (sequelize, DataTypes)->
         if @changed("status") and @previous("status") == "completed"
           throw new Error "Campaign status can not be changed after it is complete."
     }
-    hooks: {      
+    hooks: {
+      beforeValidate: (campaign)->
+        campaign.impressions_needed = Math.max 0, campaign.impressions_requested - campaign.impressions
+        
+      
+      beforeUpdate: (campaign)->
+        if campaign.impressions_needed == 0
+          campaign.status = "completed"
+      
+         
       afterUpdate: (campaign)->
         if campaign.changed("status")
           campaign.getIndustries().each (industry)->

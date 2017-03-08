@@ -135,8 +135,41 @@ module.exports = (sequelize, DataTypes)->
         }
         
       approve_spending: ->
-        # TODO build STRIPE payments stuff
-        Promise.resolve()
+        advertiser = @
+                
+        Promise.props({
+          owner: advertiser.getOwner()
+          transfers: advertiser.getTransfers({
+            where: {
+              is_transferred: false
+              type: "charge"
+              amount: {
+                $gt: 1
+              }
+            }
+          })
+        }).then (props)->
+          if not props.owner.stripe_card?
+            return Promise.reject "Please enter in your billing details before approving any spend."
+        
+          Promise.each props.transfers, (transfer)->
+            LIBS.mixpanel.people.track_charge advertiser.owner_id, transfer.amount
+            LIBS.stripe.charges.create({
+              amount: transfer.stripe_amount
+              customer: props.owner.stripe_id
+              currency: "usd"
+              description: transfer.name
+              receipt_email: props.owner.email
+              metadata: {
+                user: transfer.user_id
+                advertiser: transfer.advertiser_id
+                campaign: transfer.campaign_id
+              }
+            }).then ->
+              transfer.is_transferred = true
+              transfer.transferred_at = new Date()
+              transfer.stripe_card = props.owner.getDataValue("stripe_card")
+              transfer.save()
 
         
       associations: (fetch)->

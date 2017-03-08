@@ -52,25 +52,30 @@
 </div>
 
 <div class="display split core-information left padded">
-  <div class="top-bar">
-    <div class="section split fourth left">
-      <div class="decription">Impressions</div>
-      <div class="title"><%= campaign.metrics.impressions %></div>
-    </div>
-    <div class="section split fourth left">
-      <div class="decription">Clicks</div>
-      <div class="title cap"><%= campaign.metrics.clicks %></div>
-    </div>
-    <div class="section split fourth left">
-      <div class="decription">Start Date</div>
-      <div class="title"><%= moment(campaign.start_at).format("MMM DD, YYYY") %></div>
-    </div>
-    <div class="section split fourth left">
-      <div class="decription">End Date</div>
-      <div class="title"><%= campaign.end_at ? moment(campaign.end_at).format("MMM DD, YYYY") : "NONE" %></div>
-    </div>
-    <div class="clear"></div>
-  </div>
+  <table class="top-bar"> 
+    <tr> 
+      <td class="section">
+        <div class="decription">Impressions</div>
+        <div class="title"><%= campaign.metrics.impressions %></div>
+      </td>
+      <td class="section">
+        <div class="decription">Clicks</div>
+        <div class="title cap"><%= campaign.metrics.clicks %></div>
+      </td>
+      <td class="section">
+        <div class="decription">CTR</div>
+        <div class="title cap"><%= campaign.metrics.ctr %></div>
+      </td>
+      <td class="section">
+        <div class="decription">Start Date</div>
+        <div class="title"><%= moment(campaign.start_at).format("MMM DD") %></div>
+      </td>
+      <td class="section">
+        <div class="decription">End Date</div>
+        <div class="title"><%= campaign.end_at ? moment(campaign.end_at).format("MMM DD") : "NONE" %></div>
+      </td>
+    </tr>
+  </table>
   <br><br>
   <div class="metric full main">
     <div class="chart-wrapper">
@@ -130,9 +135,9 @@
           <th>Industry</th>
           <th>Status</th>
           <th>Progress</th>
-          <th>Ordered Imprs.</th>
           <th>Impressions</th>
           <th>Clicks</th>
+          <th>CTR</th>
           <th>CPM</th>
           <th>Budget</th>
           <th>Spend</th>
