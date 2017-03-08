@@ -209,6 +209,7 @@ module.exports.post_create = (req, res, next)->
             link: req.body.creative.link
             description: req.body.creative.description
             trackers: req.body.creative.trackers.split("\n")
+            format: "300 x 250"
             image: image
           })
       })

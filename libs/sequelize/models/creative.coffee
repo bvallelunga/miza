@@ -18,6 +18,13 @@ module.exports = (sequelize, DataTypes)->
           .replace(/\n/g, '<br>')
     }
     title: DataTypes.STRING
+    format: {
+      type: DataTypes.STRING
+      allowNull: false
+      validate: {
+        isIn: [['300 x 250']]
+      }          
+    }
     image: { 
       type: DataTypes.BLOB("long")
       allowNull: false
