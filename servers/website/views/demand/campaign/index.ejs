@@ -26,15 +26,15 @@
       <td class="section">
         <div class="actions campaign right">
           <% if(campaign.status != "completed") { %>
-            <% if(campaign.status == "paused") { %>
-              <div class="action" data-action="running">
-                <span class="fa fa-play"></span>
-                Run
-              </div>
-            <% } else { %>
+            <% if(campaign.status == "running") { %>
               <div class="action" data-action="paused">
                 <span class="fa fa-pause"></span>
                 Pause
+              </div>
+            <% } else { %>
+               <div class="action" data-action="running">
+                <span class="fa fa-play"></span>
+                Run
               </div>
             <% } %>
           <% } %>
