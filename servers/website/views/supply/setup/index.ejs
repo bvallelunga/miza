@@ -1,56 +1,58 @@
-<span>
-  The goal of this guide is to ease the process of installing <%= company %> in your website.
-  Please note that the guide is a work in progress and subject to change. We will reach
-  out if any changes are required on your end after the setup is complete. 
-</span>
-<% if(!publisher.miza_endpoint) { %>
-  <h3>Add <%= company %> DNS CNAME</h3>
+<div class="display full">
+  <span>
+    The goal of this guide is to ease the process of installing <%= company %> in your website.
+    Please note that the guide is a work in progress and subject to change. We will reach
+    out if any changes are required on your end after the setup is complete. 
+  </span>
+  <% if(!publisher.miza_endpoint) { %>
+    <h3>Add <%= company %> DNS CNAME</h3>
+    <p>
+      Please add this CNAME record to your websites DNS. This will enable traffic to be
+      routed to <%= company %> though your domain name which will increase the defensibility
+      of ads being delivered on your website. Feel free to <a href="#" onclick="Intercom('showNewMessage', 'Can you please help me setup the DNS CNAME record?')">contact us</a> 
+      if you don't know how, our team can walk you through it.
+      <br><br>
+      <strong>We will NOT under any circumstance use it to 
+      spam or do anything to tarnish your domain's reputation.</strong> 
+      We value your trust above all else, and will do everything in our power to retain it.
+    </p>
+    <div class="mini-table">
+      <table cellpadding="0" cellspacing="0">
+        <thead>
+          <th><span>Record Type</span></th>
+          <th><span>Name</span></th>
+          <th><span>TTL</span></th>
+          <th><span>Value</span></th>
+        </thead>
+        <body>
+          <tr>
+            <td>CNAME</td>
+            <td><%= publisher.endpoint %></td>
+            <td>300</td>
+            <td><%= ads_domain %></td>
+          </tr>
+        </body>
+      </table>
+    </div>
+    <div class="warning orange">
+      If your site uses HTTPS, please add <a target="_blank" href="http://<%= publisher.endpoint %>"><%= publisher.endpoint %></a>
+      to the SSL certificate. Without doing this, most browsers will not load <%= company %> when using HTTPS urls. If you 
+      do not have access to your DNS please <a href="#" onclick="Intercom('showNewMessage', 'Sadly I do not have access to my DNS. What is your alternative solution?')">reach out</a>, we have alternative solution ready for you.
+    </div>
+  <% } %>
+  
+  <%- include("./" + publisher.product + "/index") %>
+  
+  <h3>You are all set!</h3>
   <p>
-    Please add this CNAME record to your websites DNS. This will enable traffic to be
-    routed to <%= company %> though your domain name which will increase the defensibility
-    of ads being delivered on your website. Feel free to <a href="#" onclick="Intercom('showNewMessage', 'Can you please help me setup the DNS CNAME record?')">contact us</a> 
-    if you don't know how, our team can walk you through it.
+    Ready. Set. Go! Deploy the changes to your servers and it's off to the races. 
+    We will automatically track impressions and clicks which
+    can be seen in the <a href="<%= dashboard_path %>/analytics">analytics page</a>. 
     <br><br>
-    <strong>We will NOT under any circumstance use it to 
-    spam or do anything to tarnish your domain's reputation.</strong> 
-    We value your trust above all else, and will do everything in our power to retain it.
+    If you want to control what percent of your user base receives <%= company %> protection
+    you can change that with the <span>Coverage</span> setting in the 
+    <a href="<%= dashboard_path %>/settings">settings page</a>.
+    Please <a href="#" onclick="Intercom('showNewMessage', 'I ran into a problem while doing the installation. Please help!')">contact us</a> at any time if problems
+    arise, we will do our best to reach out as soon as possible.
   </p>
-  <div class="mini-table">
-    <table cellpadding="0" cellspacing="0">
-      <thead>
-        <th><span>Record Type</span></th>
-        <th><span>Name</span></th>
-        <th><span>TTL</span></th>
-        <th><span>Value</span></th>
-      </thead>
-      <body>
-        <tr>
-          <td>CNAME</td>
-          <td><%= publisher.endpoint %></td>
-          <td>300</td>
-          <td><%= ads_domain %></td>
-        </tr>
-      </body>
-    </table>
-  </div>
-  <div class="warning orange">
-    If your site uses HTTPS, please add <a target="_blank" href="http://<%= publisher.endpoint %>"><%= publisher.endpoint %></a>
-    to the SSL certificate. Without doing this, most browsers will not load <%= company %> when using HTTPS urls. If you 
-    do not have access to your DNS please <a href="#" onclick="Intercom('showNewMessage', 'Sadly I do not have access to my DNS. What is your alternative solution?')">reach out</a>, we have alternative solution ready for you.
-  </div>
-<% } %>
-
-<%- include("./" + publisher.product + "/index") %>
-
-<h3>You are all set!</h3>
-<p>
-  Ready. Set. Go! Deploy the changes to your servers and it's off to the races. 
-  We will automatically track impressions and clicks which
-  can be seen in the <a href="<%= dashboard_path %>/analytics">analytics page</a>. 
-  <br><br>
-  If you want to control what percent of your user base receives <%= company %> protection
-  you can change that with the <span>Coverage</span> setting in the 
-  <a href="<%= dashboard_path %>/settings">settings page</a>.
-  Please <a href="#" onclick="Intercom('showNewMessage', 'I ran into a problem while doing the installation. Please help!')">contact us</a> at any time if problems
-  arise, we will do our best to reach out as soon as possible.
-</p>
+</div>

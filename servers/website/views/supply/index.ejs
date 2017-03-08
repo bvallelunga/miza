@@ -30,11 +30,9 @@
   <%- include("./guide/" + publisher.product) %>
 <% } %>
 <% include ../includes/navigation %>
-<div class="container <%= dashboard_size %>">
+<div class="container <%= dashboard_size %> <%= dashboard %>-dashboard">
   <% include ./payout_warning %>
-  <div class="display full <%= dashboard %>-dashboard">
-    <%- include("./" + dashboard + "/index") %>
-  </div>
+  <%- include("./" + dashboard + "/index") %>
   <div class="clear"></div>
 </div>
 <% include ../includes/footer %>

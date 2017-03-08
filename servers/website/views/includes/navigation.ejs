@@ -28,11 +28,7 @@
           <span class="fa fa-bank"></span>
           Payouts
         </a>
-        <a href="<%= dashboard_path %>/members" class="<%= isActive(dashboard, "members") %>">
-          <span class="fa fa-users"></span>
-          Members
-        </a>
-        <a href="<%= dashboard_path %>/settings" class="<%= isActive(dashboard, "settings") %>">
+        <a href="<%= dashboard_path %>/settings" class="<%= isActive(dashboard, "settings") %> <%= isActive(dashboard, "members") %>">
           <span class="fa fa-cog"></span>
           Settings
         </a>

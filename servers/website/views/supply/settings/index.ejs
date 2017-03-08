@@ -1,36 +1,56 @@
-<form class="form" method="POST" action="<%= dashboard_path %>/settings">
-  <% include ../../includes/csrf %>
-  <table>
-    <tr>
-      <td class="title">Name</td>
-      <td><input type="text" name="publisher_name" value="<%= publisher.name %>" placeholder="Tech Crunch" required></td>
-    </tr>
-    <tr>
-      <td class="title">Website</td>
-      <td><input type="url" name="publisher_domain" value="http://<%= publisher.domain %>" placeholder="http://techcrunch.com" required></td>
-    </tr>
-    <tr>
-      <td class="title">
-        Coverage 
-        <span class="info fa fa-info-circle tooltip" title="Control the percent of your user base<br>that recieves <%=company %> services."></span>
-      </td>
-      <td class="slider">
-        <div class="slider-range" data-min="0" data-max="100" data-value="<%= publisher.config.coverage * 100 %>"></div>
-        <input class="slider-input" type="hidden" name="config_coverage" value="<%= publisher.config.coverage %>">
-        <div class="slider-display value" data-rules="" data-postfix="%"></div>
-      </td>
-    </tr>
-    <% if(publisher.industry) { %>
-      <tr>
-        <td class="title">Industry</td>
-        <td><input type="text" value="<%= publisher.industry.name %>" disabled></td>
-      </tr>
+<div class="sidebar">
+  <ul>
+    <li class="active">
+      <a href="<%= dashboard_path %>/settings">
+        <span class="fa fa-user-circle"></span>
+        Profile
+      </a>
+    </li>
+    <% if(!user.is_demo && (user.is_admin || user.id == publisher.owner.id)) { %>
+      <li>
+        <a href="<%= dashboard_path %>/members">
+          <span class="fa fa-users"></span>
+          Members
+        </a>
+      </li>
     <% } %>
-    <tr>
-      <td class="title">Account Owner</td>
-      <td><input type="text" value="<%= publisher.owner.name %>" disabled></td>
-    </tr>
-  </table>
-  <button class="button" type="submit">Update Settings</button>
-  <div class="error"></div>
-</form>
+  </ul>
+</div>
+<div class="display">
+  <form class="form" method="POST" action="<%= dashboard_path %>/settings">
+    <% include ../../includes/csrf %>
+    <table>
+      <tr>
+        <td class="title">Name</td>
+        <td><input type="text" name="publisher_name" value="<%= publisher.name %>" placeholder="Tech Crunch" required></td>
+      </tr>
+      <tr>
+        <td class="title">Website</td>
+        <td><input type="url" name="publisher_domain" value="http://<%= publisher.domain %>" placeholder="http://techcrunch.com" required></td>
+      </tr>
+      <tr>
+        <td class="title">
+          Coverage 
+          <span class="info fa fa-info-circle tooltip" title="Control the percent of your user base<br>that recieves <%=company %> services."></span>
+        </td>
+        <td class="slider">
+          <div class="slider-range" data-min="0" data-max="100" data-value="<%= publisher.config.coverage * 100 %>"></div>
+          <input class="slider-input" type="hidden" name="config_coverage" value="<%= publisher.config.coverage %>">
+          <div class="slider-display value" data-rules="" data-postfix="%"></div>
+        </td>
+      </tr>
+      <% if(publisher.industry) { %>
+        <tr>
+          <td class="title">Industry</td>
+          <td><input type="text" value="<%= publisher.industry.name %>" disabled></td>
+        </tr>
+      <% } %>
+      <tr>
+        <td class="title">Account Owner</td>
+        <td><input type="text" value="<%= publisher.owner.name %>" disabled></td>
+      </tr>
+    </table>
+    <button class="button" type="submit">Update Settings</button>
+    <div class="error"></div>
+  </form>
+</div>
