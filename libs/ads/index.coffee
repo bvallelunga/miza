@@ -37,6 +37,7 @@ module.exports.build_event = (req, data)->
     campaign: {
       id: null
       name: null
+      cpm_impression: null
     }
     creative: {
       id: null
