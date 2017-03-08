@@ -88,6 +88,9 @@ module.exports.post_list = (req, res, next)->
       model: LIBS.models.CampaignIndustry
       as: "industries"
     }]
+    order: [
+      ["name", "ASC"]
+    ]
   }).then (campaigns)->
     res.json {
       success: true
