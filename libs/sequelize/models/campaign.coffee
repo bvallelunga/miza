@@ -149,8 +149,21 @@ module.exports = (sequelize, DataTypes)->
         
         models.Campaign.hasMany models.Creative, { 
           as: 'creatives' 
-        }
+        }        
     }
+    
+    instanceMethods: {
+      utm_link: (link)->
+        if link.indexOf("?") == -1
+          link += "?"
+        
+        return link + [
+          "utm_source=#{CONFIG.general.company.toLowerCase()}",
+          "utm_medium=#{@type}"
+          "utm_campaign=#{@name.split(" ").join("_").toLowerCase()}"
+        ].join("&")
+    }
+    
     validate: {
       notCompleted: ->            
         if @changed("status") and @previous("status") == "completed"

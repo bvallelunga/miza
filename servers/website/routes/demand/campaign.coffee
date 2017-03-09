@@ -216,7 +216,7 @@ module.exports.post_create = (req, res, next)->
           LIBS.models.Creative.create({
             advertiser_id: req.advertiser.id
             campaign_id: campaign.id
-            link: req.body.creative.link
+            link: campaign.utm_link(req.body.creative.link)
             description: req.body.creative.description
             trackers: req.body.creative.trackers.split("\n")
             format: "300 x 250"
