@@ -162,7 +162,7 @@ module.exports = (sequelize, DataTypes)->
         
       
       beforeUpdate: (campaign)->
-        if campaign.impressions_needed == 0
+        if campaign.impressions_needed == 0 or campaign.end_at > new Date()
           campaign.status = "completed"
       
          

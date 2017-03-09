@@ -13,6 +13,7 @@ module.exports = require("../template") {
   LIBS.models.Transfer.findAll({
     where: {
       is_transferred: false
+      type: "payout"
     }
     include: [{
       model: LIBS.models.User
@@ -47,9 +48,7 @@ module.exports = require("../template") {
       }, (error, payout)->
         if error?
           return rej error
-          
-        console.log payout
-          
+                    
         res transfers
   
     .map (transfer)->
