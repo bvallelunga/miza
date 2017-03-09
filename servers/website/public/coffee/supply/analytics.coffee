@@ -37,10 +37,8 @@ class Dashboard
         point: {
           show: true
         }
-        tooltip: {
-          format: {
-            name: (name, ratio, id, index)-> "Impressions"
-          }
+        legend: {
+          show: false
         }
       })
       .prepare()

@@ -13,10 +13,14 @@ module.exports.get = (req, res, next)->
   Promise.props({
     impressions_chart: query "count", {
       interval: "daily"
+      group_by: [ "type" ]
       filters: [{
-        "operator": "eq"
-        "property_name": "type"
-        "property_value": "impression"
+        "operator": "in",
+        "property_name": "type",
+        "property_value": [
+          "click",
+          "impression"
+        ]
       }]
     }
     impression_count: query "count", {
