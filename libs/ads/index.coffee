@@ -1,23 +1,20 @@
 # Imports
 useragent = require 'user-agent-parser'
 
-module.exports.build_event = (req, data)->
+module.exports.build_event = (raw_data)->
   demensions = {}
   battery = {}
   advertiser = {}
   campaign = {}
   creative = {}
   industry = {}
-  is_impr_or_click = data.type == "impression" or data.type == "click"
+  is_impr_or_click = raw_data.type == "impression" or raw_data.type == "click"
   
   Promise.resolve().then ->
-    if not req.query.advertiser?
+    if not raw_data.query.advertiser?
       return Promise.resolve()
   
-    LIBS.models.Advertiser.findById(req.query.advertiser).then (temp)->
-      if not temp?
-        return Promise.resolve()
-      
+    LIBS.models.Advertiser.findById(raw_data.advertiser).then (temp)->      
       advertiser = {
         id: temp.id
         key: temp.key
@@ -25,13 +22,10 @@ module.exports.build_event = (req, data)->
       }
       
   .then ->
-    if not req.query.campaign?
+    if not raw_data.query.campaign?
       return Promise.resolve()
   
-    LIBS.models.Campaign.findById(req.query.campaign).then (temp)->
-      if not temp?
-        return Promise.resolve()
-        
+    LIBS.models.Campaign.findById(raw_data.campaign).then (temp)->
       campaign = {
         id: temp.id
         name: temp.name
@@ -39,17 +33,14 @@ module.exports.build_event = (req, data)->
       }
       
       if is_impr_or_click
-        temp[data.type + "s"] += 1
+        temp[raw_data.type + "s"] += 1
         temp.save()
         
   .then ->
-    if not req.query.industry?
+    if not raw_data.query.industry?
       return Promise.resolve()
   
-    LIBS.models.CampaignIndustry.findById(req.query.industry).then (temp)->
-      if not temp?
-        return Promise.resolve()
-        
+    LIBS.models.CampaignIndustry.findById(raw_data.industry).then (temp)->        
       industry = {
         id: temp.id
         name: temp.name
@@ -58,14 +49,14 @@ module.exports.build_event = (req, data)->
       }
       
       if is_impr_or_click
-        temp[data.type + "s"] += 1
+        temp[raw_data.type + "s"] += 1
         temp.save()
         
   .then ->
-    if not req.query.creative?
+    if not raw_data.query.creative?
       return Promise.resolve()
   
-    LIBS.models.Creative.findById(req.query.creative).then (temp)->
+    LIBS.models.Creative.findById(raw_data.creative).then (temp)->
       if not temp?
         return Promise.resolve()
         
@@ -75,50 +66,50 @@ module.exports.build_event = (req, data)->
       }
     
   .then ->
-    if req.query.demensions?
+    if raw_data.query.demensions?
       demensions = {
-        width: Number(req.query.demensions.width)
-        height: Number(req.query.demensions.height)
+        width: Number(raw_data.query.demensions.width)
+        height: Number(raw_data.query.demensions.height)
       }
       
-    if req.query.battery?
+    if raw_data.query.battery?
       battery = {
-        charging: req.query.battery.charging == "true"
-        charging_time: Number(req.query.battery.charging_time)
-        level: Number(req.query.battery.level)
+        charging: raw_data.query.battery.charging == "true"
+        charging_time: Number(raw_data.query.battery.charging_time)
+        level: Number(raw_data.query.battery.level)
       }
     
     return {
-      type: data.type 
-      ip_address: req.headers["CF-Connecting-IP"] or req.ip or req.ips
-      protected: req.query.protected == "true"
-      asset_url: data.asset_url
-      product: data.publisher.product
+      type: raw_data.type 
+      ip_address: raw_data.headers["CF-Connecting-IP"] or raw_data.ip or raw_data.ips
+      protected: raw_data.query.protected == "true"
+      asset_url: raw_data.asset_url
+      product: raw_data.publisher.product
       publisher: {
-        id: data.publisher.id
-        name: data.publisher.name
-        key: data.publisher.key
+        id: raw_data.publisher.id
+        name: raw_data.publisher.name
+        key: raw_data.publisher.key
       }
       advertiser: advertiser
       campaign: campaign
       creative: creative
       industry: industry
       page_url: {
-        raw: req.query.page_url or req.get("referrer")
+        raw: raw_data.query.page_url or raw_data.referrer
       }
-      cookies: req.cookies
-      headers: req.headers
+      cookies: raw_data.cookies
+      headers: raw_data.headers
       user_agent: {
-        raw: req.headers["user-agent"]
+        raw: raw_data.headers["user-agent"]
         client: {
           browser: {
             demensions: demensions
-            plugins: req.query.plugins or []
-            languages: req.query.languages or []
-            do_not_track: req.query.do_not_track == "true"
+            plugins: raw_data.query.plugins or []
+            languages: raw_data.query.languages or []
+            do_not_track: raw_data.query.do_not_track == "true"
           }
           device: {
-            components: req.query.components or []
+            components: raw_data.query.components or []
             battery: battery
           }
         }
@@ -147,10 +138,10 @@ module.exports.build_event = (req, data)->
     }
 
 
-module.exports.track = (req, data)->
-  agent = useragent req.headers['user-agent']
+module.exports.send = (raw_data)->
+  agent = useragent raw_data.headers['user-agent']
   
-  LIBS.ads.build_event(req, data).then (event)->  
+  LIBS.ads.build_event(raw_data).then (event)->    
     # Keen Tracking
     LIBS.keen.tracking.addEvent "ads.event", event
     
@@ -183,8 +174,27 @@ module.exports.track = (req, data)->
     }
     
     # Activate Publisher 
-    if not data.publisher.is_activated
-      data.publisher.update({
+    if not raw_data.publisher.is_activated
+      LIBS.models.Publisher.update({
         is_activated: true
+      }, {
+        individualHooks: true
+        where: {
+          id: raw_data.publisher.id
+        }
       })
+
   
+module.exports.track = (req, data)->
+  data.advertiser = req.query.advertiser
+  data.campaign = req.query.campaign
+  data.industry = req.query.industry
+  data.creative = req.query.creative
+  data.query = req.query
+  data.cookies = req.cookies
+  data.headers = req.headers
+  data.referrer = req.get("referrer")
+  data.ip = req.ip
+  data.ips = req.ips
+  
+  LIBS.queue.publish "event-queue", data
