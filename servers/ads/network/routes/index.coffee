@@ -34,12 +34,13 @@ module.exports.script_send = (req, res, next)->
 
  
 module.exports.ad_frame = (req, res, next)->
-  LIBS.exchanges.fetch(req).then (payload)->
+  LIBS.exchanges.fetch(req).then (creative)->
     res.render "ad/frame", {
       publisher: req.publisher
       miza_script: req.miza_script
-      payload: payload
+      creative: creative
       frame: req.query.frame
+      is_protected: req.query.protected
     }
     
   .catch (error)->

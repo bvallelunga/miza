@@ -9,6 +9,7 @@ module.exports = require("../template") {
   LIBS.models.Campaign.findAll({
     where: {
       end_at: {
+        $ne: null
         $lt: new Date()
       }
       status: {

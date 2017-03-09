@@ -46,32 +46,32 @@
     </style>
     <script>
       window["<%= publisher.key %>"] = { 
-        frame: "<%= frame %>"
+        frame: "<%= frame %>",
+        creative: "<%= creative.id %>",
+        advertiser: "<%= creative.advertiser_id %>",
+        campaign: "<%= creative.campaign_id %>",
+        industry: "<%= creative.industry_id %>"
       };      
       
       window.parent.window.postMessage({
         name: "frame.show",
         frame: "<%= frame %>",
-        width: <%= payload.width - (!!payload.text ? 10 : 0) %>,
-        height: <%= payload.height + (!!payload.text ? 40 : 0) %>
+        width: 300,
+        height: 250
       }, "*");
       
       <%- miza_script %>
     </script>
   </head>
   <body>
-    <% if(!!payload.target) { %>
-      <a target="_blank" href="/<%= new Buffer(payload.target).toString("base64") %>?link">
-    <% } %>
-        <img src="<%= payload.link %>"/>
-        <% if(!!payload.text) { %>
-          <div><%= payload.text %></div>
+      <a target="_blank" href="<%= creative.attributed_link(creative.industry_id, is_protected) %>">
+        <img src="data:image;base64,<%= creative.image.toString('base64') %>"/>
+        <% if(!!creative.description) { %>
+          <div><%= creative.description %></div>
         <% } %>
-    <% if(!!payload.target) { %>
       </a>
-    <% } %>
-    <% payload.beacons.forEach(function(beacon) { %>
-      <img src="/<%= new Buffer(beacon).toString("base64") %>" width="0" height="0" style="display:none" />
+    <% creative.trackers.forEach(function(tracker) { %>
+      <img src="/<%= new Buffer(tracker).toString("base64") %>" width="0" height="0" style="display:none" />
     <% }) %>
   </body>
 </html>

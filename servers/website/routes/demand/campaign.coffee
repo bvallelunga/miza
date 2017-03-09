@@ -169,6 +169,10 @@ module.exports.post_create = (req, res, next)->
     end_date = if end_date.isValid() then end_date.toDate() else null
     
     status = if start_date then "queued" else "running"
+    impressions_requested = 0
+    
+    for target in targeting
+      impressions_requested += target.impressions
     
     LIBS.models.Campaign.create({
       name: req.body.name
@@ -177,10 +181,8 @@ module.exports.post_create = (req, res, next)->
       start_at: start_date or new Date()
       end_at: end_date
       advertiser_id: req.advertiser.id
-      impressions_requested: targeting.reduce (t, s)-> 
-        return t.impressions + s.impressions
-  
-    }).then (campaign)->
+      impressions_requested: impressions_requested
+    }).then (campaign)->    
       Promise.props({
         campaign: campaign
         industries: Promise.map targeting, (target)->
@@ -206,6 +208,11 @@ module.exports.post_create = (req, res, next)->
             res response.body
         
         .then (image)->
+          trackers = req.body.creative.trackers.split("\n")
+          
+          if trackers.length == 1 and trackers[0].length == 0
+            trackers = []
+        
           LIBS.models.Creative.create({
             advertiser_id: req.advertiser.id
             campaign_id: campaign.id

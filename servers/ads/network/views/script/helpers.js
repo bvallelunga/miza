@@ -32,7 +32,8 @@ API.iframe = function(element) {
     width: width,
     height: height,
     frame: random,
-    referrer: "<%= page_url %>" || window.location.href
+    referrer: "<%= page_url %>" || window.location.href,
+    protected: API.protected
   })
   
   API.iframes.push(iframe)

@@ -8,7 +8,11 @@ API.url_attributes = {
   "do_not_track": false,
   "r": "<%= random_slug %>",
   "page_url": "<%= page_url %>" || window.location.href,
-  "protected": API.protected
+  "protected": API.protected,
+  "advertiser": API.advertiser,
+  "campaign": API.campaign,
+  "creative": API.creative,
+  "industry": API.industry
 }
 
 
