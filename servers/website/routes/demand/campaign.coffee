@@ -176,7 +176,7 @@ module.exports.post_create = (req, res, next)->
     
     LIBS.models.Campaign.create({
       name: req.body.name
-      type: "standard"
+      type: "cpm"
       status: status
       start_at: start_date or new Date()
       end_at: end_date

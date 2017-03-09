@@ -62,6 +62,25 @@ download = (url, query, headers)->
       data.content = response.body.toString("ascii")
       
     return data
+    
+    
+link_utm = (query, data)->
+  if not query.campaign?
+    return data
+    
+  LIBS.models.Campaign.findById(query.campaign).then (campaign)->  
+    params = [
+      "utm_source=#{CONFIG.general.company.toLowerCase()}",
+      "utm_medium=#{campaign.type}"
+      "utm_campaign=#{campaign.name.split(" ").join("_").toLowerCase()}"
+    ].join("&")
+    
+    if data.href.indexOf("?") == -1
+      data.href += "?"
+    
+    data.href += params
+    return data
+  
 
 
 module.exports = (path, query, headers)->
@@ -72,4 +91,10 @@ module.exports = (path, query, headers)->
     return download path.url, query, headers
 
   .then (data)->
-    return Object.assign path, data
+    data = Object.assign path, data
+    
+    if data.media == "link"
+      return link_utm(query, data)
+      
+    return data
+    
