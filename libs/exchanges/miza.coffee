@@ -1,9 +1,13 @@
 module.exports = (req)->  
+  query = {
+    active: true
+  }
+
+  if not req.publisher.is_demo
+    query.industry_id = req.publisher.industry_id
+
   LIBS.models.CampaignIndustry.findAll({
-    where: {
-      active: true
-      industry_id: req.publisher.industry_id
-    }
+    where: query
     limit: 10
     order: [
       ["impressions_needed", "DESC"]
