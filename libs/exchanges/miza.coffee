@@ -11,15 +11,16 @@ module.exports = (req)->
 
   LIBS.models.CampaignIndustry.findAll({
     where: query
-    limit: 10
+    limit: 1
     order: [
-      ["impressions_needed", "DESC"]
+      LIBS.models.Sequelize.fn('RANDOM')
+      #["impressions_needed", "DESC"]
     ]
   }).then (campaignIndustries)->  
     if campaignIndustries.length == 0
       return Promise.reject LIBS.exchanges.errors.AD_NOT_FOUND
     
-    campaignIndustry = campaignIndustries[Math.floor(Math.random() * campaignIndustries.length)]
+    campaignIndustry = campaignIndustries[0]
     
     LIBS.models.Creative.findOne({
       where: {
