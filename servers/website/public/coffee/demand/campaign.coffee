@@ -75,8 +75,10 @@ class Dashboard
     @data_table = @$table.DataTable({
       "paging":   false
       "ordering": false
+      "order":    false
       "info":     false
       "search":   false
+      "bSort":    false
       'columnDefs': [{
         'targets': 0,
         'checkboxes': {
@@ -95,7 +97,6 @@ class Dashboard
         { "data": "metrics.budget" },
         { "data": "metrics.spend" }
       ]
-      'order': [[1, 'asc']]
     })
     
   
