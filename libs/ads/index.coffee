@@ -59,7 +59,7 @@ module.exports.build_event = (raw_data)->
         })
       
       if raw_data.type == "click"
-        temp.increment("click")
+        temp.increment("clicks")
         
   .then ->
     if not raw_data.query.creative?
