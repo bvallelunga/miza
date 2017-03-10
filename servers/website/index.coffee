@@ -7,8 +7,9 @@ app = express()
 
 module.exports = (srv)->
   # 3rd Party Ignore Routes  
-  scheduler_regex = new RegExp "^((?!#{[
-    "/admin/vendor"
+  auth_ignore_regex = new RegExp "^((?!#{[
+    "/admin/vendor",
+    CONFIG.loader_io
   ].join("|")})[\\s\\S])*$"
 
 
@@ -17,7 +18,7 @@ module.exports = (srv)->
   app.set 'view engine', 'ejs'
   app.use require("compression")()
   app.use require("cookie-parser")()
-  app.use scheduler_regex, require("csurf")({ cookie: true })
+  app.use auth_ignore_regex, require("csurf")({ cookie: true })
   app.use require('express-session')(CONFIG.cookies.session session, LIBS.redis)
   app.use LIBS.bugsnag.requestHandler
 
