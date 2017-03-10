@@ -32,7 +32,6 @@ module.exports = (sequelize, DataTypes)->
           @setDataValue("end_at", new Date())
           
     }
-    paid_at: DataTypes.DATE
     start_at: DataTypes.DATE
     end_at: {
       type: DataTypes.DATE

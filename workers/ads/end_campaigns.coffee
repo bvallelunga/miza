@@ -10,8 +10,7 @@ module.exports = require("../template") {
     where: {
       $or: [{
         end_at: {
-          $ne: null
-          $lt: new Date()
+          $lte: new Date()
         }
       }, {
         impressions_needed: {
