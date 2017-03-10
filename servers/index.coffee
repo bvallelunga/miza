@@ -7,7 +7,13 @@ require("../startup") true, ->
   app = express()
   basic_auth = require 'basicauth-middleware'
   srv = require("http").createServer(app)
+  routers = require("./routers")(srv)
   
+  # 3rd Party Ignore Routes  
+  auth_ignore_regex = new RegExp "^((?!#{[
+    CONFIG.loader_io,
+    routers.ads.prefix
+  ].join("|")})[\\s\\S])*$"
   
   # Express Setup
   if not CONFIG.disable.express.logger
@@ -17,14 +23,15 @@ require("../startup") true, ->
   app.disable 'x-powered-by'
   app.use body_parser.json()
   app.use body_parser.urlencoded({ extended: true })
-  
-  if CONFIG.protected and not CONFIG.disable.express.protected
-    app.use basic_auth CONFIG.basic_auth.username, CONFIG.basic_auth.password
     
-  
   # Subdomain Routers
-  routers = require("./routers")(srv)
   app.use routers.engine
+  
+  # Basic Auth For Dev Site
+  if true or CONFIG.protected and not CONFIG.disable.express.protected
+    app.use auth_ignore_regex, basic_auth CONFIG.basic_auth.username, CONFIG.basic_auth.password
+  
+  # Active Servers
   app.use routers.ads.prefix, routers.ads.app
   app.use routers.website.app
   

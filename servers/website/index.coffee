@@ -8,8 +8,7 @@ app = express()
 module.exports = (srv)->
   # 3rd Party Ignore Routes  
   auth_ignore_regex = new RegExp "^((?!#{[
-    "/admin/vendor",
-    CONFIG.loader_io
+    "/admin/vendor"
   ].join("|")})[\\s\\S])*$"
 
 
