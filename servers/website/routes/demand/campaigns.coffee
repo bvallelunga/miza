@@ -89,7 +89,7 @@ module.exports.post_list = (req, res, next)->
       as: "industries"
     }]
     order: [
-      ["name", "ASC"]
+      ["created_at", "DESC"]
     ]
   }).then (campaigns)->
     res.json {
