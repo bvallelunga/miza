@@ -134,6 +134,7 @@ module.exports = (sequelize, DataTypes)->
           config: @config
         }
         
+      
       approve_spending: ->
         advertiser = @
                 
@@ -143,16 +144,13 @@ module.exports = (sequelize, DataTypes)->
             where: {
               is_transferred: false
               type: "charge"
-              amount: {
-                $gt: 1
-              }
             }
           })
         }).then (props)->
           if not props.owner.stripe_card?
             return Promise.reject "Please enter in your billing details before approving any spend."
         
-          Promise.each props.transfers, (transfer)->
+          Promise.each props.transfers, (transfer)->          
             LIBS.mixpanel.people.track_charge advertiser.owner_id, transfer.amount
             LIBS.stripe.charges.create({
               amount: transfer.stripe_amount
