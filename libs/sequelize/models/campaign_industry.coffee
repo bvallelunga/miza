@@ -120,4 +120,10 @@ module.exports = (sequelize, DataTypes)->
         campaignIndustry.impressions_needed = campaignIndustry.impressions_requested
         
     }
+    
+    validate: {
+      notCompleted: ->            
+        if @changed("status") and @previous("status") == "completed"
+          throw new Error "Industry status can not be changed after it is complete."
+    }
   }
