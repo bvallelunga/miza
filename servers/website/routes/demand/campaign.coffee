@@ -59,7 +59,9 @@ module.exports.get_industries = (req, res, next)->
   res.json {
     success: true
     results: req.campaign.industries.sort (a, b)->
-      return a.name > b.name
+      if(a.name < b.name) then return -1
+      if(a.name > b.name) then return 1
+      return 0
   }
   
 
