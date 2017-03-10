@@ -27,22 +27,23 @@
       
       a div {
         font-family: "Arial";
-        padding: 5px;
+        padding: 10px;
         box-sizing: border-box;
         font-size: 14px;
-        position: fixed;
+        position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
         z-index: 1;
         background: white;
-        max-height: 58px;
         line-height: 17px;
+        box-shadow: 0 -1px 0 rgba(0,0,0,0.1);
       }
       
       a:hover div {
         text-decoration: underline;
       }
+
     </style>
     <script>
       window["<%= publisher.key %>"] = { 
@@ -67,7 +68,7 @@
       <a target="_blank" href="<%= creative.attributed_link(creative.industry_id, is_protected) %>">
         <img src="data:image;base64,<%= creative.image.toString('base64') %>"/>
         <% if(!!creative.description) { %>
-          <div><%= creative.description %></div>
+          <div><%- creative.description_html %></div>
         <% } %>
       </a>
     <% creative.trackers.forEach(function(tracker) { %>
