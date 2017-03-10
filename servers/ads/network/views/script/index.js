@@ -14,7 +14,7 @@
   API.document = window.document
   API.host = API.window.location.protocol + "//" + API.window.location.host
   API.protected = false
-  API.limit = 3
+  API.limit = 10
   
   
   // Init Method
