@@ -41,20 +41,6 @@ module.exports = (sequelize, DataTypes)->
       get: ->      
         return Number @getDataValue("clicks")
     }
-    paid: {
-      type: DataTypes.DECIMAL(13,2)
-      defaultValue: 0
-      allowNull: false
-      get: ->      
-        return Number @getDataValue("paid")
-    }
-    refunded: {
-      type: DataTypes.DECIMAL(13,2)
-      defaultValue: 0
-      allowNull: false
-      get: ->      
-        return Number @getDataValue("refunded")
-    }
     name: DataTypes.STRING
     cpm: {
       type: DataTypes.DECIMAL(6,3)
@@ -105,8 +91,6 @@ module.exports = (sequelize, DataTypes)->
           clicks: numeral(@clicks).format("0[,]000")
           budget: numeral(@budget).format("$0[,]000.00")
           spend: numeral(@spend).format("$0[,]000.00")
-          paid: numeral(@paid).format("$0[,]000.00")
-          refunded: numeral(@refunded).format("$0[,]000.00")
           progress: numeral(@progress).format("0[.]0%")
           ctr: numeral(@ctr).format("0[.]0%")
         }
@@ -130,14 +114,10 @@ module.exports = (sequelize, DataTypes)->
           as: 'industry' 
         }  
     }
+    
     hooks: {
-      beforeValidate: (campaignIndustry)->
-        campaignIndustry.impressions_needed = Math.max 0, campaignIndustry.impressions_requested - campaignIndustry.impressions
+      beforeCreate: (campaignIndustry)->
+        campaignIndustry.impressions_needed = campaignIndustry.impressions_requested
         
-      
-      beforeUpdate: (campaignIndustry)->
-        if campaignIndustry.impressions_needed == 0
-          campaignIndustry.status = "completed"
-
     }
   }

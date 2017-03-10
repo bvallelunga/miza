@@ -34,6 +34,7 @@ create_publishers = (models)->
         name: "Network Demo"
         is_demo: true
         product: "network"
+        industry_id: 1
       }
     }) 
   ]

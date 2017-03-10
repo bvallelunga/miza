@@ -8,7 +8,6 @@ module.exports.build_event = (raw_data)->
   campaign = {}
   creative = {}
   industry = {}
-  is_impr_or_click = raw_data.type == "impression" or raw_data.type == "click"
   
   Promise.resolve().then ->
     if not raw_data.query.advertiser?
@@ -32,9 +31,14 @@ module.exports.build_event = (raw_data)->
         type: temp.type
       }
       
-      if is_impr_or_click
-        temp[raw_data.type + "s"] += 1
-        temp.save()
+      if raw_data.type == "impression"
+        temp.increment({
+          "impressions": 1
+          "impressions_needed": -1
+        })
+      
+      if raw_data.type == "click"
+        temp.increment("click")
         
   .then ->
     if not raw_data.query.industry?
@@ -48,9 +52,14 @@ module.exports.build_event = (raw_data)->
         cpm_impression: temp.cpm_impression
       }
       
-      if is_impr_or_click
-        temp[raw_data.type + "s"] += 1
-        temp.save()
+      if raw_data.type == "impression"
+        temp.increment({
+          "impressions": 1
+          "impressions_needed": -1
+        })
+      
+      if raw_data.type == "click"
+        temp.increment("click")
         
   .then ->
     if not raw_data.query.creative?

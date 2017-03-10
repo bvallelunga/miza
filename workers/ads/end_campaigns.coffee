@@ -8,16 +8,21 @@ module.exports = require("../template") {
 }, (job)->
   LIBS.models.Campaign.findAll({
     where: {
-      end_at: {
-        $ne: null
-        $lt: new Date()
-      }
+      $or: [{
+        end_at: {
+          $ne: null
+          $lt: new Date()
+        }
+      }, {
+        impressions_needed: {
+          $lte: 0
+        }
+      }]
       status: {
         $ne: "completed"
       }
     }
   }).each (campaign)->
-    console.log campaign.name
     campaign.status = "completed"
     campaign.save()
   

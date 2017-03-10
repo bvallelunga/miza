@@ -42,13 +42,6 @@ module.exports = (sequelize, DataTypes)->
             throw new Error "Campaign End Date must come after the Start Date"
       }
     }
-    paid: {
-      type: DataTypes.DECIMAL(13,2)
-      defaultValue: 0
-      allowNull: false
-      get: ->      
-        return Number @getDataValue("paid")
-    }
     impressions_requested: {
       type: DataTypes.DECIMAL(15)
       defaultValue: 0
@@ -72,13 +65,6 @@ module.exports = (sequelize, DataTypes)->
       defaultValue: 0
       get: ->      
         return Number @getDataValue("clicks")
-    }
-    refunded: {
-      type: DataTypes.DECIMAL(13,2)
-      defaultValue: 0
-      allowNull: false
-      get: ->      
-        return Number @getDataValue("refunded")
     }
     budget: {
       type: DataTypes.VIRTUAL
@@ -123,11 +109,9 @@ module.exports = (sequelize, DataTypes)->
           impressions: numeral(@impressions).format("0[,]000")
           impressions_needed: numeral(@impressions_needed).format("0[,]000")
           impressions_requested: numeral(@impressions_requested).format("0[,]000")
-          clicks: numeral(@clicks).format("0[,]000")
+          clicks: numeral(@clicks).format("0[,]000.00")
           budget: numeral(@budget).format("$0[,]000.00")
           spend: numeral(@spend).format("$0[,]000.00")
-          paid: numeral(@paid).format("$0[,]000.00")
-          refunded: numeral(@refunded).format("$0[,]000.00")
           progress: numeral(@progress).format("0[.]0%")
           ctr: numeral(@ctr).format("0[.]0%")
         }
@@ -162,6 +146,28 @@ module.exports = (sequelize, DataTypes)->
           "utm_medium=#{@type}"
           "utm_campaign=#{@name.split(" ").join("_").toLowerCase()}"
         ].join("&")
+        
+      
+      create_transfer: ->
+        Promise.props({
+          advertiser: @getAdvertiser()
+          industries: @getIndustries() 
+        }).then (data)=>
+          @industries = data.industries
+          
+          if @spend < 0.5
+            return Promise.resolve()
+
+          LIBS.models.Transfer.create({
+            type: "charge"
+            name: @name
+            impressions: @impressions
+            clicks: @clicks
+            amount: @spend
+            advertiser_id: @advertiser_id
+            campaign_id: @id
+            user_id: data.advertiser.owner_id
+          })
     }
     
     validate: {
@@ -170,28 +176,27 @@ module.exports = (sequelize, DataTypes)->
           throw new Error "Campaign status can not be changed after it is complete."
     }
     hooks: {
-      beforeValidate: (campaign)->
-        campaign.impressions_needed = Math.max 0, campaign.impressions_requested - campaign.impressions
+      beforeCreate: (campaign)->
+        campaign.impressions_needed = campaign.impressions_requested
         
-      
-      beforeUpdate: (campaign)->
-        if campaign.impressions_needed == 0 or (campaign.end_at? and new Date() > campaign.end_at)
-          campaign.status = "completed"
-      
-         
+            
       afterUpdate: (campaign)->
         if campaign.changed("status")
-          campaign.getIndustries().each (industry)->
-            if industry.status == "complete"
-              return Promise.resolve()
-            
-            industry.status = campaign.status
-            industry.save()
-              
+          Promise.resolve().then ->
+            if campaign.status == "completed"
+              campaign.create_transfer()
+          
+          .then ->
+            campaign.getIndustries().each (industry)->
+              if industry.status != "complete"              
+                industry.status = campaign.status
+                industry.save()
+      
             
       beforeDestroy: (campaign)->
-        campaign.getIndustries().each (industry)->
-          industry.destroy()
-          
+        campaign.create_transfer().then ->
+          campaign.getIndustries().each (industry)->
+            industry.destroy()
+
     }
   }

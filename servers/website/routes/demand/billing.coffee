@@ -6,7 +6,11 @@ module.exports.fetch = (req, res, next)->
   req.data.css.push "tooltip"
   
   Promise.resolve().then ->
-    req.advertiser.getTransfers().then (transfers)->
+    req.advertiser.getTransfers({
+      order: [
+        ["created_at", "DESC"]
+      ]
+    }).then (transfers)->
       req.advertiser.transfers = transfers
     
   .then ->

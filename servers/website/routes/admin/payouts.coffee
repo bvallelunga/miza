@@ -5,38 +5,23 @@ module.exports.has_payout = (req, res, next)->
   LIBS.models.Payout.findById(req.params.payout).then (payout)->
     if not payout?
       return res.redirect "/admin/payouts"
-       
-    Promise.resolve().then ->
-      if payout.is_transferred
-        payout.getTransfers({
-          order: [
-            ['created_at', 'DESC']
-          ]
-          include: [
-            {
-              model: LIBS.models.Publisher
-              as: "publisher"
-            }
-            {
-              model: LIBS.models.User
-              as: "user"
-            }
-          ]
-        }).then (transfers)->
-          payout.transfers = transfers
     
-      else
-        payout.update_counts()
-        
-    .then ->
-      req.payout = payout
-      next()
+    req.payout = payout
     
-  .catch next
+    if payout.is_transferred
+      return payout.fetch_transfers()
+      
+    return payout.generate_transfers()  
+  
+  .then(-> next()).catch next
 
 
 module.exports.get_root = (req, res, next)->
-  LIBS.models.Payout.findAll().then (payouts)->
+  LIBS.models.Payout.findAll({
+    order: [
+      ["created_at", "DESC"]
+    ]
+  }).then (payouts)->
     res.render "admin/payouts/index", {
       js: req.js.renderTags "modal", "admin-payouts", "date-range", "fa"
       css: req.css.renderTags "modal", "admin", "date-range"
@@ -49,21 +34,25 @@ module.exports.get_root = (req, res, next)->
 module.exports.get_create = (req, res, next)->
   res.render "admin/payouts/payout", {
     js: req.js.renderTags "modal", "admin-payouts", "fa"
-    css: req.css.renderTags "modal", "admin", "publisher"
+    css: req.css.renderTags "admin", "dashboard"
     title: "Admin Payouts"
     payout: req.payout
-    publishers: req.payout.publishers
-    transfers: req.payout.transfers
     dashboard: "admin"
+    config: {
+      payout: req.payout.id
+    }
   }
   
 
-module.exports.get_delete = (req, res, next)->
+module.exports.post_delete = (req, res, next)->
   if req.payout.is_transferred
-    return res.redirect "/admin/payouts"
+    return next "Payout already transfered!"
   
   req.payout.destroy().then ->
-    res.redirect "/admin/payouts"
+    res.json({
+      success: true
+      next: "/admin/payouts"
+    })
     
   .catch next
    
@@ -86,20 +75,11 @@ module.exports.post_update = (req, res, next)->
   if req.payout.is_transferred
     return next "Payout already transfered!"
   
-  Promise.props({
-    sources: Promise.filter req.body.sources, (source)->
-      return source.name != ""
-    .map (source)->
-      source.amount = Number(source.amount) or 0
-      return source
-  }).then (props)->
-    req.payout.update({
-      fee: Number(req.body.fee) / 100
-      sources: props.sources
-      note: req.body.note
-    })
-
-  .then ->
+  req.payout.update({
+    fee: Number(req.body.fee) / 100
+    note: req.body.note
+    name: req.body.name
+  }).then ->
     res.json {
       success: true
       next: req.path

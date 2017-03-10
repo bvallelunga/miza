@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
     }
     amount: {
-      type: DataTypes.DECIMAL(15)
+      type: DataTypes.DECIMAL(15,2)
       defaultValue: 0
       get: ->
         scaler = 1
@@ -60,6 +60,8 @@ module.exports = (sequelize, DataTypes)->
       get: ->      
         return {
           amount: numeral(@amount).format("$0[,]000.00")
+          profit: numeral(@config.profit).format("$0[,]000.00")
+          revenue: numeral(@config.revenue).format("$0[,]000.00")
           impressions: numeral(@impressions).format("0[,]000")
           clicks: numeral(@clicks).format("0[,]000")
         }

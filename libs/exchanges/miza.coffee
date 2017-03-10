@@ -1,6 +1,9 @@
 module.exports = (req)->  
   query = {
     active: true
+    impressions_needed: {
+      $gt: 0
+    }
   }
 
   if not req.publisher.is_demo
