@@ -104,11 +104,21 @@ module.exports = (sequelize, DataTypes)->
       
       publisher_metrics: (publisher, campaigns)->
         client = LIBS.keen.scopedAnalysis publisher.config.keen
+        start_at = @start_at
         
+        # Find the real start date, some advertiser
+        # transfers take awhile to be approved.
+        # In the case an advertiser doesn't pay
+        # in net 30 days, this will ensure the publisher
+        # is paid in the next month
+        for transfer in @advertiser_transfers        
+          if transfer.created_at < start_at
+            start_at = transfer.created_at
+            
         run_query = (operation, query)=>
           query.event_collection = "ads.event"
           query.timeframe = {
-            start: @start_at
+            start: start_at
             end: @end_at
           }
           query.filters = (query.filters or []).concat([{
