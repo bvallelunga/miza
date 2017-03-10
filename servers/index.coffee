@@ -28,7 +28,7 @@ require("../startup") true, ->
   app.use routers.engine
   
   # Basic Auth For Dev Site
-  if true or CONFIG.protected and not CONFIG.disable.express.protected
+  if CONFIG.protected and not CONFIG.disable.express.protected
     app.use auth_ignore_regex, basic_auth CONFIG.basic_auth.username, CONFIG.basic_auth.password
   
   # Active Servers
