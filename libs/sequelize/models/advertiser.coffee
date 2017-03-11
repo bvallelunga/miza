@@ -1,6 +1,7 @@
 url = require 'url'
 randomstring = require "randomstring"
 numeral = require "numeral"
+moment = require "moment"
 
 module.exports = (sequelize, DataTypes)->
 
@@ -85,6 +86,18 @@ module.exports = (sequelize, DataTypes)->
           upcoming_charges: numeral(@upcoming_charges).format("$0[,]000.00")
         }
     }
+    auto_approve: {
+      type: DataTypes.DECIMAL(3)
+      defaultValue: 30
+      get: ->      
+        return Number @getDataValue("auto_approve")
+        
+    }
+    auto_approve_at: {
+      type: DataTypes.VIRTUAL
+      get: ->
+        return moment(@created_at).subtract(@auto_approve, "days").toDate()
+    }
   }, {    
     classMethods: {      
       associate: (models)->
@@ -135,16 +148,20 @@ module.exports = (sequelize, DataTypes)->
         }
         
       
-      approve_spending: ->
+      approve_spending: (query_additional={})->
         advertiser = @
+        query = {
+          is_transferred: false
+          type: "charge"
+        }
+        
+        for key, value of query_additional
+          query[key] = value
                 
         Promise.props({
           owner: advertiser.getOwner()
           transfers: advertiser.getTransfers({
-            where: {
-              is_transferred: false
-              type: "charge"
-            }
+            where: query
           })
         }).then (props)->
           if not props.owner.stripe_card?
@@ -220,6 +237,7 @@ module.exports = (sequelize, DataTypes)->
             
       
       beforeCreate: (advertiser)->
+        advertiser.auto_approval = 30
         advertiser.config = {
           keen: null
         }

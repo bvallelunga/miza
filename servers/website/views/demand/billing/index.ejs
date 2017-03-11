@@ -1,38 +1,43 @@
 <div class="display full">
-  <table class="top-bar"> 
-    <tr>   
-      <td class="section">
-        <div class="decription">
-          Billed
-          <span class="info fa fa-info-circle tooltip" title="Spend that has already been<br>billed and processed."></span>
-        </div>
-        <div class="title green"><%= advertiser.metrics.billed_spend %></div>
-      </td>
-      <td class="section">
-        <div class="decription">
-          Pending
-          <span class="info fa fa-info-circle tooltip" title="Spend that is waiting for your<br>approval to be charged."></span>
-        </div>
-        <div class="title blue"><%= advertiser.metrics.pending_spend %></div>
-      </td>
-      <td class="section">
-        <div class="decription">
-          Ongoing
-          <span class="info fa fa-info-circle tooltip" title="Spend for ongoing campaigns<br>that have not completed."></span>
-        </div>
-        <div class="title orange"><%= advertiser.metrics.upcoming_charges %></div>
-      </td>
-      <td class="section">
-        <div class="actions billing right <%= advertiser.pending_spend == 0 ? "disabled": "" %>">
-          <div class="action" data-action="approve">
-            <span class="fa fa-check"></span>
-            <span class="fa fa-spin fa-refresh" style="display:none"></span>
-            Approve Pending
+  <div class="top-bar">
+    <% if(advertiser.pending_spend > 0) { %>
+      <div class="message">Pending spend is auto approved <%= advertiser.auto_approve %> days after campaign completion</div>
+    <% } %>
+    <table> 
+      <tr>   
+        <td class="section">
+          <div class="decription">
+            Billed
+            <span class="info fa fa-info-circle tooltip" title="Spend that has already been<br>billed and processed."></span>
           </div>
-        </div>
-      </td>
-    </tr>
-  </table>
+          <div class="title green"><%= advertiser.metrics.billed_spend %></div>
+        </td>
+        <td class="section">
+          <div class="decription">
+            Pending
+            <span class="info fa fa-info-circle tooltip" title="Spend that is waiting for your approval.<br>Auto approval occurs in net <%= advertiser.auto_approve %> days."></span>
+          </div>
+          <div class="title blue"><%= advertiser.metrics.pending_spend %></div>
+        </td>
+        <td class="section">
+          <div class="decription">
+            Ongoing
+            <span class="info fa fa-info-circle tooltip" title="Spend for ongoing campaigns<br>that have not completed."></span>
+          </div>
+          <div class="title orange"><%= advertiser.metrics.upcoming_charges %></div>
+        </td>
+        <td class="section">
+          <div class="actions billing right <%= advertiser.pending_spend == 0 ? "disabled": "" %>">
+            <div class="action" data-action="approve">
+              <span class="fa fa-check"></span>
+              <span class="fa fa-spin fa-refresh" style="display:none"></span>
+              Approve Pending
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
 
 <div class="display full table-container">
@@ -52,12 +57,12 @@
           <td><%= transfer.name %></td>
           <td><%= transfer.metrics.amount %></td>
           <% if(transfer.is_transferred) { %>
-            <td><%= tensify(transfer.type).past %></td>
+            <td class="<%= transfer.type == "charge" ? "green" : "red" %>"><%= tensify(transfer.type).past %></td>
           <% } else { %>
-             <td>Pending</td>
+            <td class="blue">Pending</td>
           <% } %>
           <td><%= transfer.stripe_card %></td>
-          <td><%= transfer.transferred_at ? moment(transfer.transferred_at).format("MMM Do, YYYY") : "" %></td>
+          <td><%= moment(transfer.transferred_at || advertiser.auto_approve_at).format("MMM Do, YYYY") %></td>
         </tr>
       <% }) %>
     </tbody>
