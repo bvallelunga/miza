@@ -80,6 +80,7 @@ module.exports = (srv)->
   app.get  "/admin/users", routes.auth.is_admin, routes.admin.users.get
   app.get  "/admin/users/:user/simulate", routes.auth.is_admin, routes.admin.users.simulate
   app.get  "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.get
+  app.get  "/admin/advertisers", routes.auth.is_admin, routes.admin.advertisers.get
   app.get  "/admin/scheduler", routes.auth.is_admin, routes.admin.scheduler.get
   app.get  "/admin/emails", routes.auth.is_admin, routes.admin.emails.get
   app.get  "/admin/emails/:template", routes.auth.is_admin, routes.admin.emails.email
@@ -93,6 +94,7 @@ module.exports = (srv)->
   app.post "/admin/industries/update", routes.auth.is_admin, routes.admin.industries.update
   app.post "/admin/industries/create", routes.auth.is_admin, routes.admin.industries.create
   app.post "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.post
+  app.post "/admin/advertisers", routes.auth.is_admin, routes.admin.advertisers.post
   app.use  "/admin/vendor", admin_router
   
   

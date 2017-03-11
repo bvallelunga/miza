@@ -9,6 +9,7 @@ module.exports.get_root = (req, res, next)->
 
 module.exports.invites = require "./invites"
 module.exports.publishers = require "./publishers"
+module.exports.advertisers = require "./advertisers"
 module.exports.industries = require "./industries"
 module.exports.scheduler = require "./scheduler"
 module.exports.users = require "./users"

@@ -1,0 +1,40 @@
+<% include ../includes/start %>
+<% include ../includes/navigation %>
+<div class="container xlarge form-table">
+  <form class="form" method="POST" action="/admin/advertisers">
+    <% include ../includes/csrf %>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Owner</th>
+          <th>Admin Contact</th>
+          <th>Billed Spend</th>
+          <th>Pending Spend</th>
+          <th class="number">Auto Approve Spend (Days)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% advertisers.forEach(function(advertiser, i) { %>
+          <input type="hidden" name="advertisers[<%= i %>][id]" value="<%= advertiser.id %>" required>
+          <tr>
+            <td><a href="/demand/<%= advertiser.key %>/campaigns"><%= advertiser.name %></a></td>
+           <td><a href="mailto:<%= advertiser.owner.email %>"><%= advertiser.owner.name %></a></td>
+            <td><%= advertiser.admin_contact ? advertiser.admin_contact.name : "" %></td>
+            <td><%= advertiser.metrics.billed_spend %></td>
+            <td><%= advertiser.metrics.pending_spend %></td>
+            <td>
+              <div class="group left-align">
+                <div class="fa fa-calendar"></div>
+                <input class="only number" type="number" name="advertisers[<%= i %>][auto_approve]" value="<%= advertiser.auto_approve %>" placeholder="30" min="0" step="1" max="100" required>
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <button class="button" type="submit">Update Advertisers</button>
+    <div class="error"></div>
+  </form>
+</div>
+<% include ../includes/end %>
