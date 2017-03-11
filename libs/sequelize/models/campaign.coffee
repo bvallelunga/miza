@@ -172,7 +172,7 @@ module.exports = (sequelize, DataTypes)->
     validate: {
       notCompleted: ->            
         if @changed("status") and @previous("status") == "completed"
-          throw new Error "Campaign status can not be changed after it is complete."
+          throw new Error "A campaign's status can not be changed after it is complete."
     }
     hooks: {
       beforeCreate: (campaign)->

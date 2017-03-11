@@ -124,6 +124,6 @@ module.exports = (sequelize, DataTypes)->
     validate: {
       notCompleted: ->            
         if @changed("status") and @previous("status") == "completed"
-          throw new Error "Industry status can not be changed after it is complete."
+          throw new Error "An industry's status can not be changed after it is complete."
     }
   }
