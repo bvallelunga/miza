@@ -65,7 +65,7 @@
     </script>
   </head>
   <body>
-      <a target="_blank" href="<%= creative.attributed_link(creative.industry_id, is_protected) %>">
+      <a target="_blank" href="/c/<%= creative.attributed_link(creative.industry_id, is_protected) %>">
         <img src="data:image;base64,<%= creative.image.toString('base64') %>"/>
         <% if(!!creative.description) { %>
           <div><%- creative.description_html %></div>

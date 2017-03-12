@@ -18,6 +18,6 @@ module.exports = (host, path)->
     }
     
 
-url_safe_decoder = (str)->
-  str = (str + '===').slice(0, str.length + (str.length % 4));
-  return str.replace(/-/g, '+').replace(/_/g, '/');
+module.exports.decoder = url_safe_decoder = (str)->
+  str = (str + '===').slice(0, str.length + (str.length % 4))
+  return str.replace(/-/g, '+').replace(/_/g, '/')

@@ -18,6 +18,7 @@ module.exports = (srv)->
   app.get "/check", router.core.check
   app.get "/p", router.core.ping
   app.get "/i", router.core.impression
+  app.get /^\/c\/(.*)/, router.core.click
   
   app.use router.engine
   app.use router.protect.prefix, router.protect.app
