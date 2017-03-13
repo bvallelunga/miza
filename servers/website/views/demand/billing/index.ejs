@@ -62,7 +62,7 @@
             <td class="blue">Pending</td>
           <% } %>
           <td><%= transfer.stripe_card %></td>
-          <td><%= moment(transfer.transferred_at || advertiser.auto_approve_at).format("MMM Do, YYYY") %></td>
+          <td><%= moment(transfer.transferred_at || moment(transfer.created_at).add(advertiser.auto_approve, "days")).format("MMM Do, YYYY") %></td>
         </tr>
       <% }) %>
     </tbody>

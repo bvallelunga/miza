@@ -50,6 +50,7 @@ module.exports = (req, res, next)->
   res.locals.pluralize = pluralize
   res.locals.tensify = tensify
   res.locals.dashboard = ""
+  res.locals.dashboard_path = ""
   res.locals.referrer = req.get("referrer")
   res.locals.media = {
     "logo" : "#{res.locals.host}/imgs/logo.png?#{res.locals.random}"

@@ -1,6 +1,8 @@
 <header class="navigation <%= type %>">
   <div class="left">
-    <% include ./logo %>
+    <a href="/">
+      <% include ./logo %>
+    </a>
     <div class="links">
       <% if(type == "demand") { %>
         <a href="<%= dashboard_path %>/campaigns" class="<%= isActive(dashboard, "campaigns") %> <%= isActive(dashboard, "campaign") %>">
@@ -42,10 +44,12 @@
           Admin Center
         </a>
       <% } %>
-      <a href="/dashboard" class="<%= isActive(dashboard, "dashboard") %>">
-        Dashboard
-      </a>
-      <span class="spacer"></span>
+      <% if(user.is_admin || dashboard == "account") { %>
+        <a href="/dashboard" class="<%= isActive(dashboard, "dashboard") %>">
+          Dashboard
+        </a>
+        <span class="spacer"></span>
+      <% } %>
       <a href="/account" class="<%= isActive(dashboard, "account") %>">
         Account
       </a>
