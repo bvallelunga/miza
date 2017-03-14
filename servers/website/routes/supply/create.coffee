@@ -6,8 +6,8 @@ module.exports.get = (req, res, next)->
     }
   }).then (industries)->
     res.render "supply/create", {
-      js: req.js.renderTags "modal"
-      css: req.css.renderTags "modal", "fa"
+      js: req.js.renderTags "modal", "fa"
+      css: req.css.renderTags "modal"
       title: "Create Publisher"
       industries: industries
     }

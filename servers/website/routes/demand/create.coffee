@@ -3,8 +3,8 @@ module.exports.get = (req, res, next)->
     return res.redirect "/demand"
 
   res.render "demand/create", {
-    js: req.js.renderTags "modal"
-    css: req.css.renderTags "modal", "fa"
+    js: req.js.renderTags "modal", "fa"
+    css: req.css.renderTags "modal"
     title: "Create Advertiser"
   }
   
