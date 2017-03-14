@@ -22,9 +22,10 @@ class Dashboard
     @date_range = new DatePicker ".campaigns-listing-dashboard", @update.bind @
     
     $(".actions .action").click (e)=>
+      action = $(e.currentTarget).data("action")
       campaigns = $.makeArray @data_table.column(0).checkboxes.selected()
       
-      if campaigns.length == 0
+      if campaigns.length == 0 or action == "delete" and not confirm("Please confirm you want to delete!")
         return
       
       $spinner = $(e.currentTarget).find(".fa-spin").show()
@@ -32,7 +33,7 @@ class Dashboard
       
       $.post("/demand/#{config.advertiser}/campaigns/update", {
         _csrf: config.csrf
-        action: $(e.currentTarget).data("action")
+        action: action
         campaigns: campaigns
       }).done =>
         $spinner.hide()

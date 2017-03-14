@@ -193,7 +193,11 @@ module.exports = (sequelize, DataTypes)->
       
             
       beforeDestroy: (campaign)->
-        campaign.create_transfer().then ->
+        Promise.resolve().then ->
+          if campaign.status != "completed"
+            campaign.create_transfer()
+          
+        .then ->
           campaign.getIndustries().each (industry)->
             industry.destroy()
 

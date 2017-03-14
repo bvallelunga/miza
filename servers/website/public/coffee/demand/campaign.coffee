@@ -20,13 +20,18 @@ class Dashboard
     @$search.keyup =>
       @data_table.column(1).search(@$search.val()).draw()
       
-    $(".campaign.actions .action").click (e)=>    
+    $(".campaign.actions .action").click (e)=>  
+      action = $(e.currentTarget).data("action")
+      
+      if action == "delete" and not confirm("Please confirm you want to delete!")
+        return
+        
       $spinner = $(e.currentTarget).find(".fa-spin").show()
       $original = $(e.currentTarget).find(":not(.fa-spin)").hide()  
       
       $.post("/demand/#{config.advertiser}/campaign/#{config.campaign}", {
         _csrf: config.csrf
-        action: $(e.currentTarget).data("action")
+        action: action
       }).done ->
         window.location.reload()
         
@@ -52,7 +57,7 @@ class Dashboard
       
       $.post("/demand/#{config.advertiser}/campaign/#{config.campaign}/industries", {
         _csrf: config.csrf
-        action: $(e.currentTarget).data("action")
+        action: action
         industries: industries
       }).done =>
         $spinner.hide()
