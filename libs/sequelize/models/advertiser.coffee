@@ -222,6 +222,7 @@ module.exports = (sequelize, DataTypes)->
             custom_attributes: {
               type: "advertiser"
               card: !!@owner.stripe_card
+              auto_approve: @auto_approve
               admin: if @admin_contact? then @admin_contact.name else null
             }
           }
