@@ -6,7 +6,17 @@ module.exports = require("../template") {
     priority: "high" 
   }
 }, (job)->
-  LIBS.models.Advertiser.findAll().each (advertiser)->
+  LIBS.models.Advertiser.findAll({
+    include: [{
+      model: LIBS.models.User
+      as: "owner"
+      where: {
+        stripe_card: {
+          $ne: null
+        }
+      }
+    }]
+  }).each (advertiser)->
     advertiser.approve_spending({
       created_at: {
         $lte: advertiser.auto_approve_at

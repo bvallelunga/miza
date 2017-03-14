@@ -96,7 +96,7 @@ module.exports = (sequelize, DataTypes)->
     auto_approve_at: {
       type: DataTypes.VIRTUAL
       get: ->
-        return moment(@created_at).subtract(@auto_approve, "days").toDate()
+        return moment().subtract(@auto_approve, "days").toDate()
     }
   }, {    
     classMethods: {      
@@ -159,7 +159,7 @@ module.exports = (sequelize, DataTypes)->
           query[key] = value
                 
         Promise.props({
-          owner: advertiser.getOwner()
+          owner: advertiser.owner or advertiser.getOwner()
           transfers: advertiser.getTransfers({
             where: query
           })
