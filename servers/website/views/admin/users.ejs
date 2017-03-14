@@ -20,6 +20,10 @@
   paypals = users.filter(function(user) {
     return !!user.paypal
   }).length
+  
+  cards = users.filter(function(user) {
+    return !!user.stripe_card
+  }).length
 %>
 <div class="container xlarge form-table users">
   <div class="stats">
@@ -47,12 +51,17 @@
       <strong>PayPal</strong>
       (<%= paypals %>)
     </span>
+    <span data-filter="card">
+      <strong>Cards</strong>
+      (<%= cards %>)
+    </span>
   </div>
   <table>
     <thead>
       <tr>
         <th>Name</th>
         <th>Email</th>
+        <th>Card</th>
         <th>PayPal</th>
         <th>Admin Contact</th>
         <th>Access</th>
@@ -65,10 +74,12 @@
         <tr class="
           <%= user.is_admin ? "admin" : "user" %>
           <%= !!user.paypal ? "paypal" : "" %>
+          <%= !!user.stripe_card ? "card" : "" %>
           <%= user.type %>
         ">
           <td><%= user.name %></td>
           <td><a href="mailto:<%= user.email %>"><%= user.email %></a></td>
+          <td class="<%= !!user.stripe_card ? "green" : "red" %>"><%= user.stripe_card || "No Card" %></td>
           <td class="<%= user.paypal ? "green" : "red" %>"><%= user.paypal || "No PayPal" %></td>
           <td><%= user.admin_contact ? user.admin_contact.name : "" %></td>
           <td><%= user.is_admin ? "Admin" : "User" %></td>
