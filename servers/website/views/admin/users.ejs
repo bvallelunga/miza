@@ -1,6 +1,14 @@
 <% include ../includes/start %>
 <% include ../includes/navigation %>
 <% 
+  advertisers = users.filter(function(user) {
+    return user.type == "demand"
+  }).length
+  
+  publishers = users.filter(function(user) {
+    return user.type == "supply"
+  }).length
+  
   admins_only = users.filter(function(user) {
     return user.is_admin
   }).length
@@ -18,6 +26,14 @@
     <span class="active" data-filter="all">
       <strong>All</strong>
       (<%= users.length %>)
+    </span>
+    <span data-filter="supply">
+      <strong>Publishers</strong>
+      (<%= publishers %>)
+    </span>
+    <span data-filter="demand">
+      <strong>Advertisers</strong>
+      (<%= advertisers %>)
     </span>
     <span data-filter="user">
       <strong>Users</strong>
@@ -49,6 +65,7 @@
         <tr class="
           <%= user.is_admin ? "admin" : "user" %>
           <%= !!user.paypal ? "paypal" : "" %>
+          <%= user.type %>
         ">
           <td><%= user.name %></td>
           <td><a href="mailto:<%= user.email %>"><%= user.email %></a></td>
