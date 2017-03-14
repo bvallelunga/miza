@@ -1,15 +1,10 @@
 app = require('express')()
-routes = require "./routes"
 
 module.exports = (srv)->
-  # Express Setup
-  app.set 'view engine', 'js'
-  app.set 'views', __dirname + '/views'
   
   # Routes  
-  app.get "/", routes.abtest, routes.script
-  app.get "/c", routes.abtest, routes.script
-  app.get "/*", routes.proxy
+  app.get "/*", (req, res, next)->
+    res.send "Please migrate your account to Miza Network"
   
   
   # Export

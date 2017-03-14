@@ -41,7 +41,27 @@
     </div>
   <% } %>
   
-  <%- include("./" + publisher.product + "/index") %>
+  <div>
+    <h3>Insert <%= company %> Script</h3>
+    <p>
+      Paste the script before any other ad network scripts 
+      into the <span>body</span> element.
+    </p>
+    <pre><code><%= include("../../samples/network/head") %></code></pre>
+    <h3>Ad Replacement <span>(OPTIONAL)</span></h3>
+    <p>
+      By default <%= company %> will replace all ads when an ad blocker is activated.
+      If you wish to have <%= company %> ignore a specific ad,
+      all you need to do is add the <span>m-ignore</span> attribute
+      to the ad. For example:
+    </p>
+    <pre><code class="html"><%= include("../../samples/network/ignore") %></code></pre>
+    <div class="warning orange">
+      Please make sure you attach the "m-ignore" attribute to the<br>
+      individual ad element and not it's parent containers.
+    </div>
+  </div>
+
   
   <h3>You are all set!</h3>
   <p>
