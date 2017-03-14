@@ -83,8 +83,9 @@ module.exports = (sequelize, DataTypes)->
           ]
         })
         
-      fetch_advertiser_transfers: ->
-        LIBS.models.Transfer.findAll({
+        
+      fetch_advertiser_transfers: ->      
+        LIBS.models.Transfer.all({
           where: {
             is_transferred: true
             type: "charge"
@@ -92,13 +93,23 @@ module.exports = (sequelize, DataTypes)->
             advertiser_id: {
               $ne: null
             }
-            campaign_id: {
-              $ne: null
-            }
-            created_at: {
-              $lte: @end_at
-            }
           }
+          include: [{
+            model: LIBS.models.Campaign
+            as: "campaign"
+            paranoid: false
+            where: {
+              $or: [{
+                end_at: {
+                  $lte: @end_at
+                }
+              }, {
+                deleted_at: {
+                  $lte: @end_at
+                }
+              }]
+            }
+          }]
         })
         
       
@@ -112,8 +123,8 @@ module.exports = (sequelize, DataTypes)->
         # in net 30 days, this will ensure the publisher
         # is paid in the next month
         for transfer in @advertiser_transfers        
-          if transfer.created_at < start_at
-            start_at = transfer.created_at
+          if transfer.campaign.created_at < start_at
+            start_at = transfer.campaign.created_at
             
         run_query = (operation, query)=>
           query.event_collection = "ads.event"
@@ -172,7 +183,7 @@ module.exports = (sequelize, DataTypes)->
         Promise.props({
           publishers: @fetch_publishers()
           advertiser_transfers: @fetch_advertiser_transfers()            
-        }).then (data)->
+        }).then (data)->        
           payout.advertiser_transfers = data.advertiser_transfers
           campaigns = data.advertiser_transfers.map (transfer)->
             transfer.campaign_id
