@@ -46,6 +46,9 @@ module.exports.post_updates = (req, res, next)->
         id: {
           $in: req.body.campaigns
         }
+        status: {
+          $ne: "completed"
+        }
       }
     }).each (campaign)->
       if campaign.status == "queued"
