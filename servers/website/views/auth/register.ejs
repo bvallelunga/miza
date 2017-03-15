@@ -1,7 +1,6 @@
 <% include ../includes/start %>
-<% include ../includes/header %>
+<% include ../includes/navigation %>
 <div class="container">
-  <% include ../includes/logo %>
   <form class="form" method="POST" action="/register">
     <% include ../includes/csrf %>
     <div>
@@ -13,6 +12,7 @@
         <div class="fa fa-sort"></div>
         <select class="input bottom" name="type" required>
           <option disabled="true" selected>I am a...</option>
+          <option value="all">Publisher & Advertiser</option>
           <option value="supply">Publisher</option>
           <option value="demand">Advertiser</option>
         </select>

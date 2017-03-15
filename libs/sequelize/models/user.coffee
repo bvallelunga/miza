@@ -27,7 +27,10 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING,
       allowNull: false
       validate: {
-        isIn: [['supply', 'demand']]
+        isIn: {
+          msg: "Must be valid user type"
+          args: [['supply', 'demand', 'all']]
+        }
       }
     }
     phone: {

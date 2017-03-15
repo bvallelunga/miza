@@ -44,7 +44,7 @@
           Admin Center
         </a>
       <% } %>
-      <% if(user.is_admin || dashboard == "account") { %>
+      <% if(user.is_admin || user.type == "all" || dashboard == "account") { %>
         <a href="/dashboard" class="<%= isActive(dashboard, "dashboard") %>">
           Dashboard
         </a>
@@ -59,7 +59,7 @@
     <% } else { %>
       <a href="/login">Log In</a>
       <span class="spacer"></span>
-      <a href="/">Request Demo</a>
+      <a href="#" onclick="Intercom('show')">Contact Us</a>
     <% } %>
   </div>
   <div class="clear"></div>

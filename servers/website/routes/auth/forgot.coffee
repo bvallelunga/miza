@@ -56,11 +56,7 @@ module.exports.reset_post = (req, res, next)->
 
   LIBS.redis.get redis_key, (error, user_id)->   
     if error? or not user_id?
-      return res.status(400).json {
-        success: false
-        message: "Invalid reset key."
-        csrf: req.csrfToken()
-      }
+      return "Invalid reset key."
       
     if req.body.new_password != req.body.confirm_password
       return next "Passwords do not match"
@@ -78,7 +74,7 @@ module.exports.reset_post = (req, res, next)->
       res.json {
         success: true
         message: "Your password has been updated!"
-        next: "/#{user.type}"
+        next: "/dashboard"
       }
       
     .catch next
