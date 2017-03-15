@@ -13,27 +13,20 @@ module.exports.get = (req, res, next)->
     }
   
   
-module.exports.post = (req, res, next)->
-  Publisher = LIBS.models.Publisher 
-  industry_id = null
-    
-  if req.body.publisher_product == "protect"
-    if req.body.publisher_industry
-      industry_id = Number req.body.publisher_industry
-    
-    else
-      return next "Please select an industry."
+module.exports.post = (req, res, next)->    
+  if not req.body.publisher_industry
+    return next "Please select an industry."
       
   if not req.body.publisher_miza_endpoint
     return next "Please select a DNS option."
 
-  Publisher.create({
+  LIBS.models.Publisher.create({
     product: "network"
     domain: req.body.publisher_domain
     name: req.body.publisher_name
     owner_id: req.user.id
     miza_endpoint: req.body.publisher_miza_endpoint == "true"
-    industry_id: industry_id
+    industry_id: Number req.body.publisher_industry
     admin_contact_id: req.user.admin_contact_id
   }).then (publisher)->
     req.user.addPublisher(publisher).then ->

@@ -8,6 +8,15 @@
     <% include ../includes/csrf %>
     <input class="name top" type="text" name="publisher_name" placeholder="Publisher Name" required/>
     <input class="email" type="url" name="publisher_domain" placeholder="http://publisher.com" required/>
+    <div class="group publisher_industry">
+      <div class="fa fa-sort"></div>
+      <select class="input" name="publisher_industry" required>
+        <option disabled="true" selected>Select Industry</option>
+        <% industries.forEach(function(industry) { %>
+          <option value="<%= industry.id %>"><%= industry.name %></option>
+        <% }) %>
+      </select>
+    </div>
     <div class="group">
       <div class="fa fa-sort"></div>
       <select class="input bottom" name="publisher_miza_endpoint" required>
