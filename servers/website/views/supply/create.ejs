@@ -6,7 +6,6 @@
   </span>
   <form class="form" method="POST" action="<%= path %>">
     <% include ../includes/csrf %>
-    <input class="select_value" type="hidden" name="publisher_product" value="network" required/>
     <input class="name top" type="text" name="publisher_name" placeholder="Publisher Name" required/>
     <input class="email" type="url" name="publisher_domain" placeholder="http://publisher.com" required/>
     <div class="group">

@@ -28,7 +28,7 @@ module.exports.post = (req, res, next)->
     return next "Please select a DNS option."
 
   Publisher.create({
-    product: req.body.publisher_product
+    product: "network"
     domain: req.body.publisher_domain
     name: req.body.publisher_name
     owner_id: req.user.id

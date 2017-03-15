@@ -21,7 +21,6 @@ module.exports = (srv)->
   app.get /^\/c\/(.*)/, router.core.click
   
   app.use router.engine
-  app.use router.protect.prefix, router.protect.app
   app.use router.network.prefix, router.network.app
   
   

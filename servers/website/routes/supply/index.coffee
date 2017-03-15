@@ -8,9 +8,6 @@ module.exports.get_root = (req, res, next)->
 
 
 module.exports.get_dashboard = (req, res, next)->
-  if req.publisher.product == "protect"
-    return res.redirect "/supply/#{req.publisher.key}/migrate"
-
   js = ["dashboard", "supply", "fa"]
   css = ["dashboard", "supply"]
   dashboard = req.params.dashboard
@@ -127,6 +124,5 @@ module.exports.get_dashboard = (req, res, next)->
 module.exports.auth = require "./auth"
 module.exports.create = require "./create"
 module.exports.analytics = require "./analytics"
-module.exports.migrate = require "./migrate"
 module.exports.settings = require "./settings"
 module.exports.members = require "./members"

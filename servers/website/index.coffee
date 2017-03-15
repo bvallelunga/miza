@@ -124,7 +124,6 @@ module.exports = (srv)->
   app.get  "/supply", routes.auth.is_authenticated, routes.supply.get_root
   app.get  "/supply/new", routes.auth.is_authenticated, routes.supply.create.get
   app.get  "/supply/:publisher", routes.auth.is_authenticated, routes.supply.auth, routes.supply.get_root
-  app.get  "/supply/:publisher/migrate", routes.auth.is_authenticated, routes.supply.auth, routes.supply.migrate.get
   app.get  "/supply/:publisher/:dashboard", routes.auth.is_authenticated, routes.supply.auth, routes.supply.get_dashboard
   app.get  "/supply/:publisher/analytics/metrics", routes.auth.is_authenticated, routes.supply.auth, routes.supply.analytics.get
   app.get  "/supply/:publisher/members/invite/:invite/remove", routes.auth.is_authenticated, routes.supply.auth, routes.supply.members.remove_invite
@@ -132,7 +131,6 @@ module.exports = (srv)->
   app.post "/supply/new", routes.auth.is_authenticated, routes.supply.create.post
   app.post "/supply/:publisher/members/add", routes.auth.is_authenticated, routes.supply.auth, routes.supply.members.add
   app.post "/supply/:publisher/settings", routes.auth.is_authenticated, routes.supply.auth, routes.supply.settings.post
-  app.post "/supply/:publisher/migrate", routes.auth.is_authenticated, routes.supply.auth, routes.supply.migrate.post
   
   
   # Error Handlers
