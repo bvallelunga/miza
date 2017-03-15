@@ -47,6 +47,7 @@ class Dashboard
         window.scrollTo(0,0);
      
     $(".industries.actions:not(.disabled) .action").click (e)=>
+      action = $(e.currentTarget).data("action")
       industries = $.makeArray @data_table.column(0).checkboxes.selected()
       
       if industries.length == 0
