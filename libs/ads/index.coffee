@@ -25,6 +25,8 @@ module.exports.build_event = (raw_data)->
       return Promise.resolve()
   
     LIBS.models.Campaign.findById(raw_data.campaign).then (temp)->
+      if not temp? then return
+      
       campaign = {
         id: temp.id
         name: temp.name
@@ -44,7 +46,9 @@ module.exports.build_event = (raw_data)->
     if not raw_data.query.industry?
       return Promise.resolve()
   
-    LIBS.models.CampaignIndustry.findById(raw_data.industry).then (temp)->        
+    LIBS.models.CampaignIndustry.findById(raw_data.industry).then (temp)-> 
+      if not temp? then return
+           
       industry = {
         id: temp.id
         name: temp.name
@@ -66,8 +70,7 @@ module.exports.build_event = (raw_data)->
       return Promise.resolve()
   
     LIBS.models.Creative.findById(raw_data.creative).then (temp)->
-      if not temp?
-        return Promise.resolve()
+      if not temp? then return
         
       creative = {
         id: temp.id

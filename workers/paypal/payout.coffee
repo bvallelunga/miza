@@ -20,40 +20,38 @@ module.exports = require("../template") {
       as: "user"
       where: {
         paypal: {
-          $not: null
+          $ne: null
         }
       }
     }]
-  }).then (transfers)->  
-    if transfers.length == 0
-      return Promise.resolve()
-  
+  }).each (transfer)->    
     new Promise (res, rej)->
       LIBS.paypal.payout.create {
         sender_batch_header: {
-          sender_batch_id: transfers[0].payout_id
+          sender_batch_id: transfer.payout_id
           email_subject: "Miza Inc. Payout"
         }
-        items: transfers.map (transfer)->
-          return {
-            recipient_type: "EMAIL"
-            receiver: transfer.user.paypal
-            note: transfer.note
-            sender_item_id: transfer.id
-            amount: {
-              value: transfer.amount
-              currency: "USD"
-            }
+        items: [{
+          recipient_type: "EMAIL"
+          receiver: transfer.user.paypal
+          note: transfer.note
+          sender_item_id: transfer.id
+          amount: {
+            value: transfer.amount
+            currency: "USD"
           }
+        }]
       }, (error, payout)->
         if error?
           return rej error
-                    
-        res transfers
-  
-    .map (transfer)->
-      transfer.paypal = transfer.user.paypal
-      transfer.is_transferred = true
-      transfer.transferred_at = new Date()
-      transfer.save()
+          
+        transfer.config.paypal = payout
+          
+        res transfer.update({
+          paypal: transfer.user.paypal
+          is_transferred: true
+          transferred_at: new Date()
+          config: transfer.config
+        })
+
   

@@ -13,10 +13,8 @@ module.exports = (req, res, next)->
   res.header 'Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE'
   res.header 'Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
   
-  #Locals  
-  if req.csrfToken?
-    res.locals.csrf = req.csrfToken() 
-  
+  #Locals    
+  res.locals.csrf = if req.csrfToken? then req.csrfToken() else ""
   res.locals.host = "https://#{req.get("host")}"
   res.locals.hostname = req.get("host")
   res.locals.url = res.locals.host + req.originalUrl
