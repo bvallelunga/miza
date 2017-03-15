@@ -168,15 +168,15 @@ module.exports = (sequelize, DataTypes)->
             user_id: data.advertiser.owner_id
           })
     }
-  
+    
+    validate: {
+      notCompleted: ->            
+        if @changed("status") and @previous("status") == "completed"
+          throw new Error "A campaign's status can not be changed after it is complete."
+    }
     hooks: {
       beforeCreate: (campaign)->
         campaign.impressions_needed = campaign.impressions_requested
-        
-      
-      beforeUpdate: (campaign)->
-        if campaign.changed("status") and campaign.previous("status") == "completed"
-          campaign.status = "completed"
         
             
       afterUpdate: (campaign)->
