@@ -21,14 +21,12 @@
           Notifications
         </a>
       </li>
-      <% if(user.is_admin || user.type == "demand") { %>
-        <li class="<%= isActive(subdashboard, "billing") %>">
-          <a href="/account/billing">
-            <span class="fa fa-credit-card"></span>
-            Billing
-          </a>
-        </li>
-      <% } %>
+      <li class="<%= isActive(subdashboard, "billing") %>">
+        <a href="/account/billing">
+          <span class="fa fa-credit-card"></span>
+          Billing
+        </a>
+      </li>
     </ul>
   </div>
   <div class="display">
