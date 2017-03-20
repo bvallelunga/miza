@@ -5,3 +5,72 @@
 .c3 .c3-axis-y path, .c3 .c3-axis-y line {
   stroke: transparent;
 }
+
+.keen-dataviz-green, .keen-dataviz-blue,
+.keen-dataviz-red, .keen-dataviz-purple,
+.keen-dataviz-orange {
+  
+  &.keen-dataviz-green &-metric {
+    color: #2CCA73;
+  }
+  
+  &.keen-dataviz-blue &-metric {
+    color: #00BBDE;
+  }
+  
+  &.keen-dataviz-red &-metric {
+    color: #FE6672;
+  }
+  
+  &.keen-dataviz-purple &-metric {
+    color: #8A8AD6;
+  }
+  
+  &.keen-dataviz-orange &-metric {
+    color: #EEB058;
+  }
+
+  &-metric {
+    border-radius: 4px;
+    color: #FFFFFF;
+    font-family: 'Ubuntu';
+    text-align: center;
+  }
+  
+  &-metric-value {
+    display: block;
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 72px;
+  }
+  
+  &-metric-title {
+    display: block;
+    font-size: 24px;
+    font-weight: 200;
+    line-height: 24px;
+    padding-top: 8px;
+    font-family: "Open Sans"
+  }
+  
+  .keen-spinner-container {
+    box-sizing: border-box;
+    display: block;
+    height: 50px;
+    margin: 0 auto;
+    position: relative;
+    width: 35px;
+  }
+  
+  .keen-spinner-indicator {
+    border-radius: 100%;
+    border: 3px solid #000000;
+    border: 3px solid rgba(0, 0, 0, .1);
+    border-top-color: rgba(0, 0, 0, .45);
+    box-sizing: border-box;
+    height: 35px;
+    width: 35px;
+    -webkit-animation:spin .7s linear infinite;
+    animation:spin .7s linear infinite;
+  }
+}

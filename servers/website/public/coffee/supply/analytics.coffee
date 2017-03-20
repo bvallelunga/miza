@@ -49,7 +49,8 @@ class Dashboard
       .height(180)
       .title('Impressions')
       .type('metric')
-      .colors([ '#2CCA73' ])
+      .colors([ 'transparent' ])
+      .theme("keen-dataviz-green")
       .prepare()
       
     # Click Count
@@ -58,7 +59,8 @@ class Dashboard
       .height(180)
       .title('Clicks')
       .type('metric')
-      .colors(['#8A8AD6'])
+      .colors([ 'transparent' ])
+      .theme("keen-dataviz-purple")
       .prepare()
       
     
@@ -68,7 +70,8 @@ class Dashboard
       .height(180)
       .title('Page Views')
       .type('metric')
-      .colors(['#EEB058'])
+      .colors([ 'transparent' ])
+      .theme("keen-dataviz-orange")
       .prepare()
       
       
@@ -78,7 +81,8 @@ class Dashboard
       .height(180)
       .title('Click Through Rate')
       .type('metric')
-      .colors(['#00BBDE'])
+      .colors([ 'transparent' ])
+      .theme("keen-dataviz-blue")
       .chartOptions({ 
         suffix: "%" 
       })
@@ -91,7 +95,8 @@ class Dashboard
       .height(180)
       .title('Ad Blocker Adoption')
       .type('metric')
-      .colors(['#FE6672'])
+      .colors([ 'transparent' ])
+      .theme("keen-dataviz-red")
       .chartOptions({ 
         suffix: "%" 
       })
