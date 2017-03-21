@@ -20,7 +20,7 @@ module.exports = (srv)->
       if CONFIG.pipeline == "localhost" and req.hostname.indexOf(CONFIG.ngrok) > -1
         return next()
             
-      if domains.length == 0 and req.hostname.indexOf(CONFIG.ads_server.protected_domain) > -1
+      if domains.length == 0 and req.hostname.indexOf(CONFIG.ads_server.domain) > -1
         return res.redirect CONFIG.ads_server.denied.redirect
     
       if domains.length > 0 and domains[0] not in CONFIG.website_subdomains

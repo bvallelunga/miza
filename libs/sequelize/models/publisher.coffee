@@ -108,14 +108,16 @@ module.exports = (sequelize, DataTypes)->
       cloudflare_add: (endpoint)->
         if CONFIG.disable.cloudflare
           return Promise.resolve()
+          
+        key = endpoint.replace(CONFIG.ads_server.protected_domain, "")
         
         LIBS.cloudflare.browseZones({
           name: CONFIG.ads_server.protected_domain
         }).then (zones)->        
           record = LIBS.cloudflare.Cloudflare.DNSRecord.create {
             type: "CNAME"
-            name: endpoint
-            content: CONFIG.ads_server.protected_domain
+            name: key
+            content: CONFIG.ads_server.domain
             zone_id: zones.result[0].id
             proxied: true
           }
@@ -258,7 +260,7 @@ module.exports = (sequelize, DataTypes)->
         publisher.keen_generate().then ->
       
           if publisher.miza_endpoint
-            publisher.cloudflare_add publisher.endpoint
+            publisher.cloudflare_add(publisher.endpoint)
           
           else
             publisher.heroku_add(publisher.endpoint)
@@ -277,10 +279,10 @@ module.exports = (sequelize, DataTypes)->
             
         if publisher.changed("miza_endpoint")
           if publisher.miza_endpoint
-            publisher.cloudflare_add publisher.endpoint
+            publisher.cloudflare_add(publisher.endpoint)
             
           else
-            publisher.cloudflare_remove publisher.key
+            publisher.cloudflare_remove(publisher.key)
 
     }
   }
