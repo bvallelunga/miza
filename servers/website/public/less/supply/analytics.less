@@ -1,7 +1,7 @@
 @import '../libs/all';
 @import '../global/colors';
 
-.analytics-dashboard {
+.container.analytics-dashboard {
   .date-picker-wrapper.date-dropdown {
     right: 16px !important;
     left: inherit !important;
@@ -23,7 +23,12 @@
 
 
   .display {
-    padding: 45px 10px 10px 10px;
+    padding: 10px;
+    min-height: 0;
+    
+    &.top-chart {
+      padding-top: 45px;
+    }
   }
 
   .metrics {

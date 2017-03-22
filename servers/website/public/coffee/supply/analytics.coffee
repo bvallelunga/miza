@@ -50,7 +50,6 @@ class Dashboard
       .title('Impressions')
       .type('metric')
       .colors([ 'transparent' ])
-      .theme("keen-dataviz-green")
       .prepare()
       
     # Click Count
@@ -60,7 +59,6 @@ class Dashboard
       .title('Clicks')
       .type('metric')
       .colors([ 'transparent' ])
-      .theme("keen-dataviz-purple")
       .prepare()
       
     
@@ -71,7 +69,6 @@ class Dashboard
       .title('Page Views')
       .type('metric')
       .colors([ 'transparent' ])
-      .theme("keen-dataviz-orange")
       .prepare()
       
       
@@ -79,10 +76,22 @@ class Dashboard
     @charts.ctr_count = new Keen.Dataviz()
       .el('.chart.ctr-count')
       .height(180)
-      .title('Click Through Rate')
+      .title('Click Rate')
       .type('metric')
       .colors([ 'transparent' ])
-      .theme("keen-dataviz-blue")
+      .chartOptions({ 
+        suffix: "%" 
+      })
+      .prepare()
+    
+    
+    # Fill Rate
+    @charts.fill_count = new Keen.Dataviz()
+      .el('.chart.fill-count')
+      .height(180)
+      .title('Fill Rate')
+      .type('metric')
+      .colors([ 'transparent' ])
       .chartOptions({ 
         suffix: "%" 
       })
@@ -93,10 +102,9 @@ class Dashboard
     @charts.protection_count = new Keen.Dataviz()
       .el('.chart.protection-count')
       .height(180)
-      .title('Ad Blocker Adoption')
+      .title('Ad Block Rate')
       .type('metric')
       .colors([ 'transparent' ])
-      .theme("keen-dataviz-red")
       .chartOptions({ 
         suffix: "%" 
       })

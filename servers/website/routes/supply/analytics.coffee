@@ -44,6 +44,13 @@ module.exports.get = (req, res, next)->
         "property_value": "ping"
       }]
     }
+    fill_count: query "count", {
+      filters: [{
+        "operator": "eq"
+        "property_name": "type"
+        "property_value": "request"
+      }]
+    }
     protection_count:  query "count", {
       filters: [{
         "operator": "eq"
@@ -80,7 +87,8 @@ module.exports.get = (req, res, next)->
       result: {}
     }
   }).then (props)->
-    props.protection_count.result.result = Math.floor props.protection_count.result.result/props.view_count.result.result * 100
+    props.protection_count.result.result = Math.min 100, Math.floor props.protection_count.result.result/props.view_count.result.result * 100
+    props.fill_count.result.result = Math.min 100, Math.floor props.impression_count.result.result/props.fill_count.result.result * 100
     props.ctr_count.result = {
       query: props.protection_count.result.query
       result: Math.floor props.click_count.result.result/props.impression_count.result.result * 100

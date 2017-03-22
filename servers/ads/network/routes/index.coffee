@@ -48,6 +48,11 @@ module.exports.ad_frame = (req, res, next)->
     res.render "ad/remove", {
       frame: req.query.frame
     }
+    
+  LIBS.ads.track req, {
+    type: "request"
+    publisher: req.publisher
+  }
       
       
 module.exports.proxy = (req, res, next)->
