@@ -43,14 +43,6 @@
       <strong>Endpoint Issued</strong>
       (<%= miza_endpoints %>)
     </span>
-    <span data-filter="discount">
-      <strong>Discount</strong>
-      (<%= discounts_given %>)
-    </span>
-    <span data-filter="free">
-      <strong>Free</strong>
-      (<%= free_publishers %>)
-    </span>
   </div>
   <form class="form" method="POST" action="/admin/publishers">
     <% include ../includes/csrf %>
@@ -62,7 +54,7 @@
           <th>Admin Contact</th>
           <th class="dynamic">Industry</th>
           <th class="dynamic">Endpoint Issued</th>
-          <th class="dynamic number">Discount (%)</th>
+          <th class="dynamic number">Payout (%)</th>
         </tr>
       </thead>
       <tbody>
@@ -105,7 +97,7 @@
               </div>
             </td>
             <td>
-              <input class="only number" type="number" name="publishers[<%= i %>][fee]" value="<%= 100 - (publisher.fee * 100) %>" placeholder="Fee" min="0" step="1" max="100" required>
+              <input class="only number" type="number" name="publishers[<%= i %>][fee]" value="<%= publisher.fee * 100 %>" placeholder="Fee" min="0" step="1" max="100" required>
             </td>
           </tr>
         <% }) %>

@@ -37,7 +37,7 @@ module.exports.get = (req, res, next)->
 module.exports.post = (req, res, next)->
   Promise.all req.body.publishers.map (publisher)->  
     return LIBS.models.Publisher.update({
-      fee: 1 - (Number(publisher.fee) / 100)
+      fee: Number(publisher.fee) / 100
       miza_endpoint: publisher.miza_endpoint == "true"
       industry_id: publisher.industry
     }, {

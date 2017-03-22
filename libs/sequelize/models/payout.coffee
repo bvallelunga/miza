@@ -190,7 +190,7 @@ module.exports = (sequelize, DataTypes)->
         
           Promise.map data.publishers, (publisher)->
             payout.publisher_metrics(publisher, campaigns).then (metrics)->
-              transfer_amount = metrics.revenue * ((1 - payout.fee) * publisher.fee)
+              transfer_amount = metrics.revenue * payout.fee * publisher.fee
               transfer = LIBS.models.Transfer.build({
                 name: payout.name
                 note: payout.note
@@ -262,7 +262,7 @@ module.exports = (sequelize, DataTypes)->
     
     hooks: {        
       beforeCreate: (payout, options)->
-        payout.fee = 0.6
+        payout.fee = 0.3
         payout.note = "Thank you for using Miza!"
         
     }
