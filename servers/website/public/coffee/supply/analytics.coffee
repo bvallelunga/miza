@@ -50,6 +50,7 @@ class Dashboard
       .title('Impressions')
       .type('metric')
       .colors([ 'transparent' ])
+      .theme("keen-dataviz-green")
       .prepare()
       
     # Click Count
@@ -59,6 +60,7 @@ class Dashboard
       .title('Clicks')
       .type('metric')
       .colors([ 'transparent' ])
+      .theme("keen-dataviz-purple")
       .prepare()
       
     
@@ -69,6 +71,7 @@ class Dashboard
       .title('Page Views')
       .type('metric')
       .colors([ 'transparent' ])
+      .theme("keen-dataviz-orange")
       .prepare()
       
       
@@ -79,6 +82,7 @@ class Dashboard
       .title('Click Rate')
       .type('metric')
       .colors([ 'transparent' ])
+      .theme("keen-dataviz-purple")
       .chartOptions({ 
         suffix: "%" 
       })
@@ -92,6 +96,7 @@ class Dashboard
       .title('Fill Rate')
       .type('metric')
       .colors([ 'transparent' ])
+      .theme("keen-dataviz-green")
       .chartOptions({ 
         suffix: "%" 
       })
@@ -105,6 +110,7 @@ class Dashboard
       .title('Ad Block Rate')
       .type('metric')
       .colors([ 'transparent' ])
+      .theme("keen-dataviz-red")
       .chartOptions({ 
         suffix: "%" 
       })
