@@ -108,6 +108,9 @@ module.exports = (srv)->
   app.get  "/demand/:advertiser", routes.auth.is_authenticated, routes.demand.auth, routes.demand.get_root
   app.get  "/demand/:advertiser/:dashboard", routes.auth.is_authenticated, routes.demand.auth, routes.demand.fetch_data, routes.demand.get_dashboard
   app.get  "/demand/:advertiser/campaign/:campaign/industries", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaign.fetch, routes.demand.campaign.get_industries
+  app.get  "/demand/:advertiser/members/invite/:invite/remove", routes.auth.is_authenticated, routes.demand.auth, routes.demand.members.remove_invite
+  app.get  "/demand/:advertiser/members/member/:member/remove", routes.auth.is_authenticated, routes.demand.auth, routes.demand.members.remove_member
+  app.get  "/demand/:advertiser/members/member/:member/owner", routes.auth.is_authenticated, routes.demand.auth, routes.demand.members.owner_member
   app.get  "/demand/:advertiser/campaign/:campaign/charts", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaign.fetch, routes.demand.campaign.get_charts
   app.get  "/demand/:advertiser/:dashboard/:subdashboard", routes.auth.is_authenticated, routes.demand.auth, routes.demand.fetch_data, routes.demand.get_dashboard
   app.post "/demand/new", routes.auth.is_authenticated, routes.demand.create.post
@@ -118,6 +121,7 @@ module.exports = (srv)->
   app.post "/demand/:advertiser/campaign/:campaign/industries", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaign.fetch, routes.demand.campaign.post_industries
   app.post "/demand/:advertiser/billing/charges", routes.auth.is_authenticated, routes.demand.auth, routes.demand.billing.post_charges
   app.post "/demand/:advertiser/settings", routes.auth.is_authenticated, routes.demand.auth, routes.demand.settings.post_update
+  app.post "/demand/:advertiser/members/add", routes.auth.is_authenticated, routes.demand.auth, routes.demand.members.post_add
   
   
   # Publisher Routes
@@ -128,6 +132,7 @@ module.exports = (srv)->
   app.get  "/supply/:publisher/analytics/metrics", routes.auth.is_authenticated, routes.supply.auth, routes.supply.analytics.get
   app.get  "/supply/:publisher/members/invite/:invite/remove", routes.auth.is_authenticated, routes.supply.auth, routes.supply.members.remove_invite
   app.get  "/supply/:publisher/members/member/:member/remove", routes.auth.is_authenticated, routes.supply.auth, routes.supply.members.remove_member
+  app.get  "/supply/:publisher/members/member/:member/owner", routes.auth.is_authenticated, routes.supply.auth, routes.supply.members.owner_member
   app.post "/supply/new", routes.auth.is_authenticated, routes.supply.create.post
   app.post "/supply/:publisher/members/add", routes.auth.is_authenticated, routes.supply.auth, routes.supply.members.add
   app.post "/supply/:publisher/settings", routes.auth.is_authenticated, routes.supply.auth, routes.supply.settings.post

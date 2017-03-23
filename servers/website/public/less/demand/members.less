@@ -1,7 +1,7 @@
 @import '../libs/all';
 @import '../global/colors';
 
-.members-dashboard .display {
+.container.members-dashboard .display {
   padding: 20px;
   
   form.invite {
@@ -28,6 +28,10 @@
       color: @red;
     }
     
+    .purple {
+      color: @purple;
+    }
+    
     a:hover {
       text-decoration: underline;
     }
@@ -47,7 +51,7 @@
         color: @text_weak;
       }
       
-      &:last-child {
+      &:nth-child(3), &:last-child {
         text-align: right;
       }
     }

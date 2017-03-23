@@ -1,9 +1,15 @@
 <div class="sidebar">
   <ul>
     <li class="active">
-      <a href="/demand/<%= advertiser.id %>/settings">
+      <a href="<%= dashboard_path %>/settings">
         <span class="fa fa-user-circle"></span>
         Profile
+      </a>
+    </li>
+    <li>
+      <a href="<%= dashboard_path %>/members">
+        <span class="fa fa-users"></span>
+        Members
       </a>
     </li>
     <% if(user.is_admin || user.id == advertiser.owner_id) { %>

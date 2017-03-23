@@ -42,17 +42,20 @@ module.exports.post = (req, res, next)->
     }).then (user)->
       req.session.user = user.id
       
-      Promise.filter accesses, (access)->
+      publishers = accesses.filter (access)->
         return access.publisher_id?
+      .map (access)->
+        return access.publisher_id  
         
-      .then (accesses)->
-        Promise.map accesses, (access)->
-          return access.publisher_id
-          
-      .then (publisher_ids)-> 
-        return user.addPublishers publisher_ids
-        
-      .then ->
+      advertisers = accesses.filter (access)->
+        return access.advertiser_id?
+      .map (access)->
+        return access.advertiser_id  
+      
+      Promise.all([
+        user.addPublishers(publishers),
+        user.addAdvertisers(advertisers)
+      ]).then ->
         LIBS.models.UserAccess.destroy {
           where: {
             id: {

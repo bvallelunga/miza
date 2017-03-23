@@ -121,6 +121,10 @@ module.exports = (sequelize, DataTypes)->
         models.Advertiser.hasMany models.Campaign, { 
           as: 'campaigns' 
         }
+        
+        models.Advertiser.hasMany models.UserAccess, {
+          as: 'invites'
+        }
 
     }
     instanceMethods: {      

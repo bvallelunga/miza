@@ -64,3 +64,15 @@ module.exports.remove_member = (req, res, next)->
     res.redirect "/supply/#{req.publisher.key}/members"
     
   .catch next 
+  
+
+module.exports.owner_member = (req, res, next)->
+  if not req.user.is_admin
+    return res.redirect "/supply/#{req.publisher.key}/members"
+  
+  req.publisher.owner_id = req.params.member
+  req.publisher.save().then ->
+    res.redirect "/supply/#{req.publisher.key}/members"
+    
+  .catch next 
+
