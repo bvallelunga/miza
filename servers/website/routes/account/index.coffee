@@ -3,7 +3,7 @@ module.exports.get_root = (req, res, next)->
   css = ["dashboard", "account"]
   dashboard = req.params.dashboard
   dashboards = [
-    "profile", "notifications", "billing", "password"
+    "profile", "billing", "password"
   ]
   
   if dashboard not in dashboards
