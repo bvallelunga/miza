@@ -1,5 +1,5 @@
 module.exports.get = (req, res, next)->
-  if req.user.advertisers.length > 0
+  if req.user.advertisers.length > 0 and not req.user.is_admin
     return res.redirect "/demand"
 
   res.render "demand/create", {
