@@ -63,7 +63,8 @@
           <% if(user.is_admin) { %>
             <td>
               <% if(member.id != publisher.owner.id) { %>
-                <a class="red" href="<%= dashboard_path %>/members/member/<%= member.id %>/owner">Make Owner (Admin Only)</a>
+                <a class="red" href="<%= dashboard_path %>/members/member/<%= member.id %>/owner">Make Owner</a>
+                <span class="info fa fa-info-circle tooltip" title="Only admins can perform this action."></span>
               <% } %>
             </td>
           <% } %>

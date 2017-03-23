@@ -33,8 +33,8 @@ module.exports.get_dashboard = (req, res, next)->
       
     when "members"
       dashboard_size = "medium"
-      js.push "modal", "range-slider"
-      css.push "range-slider"
+      js.push "modal", "range-slider", "tooltip"
+      css.push "range-slider", "tooltip"
       
     when "settings"
       js.push "modal", "range-slider", "tooltip"
