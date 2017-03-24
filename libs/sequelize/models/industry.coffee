@@ -47,6 +47,7 @@ module.exports = (sequelize, DataTypes)->
           name: industry.previous "name"
           cpm: industry.previous "cpm"
           private: industry.previous "private"
+          max_impressions: industry.previous "max_impressions"
           industry_id: industry.id
         })
 

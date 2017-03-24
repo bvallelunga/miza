@@ -15,6 +15,7 @@ module.exports = {
       .then ->
         models.Publisher.update({
           product: "network"
+          industry_id: null
         }, {
           where: {
             product: "protect"

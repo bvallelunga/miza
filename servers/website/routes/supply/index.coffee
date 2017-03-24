@@ -1,6 +1,6 @@
 moment = require "moment"
 
-module.exports.get_root = (req, res, next)->
+module.exports.get_root = (req, res, next)->  
   if req.user.publishers.length == 0
     return res.redirect "/supply/new"
     

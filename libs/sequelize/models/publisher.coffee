@@ -74,10 +74,6 @@ module.exports = (sequelize, DataTypes)->
           as: 'admin_contact' 
         }
         
-        models.Publisher.hasMany models.UserAccess, {
-          as: 'invites'
-        }
-        
         models.Publisher.belongsTo models.User, { 
           as: 'owner' 
         }

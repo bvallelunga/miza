@@ -7,7 +7,14 @@ module.exports = (sequelize, DataTypes)->
       allowNull: false
       get: ->      
         return Number @getDataValue("cpm")
-        
+    
+    }
+    max_impressions: {
+      defaultValue: 0
+      allowNull: false
+      type: DataTypes.DECIMAL(13)
+      get: ->      
+        return Number @getDataValue("max_impressions")
     }
     private: { 
       type: DataTypes.BOOLEAN
