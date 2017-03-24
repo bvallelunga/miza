@@ -2,19 +2,15 @@
 <% include ../includes/navigation %>
 <% 
   advertisers = users.filter(function(user) {
-    return user.type == "demand"
+    return user.type == "demand" || user.type == "all"
   }).length
   
   publishers = users.filter(function(user) {
-    return user.type == "supply"
+    return user.type == "supply" || user.type == "all"
   }).length
   
   admins_only = users.filter(function(user) {
     return user.is_admin
-  }).length
-  
-  users_only = users.filter(function(user) {
-    return !user.is_admin
   }).length
   
   paypals = users.filter(function(user) {
@@ -38,10 +34,6 @@
     <span data-filter="demand">
       <strong>Advertisers</strong>
       (<%= advertisers %>)
-    </span>
-    <span data-filter="user">
-      <strong>Users</strong>
-      (<%= users_only %>)
     </span>
     <span data-filter="admin">
       <strong>Admins</strong>
@@ -75,6 +67,7 @@
           <%= !!user.paypal ? "paypal" : "" %>
           <%= !!user.stripe_card ? "card" : "" %>
           <%= user.type %>
+          <%= user.type == "all" ? "supply demand" : "" %>
         ">
           <td><a href="mailto:<%= user.email %>"><%= user.name %></a></td>
           <td style="text-transform: capitalize"><%= user.type %></td>
