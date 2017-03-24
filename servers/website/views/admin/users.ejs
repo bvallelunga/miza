@@ -77,10 +77,10 @@
           <%= user.type %>
         ">
           <td><a href="mailto:<%= user.email %>"><%= user.name %></a></td>
+          <td style="text-transform: capitalize"><%= user.type %></td>
           <td class="<%= !!user.stripe_card ? "green" : "red" %>"><%= user.stripe_card || "No Card" %></td>
           <td class="<%= user.paypal ? "green" : "red" %>"><%= user.paypal || "No PayPal" %></td>
           <td><%= user.admin_contact ? user.admin_contact.name : "" %></td>
-          <td style="text-transform: capitalize"><%= user.type %></td>
           <td><%= moment(user.created_at).format("MMM Do, YYYY") %></td>
           <td>
             <% if(!user.is_admin) { %>
