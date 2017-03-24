@@ -10,7 +10,7 @@ module.exports.script = (req, res, next)->
     res.cookie "session", randomstring.generate(15)
 
   res.render "script/index.js", {
-    enabled: req.publisher.config.coverage > Math.random() and req.miza_enabled and req.publisher.is_demo # Remove when going back up again
+    enabled: req.publisher.config.coverage > Math.random() and req.miza_enabled
     random_slug: randomstring.generate(15)
     publisher: req.publisher
     page_url: req.get('referrer')
