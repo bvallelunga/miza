@@ -60,11 +60,10 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Email</th>
+        <th>Type</th>
         <th>Card</th>
         <th>PayPal</th>
-        <th>Admin Contact</th>
-        <th>Access</th>
+        <th>Admin</th>
         <th>Joined</th>
         <th></th>
       </tr>
@@ -77,12 +76,11 @@
           <%= !!user.stripe_card ? "card" : "" %>
           <%= user.type %>
         ">
-          <td><%= user.name %></td>
-          <td><a href="mailto:<%= user.email %>"><%= user.email %></a></td>
+          <td><a href="mailto:<%= user.email %>"><%= user.name %></a></td>
           <td class="<%= !!user.stripe_card ? "green" : "red" %>"><%= user.stripe_card || "No Card" %></td>
           <td class="<%= user.paypal ? "green" : "red" %>"><%= user.paypal || "No PayPal" %></td>
           <td><%= user.admin_contact ? user.admin_contact.name : "" %></td>
-          <td><%= user.is_admin ? "Admin" : "User" %></td>
+          <td style="text-transform: capitalize"><%= user.type %></td>
           <td><%= moment(user.created_at).format("MMM Do, YYYY") %></td>
           <td>
             <% if(!user.is_admin) { %>
