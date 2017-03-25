@@ -85,6 +85,10 @@ module.exports = (sequelize, DataTypes)->
         models.Publisher.belongsTo models.Industry, { 
           as: 'industry' 
         }
+        
+        models.Publisher.hasMany models.UserAccess, {
+          as: 'invites'
+        }
 
     }
     instanceMethods: {      
