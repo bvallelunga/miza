@@ -1,7 +1,5 @@
 module.exports = (req)->  
-  profile = LIBS.exchanges.utils.profile(req)  
-  
-  console.log profile
+  profile = LIBS.exchanges.utils.profile(req)
   
   # Disable ads for bots
   if profile.agent.isBot
@@ -41,6 +39,7 @@ module.exports = (req)->
     limit: 1
     order: [
       LIBS.models.Sequelize.fn('RANDOM')
+      ["created_at", "DESC"]
       ["impressions_needed", "DESC"]
     ]
   }).then (campaignIndustries)->  
