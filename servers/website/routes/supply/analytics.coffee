@@ -69,7 +69,7 @@ module.exports.get = (req, res, next)->
       filters: [{
         "operator": "eq",
         "property_name": "type",
-        "property_value": "impression"
+        "property_value": "ping"
       }]
     }
     browsers_chart: query "count", {
@@ -79,7 +79,7 @@ module.exports.get = (req, res, next)->
       filters: [{
         "operator": "eq",
         "property_name": "type",
-        "property_value": "impression"
+        "property_value": "ping"
       }]
     }
     ctr_count: {

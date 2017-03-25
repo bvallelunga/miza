@@ -109,8 +109,6 @@ module.exports.build_event = (raw_data)->
       page_url: {
         raw: raw_data.query.page_url or raw_data.referrer
       }
-      cookies: raw_data.cookies
-      headers: raw_data.headers
       user_agent: {
         raw: raw_data.headers["user-agent"]
         client: {

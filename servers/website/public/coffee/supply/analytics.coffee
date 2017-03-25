@@ -121,7 +121,7 @@ class Dashboard
     @charts.browsers_chart = new Keen.Dataviz()
       .el('.chart.browsers')
       .height(250)
-      .type('donut')
+      .type('pie')
       .title("Browsers")
       .chartOptions({
         size: {
@@ -138,7 +138,7 @@ class Dashboard
     @charts.devices_chart = new Keen.Dataviz()
       .el('.chart.devices')
       .height(250)
-      .type('donut')
+      .type('pie')
       .title("Operating Systems")
       .chartOptions({
         size: {
@@ -159,7 +159,7 @@ class Dashboard
         chart = @charts[name]
                 
         if data.success
-          chart.data(data.result).render()
+          chart.data(data.result).sortGroups("desc").render()
         
         else 
           chart.message(data.error)
