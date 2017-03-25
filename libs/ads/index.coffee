@@ -94,6 +94,7 @@ module.exports.build_event = (raw_data)->
     return {
       type: raw_data.type 
       ip_address: raw_data.headers["CF-Connecting-IP"] or raw_data.ip or raw_data.ips
+      session: raw_data.session
       protected: raw_data.query.protected == "true"
       asset_url: raw_data.asset_url
       product: raw_data.publisher.product
@@ -167,7 +168,7 @@ module.exports.send = (raw_data)->
     # Mixpanel Tracking
     asset_type = (event.type.split(' ').map (word) -> word[0].toUpperCase() + word[1..-1].toLowerCase()).join ' '
     LIBS.mixpanel.track "ADS.EVENT.#{asset_type}", {
-      distinct_id: "ads.#{event.ip_address}"
+      distinct_id: "ads.#{event.session}"
       $browser: agent.browser
       $browser_version: agent.version
       $screen_width: event.user_agent.client.browser.demensions.width
@@ -210,8 +211,7 @@ module.exports.track = (req, data)->
   data.industry = req.query.industry
   data.creative = req.query.creative
   data.query = req.query
-  data.cookies = req.cookies
-  data.headers = req.headers
+  data.session = req.signedCookies.session
   data.referrer = req.get("referrer")
   data.ip = req.ip
   data.ips = req.ips

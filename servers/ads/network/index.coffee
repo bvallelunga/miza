@@ -12,6 +12,7 @@ module.exports = (srv)->
   app.get "/", routes.script, routes.script_send
   app.get "/c", routes.script, routes.script_send
   app.get "/a", routes.script, routes.ad_frame
+  app.get "/oo", routes.optout
   app.get "/*", routes.proxy
   
   # Export

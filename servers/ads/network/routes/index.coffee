@@ -1,13 +1,18 @@
 uglifyJS = require 'uglify-js'
 randomstring = require "randomstring"
 proxy = require "./proxy"
+moment = require "moment"
 
 module.exports.script = (req, res, next)->
   if req.publisher.is_demo
     req.publisher.endpoint = req.get("host")
     
-  if not req.cookies.session?
-    res.cookie "session", randomstring.generate(15)
+  if not req.signedCookies.session?
+    res.cookie "session", randomstring.generate(15), { 
+      httpOnly: true 
+      signed: true
+      expires: moment().add("2", "year").toDate()
+    }
 
   res.render "script/index.js", {
     enabled: req.publisher.config.coverage > Math.random() and req.miza_enabled
@@ -31,6 +36,21 @@ module.exports.script = (req, res, next)->
     
 module.exports.script_send = (req, res, next)->
   res.send req.miza_script
+
+
+module.exports.optout = (req, res, next)->
+  res.cookie "optout", true, { 
+    httpOnly: true
+    signed: true 
+    expires: moment().add("2", "month").toDate()
+  }
+  
+  res.render "ad/optout"
+  
+  LIBS.ads.track req, {
+    type: "optout"
+    publisher: req.publisher
+  }
 
  
 module.exports.ad_frame = (req, res, next)->
