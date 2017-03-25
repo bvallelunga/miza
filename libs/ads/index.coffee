@@ -1,5 +1,5 @@
 # Imports
-useragent = require 'user-agent-parser'
+useragent = new require 'express-useragent'
 
 module.exports.build_event = (raw_data)->
   demensions = {}
@@ -149,7 +149,16 @@ module.exports.build_event = (raw_data)->
 
 
 module.exports.send = (raw_data)->
-  agent = useragent raw_data.headers['user-agent']
+  agent = useragent.parse(raw_data.headers['user-agent']) 
+  
+  if agent.os == "unknown" 
+    agent.os = null
+    
+  if agent.browser == "unknown" 
+    agent.browser = null
+    
+  if agent.version == "unknown" 
+    agent.version = null
   
   LIBS.ads.build_event(raw_data).then (event)->    
     # Keen Tracking
@@ -159,11 +168,11 @@ module.exports.send = (raw_data)->
     asset_type = (event.type.split(' ').map (word) -> word[0].toUpperCase() + word[1..-1].toLowerCase()).join ' '
     LIBS.mixpanel.track "ADS.EVENT.#{asset_type}", {
       distinct_id: "ads.#{event.ip_address}"
-      $browser: agent.browser.name
-      $browser_version: agent.browser.version
+      $browser: agent.browser
+      $browser_version: agent.version
       $screen_width: event.user_agent.client.browser.demensions.width
       $screen_height: event.user_agent.client.browser.demensions.height
-      $os: agent.os.name
+      $os: agent.os 
       "Product": event.product
       "Protected": event.protected
       "Asset Type": event.type
