@@ -142,14 +142,14 @@ module.exports.post_industries = (req, res, next)->
   .catch next
 
 
-module.exports.post_create = (req, res, next)->  
+module.exports.post_create = (req, res, next)-> 
   if not req.body.creative.image_url.length > 0
     return next "Please make sure you have uploaded an image for your creative."
     
   if not req.body.creative.link.length > 0
     return next "Please make sure you have a click link for your creative."
   
-  Promise.filter req.body.targeting, (data)->
+  Promise.filter req.body.industries, (data)->
     data.impressions = Number data.impressions
     return data.activated == "true" and data.impressions > 0
     
@@ -158,6 +158,7 @@ module.exports.post_create = (req, res, next)->
       return {
         industry: industry
         impressions: data.impressions
+        targeting: req.body.targeting or {}
       }
     
   .then (targeting)->  
@@ -196,6 +197,7 @@ module.exports.post_create = (req, res, next)->
             name: target.industry.name
             impressions_requested: target.impressions
             cpm: target.industry.cpm
+            targeting: target.targeting
           })
         
         creative: new Promise (res, rej)->

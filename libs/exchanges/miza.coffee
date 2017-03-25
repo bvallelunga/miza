@@ -1,20 +1,47 @@
 module.exports = (req)->  
+  profile = LIBS.exchanges.utils.profile(req)  
+  
+  console.log profile
+  
+  # Disable ads for bots
+  if profile.agent.isBot
+    return Promise.reject LIBS.exchanges.errors.BOT_FOUND
+
+  # Build query
   query = {
     active: true
     impressions_needed: {
       $gt: 0
     }
   }
-
+  
+  # Industry Targeting
   if not req.publisher.is_demo
     query.industry_id = req.publisher.industry_id
+    
+  # Additional Targeting
+  targets = ["devices", "os", "browsers", "countries"]
+  
+  for target in targets
+    if profile[target]
+      query["targeting.#{target}"] = {
+        $or: [
+          {
+            $eq: null
+          }
+          {
+            $like: "%#{profile[target]}%"
+          }
+        ]
+      }
 
+  # Find Campaign Industries
   LIBS.models.CampaignIndustry.findAll({
     where: query
     limit: 1
     order: [
       LIBS.models.Sequelize.fn('RANDOM')
-      #["impressions_needed", "DESC"]
+      ["impressions_needed", "DESC"]
     ]
   }).then (campaignIndustries)->  
     if campaignIndustries.length == 0

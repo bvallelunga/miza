@@ -11,7 +11,7 @@
           <td><input class="range-display" type="text" name="start_date" placeholder="MM-DD-YYYY" data-start-date="<%= moment().add(1, "day").format('MM-DD-YYYY') %>"/></td>
         </tr>
         <tr>
-          <td><input class="name_campaign" type="text" name="name" placeholder="New Branding Initiative" required/></td>
+          <td><input class="full-input" type="text" name="name" placeholder="New Branding Initiative" required/></td>
           <td></td>
           <td class="title">End Date<span>OPTIONAL</span></td>
           <td><input class="range-display" type="text" name="end_date" placeholder="MM-DD-YYYY" data-start-date="<%= moment().add(2, "day").format('MM-DD-YYYY') %>"/></td>
@@ -20,11 +20,11 @@
     </div>
     <div class="section">
       <div class="header">Creative</div>
-      <div>
+      <p>
         <%= company %> supports the IAB <strong>300 x 250</strong> format. After 
         uploading your image, you will have the ability to crop and resize your image.
         Please note the description field is optional.
-      </div>
+      </p>
       <br>
       <div class="left split half">
         <table>
@@ -55,6 +55,65 @@
       <br><br>
       <textarea class="input" type="text" name="creative[trackers]" placeholder="Impression Tracking Links  (One per line)"></textarea>
     </div>
+    
+    
+    <div class="section">
+      <div class="header">User Targeting</div>
+      <p>
+        Leaving a field blank will disable targeting for that attribute. When
+        targeting is disabled, all user segments for that attribute will match.
+      </p>
+      <table class="targeting-table">
+        <tr>
+          <td class="title">Devices<span>OPTIONAL</span></td>
+          <td valign="top">
+            <select class="chosen-select full" name="targeting[devices][]" multiple data-placeholder="Select devices to target...">
+              <option value="desktop">Desktop</option>
+              <option value="mobile">Mobile</option>
+              <option value="tablet">Tablet</option>
+              <option value="tv">Smart TV</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="title">Operating Systems<span>OPTIONAL</span></td>
+          <td valign="top">
+            <select class="chosen-select full" name="targeting[os][]" multiple data-placeholder="Select operating systems to target...">
+              <option value="windows">Windows</option>
+              <option value="osx">OSX</option>
+              <option value="linux">Linux</option>
+              <option value="ios">iOS</option>
+              <option value="android">Android</option>
+              <option value="windows phone">Windows Phone</option>
+              <option value="blackberry">Blackberry</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="title">Browser<span>OPTIONAL</span></td>
+          <td valign="top">
+            <select class="chosen-select full" name="targeting[browsers][]" multiple data-placeholder="Select browsers to target...">
+              <option value="chrome">Chrome</option>
+              <option value="firefox">Firefox</option>
+              <option value="safari">Safari</option>
+              <option value="opera">Opera</option>
+              <option value="ie">Internet Explorer</option>
+              <option value="edge">Microsoft Edge</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="title">Country<span>OPTIONAL</span></td>
+          <td valign="top">
+            <select class="chosen-select full" name="targeting[countries][]" multiple data-placeholder="Select countries to target...">
+              <option value="us">United States</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+    </div>
+    
+    
     <div class="section">
       <div class="header">
         Industries <span>(<span class="selection-shortcut" data-for="audience">select all</span>)</span>
@@ -84,8 +143,8 @@
         <tbody>
           <% industries.forEach(function(industry, i) { %>
             <tr id="industry_<%= industry.id %>" class="hidden" data-cpm="<%= industry.cpm %>">
-              <input type="hidden" name="targeting[<%= i %>][industry]" value="<%= industry.id %>" required>
-              <input type="hidden" class="activated_input" name="targeting[<%= i %>][activated]" value="false"/>
+              <input type="hidden" name="industries[<%= i %>][industry]" value="<%= industry.id %>" required>
+              <input type="hidden" class="activated_input" name="industries[<%= i %>][activated]" value="false"/>
               <td class="title"><%= industry.name %></td>
               <td class="metric text-center">
                 $<%= industry.cpm %>
@@ -94,7 +153,7 @@
               <td class="impressions">
                 <div class="group">
                   <div class="fa fa-sort"></div>
-                  <select class="input only" name="targeting[<%= i %>][impressions]">
+                  <select class="input only" name="industries[<%= i %>][impressions]">
                     <option disabled="disabled" value="" selected>Quantity</option>
                     <%
                       var max = industry.max_impressions

@@ -13,7 +13,8 @@ module.exports.fetch = (req, res, next)->
     next()
     
   else if req.subdashboard == "create" 
-    req.data.js.push("modal")
+    req.data.css.push("chosen-select")
+    req.data.js.push("modal", "chosen-select")
     req.subdashboard = "builder"
     
     LIBS.models.Industry.listed().then (industries)->

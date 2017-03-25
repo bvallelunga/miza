@@ -99,6 +99,10 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.JSONB
       defaultValue: {}
     }
+    targeting: {
+      type: DataTypes.JSONB
+      defaultValue: {}
+    }
   }, {    
     classMethods: {      
       associate: (models)->        
@@ -116,13 +120,19 @@ module.exports = (sequelize, DataTypes)->
     }
     
     hooks: {
-      beforeCreate: (campaignIndustry)->
+      beforeCreate: (campaignIndustry)-> 
         campaignIndustry.impressions_needed = campaignIndustry.impressions_requested
+        campaignIndustry.targeting = {
+          devices: campaignIndustry.targeting.devices or null
+          os: campaignIndustry.targeting.os or null
+          countries: campaignIndustry.targeting.countries or null
+          browsers: campaignIndustry.targeting.browsers or null
+        }
         
         
       beforeUpdate: (campaignIndustry)->
         if campaignIndustry.changed("status") and campaignIndustry.previous("status") == "completed"
           campaignIndustry.status = "completed"
-        
+
     }
   }
