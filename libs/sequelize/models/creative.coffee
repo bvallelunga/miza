@@ -63,8 +63,9 @@ module.exports = (sequelize, DataTypes)->
     }
     
     instanceMethods: {
-      attributed_link: (industry, is_protected)->
-        link = "#{ new Buffer(@link).toString("base64") }?"
+      attributed_link: (publisher, industry, is_protected)->
+        original_url = "#{@link}&utm_publisher=#{publisher}"
+        link = "#{ new Buffer(original_url).toString("base64") }?"
         params = [
           "creative=#{@id}",
           "advertiser=#{@advertiser_id}"

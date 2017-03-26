@@ -15,6 +15,7 @@ module.exports.has_publisher = (req, res, next)->
       return res.end CONFIG.ads_server.denied.message
     
     req.publisher = publisher
+    res.locals.publisher = publisher
     cookieParser("#{publisher.key}_#{publisher.created_at}")(req, res, next)
     
   .catch next
