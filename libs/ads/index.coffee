@@ -9,8 +9,13 @@ module.exports.build_event = (raw_data)->
   creative = {}
   industry = {}
   
+  # Clean Data
+  for key, value of raw_data
+    if value == "null" or value == "undefined" or value == ""
+      raw_data[key] = null
+  
   Promise.resolve().then ->
-    if not raw_data.query.advertiser?
+    if not raw_data.advertiser?
       return Promise.resolve()
   
     LIBS.models.Advertiser.findById(raw_data.advertiser).then (temp)->      
@@ -21,7 +26,7 @@ module.exports.build_event = (raw_data)->
       }
       
   .then ->
-    if not raw_data.query.campaign?
+    if not raw_data.campaign?
       return Promise.resolve()
   
     LIBS.models.Campaign.findById(raw_data.campaign).then (temp)->
@@ -43,7 +48,7 @@ module.exports.build_event = (raw_data)->
         temp.increment("clicks")
         
   .then ->
-    if not raw_data.query.industry?
+    if not raw_data.industry?
       return Promise.resolve()
   
     LIBS.models.CampaignIndustry.findById(raw_data.industry).then (temp)-> 
@@ -66,7 +71,7 @@ module.exports.build_event = (raw_data)->
         temp.increment("clicks")
         
   .then ->
-    if not raw_data.query.creative?
+    if not raw_data.creative?
       return Promise.resolve()
   
     LIBS.models.Creative.findById(raw_data.creative).then (temp)->
