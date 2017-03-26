@@ -47,6 +47,19 @@ module.exports = (sequelize, DataTypes)->
         models.Creative.belongsTo models.Campaign, { 
           as: 'campaign' 
         }
+        
+      
+      fetch_image: (url)->
+        new Promise (res, rej)->
+          request {
+            method: "GET"
+            encoding: null
+            url: url
+          }, (error, response, body)=>
+            if error?
+              return rej error
+          
+            res response.body
     }
     
     instanceMethods: {
@@ -61,6 +74,6 @@ module.exports = (sequelize, DataTypes)->
         ].join("&")
         
         return link + params
-      
+        
     }
   }

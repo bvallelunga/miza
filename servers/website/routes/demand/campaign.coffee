@@ -200,18 +200,7 @@ module.exports.post_create = (req, res, next)->
             targeting: target.targeting
           })
         
-        creative: new Promise (res, rej)->
-          request {
-            method: "GET"
-            encoding: null
-            url: req.body.creative.image_url
-          }, (error, response, body)=>
-            if error?
-              return rej error
-          
-            res response.body
-        
-        .then (image)->
+        creative: LIBS.models.Creative.fetch_image(req.body.creative.image_url).then (image)->
           trackers = req.body.creative.trackers.split("\n")
           
           if trackers.length == 1 and trackers[0].length == 0

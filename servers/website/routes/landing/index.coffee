@@ -97,5 +97,19 @@ module.exports.get_not_found = (req, res, next)->
     css: req.css.renderTags "modal"
   }
   
+
+module.exports.get_shortener = (req, res, next)->
+  LIBS.models.Shortener.findOne({
+    where: {
+      key: req.params.key
+    }
+  }).then (shortner)->
+    if not shortner?
+      return req._routes.landing.get_not_found(req, res)
+      
+    res.redirect shortner.url
+  
+  .catch next
+  
   
 module.exports.demo = require "./demo"

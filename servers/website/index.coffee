@@ -40,6 +40,7 @@ module.exports = (srv)->
   app.get  "/legal/:document", routes.landing.get_legal
   app.get  "/#{CONFIG.loader_io}", routes.landing.get_loader_io
   app.get  "/demo", routes.landing.demo.get_root
+  app.get  "/s/:key", routes.landing.get_shortener
   app.get  "/demo/:demo", routes.landing.demo.get_miza
   app.get  "/demo/:demo/:product", routes.landing.demo.get_miza
   app.post "/optout", routes.auth.not_authenticated, routes.landing.post_optout
@@ -82,10 +83,12 @@ module.exports = (srv)->
   app.get  "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.get
   app.get  "/admin/advertisers", routes.auth.is_admin, routes.admin.advertisers.get
   app.get  "/admin/scheduler", routes.auth.is_admin, routes.admin.scheduler.get
+  app.get  "/admin/demo", routes.auth.is_admin, routes.admin.demo.get
   app.get  "/admin/emails", routes.auth.is_admin, routes.admin.emails.get
   app.get  "/admin/emails/:template", routes.auth.is_admin, routes.admin.emails.email
   app.get  "/admin/payouts", routes.auth.is_admin, routes.admin.payouts.get_root
   app.get  "/admin/payouts/:payout", routes.auth.is_admin, routes.admin.payouts.has_payout, routes.admin.payouts.get_create
+  app.get  "/admin/demo", routes.auth.is_admin, routes.admin.demo.post
   app.post "/admin/payouts/:payout/delete", routes.auth.is_admin, routes.admin.payouts.has_payout, routes.admin.payouts.post_delete
   app.post "/admin/payouts/create", routes.auth.is_admin, routes.admin.payouts.post_create
   app.post "/admin/payouts/:payout", routes.auth.is_admin, routes.admin.payouts.has_payout, routes.admin.payouts.post_update

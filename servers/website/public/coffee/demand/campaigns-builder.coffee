@@ -3,13 +3,11 @@ class Dashboard
   $industry_options: []
   $impressions_table: null
   $impressions_empty: null
-  $simulator: null
 
   constructor: ->
     @$industry_options = $(".selection .option")
     @$impressions_table = $(".impressions_table")
     @$impressions_empty = $(".impressions_empty")
-    @$simulator = $(".simulator")
     @bind()
   
   bind: ->
@@ -40,29 +38,6 @@ class Dashboard
     @$impressions_table.find("select").change ->
       _this.impressions_updated $(@)
       
-    uploadcare.Widget('[role=uploadcare-uploader]').onChange (file)->
-      _this.simulator_update()
-      
-    uploadcare.Widget('[role=uploadcare-uploader]').onUploadComplete (file)->
-      _this.simulator_update()
-      
-    $(".simulator-watch").on "keyup", ->
-       _this.simulator_update()
-  
-  
-  simulator_update: ->
-    img = $(".simulator-image").val()
-    text = $(".simulator-description").val()
-      .replace(/&/g, '&amp;')
-      .replace(/>/g, '&gt;')
-      .replace(/</g, '&lt;')
-      .replace(/\n/g, '<br>')
-  
-    @$simulator.find("strong").toggle (text or img) == ""
-    @$simulator.find("a").attr "href", $(".simulator-link").val() or "#"
-    @$simulator.find("div").html(text).toggle(text.length > 0)
-    @$simulator.find("img").attr("src", img).toggle(img.length > 0)
-  
   
   total_cost_update: ->
     total = 0
