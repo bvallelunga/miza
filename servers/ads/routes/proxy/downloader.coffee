@@ -65,7 +65,13 @@ download = (url, query, headers)->
 
 
 module.exports = (path, query, headers)->
-  fetchRedis(path).then (data)->  
+  Promise.resolve().then ->
+    if query.link?
+      return null
+      
+    return fetchRedis(path)
+  
+  .then (data)->  
     if data?
       return data
       

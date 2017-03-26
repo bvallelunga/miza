@@ -1,6 +1,5 @@
 uglifyJS = require 'uglify-js'
 randomstring = require "randomstring"
-proxy = require "./proxy"
 moment = require "moment"
 
 module.exports.script = (req, res, next)->
@@ -73,39 +72,3 @@ module.exports.ad_frame = (req, res, next)->
     type: "request"
     publisher: req.publisher
   }
-      
-      
-module.exports.proxy = (req, res, next)->
-  proxy.path(req.get('host'), req.path).then (path)->
-    return proxy.downloader path, req.query, {
-      referer: req.query.page_url
-      "user-agent": req.get("user-agent")
-    }
-    
-  .then (data)-> 
-    if data.media == "link"
-      res.redirect data.href
-      
-    else 
-      res.set "Content-Type", data.content_type
-
-      if data.media == "binary"
-        res.end data.content, "binary"
-      
-      else
-        res.send data.content
-      
-    return data
-      
-  .then (data)->
-    if data.to_cache
-      LIBS.redis.set data.key, JSON.stringify data
-
-    LIBS.ads.track req, {
-      type: if data.media == "link" then "click" else "asset"
-      asset_url: data.href
-      publisher: req.publisher
-    }
-      
-  
-  .catch next

@@ -72,6 +72,7 @@ module.exports = (sequelize, DataTypes)->
           "campaign=#{@campaign_id}"
           "industry=#{industry}"
           "protected=#{is_protected}"
+          "link"
         ].join("&")
         
         return link + params

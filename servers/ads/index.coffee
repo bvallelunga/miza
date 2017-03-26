@@ -1,27 +1,31 @@
 app = require('express')()
 ejs = require "ejs"
+routes = require "./routes"
 
 module.exports = (srv)->
-  router = require("./router")(srv)
 
   # Express Setup
   app.engine 'js', ejs.renderFile
   app.engine 'ejs', ejs.renderFile
   app.set 'view engine', 'ejs'
+  app.set 'views', __dirname + '/views'
+  
   app.use require("compression")()
-  app.use router.core.auth.has_publisher
-  app.use router.core.auth.has_opted_out
+  app.use routes.core.auth.has_publisher
+  app.use routes.core.auth.has_opted_out
   app.use LIBS.bugsnag.requestHandler
     
   
   # Routes  
-  app.get "/check", router.core.check
-  app.get "/p", router.core.ping
-  app.get "/i", router.core.impression
-  app.get /^\/c\/(.*)/, router.core.click
+  app.get "/check", routes.core.check
+  app.get "/p", routes.core.ping
+  app.get "/i", routes.core.impression
   
-  app.use router.engine
-  app.use router.network.prefix, router.network.app
+  app.get "/", routes.network.script, routes.network.script_send
+  app.get "/c", routes.network.script, routes.network.script_send
+  app.get "/a", routes.network.script, routes.network.ad_frame
+  app.get "/oo", routes.network.optout
+  app.get "/*", routes.proxy
   
   
   # Error Handlers

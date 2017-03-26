@@ -22,16 +22,3 @@ module.exports.impression = (req, res, next)->
     type: "impression"
     publisher: req.publisher
   }
-
-
-module.exports.click = (req, res, next)->
-  encoded = utils.decoder req.params[0]
-  url = new Buffer(encoded, 'base64').toString("ascii")
-  
-  res.redirect url
-  
-  LIBS.ads.track req, {
-    type: "click"
-    asset_url: url
-    publisher: req.publisher
-  }
