@@ -19,7 +19,7 @@
           <input type="hidden" name="advertisers[<%= i %>][id]" value="<%= advertiser.id %>" required>
           <tr>
             <td><a href="/demand/<%= advertiser.key %>/campaigns"><%= advertiser.name %></a></td>
-           <td><a href="mailto:<%= advertiser.owner.email %>"><%= advertiser.owner.name %></a></td>
+           <td><a href="mailto:<%= advertiser.owner ? advertiser.owner.email : "" %>"><%= advertiser.owner ? advertiser.owner.name : "" %></a></td>
             <td><%= advertiser.admin_contact ? advertiser.admin_contact.name : "" %></td>
             <td><%= advertiser.metrics.billed_spend %></td>
             <td><%= advertiser.metrics.pending_spend %></td>
