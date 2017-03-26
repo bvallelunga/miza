@@ -4,12 +4,32 @@
   <form method="POST" action="<%= path %>">
     <div class="display builder split half left text-left">
       <div class="section">
-        <div class="header">Demo Creative</div>
+        <div class="header">Advertiser Demo</div>
+        <p>
+          All demo links will automatically delete after 30 days. 
+          Hopefully the advertiser is signed on by then!
+        </p>
+        <table>
+          <tr>
+            <td class="title">Name<span>REQUIRED</span></td>
+            <td>
+              <input class="full-input" type="text" name="name" placeholder="Slack Ad" required/>
+            </td>
+          </tr>
+          <tr>
+            <td class="title">Publisher URL<span>REQUIRED</span></td>
+            <td>
+              <input class="full-input" type="url" name="url" placeholder="Publisher url to demo" required/>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="section">
+        <div class="header">Creative</div>
         <p>
           After uploading your image, you will have the ability to crop and resize your image.
           Please note the description field is optional.
         </p>
-        <br>
         <div class="left split fourty">
           <table>
             <tr>
@@ -49,7 +69,7 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Short Link</th>
+        <th>Demo Link</th>
         <th>Admin</th>
         <th>Created</th>
       </tr>

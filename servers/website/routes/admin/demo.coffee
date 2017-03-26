@@ -1,5 +1,12 @@
+moment = require "moment"
+
 module.exports.get = (req, res, next)->
   LIBS.models.Shortener.findAll({
+    where: {
+      created_at: {
+        $gte: moment().subtract(1, "month").toDate()
+      }
+    }
     order: [
       ["created_at", "DESC"]
     ]
@@ -37,6 +44,7 @@ module.exports.post = (req, res, next)->
   .then (creative)->
     LIBS.models.Shortener.create({
       name: req.body.name
+      url: req.body.url
       creative_id: creative.id
       owner_id: req.user.id
     })

@@ -1,5 +1,5 @@
 request = require "request"
-
+moment = require "moment"
 
 module.exports.get_root = (req, res, next)->
   res.render "landing/home", {
@@ -102,6 +102,9 @@ module.exports.get_shortener = (req, res, next)->
   LIBS.models.Shortener.findOne({
     where: {
       key: req.params.key
+      created_at: {
+        $gte: moment().subtract(1, "month").toDate()
+      }
     }
   }).then (shortner)->
     if not shortner?

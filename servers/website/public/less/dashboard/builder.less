@@ -11,14 +11,6 @@
   
   form {
     padding: 0;
-    
-    .title {
-      span {
-        display: block;
-        font-size: 0.8em;
-        color: @text_weak;
-      }
-    }
   }
 
   .section {
@@ -29,6 +21,20 @@
       margin: 0;
       padding-top: 20px;
       border-top: none;
+    }
+    
+    &:last-child {
+      padding-bottom: 30px;
+    }
+    
+    .title {
+      font-size: 1.2em;
+      
+      span {
+        display: block;
+        font-size: 0.8em;
+        color: @text_weak;
+      }
     }
         
     .header {
