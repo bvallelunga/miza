@@ -149,11 +149,7 @@ module.exports.build_event = (raw_data)->
     }
 
 
-module.exports.send = (raw_data)->
-  # TODO: Remove patch to fix bug from earlier version
-  if not raw_data.headers?
-    return Promise.resolve()
-  
+module.exports.send = (raw_data)->  
   agent = useragent.parse(raw_data.headers['user-agent']) 
   
   if agent.os == "unknown" 
