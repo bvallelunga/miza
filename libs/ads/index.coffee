@@ -150,6 +150,10 @@ module.exports.build_event = (raw_data)->
 
 
 module.exports.send = (raw_data)->
+  # TODO: Remove patch to fix bug from earlier version
+  if not raw_data.headers?
+    return Promise.resolve()
+  
   agent = useragent.parse(raw_data.headers['user-agent']) 
   
   if agent.os == "unknown" 
@@ -210,6 +214,8 @@ module.exports.track = (req, data)->
   data.campaign = req.query.campaign
   data.industry = req.query.industry
   data.creative = req.query.creative
+  data.headers = req.headers
+  data.cookies = req.cookies
   data.query = req.query
   data.session = req.signedCookies.session
   data.referrer = req.get("referrer")

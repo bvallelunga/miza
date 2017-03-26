@@ -24,8 +24,8 @@ module.exports.get = (req, res, next)->
     } 
     
   .catch next
-  
-  
+
+ 
 module.exports.post = (req, res, next)->  
   if not req.body.creative.image_url.length > 0
     return next "Please make sure you have uploaded an image for your creative."
