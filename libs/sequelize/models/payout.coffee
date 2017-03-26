@@ -76,6 +76,11 @@ module.exports = (sequelize, DataTypes)->
           where: {
             is_activated: true
             product: "network"
+            config: {
+              keen: {
+                $ne: null
+              }
+            }
           }
           paranoid: false
           order: [
