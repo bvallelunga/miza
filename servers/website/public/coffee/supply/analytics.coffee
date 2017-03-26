@@ -122,7 +122,7 @@ class Dashboard
       .el('.chart.browsers')
       .height(250)
       .type('pie')
-      .title("Browsers")
+      .title("Ad Block Traffic by Browser")
       .chartOptions({
         size: {
           height: 220
@@ -139,7 +139,7 @@ class Dashboard
       .el('.chart.devices')
       .height(250)
       .type('pie')
-      .title("Operating Systems")
+      .title("Ad Block Traffic by OS")
       .chartOptions({
         size: {
           height: 220

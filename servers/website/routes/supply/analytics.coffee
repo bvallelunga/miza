@@ -70,6 +70,10 @@ module.exports.get = (req, res, next)->
         "operator": "eq",
         "property_name": "type",
         "property_value": "ping"
+      }, {
+        "operator": "eq"
+        "property_name": "protected"
+        "property_value": true
       }]
     }
     browsers_chart: query "count", {
@@ -80,6 +84,10 @@ module.exports.get = (req, res, next)->
         "operator": "eq",
         "property_name": "type",
         "property_value": "ping"
+      }, {
+        "operator": "eq"
+        "property_name": "protected"
+        "property_value": true
       }]
     }
     ctr_count: {
