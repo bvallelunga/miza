@@ -154,8 +154,13 @@ module.exports.build_event = (raw_data)->
     }
 
 
-module.exports.send = (raw_data)->  
-  agent = useragent.parse(raw_data.headers['user-agent']) 
+module.exports.send = (raw_data)->
+  if not raw_data.headers? or not raw_data.headers['user-agent']
+    raw_data.headers = {}
+    agent = {}
+  
+  else
+    agent = useragent.parse(raw_data.headers['user-agent']) 
   
   if agent.os == "unknown" 
     agent.os = null
