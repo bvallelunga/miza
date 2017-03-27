@@ -39,6 +39,17 @@
           <div class="slider-display value" data-rules="" data-postfix="%"></div>
         </td>
       </tr>
+      <tr>
+        <td class="title">
+          Ad Refresh 
+          <span class="info fa fa-info-circle tooltip" title="Control the interval in seconds at which your units<br>show a new ad. Setting it to 0 will disable refresh."></span>
+        </td>
+        <td class="slider">
+          <div class="slider-range" data-min="0" data-max="600" data-value="<%= publisher.config.refresh.interval %>"></div>
+          <input class="slider-input" type="hidden" name="config_refresh" value="<%= publisher.config.refresh.interval %>">
+          <div class="slider-display value" data-rules="0:Disabled" data-postfix=" sec"></div>
+        </td>
+      </tr>
       <% if(publisher.industry) { %>
         <tr>
           <td class="title">Industry</td>

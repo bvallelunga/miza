@@ -251,7 +251,7 @@ module.exports = (sequelize, DataTypes)->
           coverage: 1
           refresh: {
             enabled: true
-            interval: 40
+            interval: 60
           }
         }
 
