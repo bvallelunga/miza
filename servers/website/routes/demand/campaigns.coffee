@@ -74,11 +74,8 @@ module.exports.post_list = (req, res, next)->
   req.advertiser.getCampaigns({
     where: {
       start_at: {
-        $or: [{
-          $gte: new Date req.body.dates.start
-        }, {
-          $eq: null
-        }]
+        $gte: new Date req.body.dates.start
+        $lte: new Date req.body.dates.end
       }
       end_at: {
         $or: [{

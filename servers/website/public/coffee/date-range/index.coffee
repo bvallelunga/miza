@@ -16,15 +16,15 @@ window.DatePicker = class DatePicker
     @end = end
     
     if @callback?
-      $(".fa-calendar").hide()
-      $(".fa-refresh").show()
+      $(".range-display .fa-calendar").hide()
+      $(".range-display .fa-refresh").show()
   
       @callback {
         start: start, 
         end: end
       }, ->
-        $(".fa-calendar").show()
-        $(".fa-refresh").hide()
+        $(".range-display .fa-calendar").show()
+        $(".range-display .fa-refresh").hide()
   
   
   load_default: ->
