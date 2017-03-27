@@ -1,6 +1,7 @@
 API.observables = {
   query: [
-    ".adsbygoogle", ".dp-ad-chrome iframe", "#_carbonads_js"
+    ".adsbygoogle", ".dp-ad-chrome iframe", "#_carbonads_js",
+    'div[id*="div-gpt-ad-"]'
   ].join(","),
   xpaths: [
     "//body//script[contains(., 'OA_show')]/parent::*",
@@ -88,6 +89,10 @@ API.start_observing = function() {
       element.width = event.data.width
       element.height = event.data.height
       element.style.display = "block"
+      
+      if(parent.offsetHeight > parent.offsetWidth && parent.style.height == "100%") {
+        parent.style.height = event.data.height + "px"
+      }
     }
     
     if(event.data.name == "frame.reload") {
