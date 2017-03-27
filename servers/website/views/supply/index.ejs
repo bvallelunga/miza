@@ -27,11 +27,18 @@
   </div>
 </div>
 <% if(guide) { %>
-  <%- include("./guide/index") %>
+  <% include ./guide/index %>
 <% } %>
 <% include ../includes/navigation %>
 <div class="container <%= dashboard_size %> <%= dashboard %>-dashboard">
-  <% include ./payout_warning %>
+  <% if(publisher.is_activated) { %>
+    <% include ./payout_warning %>
+  <% } else { %>
+    <div class="warning orange">
+      We are scanning your website for existing ad networks. If we detect customizations<br>
+      need to be made to support your site, our engineers will automatically get pinged.
+    </div>
+  <% } %>
   <%- include("./" + dashboard + "/index") %>
   <div class="clear"></div>
 </div>
