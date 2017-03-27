@@ -30,13 +30,24 @@
       </tr>
       <tr>
         <td class="title">
-          Coverage 
+          User Coverage 
           <span class="info fa fa-info-circle tooltip" title="Control the percent of your user base<br>that recieves <%=company %> services."></span>
         </td>
         <td class="slider">
           <div class="slider-range" data-min="0" data-max="100" data-value="<%= publisher.config.coverage * 100 %>"></div>
           <input class="slider-input" type="hidden" name="config_coverage" value="<%= publisher.config.coverage %>">
           <div class="slider-display value" data-rules="" data-postfix="%"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="title">
+          Ad Coverage 
+          <span class="info fa fa-info-circle tooltip" title="For every X ad units 1 will recieve<br><%=company %> services. The higher the number,<br>the better the user's experience is."></span>
+        </td>
+        <td class="slider">
+          <div class="slider-range" data-min="1" data-max="5" data-value="<%= 1/publisher.config.ad_coverage %>"></div>
+          <input class="slider-input" type="hidden" name="config_ad_coverage" value="<%= 1/publisher.config.ad_coverage %>">
+          <div class="slider-display value" data-rules="" data-prefix="1/"></div>
         </td>
       </tr>
       <tr>

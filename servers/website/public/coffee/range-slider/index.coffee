@@ -23,5 +23,5 @@ $ ->
     this.noUiSlider.on 'update', (values, handle)->
       value = Number values[handle]
       $input.val values[handle]
-      $display.text display_rules[value] or Math.floor(value) + ($display.data("postfix") or "")
-      $display_leftover.text Math.floor(100 - value) + ($display.data("postfix") or "")
+      $display.text ($display.data("prefix") or "") + (display_rules[value] or Math.floor(value)) + ($display.data("postfix") or "")
+      $display_leftover.text ($display.data("prefix") or "") + Math.floor(100 - value) + ($display.data("postfix") or "")
