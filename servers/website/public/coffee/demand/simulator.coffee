@@ -1,4 +1,4 @@
-$ ->    
+$ ->
   simulator_update = ->
     $simulator = $(".simulator")
     img = $(".simulator-image").val()
@@ -14,11 +14,12 @@ $ ->
     $simulator.find("img").attr("src", img).toggle(img.length > 0)
     
   
-  uploadcare.Widget('[role=uploadcare-uploader]').onChange (file)->
-    simulator_update()
-      
-  uploadcare.Widget('[role=uploadcare-uploader]').onUploadComplete (file)->
-    simulator_update()
-
-  $(".simulator-watch").on "keyup", ->
-    simulator_update()
+  if $("[role=uploadcare-uploader]").length > 0
+    uploadcare.Widget('[role=uploadcare-uploader]').onChange (file)->
+      simulator_update()
+        
+    uploadcare.Widget('[role=uploadcare-uploader]').onUploadComplete (file)->
+      simulator_update()
+  
+    $(".simulator-watch").on "keyup", ->
+      simulator_update()
