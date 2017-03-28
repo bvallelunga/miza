@@ -87,4 +87,4 @@ module.exports.country = (req)->
   if lookup? and lookup.country?
     return lookup.country.toLowerCase()
   
-  return null
+  return "us"
