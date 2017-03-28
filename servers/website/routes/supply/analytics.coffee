@@ -126,7 +126,11 @@ module.exports.get = (req, res, next)->
       success: true
       result: {}
     }
-  }).then (props)->  
+  }).then (props)->      
+    for device in props.devices_chart.result.result
+      if device["user_agent.parsed.device.family"] == "Other"
+        device["user_agent.parsed.device.family"] = "Desktop"
+  
     props.protection_count.result.result = Math.min 100, Math.floor (props.protection_count.result.result/props.view_count.result.result) * 100
     props.fill_count.result.result = Math.min 100, Math.floor (props.impression_count.result.result/props.fill_count.result.result) * 100
     props.ctr_count.result = {
