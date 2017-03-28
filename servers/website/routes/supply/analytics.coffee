@@ -62,7 +62,7 @@ module.exports.get = (req, res, next)->
         "property_value": true
       }]
     }
-    devices_chart: query "count", {
+    os_chart: query "count", {
       group_by: [
         "user_agent.parsed.os.family"
       ]
@@ -74,6 +74,38 @@ module.exports.get = (req, res, next)->
         "operator": "eq"
         "property_name": "protected"
         "property_value": true
+      }]
+    }
+    devices_chart: query "count", {
+      group_by: [
+        "user_agent.parsed.device.family"
+      ]
+      filters: [{
+        "operator": "eq",
+        "property_name": "type",
+        "property_value": "ping"
+      }, {
+        "operator": "eq"
+        "property_name": "protected"
+        "property_value": true
+      }]
+    }
+    countries_chart: query "count", {
+      group_by: [
+        "location.country"
+      ]
+      filters: [{
+        "operator": "eq",
+        "property_name": "type",
+        "property_value": "ping"
+      }, {
+        "operator": "eq"
+        "property_name": "protected"
+        "property_value": true
+      }, {
+        "operator": "ne"
+        "property_name": "location.country"
+        "property_value": null
       }]
     }
     browsers_chart: query "count", {
