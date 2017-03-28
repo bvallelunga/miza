@@ -178,7 +178,7 @@
       </table>
     </a>
     <% creative.trackers.forEach(function(tracker) { %>
-      <img src="/<%= new Buffer(tracker).toString("base64") %>" width="0" height="0" style="display:none" />
+      <img src="/<%= new Buffer(tracker).toString("base64") %>?no-dl" width="0" height="0" style="display:none" />
     <% }) %>
     <footer onclick="showInformation()">
       Why am I seeing this advertisement?

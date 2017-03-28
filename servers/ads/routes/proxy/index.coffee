@@ -14,7 +14,7 @@ module.exports = (req, res, next)->
     if data.media == "link"
       res.redirect data.href
       
-    else 
+    else if not req.query["no-dl"]?
       res.set "Content-Type", data.content_type
 
       if data.media == "binary"
@@ -22,6 +22,9 @@ module.exports = (req, res, next)->
       
       else
         res.send data.content
+        
+    else
+      res.end req._routes.core.utils.pixel_tracker
       
     return data
       

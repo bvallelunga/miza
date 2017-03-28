@@ -48,7 +48,7 @@ download = (url, query, headers)->
       url: url
     }
     
-    data.content_type = data.headers['content-type'] or "text"
+    data.content_type = data.headers['content-type'] or ""
     
     if query.link?
       data.media = "link"
@@ -57,6 +57,7 @@ download = (url, query, headers)->
     else if data.content_type.indexOf("text") == -1 and data.content_type.indexOf("javascript") == -1
       data.media = "binary"
       data.content = response.body
+      data.to_cache = false
     
     else 
       data.content = response.body.toString("ascii")

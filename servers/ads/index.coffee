@@ -1,6 +1,6 @@
 app = require('express')()
 ejs = require "ejs"
-routes = require "./routes"
+routes = require("./routes")()
 
 module.exports = (srv)->
 
@@ -11,6 +11,7 @@ module.exports = (srv)->
   app.set 'views', __dirname + '/views'
   
   app.use require("compression")()
+  app.use routes.router
   app.use routes.core.auth.has_publisher
   app.use routes.core.auth.has_opted_out
   app.use LIBS.bugsnag.requestHandler

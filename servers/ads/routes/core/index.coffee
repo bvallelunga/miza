@@ -1,5 +1,4 @@
-utils = require "./utils"
-
+module.exports.utils = utils = require "./utils"
 module.exports.auth = require "./auth"
 
 module.exports.check = (req, res, next)->

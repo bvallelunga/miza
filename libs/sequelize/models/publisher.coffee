@@ -89,6 +89,18 @@ module.exports = (sequelize, DataTypes)->
         models.Publisher.hasMany models.UserAccess, {
           as: 'invites'
         }
+        
+      keen_datasets: ->
+        LIBS.keen.createCachedDataset("publisher-analytics", {
+          display_name: "Publisher Analytics"
+          query: {
+            analysis_type: "count"
+            event_collection : "ads.event"
+            timeframe: "this_15_months"
+            interval: "daily"
+          }
+          index_by: ["publisher.key"]
+        }).catch(console.log)
 
     }
     instanceMethods: {      
