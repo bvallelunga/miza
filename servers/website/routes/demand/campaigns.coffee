@@ -19,14 +19,10 @@ module.exports.fetch = (req, res, next)->
     req.data.css.push("chosen-select")
     req.data.js.push("modal", "chosen-select")
     req.data.country_data = country_data
-    req.data.approved_regions = [
-      "northernAmerica", "northernEurope"
-      "southernEurope", "easternEurope",
-      "westernEurope", "australia"
-    ]
     req.data.approved_countries = [
       "us", "ca", "mx", "de", "gb",
-      "tr", "nz", "fr", "au", "se"
+      "tr", "nz", "fr", "au", "se",
+      "ph", "in", "cn", "jp"
     ]
     
     LIBS.models.Industry.listed().then (industries)->
