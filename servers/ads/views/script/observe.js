@@ -1,7 +1,8 @@
 API.observables = {
   query: [
     ".adsbygoogle", ".dp-ad-chrome iframe", "#_carbonads_js",
-    'div[id*="div-gpt-ad-"]', '.ad-tag[data-ad-size*="300x250"]'
+    'div[id*="div-gpt-ad-"]', '.ad-tag[data-ad-size*="300x250"]',
+    '.proper-ad-unit'
   ].join(","),
   xpaths: [
     "//body//script[contains(., 'OA_show')]/parent::*",
@@ -66,6 +67,10 @@ API.start_observing = function() {
     childList: true,
     subtree: true
   })
+  
+  setInterval(function() {
+    API.fetch_current()
+  }, 1000)
   
   window.addEventListener("message", function(event) {
     var element = API.document.querySelector("." + event.data.frame)

@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes)->
       allowNull: false
     }
     fee: {
-      defaultValue: 1
+      defaultValue: 0.75
       allowNull: false
       type: DataTypes.DECIMAL(4,3)
       get: ->      

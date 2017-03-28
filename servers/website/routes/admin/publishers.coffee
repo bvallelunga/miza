@@ -1,6 +1,8 @@
 module.exports.get = (req, res, next)->
   Promise.props({
-    industries: LIBS.models.Industry.findAll()
+    industries: LIBS.models.Industry.findAll({
+      order: "name ASC"
+    })
     publishers: LIBS.models.Publisher.findAll({
       order: [
         ['is_activated', 'DESC']
