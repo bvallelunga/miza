@@ -249,7 +249,7 @@ module.exports = (sequelize, DataTypes)->
             coverage: 1
           }
           coverage: 1
-          ad_coverage: 0.333
+          ad_coverage: 0.5
           refresh: {
             enabled: true
             interval: 60
