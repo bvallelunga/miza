@@ -30,6 +30,7 @@
     "compression": "^1.6.2",
     "connect-redis": "^3.1.0",
     "cookie-parser": "^1.4.3",
+    "country-data": "0.0.31",
     "csurf": "^1.9.0",
     "ejs": "^2.4.1",
     "email-templates": "^2.4.1",

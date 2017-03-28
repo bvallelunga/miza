@@ -105,7 +105,26 @@
           <td class="title">Countries<span>OPTIONAL</span></td>
           <td valign="top">
             <select class="chosen-select full" name="targeting[countries][]" multiple data-placeholder="Select the countries to target...">
-              <option value="us">United States</option>
+              <% 
+                regions = Object.keys(country_data.regions).filter(function(region) {
+                  return approved_regions.indexOf(region) > -1
+                })
+              %>
+              <% regions.forEach(function(region_code) {
+                region = country_data.regions[region_code] 
+                region.countries = region.countries.filter(function(country) {
+                  return approved_countries.indexOf(country.toLowerCase()) > -1
+                })
+                
+                if(region.countries.length == 0) return;
+              %>
+                <optgroup label="<%= region.name %>">
+                  <% region.countries.forEach(function(code) { %>
+                    <% country = country_data.countries[code] %>
+                    <option value="<%= country.alpha2.toLowerCase() %>"><%= country.name %></option>
+                  <% }) %>
+                </optgroup>
+              <% }) %>
             </select>
           </td>
         </tr>

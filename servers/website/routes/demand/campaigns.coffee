@@ -1,3 +1,5 @@
+country_data = require 'country-data'
+
 module.exports.fetch = (req, res, next)->
   req.data.js.push("date-range")
   req.data.css.push("date-range")
@@ -13,9 +15,19 @@ module.exports.fetch = (req, res, next)->
     next()
     
   else if req.subdashboard == "create" 
+    req.subdashboard = "builder"
     req.data.css.push("chosen-select")
     req.data.js.push("modal", "chosen-select")
-    req.subdashboard = "builder"
+    req.data.country_data = country_data
+    req.data.approved_regions = [
+      "northernAmerica", "northernEurope"
+      "southernEurope", "easternEurope",
+      "westernEurope", "australia"
+    ]
+    req.data.approved_countries = [
+      "us", "ca", "mx", "de", "gb",
+      "tr", "nz", "fr", "au", "se"
+    ]
     
     LIBS.models.Industry.listed().then (industries)->
       req.data.industries = industries
