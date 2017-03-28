@@ -109,7 +109,7 @@ module.exports = (sequelize, DataTypes)->
         if CONFIG.disable.cloudflare
           return Promise.resolve()
           
-        key = endpoint.replace(CONFIG.ads_server.protected_domain, "")
+        key = endpoint.replace(".#{CONFIG.ads_server.protected_domain}", "")
         
         LIBS.cloudflare.browseZones({
           name: CONFIG.ads_server.protected_domain
