@@ -83,12 +83,6 @@ module.exports.build_event = (raw_data)->
       }
     
   .then ->
-    if raw_data.query.demensions?
-      demensions = {
-        width: Number(raw_data.query.demensions.width)
-        height: Number(raw_data.query.demensions.height)
-      }
-      
     if raw_data.query.battery?
       battery = {
         charging: raw_data.query.battery.charging == "true"
@@ -119,7 +113,10 @@ module.exports.build_event = (raw_data)->
         raw: raw_data.headers["user-agent"]
 #         client: {
 #           browser: {
-#             demensions: demensions
+#             demensions: {
+#               width: Number(raw_data.query.width)
+#               height: Number(raw_data.query.height)
+#             }
 #             plugins: raw_data.query.plugins or []
 #             languages: raw_data.query.languages or []
 #             do_not_track: raw_data.query.do_not_track == "true"
@@ -175,8 +172,8 @@ module.exports.send = (raw_data)->
       distinct_id: "ads.#{event.session}"
       $browser: agent.browser
       $browser_version: agent.version
-      $screen_width: event.user_agent.client.browser.demensions.width
-      $screen_height: event.user_agent.client.browser.demensions.height
+      $screen_width: Number(raw_data.query.width)
+      $screen_height: Number(raw_data.query.height)
       $os: agent.os 
       "Product": event.product
       "Protected": event.protected
