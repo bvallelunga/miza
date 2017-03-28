@@ -136,8 +136,8 @@ module.exports = ->
       company: "Miza"
       delimeter: " | "
       description: (
-        "Watch ads magically reappear on your website with Miza! " + 
-        "Let us worry about Ad Blockers, so you can focus on what is important."
+        "Miza helps publishers monetize ad blocked inventory by " + 
+        "delivering stylish, unobtrusive ads that are not detectable by ad blockers."
       )  
       support: {
         email: "support@miza.io"

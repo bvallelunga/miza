@@ -94,12 +94,12 @@ module.exports.get = (req, res, next)->
       success: true
       result: {}
     }
-  }).then (props)->
-    props.protection_count.result.result = Math.min 100, Math.floor props.protection_count.result.result/props.view_count.result.result * 100
-    props.fill_count.result.result = Math.min 100, Math.floor props.impression_count.result.result/props.fill_count.result.result * 100
+  }).then (props)->  
+    props.protection_count.result.result = Math.min 100, Math.floor (props.protection_count.result.result/props.view_count.result.result) * 100
+    props.fill_count.result.result = Math.min 100, Math.floor (props.impression_count.result.result/props.fill_count.result.result) * 100
     props.ctr_count.result = {
       query: props.protection_count.result.query
-      result: Math.floor props.click_count.result.result/props.impression_count.result.result * 100
+      result: Math.floor (props.click_count.result.result/props.impression_count.result.result) * 100
     }
   
     res.json(props)
