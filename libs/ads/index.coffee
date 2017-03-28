@@ -117,18 +117,18 @@ module.exports.build_event = (raw_data)->
       }
       user_agent: {
         raw: raw_data.headers["user-agent"]
-        client: {
-          browser: {
-            demensions: demensions
-            plugins: raw_data.query.plugins or []
-            languages: raw_data.query.languages or []
-            do_not_track: raw_data.query.do_not_track == "true"
-          }
-          device: {
-            components: raw_data.query.components or []
-            battery: battery
-          }
-        }
+#         client: {
+#           browser: {
+#             demensions: demensions
+#             plugins: raw_data.query.plugins or []
+#             languages: raw_data.query.languages or []
+#             do_not_track: raw_data.query.do_not_track == "true"
+#           }
+#           device: {
+#             components: raw_data.query.components or []
+#             battery: battery
+#           }
+#         }
       }
       keen: {
         addons: [{
@@ -137,12 +137,6 @@ module.exports.build_event = (raw_data)->
             ip: "ip_address"
           },
           output: "location"
-        }, {
-          name: "keen:url_parser"
-          input: {
-            url: "page_url.raw"
-          },
-          output: "page_url.parsed"
         }, {
           name: "keen:ua_parser"
           input: {
