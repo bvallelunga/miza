@@ -1,6 +1,6 @@
 <% include ../includes/start %>
 <% include ../includes/navigation %>
-<div class="container">
+<div class="container" style="padding-top: 50px;">
   <span>
     Let's get started! We just need a<br>couple details about your account.
   </span>
@@ -19,10 +19,27 @@
     </div>
     <div class="group">
       <div class="fa fa-sort"></div>
-      <select class="input bottom" name="publisher_miza_endpoint" required>
+      <select class="input" name="dns" required>
         <option disabled="true" selected>Have access to your DNS?</option>
-        <option value="false">Yes I do</option>
-        <option value="true">No I don't</option>
+        <option value="true">Yes I do</option>
+        <option value="false">No I don't</option>
+      </select>
+    </div>
+    <div class="group">
+      <div class="fa fa-sort"></div>
+      <select class="input" name="cloudflare" required>
+        <option disabled="true" selected>Does Cloudflare host your DNS?</option>
+        <option value="true">Yes they do</option>
+        <option value="false">No they don't</option>
+        <option value="false">What is Cloudflare?</option>
+      </select>
+    </div>
+    <div class="group">
+      <div class="fa fa-sort"></div>
+      <select class="input bottom" name="ssl" required>
+        <option disabled="true" selected>Does your site use SSL?</option>
+        <option value="true">Yes it does</option>
+        <option value="false">No it doesn't</option>
       </select>
     </div>
     <button class="button" type="submit">Create Publisher Account</button>

@@ -28,6 +28,23 @@
         <td class="title">Website</td>
         <td><input type="url" name="publisher_domain" value="http://<%= publisher.domain %>" placeholder="http://techcrunch.com" required></td>
       </tr>
+      <% if(user.is_admin) { %>
+        <tr>
+          <td class="title">
+            <%= company %> Endpoint
+            <span class="info fa fa-info-circle tooltip" title="Only admins can perform this action."></span>
+          </td>
+          <td>
+            <div class="group">
+              <div class="fa fa-sort"></div>
+              <select class="input only" name="miza_endpoint" required>
+                <option value="false" <%= !publisher.miza_endpoint ? "selected" : "" %>>No Enabled</option>
+                <option value="true" <%= publisher.miza_endpoint ? "selected" : "" %>>Enabled</option>
+              </select>
+            </div>
+          </td>
+        </tr>
+      <% } %>
       <tr>
         <td class="title">
           User Coverage 
@@ -61,12 +78,10 @@
           <div class="slider-display value" data-rules="0:Disabled" data-postfix=" sec"></div>
         </td>
       </tr>
-      <% if(publisher.industry) { %>
-        <tr>
-          <td class="title">Industry</td>
-          <td><input type="text" value="<%= publisher.industry.name %>" disabled></td>
-        </tr>
-      <% } %>
+      <tr>
+        <td class="title">Industry</td>
+        <td><input type="text" value="<%= publisher.industry.name %>" disabled></td>
+      </tr>
       <tr>
         <td class="title">Account Owner</td>
         <td><input type="text" value="<%= publisher.owner.name %>" disabled></td>
