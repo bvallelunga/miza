@@ -8,7 +8,7 @@ class Dashboard
   
   constructor: ->
     @$search = $(".display .search-box input")
-    @$table = $(".display .table-body table").show()
+    @$table = $(".display.industries .table-body table").show()
   
     @bindings()
     @build_table()

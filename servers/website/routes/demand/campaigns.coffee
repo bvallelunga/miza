@@ -87,7 +87,7 @@ module.exports.post_list = (req, res, next)->
       }
       end_at: {
         $or: [{
-          $lte: new Date req.body.dates.end
+          $gte: new Date req.body.dates.end
         }, {
           $eq: null
         }]
