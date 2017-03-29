@@ -29,6 +29,7 @@
 
   
   .table-header {
+    position: relative;
     background: #fbfbff;
     border-top: solid 1px rgba(0,0,0,0.03);
     border-bottom: solid 1px rgba(0,0,0,0.03);
@@ -37,6 +38,32 @@
     
     &.no-border-top {
       border-top: none;
+    }
+    
+    &.admin {
+      background: #fffafa;
+      
+      .actions {
+        &:not(.disabled) .action:hover {
+          color: #E6525A;
+          border-color: #E6525A;
+        }
+      }
+    }
+    
+    .warning-banner {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      margin-left: -125px;
+      color: #E6525A;
+      text-align: center;
+      padding: 10px 0;
+      text-transform: uppercase;
+      font-weight: bold;
+      width: 250px;
+      font-size: 18px;
+      text-shadow: 0 -1px 0 white;
     }
   }
   

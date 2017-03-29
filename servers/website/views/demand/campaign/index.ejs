@@ -161,8 +161,8 @@
 
 <% if(user.is_admin) { %>
   <div class="display full table">
-    <div class="warning-banner">Admin Only</div>
-    <div class="table-header">
+    <div class="table-header admin">
+      <div class="warning-banner">Admin Only</div>
       <div class="actions left" data-url="/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/publishers">
         <div class="action" data-action="enable">
           <span class="fa fa-circle"></span>
