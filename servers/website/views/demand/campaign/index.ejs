@@ -24,7 +24,7 @@
         <div class="title green"><%= campaign.metrics.spend %></div>
       </td>
       <td class="section">
-        <div class="actions campaign right">
+        <div class="actions campaign right" data-url="/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>">
           <% if(campaign.status != "completed") { %>
             <% if(campaign.status == "running") { %>
               <div class="action" data-action="paused">
@@ -40,7 +40,7 @@
               </div>
             <% } %>
           <% } %>
-          <div class="action" data-action="delete">
+          <div class="action" data-action="delete" data-confirm="Please confirm you want to delete!">
             <span class="fa fa-trash"></span>
             <span class="fa fa-spin fa-refresh" style="display:none"></span>
             Delete
@@ -108,9 +108,9 @@
   <br>
 </div>
 
-<div class="display industries full table">
+<div class="display full table">
   <div class="table-header">
-    <div class="industries actions left <%= campaign.status != "running" ? "disabled" : "" %>">
+    <div class="actions left <%= campaign.status != "running" ? "disabled" : "" %>" data-url="/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/industries">
       <div class="action" data-action="running">
         <span class="fa fa-play"></span>
         <span class="fa fa-spin fa-refresh" style="display:none"></span>
@@ -128,7 +128,18 @@
     </div>
   </div>
   <div class="table-body">
-    <table class="hidden">
+    <table class="hidden" data-url="/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/industries" data-columns="<%= JSON.stringify([
+      { "data": "id" },
+      { "data": "name" },
+      { "data": "status" },
+      { "data": "metrics.progress" },
+      { "data": "metrics.impressions" },
+      { "data": "metrics.clicks" },
+      { "data": "metrics.ctr" },
+      { "data": "metrics.cpm" },
+      { "data": "metrics.budget" },
+      { "data": "metrics.spend" }
+    ]) %>">
       <thead>
         <tr>
           <th></th>
@@ -148,41 +159,50 @@
   </div>
 </div>
 
-<!--
-<div class="display publishers full table">
-  <div class="table-header">
-    <div class="industries actions left">
-      <div class="action" data-action="running">
-        <span class="fa fa-ban"></span>
-        <span class="fa fa-spin fa-refresh" style="display:none"></span>
-        Block
+<% if(user.is_admin) { %>
+  <div class="display full table">
+    <div class="warning-banner">Admin Only</div>
+    <div class="table-header">
+      <div class="actions left" data-url="/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/publishers">
+        <div class="action" data-action="enable">
+          <span class="fa fa-circle"></span>
+          <span class="fa fa-spin fa-refresh" style="display:none"></span>
+          Enable
+        </div>
+        <div class="action" data-action="block">
+          <span class="fa fa-ban"></span>
+          <span class="fa fa-spin fa-refresh" style="display:none"></span>
+          Block
+        </div>
       </div>
-      <div class="action" data-action="paused">
-        <span class="fa fa-circle-o"></span>
-        <span class="fa fa-spin fa-refresh" style="display:none"></span>
-        Unblock
+      <div class="search-box right">
+        <div class="fa fa-search"></div>
+        <input type="text" class="white" placeholder="Search...."/>
       </div>
     </div>
-    <div class="search-box right">
-      <div class="fa fa-search"></div>
-      <input type="text" class="white" placeholder="Search...."/>
+    <div class="table-body">
+      <table class="hidden" data-url="/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/publishers" data-columns="<%= JSON.stringify([
+        { "data": "id" },
+        { "data": "name" },
+        { "data": "industry" },
+        { "data": "status" },
+        { "data": "metrics.impressions" },
+        { "data": "metrics.clicks" },
+        { "data": "metrics.ctr" }
+      ]) %>">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Publisher</th>
+            <th>Industry</th>
+            <th>Status</th>
+            <th>Impressions</th>
+            <th>Clicks</th>
+            <th>CTR</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
   </div>
-  <div class="table-body">
-    <table class="hidden">
-      <thead>
-        <tr>
-          <th></th>
-          <th>Publisher</th>
-          <th>Industry</th>
-          <th>Status</th>
-          <th>Impressions</th>
-          <th>Clicks</th>
-          <th>CTR</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-</div>
--->
+<% } %>

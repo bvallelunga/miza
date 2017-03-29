@@ -109,6 +109,7 @@ module.exports = (srv)->
   app.get  "/demand/:advertiser", routes.auth.is_authenticated, routes.demand.auth, routes.demand.get_root
   app.get  "/demand/:advertiser/:dashboard", routes.auth.is_authenticated, routes.demand.auth, routes.demand.fetch_data, routes.demand.get_dashboard
   app.get  "/demand/:advertiser/campaign/:campaign/industries", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaign.fetch, routes.demand.campaign.get_industries
+  app.get  "/demand/:advertiser/campaign/:campaign/publishers", routes.auth.is_admin, routes.demand.auth, routes.demand.campaign.fetch, routes.demand.campaign.get_publishers
   app.get  "/demand/:advertiser/members/invite/:invite/remove", routes.auth.is_authenticated, routes.demand.auth, routes.demand.members.remove_invite
   app.get  "/demand/:advertiser/members/member/:member/remove", routes.auth.is_authenticated, routes.demand.auth, routes.demand.members.remove_member
   app.get  "/demand/:advertiser/members/member/:member/owner", routes.auth.is_authenticated, routes.demand.auth, routes.demand.members.owner_member
@@ -120,6 +121,7 @@ module.exports = (srv)->
   app.post "/demand/:advertiser/campaigns/update", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaigns.post_updates
   app.post "/demand/:advertiser/campaign/:campaign", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaign.fetch, routes.demand.campaign.post_update
   app.post "/demand/:advertiser/campaign/:campaign/industries", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaign.fetch, routes.demand.campaign.post_industries
+  app.post "/demand/:advertiser/campaign/:campaign/publishers", routes.auth.is_admin, routes.demand.auth, routes.demand.campaign.fetch, routes.demand.campaign.post_publishers
   app.post "/demand/:advertiser/billing/charges", routes.auth.is_authenticated, routes.demand.auth, routes.demand.billing.post_charges
   app.post "/demand/:advertiser/settings", routes.auth.is_authenticated, routes.demand.auth, routes.demand.settings.post_update
   app.post "/demand/:advertiser/members/add", routes.auth.is_authenticated, routes.demand.auth, routes.demand.members.post_add

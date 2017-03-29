@@ -127,6 +127,7 @@ module.exports = (sequelize, DataTypes)->
           os: campaignIndustry.targeting.os or null
           countries: campaignIndustry.targeting.countries or null
           browsers: campaignIndustry.targeting.browsers or null
+          blocked_publishers: []
         }
         
         

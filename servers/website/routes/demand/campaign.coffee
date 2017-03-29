@@ -1,4 +1,5 @@
 moment = require "moment"
+numeral = require "numeral"
 request = require "request"
 
 module.exports.fetch = (req, res, next)->  
@@ -64,6 +65,85 @@ module.exports.get_industries = (req, res, next)->
       return 0
   }
   
+  
+module.exports.get_publishers = (req, res, next)->
+  targeting = req.campaign.industries[0].targeting
+  end_date = req.campaign.end_at
+  
+  if not end_date?
+    today = new Date()
+    shift = req.campaign.start_at
+    
+    if today > shift
+      shift = today
+    
+    end_date = moment(shift).add(1, "month").toDate()
+
+  LIBS.models.Publisher.findAll({
+    where: {
+      is_activated: true
+    }
+    order: "name ASC"
+    include: [{
+      model: LIBS.models.Industry
+      as: "industry"
+    }]
+  }).map (publisher)->
+    if not targeting.blocked_publishers?
+      targeting.blocked_publishers = []
+  
+    if targeting.blocked_publishers.indexOf(publisher.key) == -1
+      status = "Enabled"
+    else
+      status = "Blocked"
+      
+    client = LIBS.keen.scopedAnalysis(publisher.config.keen)
+  
+    query = (type)->      
+      client.query("count", {
+        event_collection: "ads.event"
+        timeframe: {
+          start: req.campaign.start_at
+          end: end_date
+        }
+        filters: [{
+          "operator": "eq"
+          "property_name": "campaign.id"
+          "property_value": req.campaign.id
+        },{
+          "operator": "eq",
+          "property_name": "type",
+          "property_value": type
+        }]
+      }).then (response)->    
+        return response.result
+  
+    return Promise.props({
+      impressions: query "impression"
+      clicks: query "click"
+      ctr: 0
+    }).then (metrics)->      
+      metrics.ctr = numeral(metrics.clicks/Math.max(metrics.impressions or 1)).format("0[.]0%")
+      metrics.impressions = numeral(metrics.impressions).format("0[,]000")
+      metrics.clicks = numeral(metrics.clicks).format("0[,]000")
+      
+      return {
+        id: publisher.key
+        name: publisher.name
+        status: status
+        industry: publisher.industry.name
+        metrics: metrics
+      }
+  
+  .then (publishers)->
+  
+    res.json {
+      success: true
+      results: publishers
+    }
+    
+  .catch next
+  
 
 module.exports.get_charts = (req, res, next)->
   client = LIBS.keen.scopedAnalysis req.advertiser.config.keen
@@ -126,12 +206,46 @@ module.exports.post_industries = (req, res, next)->
         advertiser_id: req.advertiser.id
         campaign_id: req.campaign.id
         id: {
-          $in: req.body.industries
+          $in: req.body.selected
         }
       }
     }).each (industry)->
       industry.update({
         status: req.body.action
+      })
+  
+  .then ->
+    res.json {
+      success: true
+    }
+  
+  .catch next
+  
+  
+module.exports.post_publishers = (req, res, next)->
+  Promise.resolve().then ->    
+    LIBS.models.CampaignIndustry.findAll({
+      where: {
+        advertiser_id: req.advertiser.id
+        campaign_id: req.campaign.id
+      }
+    }).each (industry)->
+      targeting = industry.targeting
+    
+      if not targeting.blocked_publishers?
+        targeting.blocked_publishers = []
+    
+      for publisher in req.body.selected
+        index = targeting.blocked_publishers.indexOf(publisher)
+        
+        if index > -1
+          targeting.blocked_publishers.splice(index, 1)
+          
+        if req.body.action == "block"
+          targeting.blocked_publishers.push publisher
+      
+      industry.update({
+        targeting: targeting
       })
   
   .then ->

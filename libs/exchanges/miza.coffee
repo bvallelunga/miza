@@ -26,6 +26,18 @@ module.exports = (req)->
     if not req.publisher.is_demo
       query.industry_id = req.publisher.industry_id
       
+    # Publisher NOT Targeting
+    query["targeting.blocked_publishers"] = {
+      $or: [
+        {
+          $eq: null
+        }
+        {
+          $notLike: "%#{'"' + req.publisher.key + '"'}%"
+        }
+      ]
+    }  
+    
     # Additional Targeting
     targets = ["devices", "os", "browsers", "countries"]
     
@@ -37,7 +49,7 @@ module.exports = (req)->
               $eq: null
             }
             {
-              $like: "%#{profile[target]}%"
+              $like: "%#{'"' + profile[target] + '"'}%"
             }
           ]
         }

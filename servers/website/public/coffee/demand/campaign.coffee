@@ -1,8 +1,7 @@
 class Dashboard
 
   charts: {}
-  $table: null
-  data_table: null
+  $tables: []
   $search: null
   
   
@@ -11,74 +10,69 @@ class Dashboard
     @$table = $(".display.industries .table-body table").show()
   
     @bindings()
-    @build_table()
     @build_charts()
     @update()
     
   
   bindings: ->
+    campaign = @
+  
     @$search.keyup =>
       @data_table.column(1).search(@$search.val()).draw()
       
-    $(".campaign.actions .action").click (e)=>  
-      action = $(e.currentTarget).data("action")
+    
+    $(".display").each ->
+      $display = $(@)
+      action_url = $display.find(".actions").data("url")
       
-      if action == "delete" and not confirm("Please confirm you want to delete!")
-        return
+      $table = campaign.build_table $display
+    
+      $display.find(".actions .action").click (e)=>  
+        action = $(e.currentTarget).data("action")
+        confirm_text = $(e.currentTarget).data("confirm")
+        selected = []
         
-      $spinner = $(e.currentTarget).find(".fa-spin").show()
-      $original = $(e.currentTarget).find(":not(.fa-spin)").hide()  
-      
-      $.post("/demand/#{config.advertiser}/campaign/#{config.campaign}", {
-        _csrf: config.csrf
-        action: action
-      }).done ->
-        window.location.reload()
+        if confirm_text? and not confirm(confirm_text)
+          return
         
-      .fail (error)->
-        $spinner.hide()
-        $original.show()
-        message = error.responseJSON.message
+        if $table?
+          selected = $.makeArray $table.column(0).checkboxes.selected()
+          
+          if selected.length == 0 then return
         
-        $(".container").prepend(
-          "<div class='warning orange'>#{message}</div>"
-        )
+        $spinner = $(e.currentTarget).find(".fa-spin").show()
+        $original = $(e.currentTarget).find(":not(.fa-spin)").hide() 
         
-        window.scrollTo(0,0);
+        $.post(action_url, {
+          _csrf: config.csrf
+          action: action
+          selected: selected
+        }).done ->
+          if $table?
+            $spinner = $(e.currentTarget).find(".fa-spin").hide()
+            $original = $(e.currentTarget).find(":not(.fa-spin)").show() 
+            return campaign.update()
+          
+          window.location.reload()
+          
+        .fail (error)->
+          $spinner.hide()
+          $original.show()
+          message = error.responseJSON.message
+          
+          $(".container").prepend(
+            "<div class='warning orange'>#{message}</div>"
+          )
+          
+          window.scrollTo(0,0);
      
-    $(".industries.actions:not(.disabled) .action").click (e)=>
-      action = $(e.currentTarget).data("action")
-      industries = $.makeArray @data_table.column(0).checkboxes.selected()
-      
-      if industries.length == 0
-        return
-        
-      $spinner = $(e.currentTarget).find(".fa-spin").show()
-      $original = $(e.currentTarget).find(":not(.fa-spin)").hide()
-      
-      $.post("/demand/#{config.advertiser}/campaign/#{config.campaign}/industries", {
-        _csrf: config.csrf
-        action: action
-        industries: industries
-      }).done =>
-        $spinner.hide()
-        $original.show()
-        @update()
-        
-      .fail (error)->
-        $spinner.hide()
-        $original.show()
-        message = error.responseJSON.message
-        
-        $(".container").prepend(
-          "<div class='warning orange'>#{message}</div>"
-        )
-        
-        window.scrollTo(0,0);
     
-    
-  build_table: ->
-    @data_table = @$table.DataTable({
+  build_table: ($display)->  
+    if not $display.hasClass "table"
+      return null
+      
+    $table = $display.find(".table-body table").show()
+    $data_table = $table.DataTable({
       "paging":   false
       "ordering": false
       "order":    false
@@ -91,19 +85,12 @@ class Dashboard
           'selectRow': true
         }
       }]
-      "columns": [
-        { "data": "id" },
-        { "data": "name" },
-        { "data": "status" },
-        { "data": "metrics.progress" },
-        { "data": "metrics.impressions" },
-        { "data": "metrics.clicks" }
-        { "data": "metrics.ctr" }
-        { "data": "metrics.cpm" },
-        { "data": "metrics.budget" },
-        { "data": "metrics.spend" }
-      ]
+      "columns": $.makeArray $table.data("columns")
     })
+    
+    @$tables.push [$table, $data_table]
+    return $data_table
+    
     
   
   build_charts: ->
@@ -143,14 +130,16 @@ class Dashboard
         
   
   update: ->
-    @data_table.clear() 
+    @$tables.forEach (tables)->
+      tables[1].clear()
+    
+      $.get(tables[0].data("url")).done (response)=>
+        if not response.success
+          return
+          
+        tables[1].rows.add(response.results)
+        tables[1].draw()    
   
-    $.get("/demand/#{config.advertiser}/campaign/#{config.campaign}/industries").done (response)=>
-      if not response.success
-        return
-        
-      @data_table.rows.add(response.results)
-      @data_table.draw()    
   
     $.get("/demand/#{config.advertiser}/campaign/#{config.campaign}/charts").done (response)=>
       for name, data of response
