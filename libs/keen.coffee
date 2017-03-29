@@ -11,15 +11,18 @@ module.exports = ->
   keen.tracking = new KeenTracking CONFIG.keen
   keen.analysis = new KeenTracking CONFIG.keen
   
+  
   keen.scopeKey = (data)->
     Keen.utils.encryptScopedKey CONFIG.keen.masterKey, data
 
+  
   keen.scopedAnalysis = (key)->
     new KeenAnalysis {
       projectId: CONFIG.keen.projectId
       readKey: key
     }
     
+  
   keen.request = (method, url, data)->
     new Promise (res, rej)->
       request[method](url)
@@ -27,23 +30,36 @@ module.exports = ->
         .set('Authorization', CONFIG.keen.masterKey)
         .set('Content-Type', 'application/json')
         .end (error, result)->
-          if error? 
+          if error?
             return rej error.response.error
           
           return res result.body
+  
   
   keen.createCachedDataset = (name, data, force=false)->
     Promise.resolve().then ->
       return keen.request "get", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}"
     
     .then (definition)->
-      if force
+      to_delete = (a, b)->
+        if typeof a != "object"
+          return a != b
+      
+        for key, value of a
+          if typeof value == "object"
+            if to_delete(value, b[key])
+              return true
+          else if value != b[key]
+            return true
+        
+        return false
+    
+      if to_delete(data, definition)
         return keen.request "delete", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}"
         
       return false   
     
-    
-    .catch ->
+    .catch (error)->
       return Promise.resolve(true) 
          
     .then (create)->
