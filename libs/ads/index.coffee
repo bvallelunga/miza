@@ -1,5 +1,6 @@
 # Imports
 useragent = new require 'express-useragent'
+geoip = require 'geoip-lite'
 
 module.exports.build_event = (raw_data)->
   demensions = {}
@@ -175,6 +176,7 @@ module.exports.send = (raw_data)->
       $screen_width: Number(raw_data.query.width)
       $screen_height: Number(raw_data.query.height)
       $os: agent.os 
+      ip: event.ip_address
       "Product": event.product
       "Protected": event.protected
       "Asset Type": event.type
