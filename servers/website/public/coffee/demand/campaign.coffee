@@ -131,12 +131,11 @@ class Dashboard
   
   update: ->
     @$tables.forEach (tables)->
-      tables[1].clear()
-    
       $.get(tables[0].data("url")).done (response)=>
         if not response.success
           return
-          
+        
+        tables[1].clear() 
         tables[1].rows.add(response.results)
         tables[1].draw()    
   

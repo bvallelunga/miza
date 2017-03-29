@@ -84,15 +84,15 @@ class Dashboard
   
   update: (dates, finished=(-> 1))->
     @dates = dates
-    @data_table.clear()
-  
+    
     $.post("/demand/#{config.advertiser}/campaigns/list", {
       _csrf: config.csrf
       dates: dates
     }).done (response)=>
       if not response.success
         return
-        
+      
+      @data_table.clear()
       @data_table.rows.add(response.results)
       @data_table.draw()
       finished()
