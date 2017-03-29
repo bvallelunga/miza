@@ -96,11 +96,12 @@ module.exports = (sequelize, DataTypes)->
           query: {
             analysis_type: "count"
             event_collection : "ads.event"
-            timeframe: "this_15_months"
+            timeframe: "this_1_months"
             interval: "daily"
+            group_by: "type"
           }
           index_by: ["publisher.key"]
-        }).catch(console.log)
+        })
 
     }
     instanceMethods: {      

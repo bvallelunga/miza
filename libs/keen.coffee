@@ -20,15 +20,35 @@ module.exports = ->
       readKey: key
     }
     
-  keen.createCachedDataset = (name, data)->
+  keen.request = (method, url, data)->
     new Promise (res, rej)->
-      request
-        .put("https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}")
+      request[method](url)
         .send(data)
         .set('Authorization', CONFIG.keen.masterKey)
         .set('Content-Type', 'application/json')
         .end (error, result)->
-          if error? then return rej error.response.error
-          return res result
+          if error? 
+            return rej error.response.error
+          
+          return res result.body
+  
+  keen.createCachedDataset = (name, data, force=false)->
+    Promise.resolve().then ->
+      return keen.request "get", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}"
+    
+    .then (definition)->
+      if force
+        return keen.request "delete", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}"
+        
+      return false   
+    
+    
+    .catch ->
+      return Promise.resolve(true) 
+         
+    .then (create)->
+      if create != false
+        keen.request "put", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}", data
+    
   
   return keen
