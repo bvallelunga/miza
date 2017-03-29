@@ -9,6 +9,7 @@ module.exports.build_event = (raw_data)->
   campaign = {}
   creative = {}
   industry = {}
+  billing = {}
   
   # Clean Data
   for key, value of raw_data
@@ -23,7 +24,7 @@ module.exports.build_event = (raw_data)->
       advertiser = {
         id: temp.id
         key: temp.key
-        name: temp.name
+        #name: temp.name
       }
       
   .then ->
@@ -35,8 +36,8 @@ module.exports.build_event = (raw_data)->
       
       campaign = {
         id: temp.id
-        name: temp.name
-        type: temp.type
+        #name: temp.name
+        #type: temp.type
       }
       
       if raw_data.type == "impression"
@@ -57,9 +58,13 @@ module.exports.build_event = (raw_data)->
            
       industry = {
         id: temp.id
-        name: temp.name
+        #name: temp.name
         cpm: temp.cpm
-        cpm_impression: temp.cpm_impression
+      }
+      
+      billing = {
+        model: "cpm"
+        amount: temp.cpm_impression
       }
       
       if raw_data.type == "impression"
@@ -84,12 +89,12 @@ module.exports.build_event = (raw_data)->
       }
     
   .then ->
-    if raw_data.query.battery?
-      battery = {
-        charging: raw_data.query.battery.charging == "true"
-        charging_time: Number(raw_data.query.battery.charging_time)
-        level: Number(raw_data.query.battery.level)
-      }
+#     if raw_data.query.battery?
+#       battery = {
+#         charging: raw_data.query.battery.charging == "true"
+#         charging_time: Number(raw_data.query.battery.charging_time)
+#         level: Number(raw_data.query.battery.level)
+#       }
     
     return {
       type: raw_data.type 
@@ -100,9 +105,10 @@ module.exports.build_event = (raw_data)->
       product: raw_data.publisher.product
       publisher: {
         id: raw_data.publisher.id
-        name: raw_data.publisher.name
+#         name: raw_data.publisher.name
         key: raw_data.publisher.key
       }
+      billing: billing
       advertiser: advertiser
       campaign: campaign
       creative: creative

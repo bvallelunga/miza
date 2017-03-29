@@ -153,7 +153,7 @@ module.exports = (sequelize, DataTypes)->
               
         Promise.props({
           revenue: run_query("sum", {
-            target_property: "industry.cpm_impression"
+            target_property: "billing.amount"
             filters: [{
               "operator": "eq",
               "property_name": "type",
