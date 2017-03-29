@@ -45,21 +45,17 @@ window.DatePicker = class DatePicker
   
   configure_datepicker: (container)->
     _this = @
-    
-    console.log $(".range-display").data("endAt")
   
     $(".range-display").dateRangePicker({
       container: container
       showShortcuts: true
       showTopbar: false
-      autoClose: true
+      autoClose: false
       format: 'MMM DD, YYYY'
       separator: ' <strong>to</strong> '
       startOfWeek: 'monday'
       language:'en'
       extraClass: "date-dropdown"
-      startDate: $(".range-display").data("start-date") or null
-      endDate: $(".range-display").data("end-date") or null
       customOpenAnimation: (cb)->
         $(@).fadeIn(0, cb)
       

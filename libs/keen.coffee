@@ -55,6 +55,7 @@ module.exports = ->
         return false
     
       if to_delete(data, definition)
+        console.log "KEEN Dataset Deleted: #{name}"
         return keen.request "delete", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}"
         
       return false   
@@ -64,6 +65,7 @@ module.exports = ->
          
     .then (create)->
       if create != false
+        console.log "KEEN Dataset Created: #{name}"
         keen.request "put", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}", data
     
   

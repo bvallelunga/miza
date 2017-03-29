@@ -186,6 +186,11 @@ class Dashboard
   
   
   update: (timeframe, finished)->
+    yesterday = moment().subtract(1, "day").endOf("day").toDate()
+  
+    if timeframe.start < yesterday and timeframe.end > yesterday
+      timeframe.end = yesterday
+  
     $.get("/supply/#{config.publisher}/analytics/metrics", {
       timeframe: timeframe
     }).done (response)=>
