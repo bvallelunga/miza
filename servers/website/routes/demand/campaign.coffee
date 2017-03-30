@@ -287,6 +287,7 @@ module.exports.post_create = (req, res, next)->
     
     status = if start_date then "queued" else "running"
     impressions_requested = 0
+    is_house = req.body.is_house == "true" and req.user.is_admin
     
     for target in targeting
       impressions_requested += target.impressions
@@ -299,6 +300,9 @@ module.exports.post_create = (req, res, next)->
       end_at: end_date
       advertiser_id: req.advertiser.id
       impressions_requested: impressions_requested
+      config: {
+        is_house: is_house
+      }
     }).then (campaign)->    
       Promise.props({
         campaign: campaign
@@ -310,8 +314,11 @@ module.exports.post_create = (req, res, next)->
             industry_id: target.industry.id
             name: target.industry.name
             impressions_requested: target.impressions
-            cpm: target.industry.cpm
+            cpm: if is_house then 0 else target.industry.cpm
             targeting: target.targeting
+            config: {
+              is_house: is_house
+            }
           })
         
         creative: LIBS.models.Creative.fetch_image(req.body.creative.image_url).then (image)->

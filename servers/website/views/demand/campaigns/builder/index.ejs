@@ -18,6 +18,31 @@
         </tr>
       </table>
     </div>
+    
+    <% if(user.is_admin) { %>
+      <div class="section">
+        <div class="header">House <span class="bubble">ADMIN</span></div>
+        <p>
+          House ads are designed for testing and will not show up on a publisher's dashboard or payouts. 
+          They will be marked with $0 CPMs so you don't have to pay to run the campaign.
+        </p>
+        <table class="targeting-table">
+          <tr>
+            <td class="title">Enabled<span>REQUIRED</span></td>
+            <td valign="top">
+              <div class="group">
+                <div class="fa fa-sort"></div>
+                <select class="input only" name="is_house">
+                  <option value="false" selected>False</option>
+                  <option value="true">True</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    <% } %>
+    
     <div class="section">
       <div class="header">Creative</div>
       <p>

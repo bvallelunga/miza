@@ -4,7 +4,12 @@
   <table class="top-bar"> 
     <tr>   
       <td class="section">
-        <div class="decription">Name</div>
+        <div class="decription">
+          Name
+          <% if(campaign.config.is_house == true) { %>
+            <span class="bubble">HOUSE</span>
+          <% } %>
+        </div>
         <div class="title"><%= campaign.name %></div>
       </td>
       <td class="section">

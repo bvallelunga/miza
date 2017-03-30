@@ -99,6 +99,11 @@ module.exports = (sequelize, DataTypes)->
             timeframe: "this_1_years"
             interval: "daily"
             group_by: [ "type" ]
+            filters: [{
+              "operator": "ne"
+              "property_name": "billing.house"
+              "property_value": true
+            }]
           }
           index_by: ["publisher.key"]
         }).catch(console.error)

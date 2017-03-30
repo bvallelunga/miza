@@ -42,7 +42,7 @@ module.exports = ->
     
     .then (definition)->
       to_delete = (a, b)->
-        if typeof a != "object"
+        if typeof a != "object" or typeof b != "object"
           return a != b
       
         for key, value of a
@@ -53,7 +53,7 @@ module.exports = ->
             return true
         
         return false
-    
+     
       if to_delete(data, definition)
         console.log "KEEN Dataset Deleted: #{name}"
         return keen.request "delete", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}"

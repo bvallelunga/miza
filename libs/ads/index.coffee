@@ -65,6 +65,7 @@ module.exports.build_event = (raw_data)->
       billing = {
         model: "cpm"
         amount: temp.cpm_impression
+        house: temp.config.is_house or false
       }
       
       if raw_data.type == "impression"
