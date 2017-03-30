@@ -9,7 +9,9 @@ module.exports.build_event = (raw_data)->
   campaign = {}
   creative = {}
   industry = {}
-  billing = {}
+  billing = {
+    house: false
+  }
   
   # Clean Data
   for key, value of raw_data
@@ -201,6 +203,7 @@ module.exports.send = (raw_data)->
       "Campaign ID": event.campaign.id
       "Campaign Name": event.campaign.name
       "Campaign Type": event.campaign.type
+      "Campaign House": event.billing.house
     }
     
     # Activate Publisher 
