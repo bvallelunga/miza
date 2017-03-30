@@ -85,13 +85,6 @@ module.exports.post_list = (req, res, next)->
         $gte: new Date req.body.dates.start
         $lte: new Date req.body.dates.end
       }
-      end_at: {
-        $or: [{
-          $lte: new Date req.body.dates.end
-        }, {
-          $eq: null
-        }]
-      }
     }
     include: [{
       model: LIBS.models.CampaignIndustry
