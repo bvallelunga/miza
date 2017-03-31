@@ -59,7 +59,7 @@ module.exports.build_event = (raw_data)->
       if not temp? then return
            
       industry = {
-        id: temp.id
+        id: temp.industry_id
         #name: temp.name
         cpm: temp.cpm
       }
@@ -105,7 +105,7 @@ module.exports.build_event = (raw_data)->
       session: raw_data.session
       protected: raw_data.query.protected == "true"
       asset_url: raw_data.asset_url
-      product: raw_data.publisher.product
+#       product: raw_data.publisher.product
       publisher: {
         id: raw_data.publisher.id
 #         name: raw_data.publisher.name

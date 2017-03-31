@@ -12,6 +12,11 @@ module.exports = ->
       underscored: true 
       freezeTableName: true
     }
+    pool: {
+      max: 1
+      min: 0
+      idle: 10000
+    }
   })
 
   database = {
