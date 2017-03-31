@@ -4,9 +4,9 @@ Sequelize = require "sequelize"
 module.exports = ->
   sequelize  = new Sequelize(CONFIG.postgres.url, { 
     logging: false
-    dialectOptions: {
-      ssl: CONFIG.postgres.ssl
-    }
+#     dialectOptions: {
+#       ssl: CONFIG.postgres.ssl
+#     }
     define: {
       paranoid: true
       underscored: true 
