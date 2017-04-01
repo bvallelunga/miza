@@ -35,7 +35,7 @@ download = (url, query, headers)->
       headers: headers
     }, (error, response, body)->
       if error? or response.statusCode != 200
-        return rej error
+        return rej "MIZA DOWNLOADER"
       
       res response
       
