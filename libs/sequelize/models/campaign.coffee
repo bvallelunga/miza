@@ -132,7 +132,20 @@ module.exports = (sequelize, DataTypes)->
         
         models.Campaign.hasMany models.Creative, { 
           as: 'creatives' 
-        }        
+        } 
+      
+      keen_datasets: ->
+        LIBS.keen.createCachedDataset("campaign-analytics", {
+          display_name: "Campaign Analytics"
+          query: {
+            analysis_type: "count"
+            event_collection : "ads.event"
+            timeframe: "this_500_hours"
+            interval: "hourly"
+            group_by: [ "type" ]
+          }
+          index_by: ["campaign.id"]
+        }).catch(console.error)       
     }
     
     instanceMethods: {
