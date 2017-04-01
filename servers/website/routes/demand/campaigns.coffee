@@ -22,7 +22,8 @@ module.exports.fetch = (req, res, next)->
     req.data.approved_countries = [
       "us", "ca", "mx", "de", "gb",
       "tr", "nz", "fr", "au", "se",
-      "ph", "in", "cn", "jp"
+      "ph", "in", "cn", "jp", "no",
+      "dk", "fi"
     ]
     
     LIBS.models.Industry.listed().then (industries)->
