@@ -2,6 +2,7 @@ module.exports = ->
   # Set Timezone to PDT
   process.env.TZ = 'America/Los_Angeles' 
 
+  is_local = process.env.PIPELINE == "localhost"
   is_prod = process.env.NODE_ENV == "production"
   is_dev = not is_prod
   logging_defaults = {
@@ -21,8 +22,7 @@ module.exports = ->
     redis_url: process.env.REDISCLOUD_URL
     postgres: {
       url: process.env.DATABASE_URL
-      ssl: process.env.DATABASE_URL.indexOf("localhost") == -1
-      flush: false and is_dev # BE VERY CAREFUL! THIS WILL FLUSH THE DB
+      ssl: is_local and process.env.DATABASE_URL.indexOf("localhost") == -1
     }
     
     pipeline: process.env.PIPELINE

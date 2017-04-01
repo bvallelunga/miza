@@ -1,5 +1,5 @@
 module.exports = (err, req, res, next)->
-  if err.message != "MIZA DOWNLOADER"
+  if err != "MIZA DOWNLOADER"
     if CONFIG.is_prod
       LIBS.bugsnag.notify err
     
