@@ -16,13 +16,7 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
       allowNull: false
       get: ->
-        url = @getDataValue("url")
-        
-        if url.indexOf("?") == -1
-          url += "?"
-          
-        url += "&m-creative=#{@creative_id}"
-        return url
+        return "#{@getDataValue("url")}#m-creative=#{@creative_id}"
     }
   }, {    
     classMethods: {      

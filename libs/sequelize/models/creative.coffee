@@ -64,6 +64,9 @@ module.exports = (sequelize, DataTypes)->
     
     instanceMethods: {
       attributed_link: (publisher, industry, is_protected)->
+        if @link.indexOf("?") == -1
+          @link += "?"
+      
         original_url = "#{@link}&utm_publisher=#{publisher}"
         link = "#{ new Buffer(original_url).toString("base64") }?"
         params = [

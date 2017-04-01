@@ -57,16 +57,13 @@ API.url_serialize = function(obj, prefix) {
   return str.join("&");
 }
 
-API.query_param = function(name, url) {
-  if (!url) {
-    url = window.location.href;
-  }
-  name = name.replace(/[\[\]]/g, "\\$&");
-  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-      results = regex.exec(url);
-  if (!results) return null;
-  if (!results[2]) return '';
-  return decodeURIComponent(results[2].replace(/\+/g, " "));
+API.hash_value = function(name) {
+  hash = window.location.hash
+  
+  if(hash.indexOf(name) == -1)
+    return null
+    
+  return hash.replace("#" + name + "=", "")
 }
 
 API.fetch_attributes = function(callback) {

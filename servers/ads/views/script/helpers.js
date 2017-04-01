@@ -32,7 +32,7 @@ API.iframe = function(element) {
     height: height,
     frame: random,
     referrer: "<%= page_url %>" || window.location.href,
-    creative_override: API.query_param("m-creative"),
+    creative_override: API.hash_value("m-creative"),
     protected: API.protected
   })
   
