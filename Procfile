@@ -1,3 +1,3 @@
 web: $COMMAND servers/index.coffee
-workers: $COMMAND workers/index.coffee
-tracker: $COMMAND workers/ads/tracker.coffee
+workers: $COMMAND workers/agenda/index.coffee
+tracker: $COMMAND workers/queue/tracker.coffee

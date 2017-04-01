@@ -1,6 +1,6 @@
 fs = require 'fs'
 
-require("../startup") true, ->
+require("../../startup") true, ->
   
   # Load Workers
   for directory in fs.readdirSync __dirname
