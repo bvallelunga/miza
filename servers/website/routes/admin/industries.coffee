@@ -17,9 +17,12 @@ module.exports.get = (req, res, next)->
 
 module.exports.update = (req, res, next)->
   Promise.all req.body.industries.map (industry)->
+    console.log Number industry.cpc
+  
     return LIBS.models.Industry.update({
       name: industry.name
       cpm: Number industry.cpm
+      cpc: Number industry.cpc
       max_impressions: Number industry.max_impressions
       private: industry.private == "true"
     }, {
@@ -43,6 +46,7 @@ module.exports.create = (req, res, next)->
   LIBS.models.Industry.create({
     name: req.body.name
     cpm: Number req.body.cpm
+    cpc: Number req.body.cpc
     private: req.body.private == "true"
     max_impressions: Number req.body.max_impressions
   }).then ->

@@ -263,15 +263,15 @@ module.exports.post_create = (req, res, next)->
   if not req.body.creative.link.length > 0
     return next "Please make sure you have a click link for your creative."
   
-  Promise.filter req.body.industries, (data)->
-    data.impressions = Number data.impressions
-    return data.activated == "true" and data.impressions > 0
+  Promise.filter req.body.industries[req.body.model], (data)->
+    data.quantity = Number data.quantity
+    return data.activated == "true" and data.quantity > 0
     
   .map (data)->
     LIBS.models.Industry.findById(data.industry).then (industry)->        
       return {
         industry: industry
-        impressions: Math.min(data.impressions, industry.max_impressions)
+        quantity: Math.min(data.quantity, industry.max_impressions)
         targeting: req.body.targeting or {}
       }
     
@@ -285,21 +285,21 @@ module.exports.post_create = (req, res, next)->
     end_date = moment(req.body.end_date, "MM-DD-YYYY")
     end_date = if end_date.isValid() then end_date.toDate() else null
     
+    quantity_requested = 0
     status = if start_date then "queued" else "running"
-    impressions_requested = 0
     is_house = req.body.is_house == "true" and req.user.is_admin
     
     for target in targeting
-      impressions_requested += target.impressions
+      quantity_requested += target.quantity
     
     LIBS.models.Campaign.create({
       name: req.body.name
-      type: "cpm"
+      type: req.body.model
       status: status
       start_at: start_date or new Date()
       end_at: end_date
       advertiser_id: req.advertiser.id
-      impressions_requested: impressions_requested
+      quantity_requested: quantity_requested
       config: {
         is_house: is_house
       }
@@ -308,13 +308,15 @@ module.exports.post_create = (req, res, next)->
         campaign: campaign
         industries: Promise.map targeting, (target)->
           LIBS.models.CampaignIndustry.create({
+            type: req.body.model
             status: campaign.status
             advertiser_id: req.advertiser.id
             campaign_id: campaign.id
             industry_id: target.industry.id
             name: target.industry.name
-            impressions_requested: target.impressions
-            cpm: if is_house then 0 else target.industry.cpm
+            quantity_requested: target.quantity
+            cpm: if is_house then 0 else (target.industry.cpm or 0)
+            cpc: if is_house then 0 else (target.industry.cpc or 0)
             targeting: target.targeting
             config: {
               is_house: is_house

@@ -65,18 +65,21 @@ class Dashboard
       }, {
         'targets': 1,
         'render': ( data, type, row, meta )->
-          data = "<a href='/demand/#{config.advertiser}/campaign/#{row.id}'>#{data}</a>"
-          return data;
+          return "<a href='/demand/#{config.advertiser}/campaign/#{row.id}'>#{data}</a>"
+      }, {
+        'targets': 2,
+        'render': ( data, type, row, meta )->
+          return data.toUpperCase()
       }]
       "columns": [
         { "data": "id" },
         { "data": "name" },
+        { "data": "type" },
         { "data": "status" },
         { "data": "metrics.progress" },
         { "data": "metrics.impressions" },
         { "data": "metrics.clicks" }
         { "data": "metrics.ctr" }
-        { "data": "metrics.budget" },
         { "data": "metrics.spend" }
       ]
     })

@@ -41,17 +41,17 @@ module.exports = (sequelize, DataTypes)->
             throw new Error "Campaign End Date must come after the Start Date"
       }
     }
-    impressions_requested: {
+    quantity_requested: {
       type: DataTypes.DECIMAL(15)
       defaultValue: 0
       get: ->      
-        return Number @getDataValue("impressions_requested")
+        return Number @getDataValue("quantity_requested")
     }
-    impressions_needed: {
+    quantity_needed: {
       type: DataTypes.DECIMAL(15)
       defaultValue: 0
       get: ->      
-        return Number @getDataValue("impressions_needed")
+        return Number @getDataValue("quantity_needed")
     }
     impressions: {
       type: DataTypes.DECIMAL(15)
@@ -93,8 +93,16 @@ module.exports = (sequelize, DataTypes)->
     }
     progress: {
       type: DataTypes.VIRTUAL
-      get: ->         
-        return @impressions/@impressions_requested
+      get: ->
+        model = 0
+        
+        if @type == "cpm" 
+          model = @impressions 
+          
+        else if @type == "cpc" 
+          model = @clicks
+               
+        return model/@quantity_requested
     }
     ctr: {
       type: DataTypes.VIRTUAL
@@ -106,8 +114,8 @@ module.exports = (sequelize, DataTypes)->
       get: ->      
         return {
           impressions: numeral(@impressions).format("0[,]000")
-          impressions_needed: numeral(@impressions_needed).format("0[,]000")
-          impressions_requested: numeral(@impressions_requested).format("0[,]000")
+          quantity_needed: numeral(@quantity_needed).format("0[,]000")
+          quantity_requested: numeral(@quantity_requested).format("0[,]000")
           clicks: numeral(@clicks).format("0[,]000")
           budget: numeral(@budget).format("$0[,]000.00")
           spend: numeral(@spend).format("$0[,]000.00")
@@ -189,7 +197,7 @@ module.exports = (sequelize, DataTypes)->
     }
     hooks: {
       beforeCreate: (campaign)->
-        campaign.impressions_needed = campaign.impressions_requested
+        campaign.quantity_needed = campaign.quantity_requested
         
             
       afterUpdate: (campaign)->

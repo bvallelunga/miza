@@ -17,7 +17,7 @@ module.exports = (req)->
     # Build query
     query = {
       active: true
-      impressions_needed: {
+      quantity_needed: {
         $gt: 0
       }
     }
@@ -61,7 +61,7 @@ module.exports = (req)->
       order: [
         LIBS.models.Sequelize.fn('RANDOM')
         ["created_at", "DESC"]
-        ["impressions_needed", "DESC"]
+        ["quantity_needed", "DESC"]
       ]
     }).then (campaignIndustries)->  
       if campaignIndustries.length == 0

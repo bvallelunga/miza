@@ -20,6 +20,10 @@
         <input class="number" type="number" name="cpm" placeholder="CPM" min="0" step="0.01" required>
       </div>
       <div class="group left-align">
+        <div class="fa fa-dollar"></div>
+        <input class="number" type="number" name="cpc" placeholder="CPC" min="0" step="0.01" required>
+      </div>
+      <div class="group left-align">
         <div class="fa fa-crosshairs"></div>
         <input class="number bottom" type="text" name="max_impressions" placeholder="Max Impressions" required>
       </div>
@@ -37,6 +41,7 @@
           <th>Industry</th>
           <th>Listing</th>
           <th class="number">CPM ($)</th>
+          <th class="number">CPC ($)</th>
           <th class="number">Max Impressions</th>
         </tr>
       </thead>
@@ -58,6 +63,12 @@
               <div class="group left-align">
                 <div class="fa fa-dollar"></div>
                 <input class="only number" type="text" data-number="2" name="industries[<%= i %>][cpm]" value="<%= industry.cpm %>" placeholder="CPM" required>
+              </div>
+            </td>
+            <td>
+              <div class="group left-align">
+                <div class="fa fa-dollar"></div>
+                <input class="only number" type="text" data-number="2" name="industries[<%= i %>][cpc]" value="<%= industry.cpc %>" placeholder="CPC" required>
               </div>
             </td>
             <td>

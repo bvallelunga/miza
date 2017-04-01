@@ -8,7 +8,7 @@ module.exports = require("../template") {
 }, (job)->
   LIBS.models.CampaignIndustry.findAll({
     where: {
-      impressions_needed: {
+      quantity_needed: {
         $lte: 0
       }
       status: {

@@ -9,6 +9,13 @@ module.exports = (sequelize, DataTypes)->
         return Number @getDataValue("cpm")
     
     }
+    cpc: {
+      type: DataTypes.DECIMAL(6,3)
+      allowNull: false
+      get: ->      
+        return Number @getDataValue("cpc")
+    
+    }
     max_impressions: {
       defaultValue: 0
       allowNull: false

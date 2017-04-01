@@ -13,7 +13,7 @@ module.exports = require("../template") {
           $lte: new Date()
         }
       }, {
-        impressions_needed: {
+        quantity_needed: {
           $lte: 0
         }
       }]

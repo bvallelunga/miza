@@ -7,6 +7,13 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.BOOLEAN
       defaultValue: false
     }
+    type: {
+      type: DataTypes.STRING
+      allowNull: false
+      validate: {
+        isIn: [['cpm', 'cpc']]
+      }
+    }
     status: {
       type: DataTypes.STRING
       allowNull: false
@@ -17,17 +24,17 @@ module.exports = (sequelize, DataTypes)->
         @setDataValue("status", value)
         @setDataValue("active", value == "running")
     }
-    impressions_requested: {
+    quantity_requested: {
       type: DataTypes.DECIMAL(15)
       defaultValue: 0
       get: ->      
-        return Number @getDataValue("impressions_requested")
+        return Number @getDataValue("quantity_requested")
     }
-    impressions_needed: {
+    quantity_needed: {
       type: DataTypes.DECIMAL(15)
       defaultValue: 0
       get: ->      
-        return Number @getDataValue("impressions_needed")
+        return Number @getDataValue("quantity_needed")
     }
     impressions: {
       type: DataTypes.DECIMAL(15)
@@ -55,25 +62,58 @@ module.exports = (sequelize, DataTypes)->
       get: ->      
         return Number @getDataValue("cpm")
     }
+    cpc: {
+      type: DataTypes.DECIMAL(6,3)
+      defaultValue: 0
+      allowNull: false
+      validate: {
+        min: {
+          args: [ 0 ]
+          msg: "CPC must be greater than or equal to 0"
+        }
+      }
+      get: ->      
+        return Number @getDataValue("cpc")
+    }
+    model_cost: {
+      type: DataTypes.VIRTUAL
+      get: ->   
+        if @type == "cpm" 
+          return @cpm / 1000 
+          
+        else if @type == "cpc" 
+          return @cpc
+          
+        return 0
+    }
     budget: {
       type: DataTypes.VIRTUAL
-      get: ->      
-        return @cpm_impression * @impressions_requested
+      get: ->             
+        return @model_cost * @quantity_requested
     }
     spend: {
       type: DataTypes.VIRTUAL
-      get: ->      
-        return @cpm_impression * @impressions
-    }
-    cpm_impression: {
-      type: DataTypes.VIRTUAL
-      get: ->      
-        return @cpm / 1000
+      get: ->    
+        if @type == "cpm"
+          return @model_cost * @impressions
+          
+        else if @type == "cpc"
+          return @model_cost * @clicks
+          
+        return 0
     }
     progress: {
       type: DataTypes.VIRTUAL
-      get: ->      
-        return @impressions/@impressions_requested
+      get: ->  
+        model = 0
+        
+        if @type == "cpm" 
+          model = @impressions 
+          
+        else if @type == "cpc" 
+          model = @clicks
+          
+        return model/@quantity_requested
     }
     ctr: {
       type: DataTypes.VIRTUAL
@@ -86,8 +126,8 @@ module.exports = (sequelize, DataTypes)->
         return {
           cpm: numeral(@cpm).format("$0[,]000.00")
           impressions: numeral(@impressions).format("0[,]000")
-          impressions_needed: numeral(@impressions_needed).format("0[,]000")
-          impressions_requested: numeral(@impressions_requested).format("0[,]000")
+          quantity_needed: numeral(@quantity_needed).format("0[,]000")
+          quantity_requested: numeral(@quantity_requested).format("0[,]000")
           clicks: numeral(@clicks).format("0[,]000")
           budget: numeral(@budget).format("$0[,]000.00")
           spend: numeral(@spend).format("$0[,]000.00")
@@ -121,7 +161,7 @@ module.exports = (sequelize, DataTypes)->
     
     hooks: {
       beforeCreate: (campaignIndustry)-> 
-        campaignIndustry.impressions_needed = campaignIndustry.impressions_requested
+        campaignIndustry.quantity_needed = campaignIndustry.quantity_requested
         campaignIndustry.targeting = {
           devices: campaignIndustry.targeting.devices or null
           os: campaignIndustry.targeting.os or null

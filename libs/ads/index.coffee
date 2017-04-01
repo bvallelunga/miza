@@ -42,14 +42,21 @@ module.exports.build_event = (raw_data)->
         #type: temp.type
       }
       
+      increments = {}
+      
       if raw_data.type == "impression"
-        temp.increment({
-          "impressions": 1
-          "impressions_needed": -1
-        })
+        increments["impressions"] = 1
+        
+        if temp.type == "cpm"
+          increments["quantity_needed"] = -1
       
       if raw_data.type == "click"
-        temp.increment("clicks")
+        increments["clicks"] = 1
+        
+        if temp.type == "cpc"
+          increments["quantity_needed"] = -1
+      
+      temp.increment(increments)
         
   .then ->
     if not raw_data.industry?
@@ -65,19 +72,26 @@ module.exports.build_event = (raw_data)->
       }
       
       billing = {
-        model: "cpm"
-        amount: temp.cpm_impression
+        model: temp.type
+        amount: temp.model_cost
         house: temp.config.is_house or false
       }
       
+      increments = {}
+      
       if raw_data.type == "impression"
-        temp.increment({
-          "impressions": 1
-          "impressions_needed": -1
-        })
+        increments["impressions"] = 1
+        
+        if temp.type == "cpm"
+          increments["quantity_needed"] = -1
       
       if raw_data.type == "click"
-        temp.increment("clicks")
+        increments["clicks"] = 1
+        
+        if temp.type == "cpc"
+          increments["quantity_needed"] = -1
+      
+      temp.increment(increments)
         
   .then ->
     if not raw_data.creative?
