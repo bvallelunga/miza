@@ -1,4 +1,3 @@
-web: $COMMAND servers/index.coffee
-workers: $COMMAND workers/index.coffee
-tracker: $COMMAND workers/ads/tracker.coffee
-pgbouncer: bin/start-pgbouncer-stunnel 
+web: bin/start-pgbouncer-stunnel $COMMAND servers/index.coffee
+workers: bin/start-pgbouncer-stunnel $COMMAND workers/index.coffee
+tracker: bin/start-pgbouncer-stunnel $COMMAND workers/ads/tracker.coffee
