@@ -24,7 +24,7 @@
         <div class="header">House <span class="bubble">ADMIN</span></div>
         <p>
           House ads are designed for testing and will not show up on a publisher's dashboard or payouts. 
-          They will be marked with $0 CPMs so you don't have to pay to run the campaign.
+          They will be marked as free so you don't have to pay to run the campaign.
         </p>
         <table class="targeting-table">
           <tr>
@@ -32,7 +32,7 @@
             <td valign="top">
               <div class="group">
                 <div class="fa fa-sort"></div>
-                <select class="input only" name="is_house">
+                <select class="input only is-house" name="is_house">
                   <option value="false" selected>False</option>
                   <option value="true">True</option>
                 </select>
@@ -42,6 +42,7 @@
         </table>
       </div>
     <% } %>
+    
     
     <div class="section">
       <div class="header">Creative</div>
@@ -169,6 +170,8 @@
         <% }) %>
       </div>
     </div>
+    
+    
     <div class="section">
       <div class="header">Impressions</div>
       <table class="impressions_table hidden">
@@ -191,25 +194,9 @@
                 <span>CPM</span>
               </td>
               <td class="impressions">
-                <div class="group">
-                  <div class="fa fa-sort"></div>
-                  <select class="input only" name="industries[<%= i %>][impressions]">
-                    <option disabled="disabled" value="" selected>Quantity</option>
-                    <%
-                      var max = industry.max_impressions
-                      var options = 25
-                      var increment = max/options
-                    %>
-                    <% for(i = increment; i <= max; i += increment) { %>
-                      <option value="<%= i %>"><%= numeral(i).format('0,0') %></option>
-                    <% } %>
-                    <% if(i < max) { %>
-                      <option value="<%= max %>"><%= numeral(max).format('0,0') %></option>
-                    <% } %>
-                  </select>
-                </div>
+                <input class="number" name="industries[<%= i %>][impressions]" type="text" placeholder="Max: <%= numeral(industry.max_impressions).format("0,000") %>"/>
               </td>
-              <td class="total metric text-right">$0</td>
+              <td class="total metric text-right">$0.00</td>
             </tr>
           <% }) %>
         </tbody>
@@ -218,6 +205,8 @@
         Please Select An Industry
       </div>
     </div>
+    
+    
     <div class="section">
       <div class="split half left quote-box">
         <div class="quote">$0.00</div>
@@ -232,6 +221,7 @@
       </div>
       <div class="clear"></div>
     </div>
+  
   </form>
 </div>
 <script>

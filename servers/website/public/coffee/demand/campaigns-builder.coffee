@@ -30,32 +30,38 @@ class Dashboard
       
     _this.$industry_options.click ->
       _this.option_selected $(@)
-      
      
     $(".selection-shortcut").click ->
       _this.option_selected _this.$industry_options, true
+      
+    $(".is-house").change ->
+      _this.$impressions_table.find("input").each ->
+        _this.impressions_updated $(@)
     
-    @$impressions_table.find("select").change ->
+    @$impressions_table.find("input").keyup ->
       _this.impressions_updated $(@)
       
   
   total_cost_update: ->
     total = 0
+    is_house = $(".is-house").val() == "true"
     
     $(".selection .option.active").each ->
       $industry = $("#industry_#{$(@).data("value")}")
-      CPM = Number $industry.data("cpm")
-      IMPRESSIONS = Number $industry.find("select").val()
-      total += CPM * (IMPRESSIONS/1000)
+      CPM = numeral($industry.data("cpm")).value()
+      IMPRESSIONS = numeral($industry.find("input.number").val()).value()
+      total += if is_house then 0 else (CPM * (IMPRESSIONS/1000))
       $(".quote-box .quote").text numeral(total).format("$0,000.00")     
 
   
   impressions_updated: ($select)->
+    is_house = $(".is-house").val() == "true"
+    
     $tr = $select.parents("tr")
-    CPM = Number $tr.data("cpm")
-    IMPRESSIONS = Number $select.val()
-    COST = CPM * (IMPRESSIONS/1000)
-    $tr.find(".total").text numeral(COST).format("$0,000.00")
+    CPM = numeral($tr.data("cpm")).value()
+    IMPRESSIONS = numeral($select.val()).value()
+    COST = if is_house then 0 else (CPM * (IMPRESSIONS/1000))
+    $tr.find(".total").text numeral(COST).format("$0,000.00")    
     @total_cost_update()
   
   

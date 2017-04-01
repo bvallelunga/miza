@@ -268,10 +268,10 @@ module.exports.post_create = (req, res, next)->
     return data.activated == "true" and data.impressions > 0
     
   .map (data)->
-    LIBS.models.Industry.findById(data.industry).then (industry)->
+    LIBS.models.Industry.findById(data.industry).then (industry)->        
       return {
         industry: industry
-        impressions: data.impressions
+        impressions: Math.min(data.impressions, industry.max_impressions)
         targeting: req.body.targeting or {}
       }
     
