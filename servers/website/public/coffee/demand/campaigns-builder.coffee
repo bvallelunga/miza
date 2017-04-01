@@ -88,8 +88,8 @@ class Dashboard
     $(".selection .option").each ->
       $option = $(@)
       value = $option.hasClass("active")
+      $(".industry_#{$option.data("value")}").toggle value
       $industry = $(".section.#{model} .industry_#{$option.data("value")}")
-      $industry.toggle value
       $industry.find(".activated_input").val value
       $industry.find("input.number").attr "required", value
       
