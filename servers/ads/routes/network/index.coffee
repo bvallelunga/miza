@@ -1,8 +1,18 @@
 uglifyJS = require 'uglify-js'
 randomstring = require "randomstring"
 moment = require "moment"
+script_cache = {}
 
 module.exports.script = (req, res, next)->
+  cached_script = script_cache[req.publisher.key]
+  
+  if cached_script? 
+    diff_minutes = (((new Date() - cached_script.updatedAt) % 86400000) % 3600000) / 60000
+    
+    if diff_minutes < 1
+      req.miza_script = cached_script.script
+      return next()
+
   if req.publisher.is_demo
     req.publisher.endpoint = req.get("host")
     
@@ -29,6 +39,11 @@ module.exports.script = (req, res, next)->
       req.miza_script = uglifyJS.minify(code, {
         fromString: true
       }).code
+    
+    script_cache[req.publisher.key] = {
+      script: req.miza_script
+      updatedAt: new Date()
+    }
     
     next()
     
