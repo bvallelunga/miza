@@ -33,6 +33,7 @@ API.iframe = function(element) {
     frame: random,
     referrer: "<%= page_url %>" || window.location.href,
     creative_override: API.hash_value("m-creative"),
+    date_string: (new Date()).toString(),
     protected: API.protected
   })
   

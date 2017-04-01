@@ -39,7 +39,7 @@ module.exports = (req)->
     }  
     
     # Additional Targeting
-    targets = ["devices", "os", "browsers", "countries"]
+    targets = ["devices", "os", "browsers", "countries", "days"]
     
     for target in targets
       if profile[target]

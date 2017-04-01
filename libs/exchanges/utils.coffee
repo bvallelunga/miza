@@ -10,6 +10,7 @@ module.exports.profile = (req)->
     os: LIBS.exchanges.utils.os(agent)
     browsers: LIBS.exchanges.utils.browser(agent)
     countries: LIBS.exchanges.utils.country(req)
+    days: LIBS.exchanges.utils.day(req)
     agent: agent
   }
   
@@ -88,3 +89,11 @@ module.exports.country = (req)->
     return lookup.country.toLowerCase()
   
   return "us"
+  
+  
+module.exports.day = (req)->
+  date = new Date req.query.date_string
+  return [
+    "sunday", "monday", "tuesday", "wednesday", 
+    "thursday", "friday", "saturday"
+  ][date.getDay()]

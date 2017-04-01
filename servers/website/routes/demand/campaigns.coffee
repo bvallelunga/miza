@@ -82,10 +82,17 @@ module.exports.post_updates = (req, res, next)->
 module.exports.post_list = (req, res, next)->
   req.advertiser.getCampaigns({
     where: {
-      start_at: {
-        $gte: new Date req.body.dates.start
-        $lte: new Date req.body.dates.end
-      }
+      $or: [{
+        start_at: {
+          $gte: new Date req.body.dates.start
+          $lte: new Date req.body.dates.end
+        }
+      }, {
+        status: "running"
+        start_at: {
+          $lte: new Date req.body.dates.start
+        }
+      }]
     }
     include: [{
       model: LIBS.models.CampaignIndustry
