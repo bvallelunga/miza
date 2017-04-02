@@ -1,6 +1,7 @@
 # Imports
 useragent = new require 'express-useragent'
 geoip = require 'geoip-lite'
+moment = require 'moment'
 
 module.exports.build_event = (raw_data)->
   demensions = {}
@@ -152,6 +153,7 @@ module.exports.build_event = (raw_data)->
 #         }
       }
       keen: {
+        timestamp: moment(raw_data.recorded_at).toISOString()
         addons: [{
           name: "keen:ip_to_geo"
           input: {
@@ -200,6 +202,7 @@ module.exports.send = (raw_data)->
       $screen_height: Number(raw_data.query.height)
       $os: agent.os 
       ip: event.ip_address
+      time: moment(raw_data.recorded_at).toDate()
       "Product": event.product
       "Protected": event.protected
       "Asset Type": event.type
@@ -244,5 +247,6 @@ module.exports.track = (req, data)->
   data.referrer = req.get("referrer")
   data.ip = req.ip
   data.ips = req.ips
+  #data.recorded_at = new Date()
   
   LIBS.queue.publish "event-queue", data
