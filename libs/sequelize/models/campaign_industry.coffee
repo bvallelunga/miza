@@ -125,6 +125,7 @@ module.exports = (sequelize, DataTypes)->
       get: ->      
         return {
           cpm: numeral(@cpm).format("$0[,]000.00")
+          cpc: numeral(@cpc).format("$0[,]000.00")
           impressions: numeral(@impressions).format("0[,]000")
           quantity_needed: numeral(@quantity_needed).format("0[,]000")
           quantity_requested: numeral(@quantity_requested).format("0[,]000")

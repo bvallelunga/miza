@@ -138,7 +138,7 @@
       { "data": "metrics.impressions" },
       { "data": "metrics.clicks" },
       { "data": "metrics.ctr" },
-      { "data": "metrics.cpm" },
+      { "data": "metrics." + campaign.type },
       { "data": "metrics.budget" },
       { "data": "metrics.spend" }
     ]) %>">
@@ -151,7 +151,7 @@
           <th>Impressions</th>
           <th>Clicks</th>
           <th>CTR</th>
-          <th>CPM</th>
+          <th><%= campaign.type.toUpperCase() %></th>
           <th>Budget</th>
           <th>Spend</th>
         </tr>
