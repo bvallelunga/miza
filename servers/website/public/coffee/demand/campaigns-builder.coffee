@@ -99,8 +99,16 @@ class Dashboard
   
   model_selected: ($option)->
     model = $option.val()
-    $(".model_table").hide().find(".selection .option input.number").attr "required", false
-    $(".model_table.#{model}").show().find(".selection .option input.number").attr "required", true
+    $(".model_table").hide().find("input.number").attr "required", false
+    $(".model_table .activated_input").val false
+    $(".model_table.#{model}").show()
+    
+    $(".selection .option").each ->
+      $option = $(@)
+      value = $option.hasClass("active")
+      $industry = $(".section.#{model} .industry_#{$option.data("value")}")
+      $industry.find(".activated_input").val value
+      $industry.find("input.number").attr "required", value
     
     $(".industries.section .selection .option").each ->
       $option = $(@)

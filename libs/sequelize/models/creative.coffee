@@ -64,7 +64,8 @@ module.exports = (sequelize, DataTypes)->
     
     instanceMethods: {
       demo_frame: ->
-        link = "//#{LIBS.models.defaults.demo_publisher.key}.#{CONFIG.web_server.domain}/a?"
+        host = CONFIG.web_server.domain.split(".").slice(-2).join(".")
+        link = "//#{LIBS.models.defaults.demo_publisher.key}.#{host}/a?"
         params = [
           "demo=true"
           "creative_override=#{@id}"
