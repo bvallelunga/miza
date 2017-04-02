@@ -242,8 +242,8 @@ module.exports = (sequelize, DataTypes)->
               fee: @fee * 100
               coverage: @config.coverage * 100
               activated: @is_activated
-              card: !!@owner.stripe_card
-              paypal: @owner.paypal
+              card: if @owner? then !!@owner.stripe_card else false
+              paypal: if @owner? then @owner.paypal else null
               product: @product
               admin: if @admin_contact? then @admin_contact.name else null
             }
