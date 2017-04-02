@@ -39,4 +39,6 @@ module.exports = (req, res, next)->
     }
       
   
-  .catch next
+  .catch (error)->
+    console.log error.stack or error
+    res.send ""
