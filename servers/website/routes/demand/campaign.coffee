@@ -280,10 +280,10 @@ module.exports.post_create = (req, res, next)->
       return Promise.reject "Please select at least 1 industry"
   
     start_date = moment(req.body.start_date, "MM-DD-YYYY")
-    start_date = if start_date.isValid() then start_date.toDate() else null
+    start_date = if start_date.isValid() then start_date.startOf("day").toDate() else null
     
     end_date = moment(req.body.end_date, "MM-DD-YYYY")
-    end_date = if end_date.isValid() then end_date.toDate() else null
+    end_date = if end_date.isValid() then end_date.endOf("day").toDate() else null
     
     quantity_requested = 0
     status = if start_date then "queued" else "running"

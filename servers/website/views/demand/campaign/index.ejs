@@ -105,15 +105,8 @@
     </div>
     <div class="clear"></div>
   </div>
-  <br>
-  <div class="simulator active">
-    <a target="_blank" href="<%= campaign.creatives[0].link %>">
-      <img src="data:image;base64,<%= campaign.creatives[0].image.toString('base64') %>"/>
-      <% if(campaign.creatives[0].description) { %>
-        <div><%- campaign.creatives[0].description_html %></div>
-      <% } %>
-    </a>
-  </div>
+  <iframe class="simulator-iframe" 
+    src="<%= campaign.creatives[0].demo_frame() %>"></iframe>
   <br>
 </div>
 

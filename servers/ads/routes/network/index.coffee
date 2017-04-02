@@ -53,11 +53,12 @@ module.exports.script_send = (req, res, next)->
 
 
 module.exports.optout = (req, res, next)->
-  res.cookie "optout", true, { 
-    httpOnly: true
-    signed: true 
-    expires: moment().add("2", "month").toDate()
-  }
+  if req.query.demo != "true"
+    res.cookie "optout", true, { 
+      httpOnly: true
+      signed: true 
+      expires: moment().add("2", "month").toDate()
+    }
   
   res.render "ad/optout"
   
@@ -75,6 +76,7 @@ module.exports.ad_frame = (req, res, next)->
       creative: creative
       frame: req.query.frame
       is_protected: req.query.protected
+      demo: req.query.demo == "true"
     }
     
   .catch (error)->

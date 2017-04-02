@@ -3,18 +3,38 @@
 <div class="display full builder">
   <form method="POST" action="<%= path %>">
     <div class="section">
-      <table>
+      <table class="top-table">
         <tr>
           <td class="title">Campaign Name<span>REQUIRED</span></td>
-          <td></td>
+          <td class="title">Pricing<span>REQUIRED</span></td>
           <td class="title">Start Date<span>OPTIONAL</span></td>
-          <td><input class="range-display" type="text" name="start_date" placeholder="MM-DD-YYYY" data-start-date="<%= moment().add(1, "day").format('MM-DD-YYYY') %>"/></td>
+          <td class="title">End Date<span>OPTIONAL</span></td>
         </tr>
         <tr>
-          <td><input class="full-input" type="text" name="name" placeholder="New Branding Initiative" required/></td>
-          <td></td>
-          <td class="title">End Date<span>OPTIONAL</span></td>
-          <td><input class="range-display" type="text" name="end_date" placeholder="MM-DD-YYYY" data-start-date="<%= moment().add(2, "day").format('MM-DD-YYYY') %>"/></td>
+          <td>
+            <input class="full-input" type="text" name="name" placeholder="New Branding Initiative" required/>
+          </td>
+          <td>
+            <div class="group pricing-input">
+              <div class="fa fa-sort"></div>
+              <select class="input only " name="model">
+                <option value="cpm" selected>CPM</option>
+                <option value="cpc">CPC</option>
+              </select>
+            </div>
+          </td>
+          <td>
+            <div class="group left-align date-input">
+              <div class="fa fa-calendar"></div>
+              <input class="range-display" type="text" name="start_date" placeholder="MM-DD-YYYY" data-start-date="<%= moment().add(1, "day").format('MM-DD-YYYY') %>"/>
+            </div>
+          </td>
+          <td>
+            <div class="group left-align date-input last">
+              <div class="fa fa-calendar"></div>
+              <input class="range-display" type="text" name="end_date" placeholder="MM-DD-YYYY" data-start-date="<%= moment().add(2, "day").format('MM-DD-YYYY') %>"/>
+            </div>
+          </td>
         </tr>
       </table>
     </div>
@@ -168,22 +188,6 @@
       </table>
     </div>
     
-    <div class="section models">
-      <input type="hidden" name="model" class="model" value="cpm"/>
-      <div class="header">Model</div>
-      <div class="selection">
-        <div class="option active" data-value="cpm">
-          <div class="metric">CPM <span>Impressions</span></div>
-          <div class="name">Awareness</div>
-        </div>
-        <div class="option" data-value="cpc">
-          <div class="metric">CPC <span>Clicks</span></div>
-          <div class="name">Action</div>
-        </div>
-      </div>
-    </div>
-    
-    
     <div class="section industries">
       <div class="header">
         Industries <span>(<span class="selection-shortcut" data-for="audience">select all</span>)</span>
@@ -208,7 +212,7 @@
           <tr>
             <th><span>Industry</span></th>
             <th><span>Cost</span></th>
-            <th><span>Max Impressions</span></th>
+            <th><span>Impressions</span></th>
             <th><span>Budget</span></th>
           </tr>
         </thead>
@@ -242,7 +246,7 @@
           <tr>
             <th><span>Industry</span></th>
             <th><span>Cost</span></th>
-            <th><span>Max Clicks</span></th>
+            <th><span>Clicks</span></th>
             <th><span>Budget</span></th>
           </tr>
         </thead>

@@ -5,6 +5,7 @@ class Dashboard
   $selection_empty: null
 
   constructor: ->
+    @$pricing_select = $(".pricing-input select")
     @$model_options = $(".models .selection .option")
     @$industry_options = $(".industries .selection .option")
     @$selection_table = $(".selection_table")
@@ -32,7 +33,7 @@ class Dashboard
     _this.$industry_options.click ->
       _this.option_selected $(@)
       
-    _this.$model_options.click ->
+    _this.$pricing_select.change ->
       _this.model_selected $(@)
      
     $(".industries .selection-shortcut").click ->
@@ -49,7 +50,7 @@ class Dashboard
   total_cost_update: ->
     total = 0
     is_house = $(".is-house").val() == "true"
-    model = $("input.model").val()
+    model = @$pricing_select.val()
     
     $(".selection .option.active").each ->
       $industry = $(".section.#{model} .industry_#{$(@).data("value")}")
@@ -83,7 +84,7 @@ class Dashboard
     show_table = @$industry_options.filter(".active").length > 0
     @$selection_table.toggle show_table
     @$selection_empty.toggle not show_table
-    model = $("input.model").val()
+    model = @$pricing_select.val()
     
     $(".selection .option").each ->
       $option = $(@)
@@ -97,13 +98,9 @@ class Dashboard
     
   
   model_selected: ($option)->
-    model = $option.data("value")
-    @$model_options.toggleClass "active", false
-    $option.toggleClass "active", true
-    debugger
+    model = $option.val()
     $(".model_table").hide().find(".selection .option input.number").attr "required", false
     $(".model_table.#{model}").show().find(".selection .option input.number").attr "required", true
-    $("input.model").val(model)
     
     $(".industries.section .selection .option").each ->
       $option = $(@)

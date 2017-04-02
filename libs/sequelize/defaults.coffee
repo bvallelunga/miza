@@ -9,22 +9,11 @@ module.exports = (models)->
         as: "publishers"
       }]
     })
-    demo_publisher_network: models.Publisher.findOne({
+    demo_publisher: models.Publisher.findOne({
       where: {
         is_demo: true
         product: "network"
       }
     })
-    demo_publisher_protect: models.Publisher.findOne({
-      where: {
-        is_demo: true
-        product: "protect"
-      }
-    })
   }).then (defaults)->
-    defaults.demo_publishers = {
-      protect: defaults.demo_publisher_protect
-      network: defaults.demo_publisher_network
-    }
-    
     models.defaults = defaults

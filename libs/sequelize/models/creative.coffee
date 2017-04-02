@@ -63,6 +63,16 @@ module.exports = (sequelize, DataTypes)->
     }
     
     instanceMethods: {
+      demo_frame: ->
+        link = "//#{LIBS.models.defaults.demo_publisher.key}.#{CONFIG.web_server.domain}/a?"
+        params = [
+          "demo=true"
+          "creative_override=#{@id}"
+        ].join("&")
+        
+        return link + params
+      
+      
       attributed_link: (publisher, industry, is_protected)->
         if @link.indexOf("?") == -1
           @link += "?"

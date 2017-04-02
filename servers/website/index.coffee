@@ -42,7 +42,6 @@ module.exports = (srv)->
   app.get  "/demo", routes.landing.demo.get_root
   app.get  "/s/:key", routes.landing.get_shortener
   app.get  "/demo/:demo", routes.landing.demo.get_miza
-  app.get  "/demo/:demo/:product", routes.landing.demo.get_miza
   app.post "/optout", routes.auth.not_authenticated, routes.landing.post_optout
   app.post "/access/request", routes.auth.not_authenticated, routes.landing.post_beta
   
