@@ -40,13 +40,23 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.DECIMAL(15)
       defaultValue: 0
       get: ->      
-        return Number @getDataValue("impressions")
+        impressions = Number @getDataValue("impressions")
+        
+        if @type == "cpm"
+          impressions = Math.min impressions, @quantity_requested
+      
+        return impressions
     }
     clicks: {
       type: DataTypes.DECIMAL(15)
       defaultValue: 0
       get: ->      
-        return Number @getDataValue("clicks")
+        clicks = Number @getDataValue("clicks")
+        
+        if @type == "cpc"
+          clicks = Math.min clicks, @quantity_requested
+        
+        return clicks
     }
     name: DataTypes.STRING
     cpm: {
@@ -59,7 +69,7 @@ module.exports = (sequelize, DataTypes)->
           msg: "CPM must be greater than or equal to 0"
         }
       }
-      get: ->      
+      get: ->            
         return Number @getDataValue("cpm")
     }
     cpc: {
