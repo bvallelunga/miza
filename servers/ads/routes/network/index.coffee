@@ -57,7 +57,7 @@ module.exports.optout = (req, res, next)->
     res.cookie "optout", true, { 
       httpOnly: true
       signed: true 
-      expires: moment().add("2", "month").toDate()
+      expires: moment().add(2, "month").toDate()
     }
   
   res.render "ad/optout"

@@ -211,25 +211,16 @@ module.exports = (sequelize, DataTypes)->
         
             
       afterUpdate: (campaign)->
-        if campaign.changed("status")
-          Promise.resolve().then ->
-            if campaign.status == "completed"
-              campaign.create_transfer()
-          
-          .then ->
-            campaign.getIndustries().each (industry)->
-              if industry.status != "complete"              
-                industry.status = campaign.status
-                industry.save()
+        campaign.getIndustries().each (industry)->
+          if industry.status != "complete"              
+            industry.status = campaign.status
+            industry.save()
       
             
-      beforeDestroy: (campaign)->
+      afterDestroy: (campaign)->
         campaign.update({
           status: "completed"
-        }).then ->
-          campaign.getIndustries().each (industry)->
-            industry.status = "completed"
-            industry.save()
+        })
 
     }
   }

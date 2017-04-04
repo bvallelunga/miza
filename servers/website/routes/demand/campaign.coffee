@@ -325,6 +325,10 @@ module.exports.post_create = (req, res, next)->
         
         creative: LIBS.models.Creative.fetch_image(req.body.creative.image_url).then (image)->
           trackers = req.body.creative.trackers.split("\n")
+          config = {}
+          
+          if req.user.is_admin and req.body.creative.disable_incentive.length > 0
+            config.disable_incentive = Number req.body.creative.disable_incentive
           
           if trackers.length == 1 and trackers[0].length == 0
             trackers = []
@@ -337,6 +341,7 @@ module.exports.post_create = (req, res, next)->
             trackers: req.body.creative.trackers.split("\n")
             format: "300 x 250"
             image: image
+            config: config
           })
       })
       

@@ -11,6 +11,23 @@ module.exports = (req, res, next)->
     }
     
   .then (data)-> 
+    if data.media != "link" or not req.query.creative?
+      return data
+      
+    LIBS.models.Creative.findById(req.query.creative).then (creative)->    
+      if creative.config.disable_incentive?        
+        res.cookie "optout", true, { 
+          httpOnly: true
+          signed: true 
+          maxAge: creative.config.disable_incentive * 60 * 1000
+        }
+        
+      return data
+    
+    .catch ->
+      return data   
+    
+  .then (data)-> 
     if data.media == "link"
       res.redirect data.href
       
