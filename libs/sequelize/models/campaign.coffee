@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes)->
           
     }
     start_at: DataTypes.DATE
+    transferred_at: DataTypes.DATE
     end_at: {
       type: DataTypes.DATE
       validate: {
@@ -141,6 +142,10 @@ module.exports = (sequelize, DataTypes)->
         models.Campaign.hasMany models.Creative, { 
           as: 'creatives' 
         } 
+        
+        models.Campaign.hasOne models.Transfer, { 
+          as: 'transfer' 
+        } 
       
       keen_datasets: ->
         LIBS.keen.createCachedDataset("campaign-analytics", {
@@ -188,6 +193,11 @@ module.exports = (sequelize, DataTypes)->
             campaign_id: @id
             user_id: data.advertiser.owner_id
           })
+          
+        .then =>
+          @transferred_at = new Date()
+          @save()
+
     }
     
     validate: {
@@ -214,13 +224,12 @@ module.exports = (sequelize, DataTypes)->
       
             
       beforeDestroy: (campaign)->
-        Promise.resolve().then ->
-          if campaign.status != "completed"
-            campaign.create_transfer()
-          
-        .then ->
+        campaign.update({
+          status: "completed"
+        }).then ->
           campaign.getIndustries().each (industry)->
-            industry.destroy()
+            industry.status = "completed"
+            industry.save()
 
     }
   }
