@@ -27,7 +27,7 @@ module.exports.build_event = (raw_data)->
       advertiser = {
         id: temp.id
         key: temp.key
-        #name: temp.name
+        name: temp.name
       }
       
   .then ->
@@ -39,8 +39,8 @@ module.exports.build_event = (raw_data)->
       
       campaign = {
         id: temp.id
-        #name: temp.name
-        #type: temp.type
+        name: temp.name
+        type: temp.type
       }
       
       increments = {}
@@ -68,7 +68,7 @@ module.exports.build_event = (raw_data)->
            
       industry = {
         id: temp.industry_id
-        #name: temp.name
+        name: temp.name
         cpm: temp.cpm
       }
       
