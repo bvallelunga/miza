@@ -9,7 +9,7 @@
   // Global Variables
   API.id = "<%= publisher.key %>" 
   API.raw_base = "<%= publisher.endpoint %>"
-  API.base = "//<%= publisher.endpoint %>/"
+  API.base = "http://<%= publisher.endpoint %>/"
   API.window = window
   API.document = window.document
   API.host = API.window.location.protocol + "//" + API.window.location.host

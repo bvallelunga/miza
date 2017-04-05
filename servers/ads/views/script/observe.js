@@ -2,7 +2,7 @@ API.observables = {
   query: [
     ".adsbygoogle", ".dp-ad-chrome iframe", "#_carbonads_js",
     'div[id*="div-gpt-ad-"]', '.ad-tag[data-ad-size*="300x250"]',
-    '.proper-ad-unit'
+    '.proper-ad-unit', 'div[id*="crt-"]',
   ].join(","),
   xpaths: [
     "//body//script[contains(., 'OA_show')]/parent::*",
