@@ -148,17 +148,21 @@ module.exports = (sequelize, DataTypes)->
         } 
       
       keen_datasets: ->
-        LIBS.keen.createCachedDataset("campaign-analytics", {
-          display_name: "Campaign Analytics"
-          query: {
-            analysis_type: "count"
-            event_collection : "ads.event"
-            timeframe: "this_500_hours"
-            interval: "hourly"
-            group_by: [ "type" ]
-          }
-          index_by: ["campaign.id"]
-        }).catch(console.error)       
+        Promise.each ["Impression", "Click"], (event_type)->
+          event_lower = event_type.toLowerCase()
+          
+          LIBS.keen.createCachedDataset("campaign-#{event_lower}-analytics", {
+            display_name: "Campaign #{event_type} Analytics"
+            query: {
+              analysis_type: "count"
+              event_collection : "ads.event.#{event_lower}"
+              timeframe: "this_500_hours"
+              interval: "hourly"
+            }
+            index_by: ["campaign.id"]
+          })
+        
+        .catch(console.error)       
     }
     
     instanceMethods: {

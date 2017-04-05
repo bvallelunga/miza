@@ -131,8 +131,8 @@ module.exports = (sequelize, DataTypes)->
           if transfer.campaign.created_at < start_at
             start_at = transfer.campaign.created_at
             
-        run_query = (operation, query)=>
-          query.event_collection = "ads.event"
+        run_query = (operation, collection, query)=>
+          query.event_collection = "ads.event.#{collection}"
           query.timeframe = {
             start: start_at
             end: @end_at
@@ -152,28 +152,8 @@ module.exports = (sequelize, DataTypes)->
             return response.result
               
         Promise.props({
-          revenue: run_query("sum", {
-            target_property: "billing.amount"
-            filters: [{
-              "operator": "eq",
-              "property_name": "type",
-              "property_value": "impression"
-            }]
-          })
-          impressions: run_query("count", {
-            filters: [{
-              "operator": "eq",
-              "property_name": "type",
-              "property_value": "impression"
-            }]
-          })
-          clicks: run_query("count", {
-            filters: [{
-              "operator": "eq",
-              "property_name": "type",
-              "property_value": "clicks"
-            }]
-          })
+          revenue: run_query("sum", "impression", {})
+          clicks: run_query("count", "click", {})
         })
         
         

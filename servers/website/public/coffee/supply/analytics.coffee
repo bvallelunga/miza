@@ -201,8 +201,16 @@ class Dashboard
       for name, data of response
         chart = @charts[name]
                 
-        if data.success
-          chart.data(data.result).sortGroups("desc").render()
+        if data.success      
+          if name == "impressions_chart"
+            debugger
+            chart.data(data.result[0]).call(->
+              ds2 = Keen.Dataset.parser('interval')(data.result[1])
+              this.dataset.appendColumn('Clicks', ds2.selectColumn(1).slice(1))
+            ).render()
+          
+          else
+            chart.data(data.result).sortGroups("desc").render()
         
         else 
           chart.message(data.error)

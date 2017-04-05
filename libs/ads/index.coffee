@@ -190,7 +190,7 @@ module.exports.send = (raw_data)->
   
   LIBS.ads.build_event(raw_data).then (event)->    
     # Keen Tracking
-    LIBS.keen.tracking.addEvent "ads.event", event
+    LIBS.keen.tracking.addEvent "ads.event.#{event.type}", event
     
     # Mixpanel Tracking
     asset_type = (event.type.split(' ').map (word) -> word[0].toUpperCase() + word[1..-1].toLowerCase()).join ' '

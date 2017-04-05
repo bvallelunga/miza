@@ -101,7 +101,7 @@ module.exports.get_publishers = (req, res, next)->
   
     query = (type)->      
       client.query("count", {
-        event_collection: "ads.event"
+        event_collection: "ads.event.#{type}"
         timeframe: {
           start: req.campaign.start_at
           end: end_date
@@ -110,10 +110,6 @@ module.exports.get_publishers = (req, res, next)->
           "operator": "eq"
           "property_name": "campaign.id"
           "property_value": req.campaign.id
-        },{
-          "operator": "eq",
-          "property_name": "type",
-          "property_value": type
         }]
       }).then (response)->    
         return response.result
@@ -158,8 +154,8 @@ module.exports.get_charts = (req, res, next)->
     
     end_date = moment(shift).add(1, "month").toDate()
   
-  query = (operation, query)->
-    query.event_collection = "ads.event"
+  query = (operation, collection, query)->
+    query.event_collection = "ads.event.#{collection}"
     query.timeframe = {
       start: req.campaign.start_at
       end: end_date
@@ -171,17 +167,10 @@ module.exports.get_charts = (req, res, next)->
       }
   
   Promise.props({
-    impressions_chart: query "count", {
+    impressions_chart: query "count", "impression", {
       interval: "daily"
       group_by: [ "type" ]
       filters: [{
-        "operator": "in",
-        "property_name": "type",
-        "property_value": [
-          "click",
-          "impression"
-        ]
-      }, {
         "operator": "eq"
         "property_name": "campaign.id"
         "property_value": req.campaign.id

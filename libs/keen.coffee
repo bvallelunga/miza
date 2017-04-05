@@ -1,7 +1,7 @@
 Keen         = require 'keen-js'
 KeenTracking = require 'keen-tracking'
 KeenAnalysis = require 'keen-analysis'
-request = require('superagent')
+request = require 'superagent'
 
 module.exports = ->
   keen = new Keen CONFIG.keen

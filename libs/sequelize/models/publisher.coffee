@@ -91,22 +91,29 @@ module.exports = (sequelize, DataTypes)->
         }
         
       keen_datasets: ->
-        LIBS.keen.createCachedDataset("publisher-analytics", {
-          display_name: "Publisher Analytics"
-          query: {
+        Promise.each ["Impression", "Click", "Ping", "Request"], (event_type)->
+          event_lower = event_type.toLowerCase()
+          query = {
             analysis_type: "count"
-            event_collection : "ads.event"
+            event_collection : "ads.event.#{event_lower}"
             timeframe: "this_1_years"
             interval: "daily"
-            group_by: [ "type" ]
-            filters: [{
-              "operator": "ne"
-              "property_name": "billing.house"
-              "property_value": true
-            }]
           }
-          index_by: ["publisher.key"]
-        }).catch(console.error)
+          
+          if event_lower == "ping"
+            query.filters = [{
+              operator: "eq"
+              property_name: "protected"
+              property_value: true
+            }]
+
+          LIBS.keen.createCachedDataset("publisher-#{event_lower}-impression", {
+            display_name: "Publisher #{event_type} Analytics"
+            query: query
+            index_by: ["publisher.key"]
+          })          
+        
+        .catch(console.error)
 
     }
     instanceMethods: {      
@@ -189,6 +196,10 @@ module.exports = (sequelize, DataTypes)->
             property_name: "publisher.key",
             operator: "eq",
             property_value: @key
+          }, {
+            operator: "ne"
+            property_name: "billing.house"
+            property_value: true
           }]
         }
         

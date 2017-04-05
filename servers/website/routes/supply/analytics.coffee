@@ -1,8 +1,20 @@
 module.exports.get = (req, res, next)->
   client = LIBS.keen.scopedAnalysis(req.publisher.config.keen)
   
-  query = (operation, query)->
-    query.event_collection = "ads.event"
+  query = (operation, collection, query)->
+    if typeof collection == "object"
+      return Promise.map collection, (type)->
+        query.event_collection = "ads.event.#{type}"
+        query.timeframe = req.query.timeframe or "this_1_month"
+        return client.query(operation, query)
+      
+      .then (responses)->        
+        return {
+          success: true
+          result: responses
+        }
+    
+    query.event_collection = "ads.event.#{collection}"
     query.timeframe = req.query.timeframe or "this_1_month"
     client.query(operation, query).then (response)->    
       return {
@@ -11,94 +23,45 @@ module.exports.get = (req, res, next)->
       }
   
   Promise.props({
-    impressions_chart: query "count", {
+    impressions_chart: query "count", ["impression", "click"], {
       interval: "daily"
-      group_by: [ "type" ]
-      filters: [{
-        "operator": "in",
-        "property_name": "type",
-        "property_value": [
-          "click",
-          "impression"
-        ]
-      }]
     }
-    impression_count: query "count", {
+    impression_count: query "count", "impression", {}
+    click_count: query "count", "click", {}
+    view_count: query "count", "ping", {}
+    fill_count: query "count", "request", {}
+    protection_count:  query "count", "ping", {
       filters: [{
-        "operator": "eq"
-        "property_name": "type"
-        "property_value": "impression"
-      }]
-    }
-    click_count: query "count", {
-      filters: [{
-        "operator": "eq"
-        "property_name": "type"
-        "property_value": "click"
-      }]
-    }
-    view_count: query "count", {
-      filters: [{
-        "operator": "eq"
-        "property_name": "type"
-        "property_value": "ping"
-      }]
-    }
-    fill_count: query "count", {
-      filters: [{
-        "operator": "eq"
-        "property_name": "type"
-        "property_value": "request"
-      }]
-    }
-    protection_count:  query "count", {
-      filters: [{
-        "operator": "eq"
-        "property_name": "type"
-        "property_value": "ping"
-      }, {
         "operator": "eq"
         "property_name": "protected"
         "property_value": true
       }]
     }
-    os_chart: query "count", {
+    os_chart: query "count", "ping", {
       group_by: [
         "user_agent.parsed.os.family"
       ]
       filters: [{
-        "operator": "eq",
-        "property_name": "type",
-        "property_value": "ping"
-      }, {
         "operator": "eq"
         "property_name": "protected"
         "property_value": true
       }]
     }
-    devices_chart: query "count", {
+    devices_chart: query "count", "ping", {
       group_by: [
         "user_agent.parsed.device.family"
       ]
       filters: [{
-        "operator": "eq",
-        "property_name": "type",
-        "property_value": "ping"
-      }, {
         "operator": "eq"
         "property_name": "protected"
         "property_value": true
       }]
     }
-    countries_chart: query "count", {
+    countries_chart: query "count", "ping", {
       group_by: [
         "location.country"
       ]
       filters: [{
-        "operator": "eq",
-        "property_name": "type",
-        "property_value": "ping"
-      }, {
         "operator": "eq"
         "property_name": "protected"
         "property_value": true
@@ -108,15 +71,11 @@ module.exports.get = (req, res, next)->
         "property_value": null
       }]
     }
-    browsers_chart: query "count", {
+    browsers_chart: query "count", "ping", {
       group_by: [
         "user_agent.parsed.browser.family"
       ]
       filters: [{
-        "operator": "eq",
-        "property_name": "type",
-        "property_value": "ping"
-      }, {
         "operator": "eq"
         "property_name": "protected"
         "property_value": true
