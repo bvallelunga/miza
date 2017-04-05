@@ -132,8 +132,8 @@ module.exports = (sequelize, DataTypes)->
           clicks: numeral(@clicks).format("0[,]000")
           budget: numeral(@budget).format("$0[,]000.00")
           spend: numeral(@spend).format("$0[,]000.00")
-          progress: numeral(@progress).format("0[.]0%")
-          ctr: numeral(@ctr).format("0[.]0%")
+          progress: numeral(@progress).format("0[.]00%")
+          ctr: numeral(@ctr).format("0[.]00%")
         }
     }
     config: {
