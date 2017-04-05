@@ -6,14 +6,12 @@
         Profile
       </a>
     </li>
-    <% if(!user.is_demo && (user.is_admin || user.id == publisher.owner.id)) { %>
-      <li>
-        <a href="<%= dashboard_path %>/members">
-          <span class="fa fa-users"></span>
-          Members
-        </a>
-      </li>
-    <% } %>
+    <li>
+      <a href="<%= dashboard_path %>/members">
+        <span class="fa fa-users"></span>
+        Members
+      </a>
+    </li>
   </ul>
 </div>
 <div class="display">
