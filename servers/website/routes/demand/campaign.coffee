@@ -264,11 +264,15 @@ module.exports.post_create = (req, res, next)->
     return next "Please make sure you have a click link for your creative."
   
   Promise.filter req.body.industries[req.body.model], (data)->
-    data.quantity = Number data.quantity
+    data.quantity = Number(data.quantity) or 0
+    data.amount = Number(data.amount) or 0
     return data.activated == "true" and data.quantity > 0
     
   .map (data)->
     LIBS.models.Industry.findById(data.industry).then (industry)->        
+      if req.user.is_admin
+        industry[req.body.model] = data.amount
+                
       return {
         industry: industry
         quantity: Math.min(data.quantity, industry.max_impressions)
@@ -276,7 +280,7 @@ module.exports.post_create = (req, res, next)->
       }
     
   .then (targeting)->  
-    if targeting.length == 0
+    if false and targeting.length == 0
       return Promise.reject "Please select at least 1 industry"
   
     start_date = moment(req.body.start_date, "MM-DD-YYYY")

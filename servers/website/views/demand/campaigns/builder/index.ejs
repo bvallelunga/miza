@@ -243,16 +243,22 @@
         </thead>
         <tbody>
           <% industries.forEach(function(industry, i) { %>
-            <tr class="hidden industry_<%= industry.id %>" data-amount="<%= industry.cpm %>" data-model="cpm">
+            <tr class="hidden industry_<%= industry.id %>" data-amount="<%= industry.cpm %>">
               <input type="hidden" name="industries[cpm][][<%= i %>][industry]" value="<%= industry.id %>" required>
               <input type="hidden" class="activated_input" name="industries[cpm][][<%= i %>][activated]" value="false"/>
               <td class="title"><%= industry.name %></td>
               <td class="metric text-center">
-                $<%= industry.cpm %>
-                <span>CPM</span>
+                <% if(user.is_admin) { %>
+                  <input class="amount dynamic" name="industries[cpm][][<%= i %>][amount]" step="any"
+                    type="number" min="0" placeholder="CPM Override" value="<%= industry.cpm %>"/>
+                <% } else { %>
+                  <input class="amount" type="hidden" value="<%= industry.cpm %>"/>
+                  $<%= industry.cpm %> <span>CPM</span>
+                <% } %>
               </td>
               <td class="impressions">
-                <input class="number" name="industries[cpm][][<%= i %>][quantity]" type="text" placeholder="Max: <%= numeral(industry.max_impressions).format("0,000") %>"/>
+                <input class="quantity number dynamic"
+                  name="industries[cpm][][<%= i %>][quantity]" type="text" placeholder="Max: <%= numeral(industry.max_impressions).format("0,000") %>"/>
               </td>
               <td class="total metric text-right">$0.00</td>
             </tr>
@@ -282,11 +288,17 @@
               <input type="hidden" class="activated_input" name="industries[cpc][][<%= i %>][activated]" value="false"/>
               <td class="title"><%= industry.name %></td>
               <td class="metric text-center">
-                $<%= industry.cpc %>
-                <span>CPC</span>
+                <% if(user.is_admin) { %>
+                  <input class="amount dynamic" name="industries[cpc][][<%= i %>][amount]" step="any"
+                    type="number" min="0" placeholder="CPM Override" value="<%= industry.cpc %>"/>
+                <% } else { %>
+                  <input class="amount" type="hidden" value="<%= industry.cpc %>"/>
+                  $<%= industry.cpc %> <span>CPC</span>
+                <% } %>
               </td>
               <td class="impressions">
-                <input class="number" name="industries[cpc][][<%= i %>][quantity]" type="text" placeholder="Max: <%= numeral(industry.max_impressions).format("0,000") %>"/>
+                <input class="number quantity dynamic" 
+                  name="industries[cpc][][<%= i %>][quantity]" type="text" placeholder="Max: <%= numeral(industry.max_impressions).format("0,000") %>"/>
               </td>
               <td class="total metric text-right">$0.00</td>
             </tr>

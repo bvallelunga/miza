@@ -40,10 +40,10 @@ class Dashboard
       _this.option_selected _this.$industry_options, true
       
     $(".is-house").change ->
-      _this.$selection_table.find("input.number").each ->
+      _this.$selection_table.find("input.dynamic").each ->
         _this.impressions_updated $(@)
     
-    _this.$selection_table.find("input.number").keyup ->
+    _this.$selection_table.on "keyup change", "input.dynamic", ->
       _this.impressions_updated $(@)
       
   
@@ -54,8 +54,8 @@ class Dashboard
     
     $(".selection .option.active").each ->
       $industry = $(".section.#{model} .industry_#{$(@).data("value")}")
-      COST = numeral($industry.data("amount")).value()
-      AMOUNT = numeral($industry.find("input.number").val()).value()
+      COST = numeral($industry.find(".amount").val()).value()
+      AMOUNT = numeral($industry.find("input.quantity").val()).value()
       
       if $industry.data("model") == "cpm"
         AMOUNT = AMOUNT/1000
@@ -68,8 +68,8 @@ class Dashboard
     is_house = $(".is-house").val() == "true"
     
     $industry = $select.parents("tr")
-    COST = numeral($industry.data("amount")).value()
-    AMOUNT = numeral($industry.find("input.number").val()).value()
+    COST = numeral($industry.find(".amount").val()).value()
+    AMOUNT = numeral($industry.find("input.quantity").val()).value()
     
     if $industry.data("model") == "cpm"
       AMOUNT = AMOUNT/1000
@@ -92,14 +92,14 @@ class Dashboard
       $(".industry_#{$option.data("value")}").toggle value
       $industry = $(".section.#{model} .industry_#{$option.data("value")}")
       $industry.find(".activated_input").val value
-      $industry.find("input.number").attr "required", value
+      $industry.find("input.dynamic").attr "required", value
       
     @total_cost_update()
     
   
   model_selected: ($option)->
     model = $option.val()
-    $(".model_table").hide().find("input.number").attr "required", false
+    $(".model_table").hide().find("input.dynamic").attr "required", false
     $(".model_table .activated_input").val false
     $(".model_table.#{model}").show()
     
@@ -108,7 +108,7 @@ class Dashboard
       value = $option.hasClass("active")
       $industry = $(".section.#{model} .industry_#{$option.data("value")}")
       $industry.find(".activated_input").val value
-      $industry.find("input.number").attr "required", value
+      $industry.find("input.dynamic").attr "required", value
     
     $(".industries.section .selection .option").each ->
       $option = $(@)
