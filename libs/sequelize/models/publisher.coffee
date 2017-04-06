@@ -107,7 +107,7 @@ module.exports = (sequelize, DataTypes)->
               property_value: true
             }]
 
-          LIBS.keen.createCachedDataset("publisher-#{event_lower}-impression", {
+          LIBS.keen.createCachedDataset("publisher-#{event_lower}-analytics", {
             display_name: "Publisher #{event_type} Analytics"
             query: query
             index_by: ["publisher.key"]
