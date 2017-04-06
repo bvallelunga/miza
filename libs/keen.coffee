@@ -36,7 +36,7 @@ module.exports = ->
           return res result.body
   
   
-  keen.createCachedDataset = (name, data, force=false)->
+  keen.createCachedDataset = (name, data, force=false)->    
     Promise.resolve().then ->
       return keen.request "get", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}"
     
@@ -68,5 +68,6 @@ module.exports = ->
         console.log "KEEN Dataset Created: #{name}"
         keen.request "put", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}", data
     
-  
+    .catch console.error
+    
   return keen

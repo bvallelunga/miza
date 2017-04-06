@@ -2,25 +2,35 @@ module.exports.get = (req, res, next)->
   client = LIBS.keen.scopedAnalysis(req.publisher.config.keen)
   
   query = (operation, collection, query)->
-    if typeof collection == "object"
-      return Promise.map collection, (type)->
-        query.event_collection = "ads.event.#{type}"
-        query.timeframe = req.query.timeframe or "this_1_month"
-        return client.query(operation, query)
+    Promise.resolve().then ->
+      if typeof collection == "object"
+        return Promise.map collection, (type)->
+          query.event_collection = "ads.event.#{type}"
+          query.timeframe = req.query.timeframe or "this_1_month"
+          return client.query(operation, query)
+        
+        .then (responses)->        
+          return {
+            success: true
+            result: responses
+          }
       
-      .then (responses)->        
+      query.event_collection = "ads.event.#{collection}"
+      query.timeframe = req.query.timeframe or "this_1_month"
+      client.query(operation, query).then (response)->    
         return {
           success: true
-          result: responses
+          result: response
         }
     
-    query.event_collection = "ads.event.#{collection}"
-    query.timeframe = req.query.timeframe or "this_1_month"
-    client.query(operation, query).then (response)->    
+    .catch (error)->
+      LIBS.bugsnag.notify error
+    
       return {
-        success: true
-        result: response
+        success: false
+        error: "Could not load data. Try again in 1 minute."
       }
+      
   
   Promise.props({
     impressions_chart: query "count", ["impression", "click"], {
@@ -85,18 +95,45 @@ module.exports.get = (req, res, next)->
       success: true
       result: {}
     }
-  }).then (props)->      
-    for device in props.devices_chart.result.result
-      if device["user_agent.parsed.device.family"] == "Other"
-        device["user_agent.parsed.device.family"] = "Desktop"
-  
-    props.protection_count.result.result = Math.min 100, Math.floor (props.protection_count.result.result/props.view_count.result.result) * 100
-    props.fill_count.result.result = Math.min 100, Math.floor (props.impression_count.result.result/props.fill_count.result.result) * 100
-    props.ctr_count.result = {
-      query: props.protection_count.result.query
-      result: Math.floor (props.click_count.result.result/props.impression_count.result.result) * 100
-    }
-  
+  }).then (props)->    
+    if props.devices_chart.result?
+      for device in props.devices_chart.result.result
+        if device["user_agent.parsed.device.family"] == "Other"
+          device["user_agent.parsed.device.family"] = "Desktop"
+    
+    
+    if props.protection_count.result? and props.view_count.result?
+      props.protection_count.result.result = Math.min 100, Math.floor (props.protection_count.result.result/props.view_count.result.result) * 100
+    
+    else
+      props.protection_count = {
+        success: false
+        error: "Could not load data."
+      }
+    
+    
+    if props.fill_count.result? and props.impression_count.result?
+      props.fill_count.result.result = Math.min 100, Math.floor (props.impression_count.result.result/props.fill_count.result.result) * 100
+    
+    else
+      props.fill_count = {
+        success: false
+        error: "Could not load data."
+      }
+    
+    
+    if props.click_count.result? and props.impression_count.result?
+      props.ctr_count.result = {
+        query: props.protection_count.result.query
+        result: Math.floor (props.click_count.result.result/props.impression_count.result.result) * 100
+      }
+    
+    else
+      props.ctr_count = {
+        success: false
+        error: "Could not load data. Try again in 1 minute."
+      }
+    
     res.json(props)
     
   .catch next

@@ -186,6 +186,18 @@ class Dashboard
   
   
   update: (timeframe, finished)->  
+    max_start = moment().subtract(1, "hour").startOf("hour").toDate()
+    max_end = moment().subtract(1, "hour").endOf("hour").toDate()
+  
+    if timeframe.start > max_start
+      timeframe.start = max_start
+    
+    if timeframe.end > max_end
+      timeframe.end = max_end
+      
+    timeframe.start = timeframe.start.toISOString()
+    timeframe.end = timeframe.end.toISOString()
+    
     $.get("/supply/#{config.publisher}/analytics/metrics", {
       timeframe: timeframe
     }).done (response)=>
@@ -197,7 +209,7 @@ class Dashboard
             chart.data(data.result[0]).call(->
               ds2 = Keen.Dataset.parser('interval')(data.result[1])
               this.dataset.appendColumn('Clicks', ds2.selectColumn(1).slice(1))
-            ).render()
+            ).labels(["Impressions", "Clicks"]).render()
           
           else
             chart.data(data.result).sortGroups("desc").render()

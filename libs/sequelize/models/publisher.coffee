@@ -96,8 +96,8 @@ module.exports = (sequelize, DataTypes)->
           query = {
             analysis_type: "count"
             event_collection : "ads.event.#{event_lower}"
-            timeframe: "this_1_years"
-            interval: "daily"
+            timeframe: "this_500_hours"
+            interval: "hourly"
           }
           
           if event_lower == "ping"
