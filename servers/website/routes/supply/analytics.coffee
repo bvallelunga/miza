@@ -1,8 +1,13 @@
+LOAD_ERROR = {
+  success: false
+  error: "Please try again in 1 minute"
+}
+
 module.exports.get = (req, res, next)->
   client = LIBS.keen.scopedAnalysis(req.publisher.config.keen)
   
   query = (operation, collection, query)->
-    Promise.resolve().then ->
+    Promise.resolve().then ->    
       if typeof collection == "object"
         return Promise.map collection, (type)->
           query.event_collection = "ads.event.#{type}"
@@ -26,10 +31,7 @@ module.exports.get = (req, res, next)->
     .catch (error)->
       LIBS.bugsnag.notify error
     
-      return {
-        success: false
-        error: "Could not load data. Try again in 1 minute."
-      }
+      return LOAD_ERROR
       
   
   Promise.props({
@@ -106,20 +108,14 @@ module.exports.get = (req, res, next)->
       props.protection_count.result.result = Math.min 100, Math.floor (props.protection_count.result.result/props.view_count.result.result) * 100
     
     else
-      props.protection_count = {
-        success: false
-        error: "Could not load data."
-      }
+      props.protection_count = LOAD_ERROR
     
     
     if props.fill_count.result? and props.impression_count.result?
       props.fill_count.result.result = Math.min 100, Math.floor (props.impression_count.result.result/props.fill_count.result.result) * 100
     
     else
-      props.fill_count = {
-        success: false
-        error: "Could not load data."
-      }
+      props.fill_count = LOAD_ERROR
     
     
     if props.click_count.result? and props.impression_count.result?
@@ -129,10 +125,7 @@ module.exports.get = (req, res, next)->
       }
     
     else
-      props.ctr_count = {
-        success: false
-        error: "Could not load data. Try again in 1 minute."
-      }
+      props.ctr_count = LOAD_ERROR
     
     res.json(props)
     
