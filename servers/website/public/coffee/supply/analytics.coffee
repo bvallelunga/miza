@@ -203,7 +203,6 @@ class Dashboard
                 
         if data.success      
           if name == "impressions_chart"
-            debugger
             chart.data(data.result[0]).call(->
               ds2 = Keen.Dataset.parser('interval')(data.result[1])
               this.dataset.appendColumn('Clicks', ds2.selectColumn(1).slice(1))
