@@ -166,9 +166,8 @@ module.exports = (sequelize, DataTypes)->
     }
     
     instanceMethods: {
-      utm_link: (link)->
-        if link.indexOf("?") == -1
-          link += "?"
+      utm_link: (link)->        
+        link += if link.indexOf("?") == -1 then "?" else "&"
         
         return link + [
           "utm_source=#{CONFIG.general.company.toLowerCase()}",

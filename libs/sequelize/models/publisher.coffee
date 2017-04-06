@@ -91,8 +91,8 @@ module.exports = (sequelize, DataTypes)->
         }
         
       keen_datasets: ->
-        Promise.each ["Impression", "Click", "Ping", "Request"], (event_type)->
-          event_lower = event_type.toLowerCase()
+        Promise.each ["Impression", "Click", "Ping", "Ping Protected", "Request"], (event_type)->
+          event_lower = event_type.toLowerCase().split(" ").join("-")
           query = {
             analysis_type: "count"
             event_collection : "ads.event.#{event_lower}"
@@ -100,7 +100,7 @@ module.exports = (sequelize, DataTypes)->
             interval: "hourly"
           }
           
-          if event_lower == "ping"
+          if event_lower.indexOf("protected") > -1
             query.filters = [{
               operator: "eq"
               property_name: "protected"

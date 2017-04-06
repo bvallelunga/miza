@@ -34,8 +34,8 @@ download = (url, query, headers)->
       followAllRedirects: true
       headers: headers
     }, (error, response, body)->
-      if error? or response.statusCode != 200
-        return rej "MIZA DOWNLOADER"
+      if error?
+        return rej error
       
       res response
       
