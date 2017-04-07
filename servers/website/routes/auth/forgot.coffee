@@ -54,9 +54,9 @@ module.exports.reset_get = (req, res, next)->
 module.exports.reset_post = (req, res, next)->
   redis_key = "user.reset.#{req.params.key}"
 
-  LIBS.redis.get redis_key, (error, user_id)->   
-    if error? or not user_id?
-      return "Invalid reset key."
+  LIBS.redis.get(redis_key).then (user_id)->
+    if not user_id?
+      return next "Invalid reset key."
       
     if req.body.new_password != req.body.confirm_password
       return next "Passwords do not match"
@@ -77,7 +77,7 @@ module.exports.reset_post = (req, res, next)->
         next: "/dashboard"
       }
       
-    .catch next
+  .catch next
     
     
     

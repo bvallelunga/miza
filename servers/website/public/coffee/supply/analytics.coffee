@@ -217,7 +217,7 @@ class Dashboard
         else 
           chart.message(data.error)
     
-      finished()
+      if finished? then finished()
   
 
 $ ->
@@ -227,5 +227,9 @@ $ ->
   dashboard = new Dashboard()
   
   Keen.ready ->
-    new DatePicker ".analytics-dashboard", (dates, finished)->
-      dashboard.update dates, finished
+    dashboard.update {
+      start: moment().startOf("month").toDate()
+      end: moment().endOf("month").toDate()
+    }
+#     new DatePicker ".analytics-dashboard", (dates, finished)->
+#       dashboard.update dates, finished

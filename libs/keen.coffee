@@ -30,9 +30,7 @@ module.exports = ->
         .set('Authorization', CONFIG.keen.masterKey)
         .set('Content-Type', 'application/json')
         .end (error, result)->
-          if error?
-            return rej error.response.error
-          
+          if error? then return rej error.response.error
           return res result.body
   
   

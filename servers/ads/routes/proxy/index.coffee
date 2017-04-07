@@ -46,9 +46,6 @@ module.exports = (req, res, next)->
     return data
       
   .then (data)->
-    if data.to_cache
-      LIBS.redis.set data.key, JSON.stringify data
-
     LIBS.ads.track req, {
       type: if data.media == "link" then "click" else "asset"
       asset_url: data.href
