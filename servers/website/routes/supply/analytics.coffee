@@ -8,13 +8,13 @@ moment = require "moment"
 module.exports.get = (req, res, next)->
   redis_key = "publisher.#{req.publisher.key}.analytics"
 
-  LIBS.redis.get(redis_key).then (analytics)->
+  LIBS.redis.get(redis_key).then (analytics)->  
     if analytics?     
       try
         analytics = JSON.parse analytics
         end = moment(analytics.cachedAt)
         
-        if moment().diff(end, "hours") < 1
+        if moment().diff(end, "hours") < 1 and valid_cache(analytics.response)
           return analytics.response
   
     client = LIBS.keen.scopedAnalysis(req.publisher.config.keen)
@@ -140,11 +140,13 @@ module.exports.get = (req, res, next)->
       
       else
         analytics.ctr_count = LOAD_ERROR
-        
-      LIBS.redis.set(redis_key, JSON.stringify({
-        cachedAt: new Date()
-        response: analytics
-      }))
+      
+      if valid_cache(analytics)
+        LIBS.redis.set(redis_key, JSON.stringify({
+          cachedAt: new Date()
+          response: analytics
+        }))
+      
       return analytics
   
     
@@ -152,3 +154,11 @@ module.exports.get = (req, res, next)->
     res.json(analytics)
     
   .catch next
+  
+
+valid_cache = (analytics)->
+  for key, chart of analytics
+    if not chart.success
+      return false
+      
+  return true
