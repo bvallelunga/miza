@@ -118,7 +118,7 @@ module.exports.get = (req, res, next)->
       
       if analytics.protection_count.result? and analytics.view_count.result?
         analytics.protection_count.result.result = Math.min 100, Math.floor (analytics.protection_count.result.result/analytics.view_count.result.result) * 100
-        analytics.protection_count.result.result = analytics.protection_count.result.result.toFixed(2)
+        analytics.protection_count.result.result = Number analytics.protection_count.result.result.toFixed(2)
       
       else
         analytics.protection_count = LOAD_ERROR
@@ -126,7 +126,7 @@ module.exports.get = (req, res, next)->
       
       if analytics.fill_count.result? and analytics.impression_count.result?
         analytics.fill_count.result.result = Math.min 100, Math.floor (analytics.impression_count.result.result/analytics.fill_count.result.result) * 100
-        analytics.fill_count.result.result = analytics.fill_count.result.result.toFixed(2)
+        analytics.fill_count.result.result = Number analytics.fill_count.result.result.toFixed(2)
       
       else
         analytics.fill_count = LOAD_ERROR
@@ -135,7 +135,7 @@ module.exports.get = (req, res, next)->
       if analytics.click_count.result? and analytics.impression_count.result?
         analytics.ctr_count.result = {
           query: analytics.protection_count.result.query
-          result: ((analytics.click_count.result.result/analytics.impression_count.result.result) * 100).toFixed(2)
+          result: Number ((analytics.click_count.result.result/analytics.impression_count.result.result) * 100).toFixed(2)
         }
       
       else
