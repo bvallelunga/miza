@@ -119,7 +119,7 @@ module.exports.get_publishers = (req, res, next)->
       clicks: query "click"
       ctr: 0
     }).then (metrics)->      
-      metrics.ctr = numeral(metrics.clicks/Math.max(metrics.impressions or 1)).format("0[.]0%")
+      metrics.ctr = numeral(metrics.clicks/Math.max(metrics.impressions or 1)).format("0[.]00%")
       metrics.impressions = numeral(metrics.impressions).format("0[,]000")
       metrics.clicks = numeral(metrics.clicks).format("0[,]000")
       
