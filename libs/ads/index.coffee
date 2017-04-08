@@ -120,10 +120,10 @@ module.exports.build_event = (raw_data)->
       session: raw_data.session
       protected: raw_data.query.protected == "true"
       asset_url: raw_data.asset_url
-#       product: raw_data.publisher.product
+      product: raw_data.publisher.product
       publisher: {
         id: raw_data.publisher.id
-#         name: raw_data.publisher.name
+        name: raw_data.publisher.name
         key: raw_data.publisher.key
       }
       billing: billing
