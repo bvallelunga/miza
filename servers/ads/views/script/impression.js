@@ -7,13 +7,14 @@ API.impression_parent_init = function() {
 }
 
 
-API.impression_check = function(iframe) {   
+API.impression_check = function(iframe) {  
+  var buffer = -5
   var rect = iframe.getBoundingClientRect()
   var in_view = (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    rect.top >= buffer &&
+    rect.left >= buffer &&
+    ((window.innerHeight || document.documentElement.clientHeight) - rect.bottom) >= buffer &&
+    ((window.innerWidth || document.documentElement.clientWidth) - rect.right) >= buffer
   )
   
   if(in_view) {
