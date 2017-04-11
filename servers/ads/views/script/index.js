@@ -17,17 +17,26 @@
   API.limit = 10
   
   
+  // Helper Methods
+  <% include ./helpers.js %>
+  <% include ./url.js %>
+  <% include ./observe.js %>
+  <% include ./refresh.js %>
+  <% include ./impression.js %>
+  
+  
   // Init Method
   API.init = function() {
     API.fetch_attributes(function() {                        
-      if(!!API.frame) {
-        API.status("i")
-        
+      if(!!API.frame) {  
+        API.impression_frame_init()
+              
         if(<%- publisher.config.refresh.enabled %>) {
           API.refresh_init()
         }
       } else {
         API.status("p")
+        API.impression_parent_init()
         
         if(API.protected && <%- enabled %>) {
           API.observe_init()
@@ -35,13 +44,6 @@
       }
     })
   }
-  
-  // Helper Methods
-  <% include ./helpers.js %>
-  <% include ./url.js %>
-  <% include ./observe.js %>
-  <% include ./refresh.js %>
-  
   
   // Init Miza
   API.init()

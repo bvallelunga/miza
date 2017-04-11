@@ -107,6 +107,10 @@ API.start_observing = function() {
         API.refresh_iframes()
       }
     }
+    
+    if(event.data.name == "frame.impression") {
+      API.impression_check(element)
+    }
   }, false);
 }
 

@@ -6,7 +6,6 @@ API.url_attributes = {
   "languages": [],
   "components": [],
   "do_not_track": false,
-  "r": "<%= random_slug %>",
   "page_url": "<%= page_url %>" || window.location.href,
   "protected": API.protected,
   "advertiser": API.advertiser,

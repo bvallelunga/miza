@@ -6,7 +6,7 @@ script_cache = {}
 module.exports.script = (req, res, next)->
   cached_script = script_cache[req.publisher.key]
   
-  if cached_script? 
+  if CONFIG.is_prod and cached_script? 
     diff_minutes = (((new Date() - cached_script.updatedAt) % 86400000) % 3600000) / 60000
     
     if diff_minutes < 1
