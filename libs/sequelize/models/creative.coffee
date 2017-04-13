@@ -79,17 +79,20 @@ module.exports = (sequelize, DataTypes)->
       
         original_url = "#{@link}utm_publisher=#{publisher}"
         link = "#{ new Buffer(original_url).toString("base64") }?"
-        
-        if is_demo then return link
-        
-        return link + [
-          "creative=#{@id}",
-          "advertiser=#{@advertiser_id}"
-          "campaign=#{@campaign_id}"
-          "industry=#{industry}"
-          "protected=#{is_protected}"
+        params = [
           "link"
-        ].join("&")
+        ]
+        
+        if not is_demo
+          params = params.concat [
+            "creative=#{@id}",
+            "advertiser=#{@advertiser_id}"
+            "campaign=#{@campaign_id}"
+            "industry=#{industry}"
+            "protected=#{is_protected}"
+          ]
+        
+        return link + params.join("&")
         
     }
   }
