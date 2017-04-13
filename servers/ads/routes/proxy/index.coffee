@@ -11,21 +11,38 @@ module.exports = (req, res, next)->
     }
     
   .then (data)-> 
-    if data.media != "link" or not req.query.creative?
+    if data.media != "link"
       return data
       
-    LIBS.models.Creative.findById(req.query.creative).then (creative)->    
-      if creative.config.disable_incentive?        
-        res.cookie "optout", true, { 
-          httpOnly: true
-          signed: true 
-          maxAge: creative.config.disable_incentive * 60 * 1000
-        }
+    if req.query.campaign?
+      clicked_campaigns = req.signedCookies.clicked_campaigns or []
+      campaign = Number(req.query.campaign)
+      
+      if clicked_campaigns.indexOf(campaign) == -1
+        clicked_campaigns.push Number(campaign)
         
-      return data
+      res.cookie "clicked_campaigns", clicked_campaigns, { 
+        httpOnly: true
+        signed: true 
+        maxAge: 10000 * 60 * 1000
+      }
+     
+    if req.query.creative? 
+      LIBS.models.Creative.findById(req.query.creative).then (creative)->    
+        if creative.config.disable_incentive?        
+          res.cookie "optout", true, { 
+            httpOnly: true
+            signed: true 
+            maxAge: creative.config.disable_incentive * 60 * 1000
+          }
+          
+        return data
+      
+      .catch ->
+        return data  
     
-    .catch ->
-      return data   
+    else
+      return data 
     
   .then (data)-> 
     if data.media == "link"

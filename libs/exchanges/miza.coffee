@@ -22,6 +22,14 @@ module.exports = (req)->
       }
     }
     
+    # Campaign Blocking
+    blocked_campaigns = req.signedCookies.clicked_campaigns or []
+    
+    if blocked_campaigns.length > 0
+      query.campaign_id = {
+        $notIn: blocked_campaigns
+      }
+    
     # Industry Targeting
     if not req.publisher.is_demo
       query.industry_id = req.publisher.industry_id

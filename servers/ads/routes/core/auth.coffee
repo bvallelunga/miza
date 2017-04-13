@@ -21,7 +21,7 @@ module.exports.has_publisher = (req, res, next)->
   .catch next
   
   
-module.exports.has_opted_out = (req, res, next)->    
+module.exports.has_opted_out = (req, res, next)->  
   LIBS.models.OptOut.count({
     where: {
       ip_address: req.ip or req.ips
