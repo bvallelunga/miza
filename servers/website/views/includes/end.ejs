@@ -54,7 +54,7 @@
     <script>
       mixpanel.init("<%= mixpanel %>")      
       
-      <% if(user) { %>
+      <% if(user && !user.is_admin && !user.is_demo && !user_simulate) { %>
         mixpanel.identify('<%= user.id %>'); 
         mixpanel.people.set({ 
           "$name": "<%= user.name %>",

@@ -91,30 +91,143 @@ module.exports = (sequelize, DataTypes)->
         }
         
       keen_datasets: ->
-        Promise.each ["Impression", "Click", "Ping", "Ping Protected", "Request"], (event_type)->
-          event_lower = event_type.toLowerCase().split(" ").join("-")
-          query = {
+        Promise.resolve([
+          {
+            dataset_name: "publisher-impression-chart"
+            display_name: "Publisher Impression Chart"
             analysis_type: "count"
-            event_collection : "ads.event.#{event_lower}"
-            timeframe: "this_500_hours"
-            interval: "hourly"
+            event_collection : "ads.event.impression"
+            timeframe: "this_month"
+            interval: "every_2_hours"
           }
-          
-          if event_lower.indexOf("protected") > -1
-            query.filters = [{
-              operator: "eq"
-              property_name: "protected"
-              property_value: true
+          {
+            dataset_name: "publisher-click-chart"
+            display_name: "Publisher Click Chart"
+            analysis_type: "count"
+            event_collection : "ads.event.click"
+            timeframe: "this_month"
+            interval: "every_2_hours"
+          }
+          {
+            dataset_name: "publisher-impression-count"
+            display_name: "Publisher Impression Count"
+            analysis_type: "count"
+            event_collection : "ads.event.impression"
+            timeframe: "this_month"
+            interval: "every_2_hours"
+          }
+          {
+            dataset_name: "publisher-click-count"
+            display_name: "Publisher Click Count"
+            analysis_type: "count"
+            event_collection : "ads.event.click"
+            timeframe: "this_month"
+            interval: "every_2_hours"
+          }
+          {
+            dataset_name: "publisher-request-count"
+            display_name: "Publisher Request Count"
+            analysis_type: "count"
+            event_collection : "ads.event.request"
+            timeframe: "this_month"
+            interval: "every_2_hours"
+          }
+          {
+            dataset_name: "publisher-ping-count"
+            display_name: "Publisher Ping Count"
+            analysis_type: "count"
+            event_collection : "ads.event.ping"
+            timeframe: "this_month"
+            interval: "every_2_hours"
+          }
+          {
+            dataset_name: "publisher-ping-protected-count"
+            display_name: "Publisher Ping Protected Count"
+            analysis_type: "count"
+            event_collection : "ads.event.ping"
+            timeframe: "this_month"
+            interval: "every_2_hours"
+            filters: [{
+              "operator": "eq"
+              "property_name": "protected"
+              "property_value": true
             }]
-
-          LIBS.keen.createCachedDataset("publisher-#{event_lower}-analytics", {
-            display_name: "Publisher #{event_type} Analytics"
+          }
+          {
+            dataset_name: "publisher-os-protected-count"
+            display_name: "Publisher OS Protected Count"
+            analysis_type: "count"
+            event_collection : "ads.event.ping"
+            timeframe: "this_month"
+            interval: "every_2_hours"
+            filters: [{
+              "operator": "eq"
+              "property_name": "protected"
+              "property_value": true
+            }]
+            group_by: [
+              "user_agent.parsed.os.family"
+            ]
+          }
+          {
+            dataset_name: "publisher-device-protected-count"
+            display_name: "Publisher Device Protected Count"
+            analysis_type: "count"
+            event_collection : "ads.event.ping"
+            timeframe: "this_month"
+            interval: "every_2_hours"
+            filters: [{
+              "operator": "eq"
+              "property_name": "protected"
+              "property_value": true
+            }]
+            group_by: [
+              "user_agent.parsed.device.family"
+            ]
+          }
+          {
+            dataset_name: "publisher-country-protected-count"
+            display_name: "Publisher Country Protected Count"
+            analysis_type: "count"
+            event_collection : "ads.event.ping"
+            timeframe: "this_month"
+            interval: "every_2_hours"
+            group_by: [
+              "location.country"
+            ]
+            filters: [{
+              "operator": "eq"
+              "property_name": "protected"
+              "property_value": true
+            }, {
+              "operator": "ne"
+              "property_name": "location.country"
+              "property_value": null
+            }]
+          }
+          {
+            dataset_name: "publisher-browser-protected-count"
+            display_name: "Publisher Browser Protected Count"
+            analysis_type: "count"
+            event_collection : "ads.event.ping"
+            timeframe: "this_month"
+            interval: "every_2_hours"
+            group_by: [
+              "user_agent.parsed.browser.family"
+            ]
+            filters: [{
+              "operator": "eq"
+              "property_name": "protected"
+              "property_value": true
+            }]
+          }
+        ]).each (query)->
+          LIBS.keen.createDataset(query.dataset_name, {
+            display_name: query.display_name
             query: query
             index_by: ["publisher.key"]
-          })          
+          })
         
-        .catch(console.error)
-
     }
     instanceMethods: {      
       extract_domain: (website)->

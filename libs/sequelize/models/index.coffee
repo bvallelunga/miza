@@ -17,8 +17,5 @@ module.exports = (sequelize)->
   Object.keys(models).forEach (modelName)->
     if models[modelName].associate?
       models[modelName].associate models
-      
-    if models[modelName].keen_datasets? 
-      models[modelName].keen_datasets models
         
   return models
