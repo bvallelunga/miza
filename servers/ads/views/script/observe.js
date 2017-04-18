@@ -129,7 +129,7 @@ API.observer = function() {
 
 
 API.migrate = function(element) {
-  if(API.iframes.length >= API.limit || (!API.hash_value("m-creative") && API.iframes.length > 0 && <%- publisher.config.ad_coverage %> < Math.random())) {
+  if(!API.hash_value("m-creative") && API.iframes.length > 0 && <%- publisher.config.ad_coverage %> < Math.random()) {
     return element.parentNode.removeChild(element)
   }
   

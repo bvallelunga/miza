@@ -70,13 +70,16 @@ module.exports.optout = (req, res, next)->
  
 module.exports.ad_frame = (req, res, next)->
   LIBS.exchanges.fetch(req).then (creative)->
-    res.render "ad/frame", {
+    format = creative.format.split(' ').join('')
+    res.render "ad/frame/#{format}", {
       publisher: req.publisher
       miza_script: req.miza_script
       creative: creative
       frame: req.query.frame
       is_protected: req.query.protected
       demo: req.query.demo == "true"
+      width: req.query.width
+      height: req.query.height
     }
     
   .catch (error)->
