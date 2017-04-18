@@ -97,56 +97,56 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Impression Chart"
             analysis_type: "count"
             event_collection : "ads.event.impression"
-            timeframe: "this_month"
-            interval: "every_2_hours"
+            timeframe: "this_1_year"
+            interval: "daily"
           }
           {
             dataset_name: "publisher-click-chart"
             display_name: "Publisher Click Chart"
             analysis_type: "count"
             event_collection : "ads.event.click"
-            timeframe: "this_month"
-            interval: "every_2_hours"
+            timeframe: "this_1_year"
+            interval: "daily"
           }
           {
             dataset_name: "publisher-impression-count"
             display_name: "Publisher Impression Count"
             analysis_type: "count"
             event_collection : "ads.event.impression"
-            timeframe: "this_month"
-            interval: "every_2_hours"
+            timeframe: "this_1_year"
+            interval: "monthly"
           }
           {
             dataset_name: "publisher-click-count"
             display_name: "Publisher Click Count"
             analysis_type: "count"
             event_collection : "ads.event.click"
-            timeframe: "this_month"
-            interval: "every_2_hours"
+            timeframe: "this_1_year"
+            interval: "monthly"
           }
           {
             dataset_name: "publisher-request-count"
             display_name: "Publisher Request Count"
             analysis_type: "count"
             event_collection : "ads.event.request"
-            timeframe: "this_month"
-            interval: "every_2_hours"
+            timeframe: "this_1_year"
+            interval: "monthly"
           }
           {
             dataset_name: "publisher-ping-count"
             display_name: "Publisher Ping Count"
             analysis_type: "count"
             event_collection : "ads.event.ping"
-            timeframe: "this_month"
-            interval: "every_2_hours"
+            timeframe: "this_1_year"
+            interval: "monthly"
           }
           {
             dataset_name: "publisher-ping-protected-count"
             display_name: "Publisher Ping Protected Count"
             analysis_type: "count"
             event_collection : "ads.event.ping"
-            timeframe: "this_month"
-            interval: "every_2_hours"
+            timeframe: "this_1_year"
+            interval: "monthly"
             filters: [{
               "operator": "eq"
               "property_name": "protected"
@@ -158,8 +158,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher OS Protected Count"
             analysis_type: "count"
             event_collection : "ads.event.ping"
-            timeframe: "this_month"
-            interval: "every_2_hours"
+            timeframe: "this_1_year"
+            interval: "monthly"
             filters: [{
               "operator": "eq"
               "property_name": "protected"
@@ -174,8 +174,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Device Protected Count"
             analysis_type: "count"
             event_collection : "ads.event.ping"
-            timeframe: "this_month"
-            interval: "every_2_hours"
+            timeframe: "this_1_year"
+            interval: "monthly"
             filters: [{
               "operator": "eq"
               "property_name": "protected"
@@ -190,8 +190,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Country Protected Count"
             analysis_type: "count"
             event_collection : "ads.event.ping"
-            timeframe: "this_month"
-            interval: "every_2_hours"
+            timeframe: "this_1_year"
+            interval: "monthly"
             group_by: [
               "location.country"
             ]
@@ -210,8 +210,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Browser Protected Count"
             analysis_type: "count"
             event_collection : "ads.event.ping"
-            timeframe: "this_month"
-            interval: "every_2_hours"
+            timeframe: "this_1_year"
+            interval: "monthly"
             group_by: [
               "user_agent.parsed.browser.family"
             ]
