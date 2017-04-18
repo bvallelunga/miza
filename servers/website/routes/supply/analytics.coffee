@@ -36,7 +36,7 @@ module.exports.get = (req, res, next)->
       
     if analytics.protection_count.result? and analytics.view_count.result?
       analytics.protection_count.result = Math.min 100, Math.floor (analytics.protection_count.result/analytics.view_count.result) * 100
-      analytics.protection_count.result = Number analytics.protection_count.result.toFixed(2)
+      analytics.protection_count.result = Number(analytics.protection_count.result.toFixed(2))
     
     else
       analytics.protection_count = DATA_ERROR
@@ -76,8 +76,9 @@ module.exports.get = (req, res, next)->
   
 
 flattener = (promise)->
-  promise.then (data)->
-    return {
-      metadata: data.metadata
-      result: data.result[0].value
-    }
+  promise.then (data)->  
+    if data.result?
+      return {
+        metadata: data.metadata
+        result: data.result[0].value
+      }
