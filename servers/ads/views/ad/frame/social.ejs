@@ -94,9 +94,76 @@
         color: white;
       }
       
+      footer {
+        color: black;
+        float: right;
+        font-size: 11px;
+        margin-top: 8px;
+        color: #555555;
+        cursor: pointer;
+      }
+      
+      footer:hover {
+        text-decoration: underline;
+      }
+      
       .clear {
         float: none;
         clear: both;
+      }
+      
+      information {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 25px;
+        background: white;
+        font-size: 15px;
+        line-height: 20px;
+        padding: 10px;
+        box-sizing: border-box;
+        border: solid 1px rgba(0,0,0,0.1);
+        border-radius: 4px;
+        display: none;
+        background: #fbfbfb;
+        color: #6a6a6a;
+      }
+      
+      information a {
+        width: 150px;
+        margin: 10px auto 0;
+        border: solid 1px rgba(0,0,0,0.05);
+        text-align: center;
+        padding: 10px 0;
+        display: block;
+        background: rgba(0,0,0,0.1);
+        color: rgba(0,0,0,0.6);
+        text-decoration: none;
+        border-radius: 3px;
+      }
+      
+      information table {
+        background: transparent;
+      }
+      
+      information a:hover {
+        text-decoration: none;
+        background: #FF0000;
+        color: white;
+      }
+      
+      information div {
+        text-align: center;
+        width: 100%;
+        color: #6a6a6a;
+        font-size: 12px;
+        margin-top: 5px;
+        cursor: pointer;
+      }
+      
+      information div:hover {
+        text-decoration: underline;
       }
     </style>
     <script>
@@ -115,10 +182,38 @@
         height: <%- height %>
       }, "*");
       
+      function showInformation() {
+        document.getElementsByTagName("information")[0].style.display = "block";
+      }
+      
+      function hideInformation() {
+        document.getElementsByTagName("information")[0].style.display = "none";
+      }
+
       <%- miza_script %>
     </script>
   </head>
   <body>
+    <information>
+      <table>
+        <tr>
+          <td>
+            We love creating content that makes users 
+            like you happy every day. Without advertising
+            we would be forced to make you pay for the 
+            content we provide for free. 
+            <br><br>
+            But don't worry, our ads are relevant, 
+            stylish and unobtrusive. Hopefully you even find
+            some of them helpful! But if you would like to opt 
+            out of seeing our ads, you can deactivate them here.
+            <br><br><br>
+            <a href="/oo?demo=<%= demo %>">Stop Seeing Ads</a>
+            <div onclick="hideInformation()">Close Information</div>
+          </td> 
+        </tr>
+      </table>
+    </information>
     <div class="container">
       <div class="grid">
         <div class="image" style='background-image: url("https://instagram.fsnc1-1.fna.fbcdn.net/t51.2885-15/e15/1538350_1528374764070564_1190643161_n.jpg");'></div>
@@ -138,5 +233,8 @@
     <% creative.trackers.forEach(function(tracker) { %>
       <img src="/<%= new Buffer(tracker).toString("base64") %>?no-dl" width="0" height="0" style="display:none" />
     <% }) %>
+    <footer onclick="showInformation()">
+      Why am I seeing this advertisement?
+    </footer>
   </body>
 </html>
