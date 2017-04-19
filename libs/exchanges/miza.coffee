@@ -17,9 +17,6 @@ module.exports = (req)->
     # Build query
     query = {
       active: true
-      quantity_needed: {
-        $gt: 0
-      }
     }
     
     # Campaign Blocking
@@ -63,17 +60,31 @@ module.exports = (req)->
         }
   
     # Find Campaign Industries
+    # Grab a random set of 5 campaigns
+    # Then we sort the 5 campaigns by bid
+    # 60% of the time the highest bid will
+    # be shown. 40% of the time the a random
+    # creative will be chosen
     LIBS.models.CampaignIndustry.findAll({
       where: query
-      limit: 1
+      limit: 5
       order: [
         LIBS.models.Sequelize.fn('RANDOM')
         ["created_at", "DESC"]
-        ["quantity_needed", "DESC"]
       ]
     }).then (campaignIndustries)->  
       if campaignIndustries.length == 0
         return Promise.reject LIBS.exchanges.errors.AD_NOT_FOUND
+      
+      # 40% of the time we show select a random bid
+      # this is done to ensure the low bids get
+      # some impressions
+      if Math.random() <= 0.60
+        campaignIndustries = campaignIndustries.sort (a, b)->
+          return b.amount - a.amount
+        
+      else
+        campaignIndustries = LIBS.helpers.shuffle campaignIndustries
       
       campaignIndustry = campaignIndustries[0]
       

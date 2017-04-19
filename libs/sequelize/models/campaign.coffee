@@ -66,31 +66,42 @@ module.exports = (sequelize, DataTypes)->
       get: ->      
         return Number @getDataValue("clicks")
     }
-    budget: {
+    amount: {
+      type: DataTypes.DECIMAL(6,3)
+      defaultValue: 0
+      allowNull: false
+      validate: {
+        min: {
+          args: [ 0 ]
+          msg: "Amount must be greater than or equal to 0"
+        }
+      }
+      get: ->      
+        return Number @getDataValue("amount")
+    }
+    model_cost: {
       type: DataTypes.VIRTUAL
       get: ->   
-        total = 0
-        
-        if not @industries?
-          return NaN
-        
-        for industry in @industries
-          total += industry.budget
-         
-        return total
+        if @type == "cpm" 
+          return @amount / 1000 
+          
+        return @amount
+    }
+    budget: {
+      type: DataTypes.VIRTUAL
+      get: ->
+        return @model_cost * @quantity_requested
     }
     spend: {
       type: DataTypes.VIRTUAL
       get: ->      
-        total = 0
-        
-        if not @industries?
-          return NaN
-        
-        for industry in @industries
-          total += industry.spend
-         
-        return total
+        if @type == "cpm"
+          return @model_cost * @impressions
+          
+        else if @type == "cpc"
+          return @model_cost * @clicks
+          
+        return 0
     }
     progress: {
       type: DataTypes.VIRTUAL
@@ -114,6 +125,7 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.VIRTUAL
       get: ->      
         return {
+          amount: numeral(@amount).format("$0[,]000.00")
           impressions: numeral(@impressions).format("0[,]000")
           quantity_needed: numeral(@quantity_needed).format("0[,]000")
           quantity_requested: numeral(@quantity_requested).format("0[,]000")

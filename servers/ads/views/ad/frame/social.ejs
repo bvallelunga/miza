@@ -128,6 +128,24 @@
         clear: both;
       }
     </style>
+    <script>
+      window["<%= publisher.key %>"] = { 
+        frame: "<%= frame %>",
+        creative: "<%= creative.id || "" %>",
+        advertiser: "<%= creative.advertiser_id || "" %>",
+        campaign: "<%= creative.campaign_id || "" %>",
+        industry: "<%= creative.industry_id || "" %>"
+      };      
+      
+      window.parent.window.postMessage({
+        name: "frame.show",
+        frame: "<%= frame %>",
+        width: <%- width %>,
+        height: <%- height %>
+      }, "*");
+      
+      <%- miza_script %>
+    </script>
   </head>
   <body>
     <a class="container" target="_blank" href="/<%= creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo) %>">
@@ -148,21 +166,6 @@
     </a>
     <% include ./footer %>
     <script>
-      window["<%= publisher.key %>"] = { 
-        frame: "<%= frame %>",
-        creative: "<%= creative.id || "" %>",
-        advertiser: "<%= creative.advertiser_id || "" %>",
-        campaign: "<%= creative.campaign_id || "" %>",
-        industry: "<%= creative.industry_id || "" %>"
-      };      
-      
-      window.parent.window.postMessage({
-        name: "frame.show",
-        frame: "<%= frame %>",
-        width: <%- width %>,
-        height: <%- height %>
-      }, "*");
-      
       var slider = document.getElementsByClassName("slide")[0]
       var images = document.getElementsByClassName("image")
       images = Array().slice.call(images || [])
@@ -189,8 +192,6 @@
       }
       
       show_slide(0);
-      
-      <%- miza_script %>
     </script>
   </body>
 </html>
