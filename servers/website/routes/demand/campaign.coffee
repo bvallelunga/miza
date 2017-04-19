@@ -252,7 +252,12 @@ module.exports.post_create = (req, res, next)->
     return next "Please make sure you have a click link for your creative."
       
   Promise.resolve().then ->
-    query = {}
+    query = {
+      private: false
+      max_impressions: {
+        $gt: 0
+      }
+    }
     
     if req.body.industries? and req.body.industries.length > 0
       query = {
@@ -268,10 +273,10 @@ module.exports.post_create = (req, res, next)->
     bid = Number req.body.bid
     budget = Number req.body.budget
     
-    if bid == NaN
+    if bid == NaN or bid < 0.1
       return Promise.reject "Please make sure you entered a valid bid."
       
-    if budget == NaN
+    if budget == NaN or budget < 1
       return Promise.reject "Please make sure you entered a valid budget."
     
     start_date = moment(req.body.start_date, "MM-DD-YYYY")
