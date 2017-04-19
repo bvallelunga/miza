@@ -13,10 +13,6 @@
         <div class="title"><%= campaign.name %></div>
       </td>
       <td class="section">
-        <div class="decription">Model</div>
-        <div class="title uppercase"><%= campaign.type %></div>
-      </td>
-      <td class="section">
         <div class="decription">Status</div>
         <div class="title cap"><%= campaign.status %></div>
       </td>
@@ -134,12 +130,10 @@
       { "data": "id" },
       { "data": "name" },
       { "data": "status" },
-      { "data": "metrics.progress" },
       { "data": "metrics.impressions" },
       { "data": "metrics.clicks" },
       { "data": "metrics.ctr" },
-      { "data": "metrics." + campaign.type },
-      { "data": "metrics.budget" },
+      { "data": "metrics.amount" },
       { "data": "metrics.spend" }
     ]) %>">
       <thead>
@@ -147,12 +141,10 @@
           <th></th>
           <th>Industry</th>
           <th>Status</th>
-          <th>Progress</th>
           <th>Impressions</th>
           <th>Clicks</th>
           <th>CTR</th>
           <th><%= campaign.type.toUpperCase() %></th>
-          <th>Budget</th>
           <th>Spend</th>
         </tr>
       </thead>

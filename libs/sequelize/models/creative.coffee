@@ -68,7 +68,9 @@ module.exports = (sequelize, DataTypes)->
         link = "//#{LIBS.models.defaults.demo_publisher.key}.#{host}/a?"
         params = [
           "demo=true"
-          "creative_override=#{@id}"
+          "creative_override=#{@id}",
+          "width=300"
+          "height=300"
         ].join("&")
         
         return link + params

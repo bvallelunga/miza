@@ -9,9 +9,6 @@ module.exports.fetch = (req, res, next)->
       advertiser_id: req.advertiser.id
     }
     include: [{
-      model: LIBS.models.CampaignIndustry
-      as: "industries"
-    }, {
       model: LIBS.models.Creative
       as: "creatives"
     }]
@@ -57,82 +54,84 @@ module.exports.post_update = (req, res, next)->
   
 
 module.exports.get_industries = (req, res, next)->
-  res.json {
-    success: true
-    results: req.campaign.industries.sort (a, b)->
-      if(a.name < b.name) then return -1
-      if(a.name > b.name) then return 1
-      return 0
-  }
+  req.campaign.getIndustries({
+    sort: "name ASC"
+  }).then (industries)->
+    res.json {
+      success: true
+      results: industries
+    }
+  
+  .catch next
   
   
 module.exports.get_publishers = (req, res, next)->
-  targeting = req.campaign.industries[0].targeting
-  end_date = req.campaign.end_at
-  
-  if not end_date?
-    today = new Date()
-    shift = req.campaign.start_at
+  req.campaign.getIndustries().then (industries)->
+    targeting = industries[0].targeting
+    end_date = req.campaign.end_at
     
-    if today > shift
-      shift = today
-    
-    end_date = moment(shift).add(1, "month").toDate()
-
-  LIBS.models.Publisher.findAll({
-    where: {
-      is_activated: true
-    }
-    order: "name ASC"
-    include: [{
-      model: LIBS.models.Industry
-      as: "industry"
-    }]
-  }).map (publisher)->
-    if not targeting.blocked_publishers?
-      targeting.blocked_publishers = []
-  
-    if targeting.blocked_publishers.indexOf(publisher.key) == -1
-      status = "Enabled"
-    else
-      status = "Blocked"
+    if not end_date?
+      today = new Date()
+      shift = req.campaign.start_at
       
-    client = LIBS.keen.scopedAnalysis(publisher.config.keen)
-  
-    query = (type)->      
-      client.query("count", {
-        event_collection: "ads.event.#{type}"
-        timeframe: {
-          start: req.campaign.start_at
-          end: end_date
-        }
-        filters: [{
-          "operator": "eq"
-          "property_name": "campaign.id"
-          "property_value": req.campaign.id
-        }]
-      }).then (response)->    
-        return response.result
-  
-    return Promise.props({
-      impressions: query "impression"
-      clicks: query "click"
-      ctr: 0
-    }).then (metrics)->      
-      metrics.ctr = numeral(metrics.clicks/Math.max(metrics.impressions or 1)).format("0[.]00%")
-      metrics.impressions = numeral(metrics.impressions).format("0[,]000")
-      metrics.clicks = numeral(metrics.clicks).format("0[,]000")
+      if today > shift
+        shift = today
       
-      return {
-        id: publisher.key
-        name: publisher.name
-        status: status
-        industry: publisher.industry.name
-        metrics: metrics
+      end_date = moment(shift).add(1, "month").toDate()
+  
+    LIBS.models.Publisher.findAll({
+      where: {
+        is_activated: true
       }
-  
+      order: "name ASC"
+      include: [{
+        model: LIBS.models.Industry
+        as: "industry"
+      }]
+    }).map (publisher)->
+      if not targeting.blocked_publishers?
+        targeting.blocked_publishers = []
+    
+      if targeting.blocked_publishers.indexOf(publisher.key) == -1
+        status = "Enabled"
+      else
+        status = "Blocked"
+        
+      client = LIBS.keen.scopedAnalysis(publisher.config.keen)
+    
+      query = (type)->      
+        client.query("count", {
+          event_collection: "ads.event.#{type}"
+          timeframe: {
+            start: req.campaign.start_at
+            end: end_date
+          }
+          filters: [{
+            "operator": "eq"
+            "property_name": "campaign.id"
+            "property_value": req.campaign.id
+          }]
+        }).then (response)->    
+          return response.result
+    
+      return Promise.props({
+        impressions: query "impression"
+        clicks: query "click"
+        ctr: 0
+      }).then (metrics)->      
+        metrics.ctr = numeral(metrics.clicks/Math.max(metrics.impressions or 1)).format("0[.]00%")
+        metrics.impressions = numeral(metrics.impressions).format("0[,]000")
+        metrics.clicks = numeral(metrics.clicks).format("0[,]000")
+        
+        return {
+          id: publisher.key
+          name: publisher.name
+          status: status
+          industry: publisher.industry.name
+          metrics: metrics
+        }
+    
   .then (publishers)->
-  
     res.json {
       success: true
       results: publishers
@@ -251,39 +250,45 @@ module.exports.post_create = (req, res, next)->
     
   if not req.body.creative.link.length > 0
     return next "Please make sure you have a click link for your creative."
-  
-  Promise.filter req.body.industries[req.body.model], (data)->
-    data.quantity = Number(data.quantity) or 0
-    data.amount = Number(data.amount) or 0
-    return data.activated == "true" and data.quantity > 0
-    
-  .map (data)->
-    LIBS.models.Industry.findById(data.industry).then (industry)->        
-      if req.user.is_admin
-        industry[req.body.model] = data.amount
-                
-      return {
-        industry: industry
-        quantity: Math.min(data.quantity, industry.max_impressions)
-        targeting: req.body.targeting or {}
+      
+  Promise.resolve().then ->
+    query = {
+      private: false
+      max_impressions: {
+        $gt: 0
       }
+    }
     
-  .then (targeting)->  
-    if false and targeting.length == 0
-      return Promise.reject "Please select at least 1 industry"
+    if req.body.industries? and req.body.industries.length > 0
+      query = {
+        id: {
+          $in: req.body.industries.map (id)-> Number id
+        }
+      }
   
+    LIBS.models.Industry.findAll({
+      where: query
+    })
+  .then (targeting)->    
+    bid = Number req.body.bid
+    budget = Number req.body.budget
+    
+    if bid == NaN or bid < 0.1
+      return Promise.reject "Please make sure you entered a valid bid."
+      
+    if budget == NaN or budget < 1
+      return Promise.reject "Please make sure you entered a valid budget."
+    
     start_date = moment(req.body.start_date, "MM-DD-YYYY")
     start_date = if start_date.isValid() then start_date.startOf("day").toDate() else null
     
     end_date = moment(req.body.end_date, "MM-DD-YYYY")
     end_date = if end_date.isValid() then end_date.endOf("day").toDate() else null
     
-    quantity_requested = 0
-    status = if start_date then "queued" else "running"
     is_house = req.body.is_house == "true" and req.user.is_admin
-    
-    for target in targeting
-      quantity_requested += target.quantity
+    temp_bid = if req.body.model == "cpm" then bid/1000 else bid
+    quantity_requested = Math.floor(budget/temp_bid)
+    status = if start_date then "queued" else "running"
     
     LIBS.models.Campaign.create({
       name: req.body.name
@@ -292,25 +297,25 @@ module.exports.post_create = (req, res, next)->
       start_at: start_date or new Date()
       end_at: end_date
       advertiser_id: req.advertiser.id
+      amount: if is_house then 0 else bid
       quantity_requested: quantity_requested
       config: {
         is_house: is_house
+        targeting: req.body.targeting or {}
       }
     }).then (campaign)->    
       Promise.props({
         campaign: campaign
-        industries: Promise.map targeting, (target)->
+        industries: Promise.map targeting, (industry)->
           LIBS.models.CampaignIndustry.create({
             type: req.body.model
             status: campaign.status
             advertiser_id: req.advertiser.id
             campaign_id: campaign.id
-            industry_id: target.industry.id
-            name: target.industry.name
-            quantity_requested: target.quantity
-            cpm: if is_house then 0 else (target.industry.cpm or 0)
-            cpc: if is_house then 0 else (target.industry.cpc or 0)
-            targeting: target.targeting
+            industry_id: industry.id
+            name: industry.name
+            amount: if is_house then 0 else bid
+            targeting: req.body.targeting or {}
             config: {
               is_house: is_house
             }
