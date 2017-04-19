@@ -116,6 +116,7 @@ module.exports = ->
       heroku: true and is_dev
       queue: false and is_dev
       slack: true and is_dev
+      bugsnag: true and is_dev
       express: {
         protected: true and is_dev
         logger: true and is_dev
@@ -165,6 +166,7 @@ module.exports = ->
     }
     
     keen: {
+      prefix: "v2"
       readKey: process.env.KEEN_MASTER_KEY
       writeKey: process.env.KEEN_MASTER_KEY
       masterKey: process.env.KEEN_MASTER_KEY

@@ -7,7 +7,7 @@ module.exports.get = (req, res, next)->
   query = (query_name)->
     LIBS.keen.fetchDataset(query_name, {
       index_by: req.publisher.key
-      timeframe: "this_month"
+      timeframe: "this_1_months"
     }).catch (error)->
       LIBS.bugsnag.notify error
       console.log error
@@ -28,14 +28,14 @@ module.exports.get = (req, res, next)->
     countries_chart: flattener query "publisher-country-protected-count"
     browsers_chart: flattener query "publisher-browser-protected-count"
     ctr_count: DATA_ERROR
-  }).then (analytics)->     
+  }).then (analytics)->         
     if analytics.devices_chart.result?
       for device in analytics.devices_chart.result
         if device["user_agent.parsed.device.family"] == "Other"
           device["user_agent.parsed.device.family"] = "Desktop"
       
     if analytics.protection_count.result? and analytics.view_count.result?
-      analytics.protection_count.result = Math.min 100, Math.floor (analytics.protection_count.result/analytics.view_count.result) * 100
+      analytics.protection_count.result = Math.min 100, Math.floor (analytics.protection_count.result/Math.max(1, analytics.view_count.result)) * 100
       analytics.protection_count.result = Number(analytics.protection_count.result.toFixed(2))
     
     else
@@ -43,7 +43,7 @@ module.exports.get = (req, res, next)->
     
     
     if analytics.fill_count.result? and analytics.impression_count.result?
-      analytics.fill_count.result = Math.min 100, Math.floor (analytics.impression_count.result/analytics.fill_count.result) * 100
+      analytics.fill_count.result = Math.min 100, Math.floor (analytics.impression_count.result/Math.max(1, analytics.fill_count.result)) * 100
       analytics.fill_count.result = Number analytics.fill_count.result.toFixed(2)
     
     else
@@ -53,7 +53,7 @@ module.exports.get = (req, res, next)->
     if analytics.click_count.result? and analytics.impression_count.result?
       analytics.ctr_count = {
         metadata: analytics.protection_count.metadata
-        result: Number ((analytics.click_count.result/analytics.impression_count.result) * 100).toFixed(2)
+        result: Number ((analytics.click_count.result/Math.max(1, analytics.impression_count.result)) * 100).toFixed(2)
       }
     
     for key, value of analytics
@@ -76,7 +76,7 @@ module.exports.get = (req, res, next)->
   
 
 flattener = (promise)->
-  promise.then (data)->  
+  promise.then (data)->        
     if data.result?
       return {
         metadata: data.metadata

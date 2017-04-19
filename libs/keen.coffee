@@ -42,13 +42,15 @@ module.exports = ->
         keen.request("delete", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{dataset.dataset_name}")
   
   
-  keen.createDataset = (name, data)->            
+  keen.createDataset = (name, data)->  
+    name = "#{CONFIG.keen.prefix}-#{name}"        
     console.log "KEEN Dataset Created: #{name}"
     keen.request("put", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}", data).catch (error)->
       console.log error
   
     
-  keen.fetchDataset = (name, data)->            
+  keen.fetchDataset = (name, data)->
+    name = "#{CONFIG.keen.prefix}-#{name}"      
     keen.request "get", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}/results", data      
     
   return keen

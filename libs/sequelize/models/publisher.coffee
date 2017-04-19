@@ -93,54 +93,91 @@ module.exports = (sequelize, DataTypes)->
       keen_datasets: ->
         Promise.resolve([
           {
+            timezone: "UTC"
             dataset_name: "publisher-impression-chart"
             display_name: "Publisher Impression Chart"
             analysis_type: "count"
             event_collection : "ads.event.impression"
-            timeframe: "this_1_year"
+            timeframe: "this_90_days"
             interval: "daily"
+            filters: [{
+              operator: "ne"
+              property_name: "billing.house"
+              property_value: true
+            }]
           }
           {
+            timezone: "UTC"
             dataset_name: "publisher-click-chart"
             display_name: "Publisher Click Chart"
             analysis_type: "count"
             event_collection : "ads.event.click"
-            timeframe: "this_1_year"
+            timeframe: "this_90_days"
             interval: "daily"
+            filters: [{
+              operator: "ne"
+              property_name: "billing.house"
+              property_value: true
+            }]
           }
           {
+            timezone: "UTC"
             dataset_name: "publisher-impression-count"
             display_name: "Publisher Impression Count"
             analysis_type: "count"
             event_collection : "ads.event.impression"
             timeframe: "this_1_year"
             interval: "monthly"
+            filters: [{
+              operator: "ne"
+              property_name: "billing.house"
+              property_value: true
+            }]
           }
           {
+            timezone: "UTC"
             dataset_name: "publisher-click-count"
             display_name: "Publisher Click Count"
             analysis_type: "count"
             event_collection : "ads.event.click"
             timeframe: "this_1_year"
             interval: "monthly"
+            filters: [{
+              operator: "ne"
+              property_name: "billing.house"
+              property_value: true
+            }]
           }
           {
+            timezone: "UTC"
             dataset_name: "publisher-request-count"
             display_name: "Publisher Request Count"
             analysis_type: "count"
             event_collection : "ads.event.request"
             timeframe: "this_1_year"
             interval: "monthly"
+            filters: [{
+              operator: "ne"
+              property_name: "billing.house"
+              property_value: true
+            }]
           }
           {
+            timezone: "UTC"
             dataset_name: "publisher-ping-count"
             display_name: "Publisher Ping Count"
             analysis_type: "count"
             event_collection : "ads.event.ping"
             timeframe: "this_1_year"
             interval: "monthly"
+            filters: [{
+              operator: "ne"
+              property_name: "billing.house"
+              property_value: true
+            }]
           }
           {
+            timezone: "UTC"
             dataset_name: "publisher-ping-protected-count"
             display_name: "Publisher Ping Protected Count"
             analysis_type: "count"
@@ -151,9 +188,14 @@ module.exports = (sequelize, DataTypes)->
               "operator": "eq"
               "property_name": "protected"
               "property_value": true
+            }, {
+              operator: "ne"
+              property_name: "billing.house"
+              property_value: true
             }]
           }
           {
+            timezone: "UTC"
             dataset_name: "publisher-os-protected-count"
             display_name: "Publisher OS Protected Count"
             analysis_type: "count"
@@ -164,12 +206,17 @@ module.exports = (sequelize, DataTypes)->
               "operator": "eq"
               "property_name": "protected"
               "property_value": true
+            }, {
+              operator: "ne"
+              property_name: "billing.house"
+              property_value: true
             }]
             group_by: [
               "user_agent.parsed.os.family"
             ]
           }
           {
+            timezone: "UTC"
             dataset_name: "publisher-device-protected-count"
             display_name: "Publisher Device Protected Count"
             analysis_type: "count"
@@ -180,12 +227,17 @@ module.exports = (sequelize, DataTypes)->
               "operator": "eq"
               "property_name": "protected"
               "property_value": true
+            }, {
+              operator: "ne"
+              property_name: "billing.house"
+              property_value: true
             }]
             group_by: [
               "user_agent.parsed.device.family"
             ]
           }
           {
+            timezone: "UTC"
             dataset_name: "publisher-country-protected-count"
             display_name: "Publisher Country Protected Count"
             analysis_type: "count"
@@ -203,9 +255,14 @@ module.exports = (sequelize, DataTypes)->
               "operator": "ne"
               "property_name": "location.country"
               "property_value": null
+            }, {
+              operator: "ne"
+              property_name: "billing.house"
+              property_value: true
             }]
           }
           {
+            timezone: "UTC"
             dataset_name: "publisher-browser-protected-count"
             display_name: "Publisher Browser Protected Count"
             analysis_type: "count"
@@ -219,6 +276,10 @@ module.exports = (sequelize, DataTypes)->
               "operator": "eq"
               "property_name": "protected"
               "property_value": true
+            }, {
+              operator: "ne"
+              property_name: "billing.house"
+              property_value: true
             }]
           }
         ]).each (query)->
