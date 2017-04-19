@@ -70,7 +70,7 @@ module.exports = (req)->
       limit: 5
       order: [
         LIBS.models.Sequelize.fn('RANDOM')
-        ["created_at", "DESC"]
+        ["updated_at", "ASC"]
       ]
     }).then (campaignIndustries)->  
       if campaignIndustries.length == 0
