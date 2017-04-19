@@ -47,17 +47,11 @@ module.exports.build_event = (raw_data)->
       
       if raw_data.type == "impression"
         increments["impressions"] = 1
-        
-        if temp.type == "cpm"
-          increments["quantity_needed"] = -1
       
       if raw_data.type == "click"
         increments["clicks"] = 1
-        
-        if temp.type == "cpc"
-          increments["quantity_needed"] = -1
       
-      temp.increment(increments)
+      return temp.increment(increments)
         
   .then ->
     if not raw_data.industry?
@@ -85,7 +79,7 @@ module.exports.build_event = (raw_data)->
       if raw_data.type == "click"
         increments["clicks"] = 1
       
-      temp.increment(increments)
+      return temp.increment(increments)
         
   .then ->
     if not raw_data.creative?
@@ -240,6 +234,6 @@ module.exports.track = (req, data)->
   data.referrer = req.get("referrer")
   data.ip = req.ip
   data.ips = req.ips
-  #data.recorded_at = new Date()
+  data.recorded_at = new Date()
   
   LIBS.queue.publish "event-queue", data
