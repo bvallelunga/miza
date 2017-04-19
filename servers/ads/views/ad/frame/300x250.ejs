@@ -24,7 +24,7 @@
         text-decoration: underline;
       }
       
-      table {
+      a table {
         width: 100%;
         height: 250px;
         background: white;
@@ -33,7 +33,7 @@
         border-collapse: collapse;
       }
       
-      table tr:first-child td {
+      a table tr:first-child td {
         padding: 0;
         margin: 0;
         background-position: center center;
@@ -41,7 +41,7 @@
         background-size: cover;
       }
       
-      table tr:nth-child(2) td {
+      a table tr:nth-child(2) td {
         font-family: "Arial";
         padding: 5px;
         box-sizing: border-box;
@@ -51,72 +51,6 @@
         height: 20px;
         box-sizing: border-box;
       }
-      
-      footer {
-        color: black;
-        float: right;
-        font-size: 11px;
-        margin-top: 4px;
-        color: #555555;
-        cursor: pointer;
-      }
-      
-      footer:hover {
-        text-decoration: underline;
-      }
-      
-      information {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: white;
-        font-size: 15px;
-        line-height: 20px;
-        padding: 10px;
-        box-sizing: border-box;
-        border: solid 1px rgba(0,0,0,0.1);
-        border-radius: 4px;
-        display: none;
-        background: #fbfbfb;
-        color: #6a6a6a;
-      }
-      
-      information a {
-        width: 150px;
-        margin: 10px auto 0;
-        border: solid 1px rgba(0,0,0,0.05);
-        text-align: center;
-        padding: 8px 0;
-        display: block;
-        background: rgba(0,0,0,0.1);
-        color: rgba(0,0,0,0.6);
-      }
-      
-      information table {
-        background: transparent;
-      }
-      
-      information a:hover {
-        text-decoration: none;
-        background: #FF0000;
-        color: white;
-      }
-      
-      information div {
-        text-align: center;
-        width: 100%;
-        color: #6a6a6a;
-        font-size: 12px;
-        margin-top: 5px;
-        cursor: pointer;
-      }
-      
-      information div:hover {
-        text-decoration: underline;
-      }
-
     </style>
     <script>
       window["<%= publisher.key %>"] = { 
@@ -134,37 +68,10 @@
         height: 280
       }, "*");
       
-      function showInformation() {
-        document.getElementsByTagName("information")[0].style.display = "block";
-      }
-      
-      function hideInformation() {
-        document.getElementsByTagName("information")[0].style.display = "none";
-      }
-      
       <%- miza_script %>
     </script>
   </head>
   <body>
-    <information>
-      <table>
-        <tr>
-          <td>
-            We love creating content that makes users 
-            like you happy every day. Without advertising
-            we would be forced to make you pay for the 
-            content we provide for free. 
-            <br><br>
-            But don't worry, our ads are relevant, 
-            stylish and unobtrusive. Hopefully you even find
-            some of them helpful! But if you would like to opt 
-            out of seeing our ads, you can deactivate them here.
-            <a href="/oo?demo=<%= demo %>">Stop Seeing Ads</a>
-            <div onclick="hideInformation()">Close Information</div>
-          </td> 
-        </tr>
-      </table>
-    </information>
     <a target="_blank" href="/<%= creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo) %>">
       <table>
         <tr>
@@ -177,11 +84,6 @@
         <% } %>
       </table>
     </a>
-    <% creative.trackers.forEach(function(tracker) { %>
-      <img src="/<%= new Buffer(tracker).toString("base64") %>?no-dl" width="0" height="0" style="display:none" />
-    <% }) %>
-    <footer onclick="showInformation()">
-      Why am I seeing this advertisement?
-    </footer>
+    <% include ./footer %>
   </body>
 </html>
