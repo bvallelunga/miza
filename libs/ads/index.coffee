@@ -47,9 +47,15 @@ module.exports.build_event = (raw_data)->
       
       if raw_data.type == "impression"
         increments["impressions"] = 1
+        
+        if temp.type == "cpm"
+          increments["quantity_needed"] = -1
       
       if raw_data.type == "click"
         increments["clicks"] = 1
+        
+        if temp.type == "cpc"
+          increments["quantity_needed"] = -1
       
       return temp.increment(increments)
         
