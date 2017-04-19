@@ -69,7 +69,6 @@ module.exports.build_event = (raw_data)->
       industry = {
         id: temp.industry_id
         name: temp.name
-        cpm: temp.cpm
       }
       
       billing = {

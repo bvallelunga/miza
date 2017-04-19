@@ -189,12 +189,7 @@ module.exports = (sequelize, DataTypes)->
         
       
       create_transfer: ->
-        Promise.props({
-          advertiser: @getAdvertiser()
-          industries: @getIndustries() 
-        }).then (data)=>
-          @industries = data.industries
-          
+        @getAdvertiser().then (advertiser)->         
           if @spend < 0.5
             return Promise.resolve()
 
@@ -206,7 +201,7 @@ module.exports = (sequelize, DataTypes)->
             amount: @spend
             advertiser_id: @advertiser_id
             campaign_id: @id
-            user_id: data.advertiser.owner_id
+            user_id: advertiser.owner_id
           })
           
         .then =>
