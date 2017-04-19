@@ -1,9 +1,9 @@
 module.exports = require("../template") {
   intervals: [
-    ["ads.end_campaign", "* * * * *"]
+    ["ads.end_campaign", "10 seconds"]
   ]
   config: {
-    priority: "high" 
+    priority: "low" 
   }
 }, (job)->
   LIBS.models.Campaign.findAll({
