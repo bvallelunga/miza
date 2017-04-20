@@ -1,8 +1,3 @@
-DATA_ERROR = {
-  success: false
-  error: "No Data Available"
-}
-
 moment = require "moment"
 
 module.exports.get = (req, res, next)->  
@@ -13,7 +8,7 @@ module.exports.get = (req, res, next)->
     }).catch (error)->
       LIBS.bugsnag.notify error
       console.log error
-      return DATA_ERROR
+      return LIBS.keen.errors.DATA
   
   month_timeframe = JSON.stringify({
     start: moment.utc().startOf("month").toDate()
@@ -34,7 +29,7 @@ module.exports.get = (req, res, next)->
     devices_chart: flattener query "publisher-device-protected-count"
     countries_chart: flattener query "publisher-country-protected-count"
     browsers_chart: flattener query "publisher-browser-protected-count"
-    ctr_count: DATA_ERROR
+    ctr_count: LIBS.keen.errors.DATA
   }).then (analytics)->         
     if analytics.devices_chart.result?
       for device in analytics.devices_chart.result
@@ -46,7 +41,7 @@ module.exports.get = (req, res, next)->
       analytics.protection_count.result = Number(analytics.protection_count.result.toFixed(2))
     
     else
-      analytics.protection_count = DATA_ERROR
+      analytics.protection_count = LIBS.keen.errors.DATA
     
     
     if analytics.fill_count.result? and analytics.impression_count.result?
@@ -54,7 +49,7 @@ module.exports.get = (req, res, next)->
       analytics.fill_count.result = Number analytics.fill_count.result.toFixed(2)
     
     else
-      analytics.fill_count = DATA_ERROR
+      analytics.fill_count = LIBS.keen.errors.DATA
     
     
     if analytics.click_count.result? and analytics.impression_count.result?
@@ -65,7 +60,7 @@ module.exports.get = (req, res, next)->
     
     for key, value of analytics
       if typeof value.result == "object" and value.result.length == 0
-        analytics[key] = DATA_ERROR
+        analytics[key] = LIBS.keen.errors.DATA
         continue
 
       analytics[key] = {

@@ -160,21 +160,55 @@ module.exports = (sequelize, DataTypes)->
         } 
       
       keen_datasets: ->
-        Promise.each ["Impression", "Click"], (event_type)->
-          event_lower = event_type.toLowerCase()
-          
-          LIBS.keen.createCachedDataset("campaign-#{event_lower}-analytics", {
-            display_name: "Campaign #{event_type} Analytics"
-            query: {
-              analysis_type: "count"
-              event_collection : "ads.event.#{event_lower}"
-              timeframe: "this_500_hours"
-              interval: "hourly"
-            }
+        Promise.resolve([
+          {
+            timezone: "UTC"
+            dataset_name: "campaign-impression-chart"
+            display_name: "Campaign Impression Chart"
+            analysis_type: "count"
+            event_collection : "ads.event.impression"
+            timeframe: "this_90_days"
+            interval: "daily"
+          }
+          {
+            timezone: "UTC"
+            dataset_name: "campaign-click-chart"
+            display_name: "Campaign Click Chart"
+            analysis_type: "count"
+            event_collection : "ads.event.click"
+            timeframe: "this_90_days"
+            interval: "daily"
+          }
+          {
+            timezone: "UTC"
+            dataset_name: "campaign-publisher-impression-count"
+            display_name: "Campaign Publisher Impression Count"
+            analysis_type: "count"
+            event_collection : "ads.event.impression"
+            timeframe: "this_90_days"
+            interval: "monthly"
+            group_by: [
+              "publisher.key"
+            ]
+          }
+          {
+            timezone: "UTC"
+            dataset_name: "campaign-publisher-click-count"
+            display_name: "Campaign Publisher Click Count"
+            analysis_type: "count"
+            event_collection : "ads.event.click"
+            timeframe: "this_90_days"
+            interval: "monthly"
+            group_by: [
+              "publisher.key"
+            ]
+          }
+        ]).each (query)->
+          LIBS.keen.createDataset(query.dataset_name, {
+            display_name: query.display_name
+            query: query
             index_by: ["campaign.id"]
-          })
-        
-        .catch(console.error)       
+          })       
     }
     
     instanceMethods: {

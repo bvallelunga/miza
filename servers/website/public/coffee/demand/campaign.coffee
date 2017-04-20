@@ -143,12 +143,11 @@ class Dashboard
     $.get("/demand/#{config.advertiser}/campaign/#{config.campaign}/charts").done (response)=>
       for name, data of response
         chart = @charts[name]
-                
-        if data.success
-          chart.data(data.result).render()
         
-        else 
-          chart.message(data.error)
+        chart.data(data[0]).call(->
+          ds2 = Keen.Dataset.parser('interval')(data[1])
+          this.dataset.appendColumn('Clicks', ds2.selectColumn(1).slice(1))
+        ).labels(["Impressions", "Clicks"]).render()
 
 
 

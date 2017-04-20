@@ -51,6 +51,13 @@ module.exports = ->
     
   keen.fetchDataset = (name, data)->
     name = "#{CONFIG.keen.prefix}-#{name}"      
-    keen.request "get", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}/results", data      
+    keen.request "get", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}/results", data  
+    
+  keen.errors = {
+    DATA: {
+      success: false
+      error: "No Data Available"
+    }
+  } 
     
   return keen
