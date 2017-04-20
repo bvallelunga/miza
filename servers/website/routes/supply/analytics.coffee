@@ -3,20 +3,27 @@ DATA_ERROR = {
   error: "No Data Available"
 }
 
+moment = require "moment"
+
 module.exports.get = (req, res, next)->  
-  query = (query_name)->
+  query = (query_name, timeframe)->
     LIBS.keen.fetchDataset(query_name, {
       index_by: req.publisher.key
-      timeframe: "this_1_months"
+      timeframe: timeframe or "this_1_months"
     }).catch (error)->
       LIBS.bugsnag.notify error
       console.log error
       return DATA_ERROR
   
+  month_timeframe = JSON.stringify({
+    start: moment.utc().startOf("month").toDate()
+    end: moment.utc().startOf("day").toISOString()
+  })
+  
   Promise.props({
     impressions_chart: Promise.all([
-      query "publisher-impression-chart"
-      query "publisher-click-chart"
+      query "publisher-impression-chart", month_timeframe
+      query "publisher-click-chart", month_timeframe
     ])
     impression_count: flattener query "publisher-impression-count"
     click_count: flattener query "publisher-click-count"

@@ -231,8 +231,8 @@ $ ->
   
   Keen.ready ->
     dashboard.update {
-      start: moment().startOf("month").toDate()
-      end: moment().endOf("month").toDate()
+      start: moment.utc().startOf("month").toDate()
+      end: moment.utc().add(1, "day").startOf("day").toDate()
     }
 #     new DatePicker ".analytics-dashboard", (dates, finished)->
 #       dashboard.update dates, finished
