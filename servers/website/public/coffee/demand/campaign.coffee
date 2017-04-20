@@ -144,10 +144,11 @@ class Dashboard
       for name, data of response
         chart = @charts[name]
         
-        chart.data(data[0]).call(->
-          ds2 = Keen.Dataset.parser('interval')(data[1])
-          this.dataset.appendColumn('Clicks', ds2.selectColumn(1).slice(1))
-        ).labels(["Impressions", "Clicks"]).render()
+        chart.data(data.result).render()
+#         chart.data(data[0]).call(->
+#           ds2 = Keen.Dataset.parser('interval')(data[1])
+#           this.dataset.appendColumn('Clicks', ds2.selectColumn(1).slice(1))
+#         ).labels(["Impressions", "Clicks"]).render()
 
 
 

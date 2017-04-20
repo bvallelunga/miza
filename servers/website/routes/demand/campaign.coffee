@@ -63,40 +63,138 @@ module.exports.get_industries = (req, res, next)->
     }
   
   .catch next
-  
+
   
 module.exports.get_publishers = (req, res, next)->
-  end_date = req.campaign.end_at or new Date()
-  month_timeframe = JSON.stringify({
-    start: moment.utc().startOf("month").toDate()
-    end: moment.utc(end_date).add(1, "day").startOf("day").toISOString()
-  })
+  req.campaign.getIndustries().then (industries)->
+    targeting = industries[0].targeting
+    end_date = req.campaign.end_at or new Date()
   
-  query = (query_name)->
-    LIBS.keen.fetchDataset(query_name, {
-      index_by: req.campaign.id
-      timeframe: month_timeframe
-    }).catch (error)->
-      LIBS.bugsnag.notify error
-      console.log error
-      return LIBS.keen.errors.DATA
-  
-  # TODO: Once cache is built, finish mapping
-  #       impressions & clicks to publishers
-  Promise.props({
-    impressions: query "campaign-publisher-impression-count"
-    clicks: query "campaign-publisher-click-count"
-  }).then (data)->
-    console.log data.impressions
-  
-
-  Promise.resolve([]).then (publishers)->
+    LIBS.models.Publisher.findAll({
+      where: {
+        is_activated: true
+      }
+      order: "name ASC"
+      include: [{
+        model: LIBS.models.Industry
+        as: "industry"
+      }]
+    }).map (publisher)->
+      if not targeting.blocked_publishers?
+        targeting.blocked_publishers = []
+    
+      if targeting.blocked_publishers.indexOf(publisher.key) == -1
+        status = "Enabled"
+      else
+        status = "Blocked"
+        
+      client = LIBS.keen.scopedAnalysis(publisher.config.keen)
+    
+      query = (type)->      
+        client.query("count", {
+          event_collection: "ads.event.#{type}"
+          timeframe: {
+            start: req.campaign.start_at
+            end: end_date
+          }
+          filters: [{
+            "operator": "eq"
+            "property_name": "campaign.id"
+            "property_value": req.campaign.id
+          }]
+        }).then (response)->    
+          return response.result
+    
+      return Promise.props({
+        impressions: query "impression"
+        clicks: query "click"
+        ctr: 0
+      }).then (metrics)->      
+        metrics.ctr = numeral(metrics.clicks/Math.max(metrics.impressions or 1)).format("0[.]00%")
+        metrics.impressions = numeral(metrics.impressions).format("0[,]000")
+        metrics.clicks = numeral(metrics.clicks).format("0[,]000")
+        
+        return {
+          id: publisher.key
+          name: publisher.name
+          status: status
+          industry: publisher.industry.name
+          metrics: metrics
+        }
+    
+  .then (publishers)->
     res.json {
       success: true
       results: publishers
     }
     
   .catch next
+  
+
+module.exports.get_charts = (req, res, next)->
+  client = LIBS.keen.scopedAnalysis req.advertiser.config.keen
+  end_date = req.campaign.end_at or new Date()
+  
+  query = (operation, collection, query)->
+    query.event_collection = "ads.event.#{collection}"
+    query.timeframe = {
+      start: req.campaign.start_at
+      end: end_date
+    }
+    client.query(operation, query).then (response)->    
+      return {
+        success: true
+        result: response
+      }
+      
+   Promise.props({
+    impressions_chart: query "count", "impression", {
+      interval: "daily"
+      group_by: [ "type" ]
+      filters: [{
+        "operator": "eq"
+        "property_name": "campaign.id"
+        "property_value": req.campaign.id
+      }]
+    }
+  }).then (charts)->
+    res.json(charts) 
+  
+  .catch next
+  
+  
+# module.exports.get_publishers = (req, res, next)->
+#   end_date = req.campaign.end_at or new Date()
+#   month_timeframe = JSON.stringify({
+#     start: moment.utc().startOf("month").toDate()
+#     end: moment.utc(end_date).add(1, "day").startOf("day").toISOString()
+#   })
+#   
+#   query = (query_name)->
+#     LIBS.keen.fetchDataset(query_name, {
+#       index_by: req.campaign.id
+#       timeframe: month_timeframe
+#     }).catch (error)->
+#       LIBS.bugsnag.notify error
+#       console.log error
+#       return LIBS.keen.errors.DATA
+#   
+#   # TODO: Once cache is built, finish mapping
+#   #       impressions & clicks to publishers
+#   Promise.props({
+#     impressions: query "campaign-publisher-impression-count"
+#     clicks: query "campaign-publisher-click-count"
+#   }).then (data)->
+#     console.log data.impressions
+#   
+# 
+#   Promise.resolve([]).then (publishers)->
+#     res.json {
+#       success: true
+#       results: publishers
+#     }
+#     
+#   .catch next
   
 #   req.campaign.getIndustries().then (industries)->
 #     targeting = industries[0].targeting
@@ -155,31 +253,33 @@ module.exports.get_publishers = (req, res, next)->
 #         }
   
 
-module.exports.get_charts = (req, res, next)->
-  end_date = req.campaign.end_at or new Date()
-  month_timeframe = JSON.stringify({
-    start: moment.utc().startOf("month").toDate()
-    end: moment.utc(end_date).add(1, "day").startOf("day").toISOString()
-  })
-  
-  query = (query_name)->
-    LIBS.keen.fetchDataset(query_name, {
-      index_by: req.campaign.id
-      timeframe: month_timeframe
-    }).catch (error)->
-      LIBS.bugsnag.notify error
-      console.log error
-      return LIBS.keen.errors.DATA
-  
-  Promise.props({
-    impressions_chart: Promise.all([
-      query "campaign-impression-chart"
-      query "campaign-click-chart"
-    ])
-  }).then (charts)->  
-    res.json(charts) 
-  
-  .catch next
+# module.exports.get_charts = (req, res, next)->
+#   end_date = req.campaign.end_at or new Date()
+#   month_timeframe = JSON.stringify({
+#     start: moment.utc(req.campaign.start_at).startOf("day").toISOString()
+#     end: moment.utc(end_date).add(2, "day").startOf("day").toISOString()
+#   })
+#   
+#   query = (query_name)->
+#     LIBS.keen.fetchDataset(query_name, {
+#       index_by: req.campaign.id
+#       timeframe: month_timeframe
+#     }).catch (error)->
+#       LIBS.bugsnag.notify error
+#       console.log error
+#       return LIBS.keen.errors.DATA
+#   
+#   Promise.props({
+#     impressions_chart: Promise.all([
+#       query "campaign-impression-chart"
+#       query "campaign-click-chart"
+#     ])
+#   }).then (charts)->  
+#     console.log charts.impressions_chart[0].metadata
+#   
+#     res.json(charts) 
+#   
+#   .catch next
   
   
   
@@ -247,10 +347,10 @@ module.exports.post_publishers = (req, res, next)->
 
 module.exports.post_create = (req, res, next)-> 
   if not req.body.creative.image_url.length > 0
-    return next "Please make sure you have uploaded an image for your creative."
+    return next "Please make sure you have uploaded an image for your creative"
     
   if not req.body.creative.link.length > 0
-    return next "Please make sure you have a click link for your creative."
+    return next "Please make sure you have a click link for your creative"
       
   Promise.resolve().then ->
     query = {
@@ -274,11 +374,17 @@ module.exports.post_create = (req, res, next)->
     bid = Number req.body.bid
     budget = Number req.body.budget
     
-    if bid == NaN or bid < 0.1
-      return Promise.reject "Please make sure you entered a valid bid."
+    if bid == NaN
+      return Promise.reject "Please make sure you entered a valid bid"
       
-    if budget == NaN or budget < 1
-      return Promise.reject "Please make sure you entered a valid budget."
+    if bid < 0.02
+      return Promise.reject "Please make sure your bid is at least $0.02"
+      
+    if budget == NaN
+      return Promise.reject "Please make sure you entered a valid budget"
+      
+    if budget < 2
+      return Promise.reject "Please make sure your budget is at least $2"
     
     start_date = moment(req.body.start_date, "MM-DD-YYYY")
     start_date = if start_date.isValid() then start_date.startOf("day").toDate() else null

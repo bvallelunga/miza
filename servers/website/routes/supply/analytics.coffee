@@ -12,7 +12,7 @@ module.exports.get = (req, res, next)->
   
   month_timeframe = JSON.stringify({
     start: moment.utc().startOf("month").toDate()
-    end: moment.utc().add(1, "day").startOf("day").toISOString()
+    end: moment.utc().add(2, "day").startOf("day").toISOString()
   })
   
   Promise.props({
