@@ -25,8 +25,9 @@ module.exports = ->
   
   keen.request = (method, url, data)->
     new Promise (res, rej)->
-      request[method](url)
-        .send(data)
+      params = if method == "get" then "query" else "send"
+      
+      request[method](url)[params](data)
         .set('Authorization', CONFIG.keen.masterKey)
         .set('Content-Type', 'application/json')
         .end (error, result)->
@@ -34,39 +35,22 @@ module.exports = ->
           return res result.body
   
   
-  keen.createCachedDataset = (name, data, force=false)->            
-    Promise.resolve().then ->
-      return keen.request "get", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}"
+  keen.deleteDatasets = ->
+    keen.request("get", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets").then (response)->
+      Promise.each response.datasets, (dataset)->
+        console.log "KEEN Dataset Deleted: #{dataset.dataset_name}"
+        keen.request("delete", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{dataset.dataset_name}")
+  
+  
+  keen.createDataset = (name, data)->  
+    name = "#{CONFIG.keen.prefix}-#{name}"        
+    console.log "KEEN Dataset Created: #{name}"
+    keen.request("put", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}", data).catch (error)->
+      console.log error
+  
     
-    .then (definition)->
-      to_delete = (a, b)->
-        if typeof a != "object" or typeof b != "object"
-          return a != b
-      
-        for key, value of a
-          if typeof value == "object"
-            if to_delete(value, b[key])
-              return true
-          else if value != b[key]
-            return true
-        
-        return false
-     
-      if to_delete(data, definition)
-        console.log "KEEN Dataset Deleted: #{name}"
-        return keen.request "delete", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}"
-        
-      return false   
-    
-    .catch (error)->
-      return Promise.resolve(true) 
-         
-    .then (create)->
-      if create != false
-        console.log "KEEN Dataset Created: #{name}"
-        keen.request "put", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}", data
-    
-    .catch console.error
-    
+  keen.fetchDataset = (name, data)->
+    name = "#{CONFIG.keen.prefix}-#{name}"      
+    keen.request "get", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}/results", data      
     
   return keen

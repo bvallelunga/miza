@@ -68,16 +68,7 @@ module.exports.get_industries = (req, res, next)->
 module.exports.get_publishers = (req, res, next)->
   req.campaign.getIndustries().then (industries)->
     targeting = industries[0].targeting
-    end_date = req.campaign.end_at
-    
-    if not end_date?
-      today = new Date()
-      shift = req.campaign.start_at
-      
-      if today > shift
-        shift = today
-      
-      end_date = moment(shift).add(1, "month").toDate()
+    end_date = req.campaign.end_at or new Date()
   
     LIBS.models.Publisher.findAll({
       where: {
@@ -142,16 +133,7 @@ module.exports.get_publishers = (req, res, next)->
 
 module.exports.get_charts = (req, res, next)->
   client = LIBS.keen.scopedAnalysis req.advertiser.config.keen
-  end_date = req.campaign.end_at
-  
-  if not end_date?
-    today = new Date()
-    shift = req.campaign.start_at
-    
-    if today > shift
-      shift = today
-    
-    end_date = moment(shift).add(1, "month").toDate()
+  end_date = req.campaign.end_at or new Date()
   
   query = (operation, collection, query)->
     query.event_collection = "ads.event.#{collection}"

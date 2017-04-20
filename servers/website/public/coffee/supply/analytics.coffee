@@ -212,6 +212,9 @@ class Dashboard
             ).labels(["Impressions", "Clicks"]).render()
           
           else
+            if data.result.result == null
+              data.result.result = NaN
+            
             chart.data(data.result).sortGroups("desc").render()
         
         else 
@@ -228,8 +231,8 @@ $ ->
   
   Keen.ready ->
     dashboard.update {
-      start: moment().startOf("month").toDate()
-      end: moment().endOf("month").toDate()
+      start: moment.utc().startOf("month").toDate()
+      end: moment.utc().add(1, "day").startOf("day").toDate()
     }
 #     new DatePicker ".analytics-dashboard", (dates, finished)->
 #       dashboard.update dates, finished
