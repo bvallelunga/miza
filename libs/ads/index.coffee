@@ -25,7 +25,7 @@ module.exports.build_event = (raw_data)->
   
     LIBS.models.Advertiser.findById(raw_data.advertiser).then (temp)->      
       advertiser = {
-        id: temp.id
+        id: String(temp.id)
         key: temp.key
         name: temp.name
       }
@@ -38,7 +38,7 @@ module.exports.build_event = (raw_data)->
       if not temp? then return
       
       campaign = {
-        id: temp.id
+        id: String(temp.id)
         name: temp.name
         type: temp.type
       }
@@ -67,7 +67,7 @@ module.exports.build_event = (raw_data)->
       if not temp? then return
            
       industry = {
-        id: temp.industry_id
+        id: String(temp.industry_id)
         name: temp.name
       }
       
@@ -95,7 +95,7 @@ module.exports.build_event = (raw_data)->
       if not temp? then return
         
       creative = {
-        id: temp.id
+        id: String(temp.id)
         format: temp.format
       }
     
@@ -115,7 +115,7 @@ module.exports.build_event = (raw_data)->
       asset_url: raw_data.asset_url
       product: raw_data.publisher.product
       publisher: {
-        id: raw_data.publisher.id
+        id: String(raw_data.publisher.id)
         name: raw_data.publisher.name
         key: raw_data.publisher.key
       }
