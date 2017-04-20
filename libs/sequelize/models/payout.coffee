@@ -152,9 +152,27 @@ module.exports = (sequelize, DataTypes)->
             return response.result
               
         Promise.props({
-          revenue: run_query("sum", "impression", {})
+          impressions: run_query("count", "impression", {})
           clicks: run_query("count", "click", {})
-        })
+          revenue_impressions: run_query("sum", "impression", {
+            target_property: "billing.amount"
+            filters: [{
+              "operator": "gt",
+              "property_name": "billing.amount",
+              "property_value": 0
+            }]
+          })
+          revenue_clicks: run_query("sum", "click", {
+            target_property: "billing.amount"
+            filters: [{
+              "operator": "gt",
+              "property_name": "billing.amount",
+              "property_value": 0
+            }]
+          })
+        }).then (data)->
+          data.revenue = data.revenue_impressions + data.clicks
+          return data
         
         
       generate_transfers: ->     
