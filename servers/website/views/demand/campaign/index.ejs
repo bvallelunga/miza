@@ -13,12 +13,16 @@
         <div class="title"><%= campaign.name %></div>
       </td>
       <td class="section">
+        <div class="decription">Pricing</div>
+        <div class="title uppercase"><%= campaign.type %></div>
+      </td>
+      <td class="section">
         <div class="decription">Status</div>
         <div class="title cap"><%= campaign.status %></div>
       </td>
       <td class="section">
-        <div class="decription">Progress</div>
-        <div class="title cap"><%= campaign.metrics.progress %></div>
+        <div class="decription">Bid</div>
+        <div class="title orange"><%= campaign.metrics.amount %></div>
       </td>
       <td class="section">
         <div class="decription">Budget</div>
@@ -59,6 +63,10 @@
 <div class="display full">
   <table class="top-bar"> 
     <tr> 
+      <td class="section">
+        <div class="decription">Progress</div>
+        <div class="title cap"><%= campaign.metrics.progress %></div>
+      </td>
       <td class="section">
         <div class="decription">Impressions</div>
         <div class="title"><%= campaign.metrics.impressions %></div>
