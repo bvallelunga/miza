@@ -68,7 +68,10 @@
         <div class="title cap"><%= campaign.metrics.progress %></div>
       </td>
       <td class="section">
-        <div class="decription">Impressions</div>
+        <div class="decription">
+          Impressions
+          <span class="info fa fa-info-circle tooltip" title="How many people viewed the ad."></span>
+        </div>
         <div class="title"><%= campaign.metrics.impressions %></div>
       </td>
       <td class="section">
@@ -76,7 +79,9 @@
         <div class="title cap"><%= campaign.metrics.clicks %></div>
       </td>
       <td class="section">
-        <div class="decription">CTR</div>
+        <div class="decription">
+          CTR <span class="info fa fa-info-circle tooltip" title="Click through rate. How many people<br>viewed the ad and then clicked."></span>
+        </div>
         <div class="title cap"><%= campaign.metrics.ctr %></div>
       </td>
       <td class="section">
@@ -160,7 +165,7 @@
     </tr>
     <tr>
       <td class="section">
-        <div class="decription">Trackers</div>
+        <div class="decription">Impression Trackers</div>
         <div class="title"><%= campaign.creatives[0].trackers.filter(function(str) {
           return str.length > 0
         }).length %></div>
