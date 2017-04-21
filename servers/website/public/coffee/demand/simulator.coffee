@@ -2,15 +2,9 @@ $ ->
   simulator_update = ->
     $simulator = $(".simulator")
     img = $(".simulator-image").val()
-    text = $(".simulator-description").val()
-      .replace(/&/g, '&amp;')
-      .replace(/>/g, '&gt;')
-      .replace(/</g, '&lt;')
-      .replace(/\n/g, '<br>')
   
-    $simulator.find("strong").toggle (text or img) == ""
+    $simulator.find("strong").toggle img == ""
     $simulator.find("a").attr "href", $(".simulator-link").val() or "#"
-    $simulator.find("div").html(text).toggle(text.length > 0)
     $simulator.find("img").attr("src", img).toggle(img.length > 0)
     
   

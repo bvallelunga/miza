@@ -342,7 +342,6 @@ module.exports.post_create = (req, res, next)->
             advertiser_id: req.advertiser.id
             campaign_id: campaign.id
             link: campaign.utm_link(req.body.creative.link)
-            description: req.body.creative.description
             trackers: req.body.creative.trackers.split("\n")
             format: "300 x 250"
             image: image
