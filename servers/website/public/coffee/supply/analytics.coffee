@@ -30,7 +30,7 @@ class Dashboard
             tick: {
               outer: false
               format: (x)-> 
-                return if parseInt(x) == x then x else null
+                return if parseInt(x) == x then numeral(x).format("1a") else null
             }
           }
         }
