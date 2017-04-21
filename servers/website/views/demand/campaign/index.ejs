@@ -48,12 +48,18 @@
                 Run
               </div>
             <% } %>
+            <div class="action" data-action="completed" data-confirm="Please confirm you want to archive!">
+              <span class="fa fa-archive"></span>
+              <span class="fa fa-spin fa-refresh" style="display:none"></span>
+              Archive
+            </div>
+          <% } else { %>
+            <div class="action" data-action="delete" data-confirm="Please confirm you want to delete!">
+              <span class="fa fa-trash"></span>
+              <span class="fa fa-spin fa-refresh" style="display:none"></span>
+              Delete
+            </div>
           <% } %>
-          <div class="action" data-action="delete" data-confirm="Please confirm you want to delete!">
-            <span class="fa fa-trash"></span>
-            <span class="fa fa-spin fa-refresh" style="display:none"></span>
-            Delete
-          </div>
         </div>
       </td>
     </tr>

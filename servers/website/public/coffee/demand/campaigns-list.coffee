@@ -24,8 +24,9 @@ class Dashboard
     $(".actions .action").click (e)=>
       action = $(e.currentTarget).data("action")
       campaigns = $.makeArray @data_table.column(0).checkboxes.selected()
+      confirm_text = $(e.currentTarget).data("confirm")
       
-      if campaigns.length == 0 or action == "delete" and not confirm("Please confirm you want to delete!")
+      if campaigns.length == 0 or confirm_text? and not confirm(confirm_text)
         return
       
       $spinner = $(e.currentTarget).find(".fa-spin").show()
