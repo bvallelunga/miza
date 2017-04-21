@@ -103,32 +103,32 @@
           </tr>
           <tr>
             <td>
-              <% if(user.is_admin) { %>
-                <div class="input-extension">
-                  <input class="simulator-watch simulator-link input" type="url" name="creative[link]" placeholder="Click Link" required/>
-                  <div class="extension">
-                    <div class="left">
-                      Ad-Free Browsing
-                    </div>
-                    <div class="group right">
-                      <div class="fa fa-sort"></div>
-                      <select class="input" name="creative[disable_incentive]">
-                        <option value="" selected>Disabled</option>
-                        <option value="30">30 mins</option>
-                        <option value="60">1 hour</option>
-                        <option value="720">12 hours</option>
-                        <option value="1440">1 day</option>
-                        <option value="10080">1 week</option>
-                        <option value="43200">1 month</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              <% } else { %>
-                <input class="simulator-watch simulator-link input" type="url" name="creative[link]" placeholder="Click Link" required/>
-              <% } %>
+              <input class="simulator-watch simulator-link input" type="url" name="creative[link]" placeholder="Click Link" required/>
             </td>
           </tr>
+          <% if(user.is_admin) { %>
+            <tr>
+              <td>
+                <div class="input input-extension">
+                  <div class="left">
+                    Ad-Free Browsing after Click
+                  </div>
+                  <div class="group right">
+                    <div class="fa fa-sort"></div>
+                    <select class="input" name="creative[disable_incentive]">
+                      <option value="" selected>Disabled</option>
+                      <option value="30">30 mins</option>
+                      <option value="60">1 hour</option>
+                      <option value="720">12 hours</option>
+                      <option value="1440">1 day</option>
+                      <option value="10080">1 week</option>
+                      <option value="43200">1 month</option>
+                    </select>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <% } %>
         </table>
       </div>
       <div class="right split half">

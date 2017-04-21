@@ -290,53 +290,44 @@ body {
     opacity: .8;
   }
   
-  .input-extension {
+  .input.input-extension {  
+    padding-top: 10px;
+    padding-bottom: 10px;
+    .clearfix();
+          
     input:not([type="checkbox"]), .input,
     textarea, .textarea {
       padding-bottom: 21px;
     }
-  
-    & > div {
-      background: @blue;
-      padding: 7px 15px;
-      color: #3b5468;
-      border: 1px solid solid 1px rgba(0,0,0,0.2);
-      font-size: 16px;
-      position: relative;
-      top: -5px;
-      color: white;
-      .border-radius(0 0 5px 5px);
-      .clearfix();
-      
-      .left {
-        margin-top: 5px;
-      }
-      
-      span.bubble {
-        font-size: 0.7em !important;
-        margin: 0 6px 0 0 !important;
-      }
-     
-      .group {        
-        .input {
-          padding-right: 30px;
-        }
-        
-        .fa {
-          top: 8px !important;
-          right: 8px !important;
-          color: rgba(255, 255, 255, 0.5) !important;
-        }
-      } 
-      
+    
+    .left {
+      margin-top: 5px;
+    }
+    
+    span.bubble {
+      font-size: 0.7em !important;
+      margin: 0 6px 0 0 !important;
+    }
+   
+    .group {        
       .input {
-        width: inherit;
-        padding: 5px;
-        background: rgba(0,0,0,0.2);
-        color: white;
-        border: solid 1px rgba(0,0,0,0.1);
-        .box-shadow(none);
+        padding-right: 30px;
       }
+      
+      .fa {
+        top: 8px !important;
+        right: 8px !important;
+        color: rgba(255, 255, 255, 0.5) !important;
+      }
+    } 
+    
+    .input {
+      width: inherit;
+      padding: 5px;
+      background: @blue;
+      color: white;
+      border: solid 1px rgba(0,0,0,0.1);
+      .box-shadow(none);
     }
   }
   
@@ -349,7 +340,6 @@ body {
     font-size: 16px;
     padding: 16px 15px;
     margin: 0;
-    resize: vertical;
     .box-shadow(0 0 0px 1000px #fafbfc inset);
     .border-radius(5px);
     
@@ -372,6 +362,10 @@ body {
       margin: inherit;
       .box-shadow(none);
       .border-radius(0);
+    }
+    
+    &textarea, &.textarea {
+      resize: vertical;
     }
   }
   
