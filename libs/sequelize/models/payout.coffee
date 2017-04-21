@@ -104,15 +104,7 @@ module.exports = (sequelize, DataTypes)->
             as: "campaign"
             paranoid: false
             where: {
-              $or: [{
-                end_at: {
-                  $lte: @end_at
-                }
-              }, {
-                deleted_at: {
-                  $lte: @end_at
-                }
-              }]
+              status: "completed"
             }
           }]
         })
@@ -171,6 +163,7 @@ module.exports = (sequelize, DataTypes)->
             }]
           })
         }).then (data)->
+          console.log campaigns, data
           data.revenue = data.revenue_impressions + data.clicks
           return data
         

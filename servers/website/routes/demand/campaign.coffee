@@ -74,7 +74,7 @@ module.exports.get_publishers = (req, res, next)->
   
   query = (query_name)->
     LIBS.keen.fetchDataset(query_name, {
-      index_by: req.campaign.id
+      index_by: String(req.campaign.id)
       timeframe: month_timeframe
     }).catch (error)->
       LIBS.bugsnag.notify error
@@ -83,11 +83,11 @@ module.exports.get_publishers = (req, res, next)->
   
   # TODO: Once cache is built, finish mapping
   #       impressions & clicks to publishers
-  Promise.props({
-    impressions: query "campaign-publisher-impression-count"
-    clicks: query "campaign-publisher-click-count"
-  }).then (data)->
-    console.log data.impressions
+#   Promise.props({
+#     impressions: query "campaign-publisher-impression-count"
+#     clicks: query "campaign-publisher-click-count"
+#   }).then (data)->
+#     console.log data.impressions
   
 
   Promise.resolve([]).then (publishers)->
@@ -164,7 +164,7 @@ module.exports.get_charts = (req, res, next)->
   
   query = (query_name)->
     LIBS.keen.fetchDataset(query_name, {
-      index_by: req.campaign.id
+      index_by: String(req.campaign.id)
       timeframe: month_timeframe
     }).catch (error)->
       LIBS.bugsnag.notify error
@@ -177,8 +177,7 @@ module.exports.get_charts = (req, res, next)->
       query "campaign-click-chart"
     ])
   }).then (charts)->  
-    console.log charts.impressions_chart[0].metadata
-  
+    console.log charts.impressions_chart[0].metadata 
     res.json(charts) 
   
   .catch next

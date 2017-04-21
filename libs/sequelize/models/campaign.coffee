@@ -223,7 +223,7 @@ module.exports = (sequelize, DataTypes)->
         
       
       create_transfer: ->
-        @getAdvertiser().then (advertiser)->         
+        @getAdvertiser().then (advertiser)=>       
           if @spend < 0.5
             return Promise.resolve()
 
