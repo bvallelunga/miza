@@ -17,7 +17,7 @@ API.impression_check = function(iframe) {
     ((window.innerWidth || document.documentElement.clientWidth) - rect.right) >= buffer
   )
   
-  if(in_view && iframe.contentWindow) {
+  if(in_view && !!iframe.contentWindow) {
     iframe.contentWindow.postMessage({
       name: "frame.impression"
     }, "*")
