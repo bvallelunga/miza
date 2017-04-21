@@ -59,7 +59,7 @@
         advertiser: "<%= creative.advertiser_id || "" %>",
         campaign: "<%= creative.campaign_id || "" %>",
         industry: "<%= creative.industry_id || "" %>"
-      };      
+      };
       
       window.parent.window.postMessage({
         name: "frame.show",
@@ -68,7 +68,9 @@
         height: 280
       }, "*");
       
-      <%- miza_script %>
+      <% if(!demo) { %>
+        <%- miza_script %>
+      <% } %>
     </script>
   </head>
   <body>

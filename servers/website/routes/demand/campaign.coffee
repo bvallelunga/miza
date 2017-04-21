@@ -177,7 +177,6 @@ module.exports.get_charts = (req, res, next)->
       query "campaign-click-chart"
     ])
   }).then (charts)->  
-    console.log charts.impressions_chart[0].metadata 
     res.json(charts) 
   
   .catch next

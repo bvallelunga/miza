@@ -56,7 +56,7 @@
   </table>
 </div>
 
-<div class="display split core-information left padded">
+<div class="display full">
   <table class="top-bar"> 
     <tr> 
       <td class="section">
@@ -87,23 +87,6 @@
       <div class="chart impressions"></div>
     </div>
   </div>
-</div>
-
-<div class="display split simulator-container right">
-  <div class="top-bar">
-    <div class="section split half left">
-      <div class="decription">Creative</div>
-      <div class="title"><%= campaign.creatives[0].format %> </div>
-    </div>
-    <div class="section split half right">
-      <div class="decription">Format</div>
-      <div class="title">Image <%= campaign.creatives[0].description ? " + Text" : "" %></div>
-    </div>
-    <div class="clear"></div>
-  </div>
-  <iframe class="simulator-iframe" 
-    src="<%= campaign.creatives[0].demo_frame() %>"></iframe>
-  <br>
 </div>
 
 <div class="display full table">
@@ -150,6 +133,40 @@
       </thead>
       <tbody></tbody>
     </table>
+  </div>
+</div>
+
+<div class="display full creative-container">
+  <table class="top-bar creative-info left"> 
+    <tr> 
+      <td class="section">
+        <div class="decription">Creative</div>
+        <div class="title capitalize"><%= campaign.creatives[0].format %></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="section">
+        <div class="decription">Format</div>
+        <div class="title capitalize">Image <%= campaign.creatives[0].description ? " + Text" : "" %></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="section">
+        <div class="decription">Trackers</div>
+        <div class="title"><%= campaign.creatives[0].trackers.filter(function(str) {
+          return str.length > 0
+        }).length %></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="section">
+        <div class="decription">Click URL</div>
+        <a class="title" target="_blank" href="<%= campaign.creatives[0].link %>"><%= campaign.creatives[0].link.slice(0,42) %>...</a>
+      </td>
+    </tr>
+  </table>
+  <div class="simulator-container right">
+    <div><iframe class="simulator-iframe right" data-src="<%= campaign.creatives[0].demo_frame() %>"></iframe></div>
   </div>
 </div>
 

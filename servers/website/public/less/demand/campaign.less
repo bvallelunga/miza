@@ -8,20 +8,53 @@
     min-height: 250px;
   }
   
-  &.split.core-information {
-    width: 62% !important;
-    height: 382px;
-  }
-  
-  &.split.simulator-container {
-    width: 36.5% !important;
-    height: 382px;
+  &.creative-container {
+/*
+    background-color: #38A0DC;
+    background: url("/imgs/transparent.png");
+    background-repeat: repeat;
+*/
+    color: white;
+    font-size: 1.1em;
+    min-height: 375px;
+    .clearfix();
     
-    .simulator-iframe {
-      width: 300px;
-      height: 280px;
-      margin: 0 auto;
-      display: block;
+    .creative-info {
+      width: 30%;
+      
+      .section {
+        width: 100%;
+        
+        a {
+          color: @blue !important;
+          
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+        
+        .decription {
+          word-wrap: break-word;
+          width: 100%;
+        }
+        
+        .title {
+          width: 100%;
+          word-wrap: break-word;
+          word-break: break-all;
+        }
+      }
+    }
+  
+    .simulator-container {
+      width: 70% !important;
+      min-height: 100%;
+      padding: 30px;
+      .box-sizing(border-box);
+      
+      iframe {
+        display: none;  
+      }
     }
   }
 
