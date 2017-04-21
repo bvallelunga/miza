@@ -116,7 +116,7 @@ class Dashboard
               outer: false
               format: (x)-> 
                 console.log x
-                return if parseInt(x) == x then numeral(x).format("1a") else null
+                return if parseInt(x) == x then numeral(x).format("1[.]0a") else null
             }
           }
         }
