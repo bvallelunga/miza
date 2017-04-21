@@ -115,7 +115,6 @@ class Dashboard
             tick: {
               outer: false
               format: (x)-> 
-                console.log x
                 return if parseInt(x) == x then numeral(x).format("1[.]0a") else null
             }
           }
