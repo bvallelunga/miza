@@ -66,34 +66,74 @@ module.exports.get_industries = (req, res, next)->
   
   
 module.exports.get_publishers = (req, res, next)->
-  req.campaign.getIndustries().then (industries)->
-    targeting = industries[0].targeting
-    end_date = req.campaign.end_at or new Date()
+  end_date = req.campaign.end_at or new Date()
+  months = Math.max 1, moment.duration(end_date - req.campaign.start_at).months()
+  month_timeframe = "this_#{months}_months"
   
-    LIBS.models.Publisher.findAll({
-      where: {
-        is_activated: true
-      }
-      order: "name ASC"
-      include: [{
-        model: LIBS.models.Industry
-        as: "industry"
-      }]
-    }).map (publisher)->
-      if not targeting.blocked_publishers?
-        targeting.blocked_publishers = []
+  query = (query_name)->
+    LIBS.keen.fetchDataset(query_name, {
+      index_by: String(req.campaign.id)
+      timeframe: month_timeframe
+    }).then (response)->
+      return response.result.map (data)-> data.value
+  
+  Promise.props({
+    impressions: query "campaign-publisher-impression-count"
+    clicks: query "campaign-publisher-click-count"
+  }).then (data)->
+    metrics = {
+      impressions: {}
+      clicks: {}
+    }
     
-      if targeting.blocked_publishers.indexOf(publisher.key) == -1
-        status = "Enabled"
-      else
-        status = "Blocked"
-                
-      return {
-        id: publisher.key
-        name: publisher.name
-        status: status
-        industry: publisher.industry.name
-      }
+    for name, intervals of data    
+      for interval in intervals
+        for publishers in interval
+          key = publishers["publisher.key"]
+          if not metrics[name][key]?
+            metrics[name][key] = 0
+            
+          metrics[name][key] += publishers["result"]
+        
+    return metrics
+    
+  .then (metrics)->
+    req.campaign.getIndustries().then (industries)->
+      targeting = industries[0].targeting
+      end_date = req.campaign.end_at or new Date()
+    
+      LIBS.models.Publisher.findAll({
+        where: {
+          is_activated: true
+        }
+        order: "name ASC"
+        include: [{
+          model: LIBS.models.Industry
+          as: "industry"
+        }]
+      }).map (publisher)->
+        impressions = metrics.impressions[publisher.key] or 0
+        clicks = metrics.clicks[publisher.key] or 0
+      
+        if not targeting.blocked_publishers?
+          targeting.blocked_publishers = []
+      
+        if targeting.blocked_publishers.indexOf(publisher.key) == -1
+          status = "Enabled"
+        else
+          status = "Blocked"
+                  
+        return {
+          id: publisher.key
+          name: publisher.name
+          status: status
+          industry: publisher.industry.name
+          metrics: {
+            impressions: numeral(impressions).format("1[,]000")
+            clicks: numeral(clicks).format("1[,]000")
+            ctr: numeral(clicks/(impressions or 1)).format("0.00%")
+          }
+        }
     
   .then (publishers)->
     res.json {
