@@ -98,7 +98,7 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Impression Chart"
             analysis_type: "count"
             event_collection : "ads.event.impression"
-            timeframe: "this_90_days"
+            timeframe: "this_3_months"
             interval: "daily"
             filters: [{
               operator: "ne"
@@ -112,7 +112,7 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Click Chart"
             analysis_type: "count"
             event_collection : "ads.event.click"
-            timeframe: "this_90_days"
+            timeframe: "this_3_months"
             interval: "daily"
             filters: [{
               operator: "ne"

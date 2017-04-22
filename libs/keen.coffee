@@ -23,6 +23,14 @@ module.exports = ->
     }
     
   
+  keen.errors = {
+    DATA: {
+      success: false
+      error: "No Data Available"
+    }
+  }
+    
+  
   keen.request = (method, url, data)->
     new Promise (res, rej)->
       params = if method == "get" then "query" else "send"
@@ -35,12 +43,19 @@ module.exports = ->
           return res result.body
   
   
-  keen.deleteDatasets = ->
-    keen.request("get", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets").then (response)->
-      Promise.each response.datasets, (dataset)->
-        console.log "KEEN Dataset Deleted: #{dataset.dataset_name}"
-        keen.request("delete", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{dataset.dataset_name}")
+   keen.deleteDataset = (dataset)->
+    console.log "KEEN Dataset Deleted: #{dataset}"
+    keen.request("delete", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{dataset}")
   
+  
+  keen.deleteDatasets = (url=null)->
+    keen.request("get", url or "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets").then (response)->
+      Promise.each response.datasets, (dataset)->
+        keen.deleteDataset dataset.dataset_name
+      
+      if response.next_page_url
+        keen.fetchDefinitions response.next_page_url
+
   
   keen.createDataset = (name, data)->  
     name = "#{CONFIG.keen.prefix}-#{name}"        
@@ -51,13 +66,16 @@ module.exports = ->
     
   keen.fetchDataset = (name, data)->
     name = "#{CONFIG.keen.prefix}-#{name}"      
-    keen.request "get", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}/results", data  
-    
-  keen.errors = {
-    DATA: {
-      success: false
-      error: "No Data Available"
-    }
-  } 
+    keen.request "get", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}/results", data   
   
+  
+  keen.fetchDefinitions = (url=null)->
+    keen.request("get", url or "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets").then (response)->
+      Promise.each response.datasets, (dataset)->
+        console.log dataset.dataset_name
+      
+      if response.next_page_url
+        keen.fetchDefinitions response.next_page_url
+
+
   return keen

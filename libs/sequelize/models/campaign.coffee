@@ -167,7 +167,7 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Impression Chart"
             analysis_type: "count"
             event_collection : "ads.event.impression"
-            timeframe: "this_90_days"
+            timeframe: "this_3_months"
             interval: "daily"
           }
           {
@@ -176,8 +176,32 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Click Chart"
             analysis_type: "count"
             event_collection : "ads.event.click"
-            timeframe: "this_90_days"
+            timeframe: "this_3_months"
             interval: "daily"
+          }
+          {
+            timezone: "UTC"
+            dataset_name: "campaign-publisher-impression-count"
+            display_name: "Campaign Publisher Impression Count"
+            analysis_type: "count"
+            event_collection : "ads.event.impression"
+            timeframe: "this_3_months"
+            interval: "monthly"
+            group_by: [
+              "publisher.key"
+            ]
+          }
+          {
+            timezone: "UTC"
+            dataset_name: "campaign-publisher-click-count"
+            display_name: "Campaign Publisher Click Count"
+            analysis_type: "count"
+            event_collection : "ads.event.click"
+            timeframe: "this_3_months"
+            interval: "monthly"
+            group_by: [
+              "publisher.key"
+            ]
           }
         ]).each (query)->
           LIBS.keen.createDataset(query.dataset_name, {
