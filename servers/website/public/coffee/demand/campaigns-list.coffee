@@ -19,11 +19,11 @@ class Dashboard
     @$search.keyup =>
       @data_table.column(1).search(@$search.val()).draw()
       
-#     $(".button-major").click ->
-#       $(".modal").fadeIn 250
-#       
-#     $(".modal .close").click ->
-#       $(".modal").fadeOut 250
+    $(".button-major").click ->
+      $(".modal").fadeIn 250
+      
+    $(".modal .close").click ->
+      $(".modal").fadeOut 250
       
     @date_range = new DatePicker ".campaigns-listing-dashboard", @update.bind @
     
