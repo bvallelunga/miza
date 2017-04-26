@@ -27,7 +27,7 @@ module.exports.build_event = (raw_data)->
       advertiser = {
         id: String(temp.id)
         key: temp.key
-        name: temp.name
+#         name: temp.name
       }
       
   .then ->
@@ -39,8 +39,8 @@ module.exports.build_event = (raw_data)->
       
       campaign = {
         id: String(temp.id)
-        name: temp.name
-        type: temp.type
+#         name: temp.name
+#         type: temp.type
       }
       
       increments = {}
@@ -68,7 +68,7 @@ module.exports.build_event = (raw_data)->
            
       industry = {
         id: String(temp.industry_id)
-        name: temp.name
+#         name: temp.name
       }
       
       billing = {
@@ -96,7 +96,7 @@ module.exports.build_event = (raw_data)->
         
       creative = {
         id: String(temp.id)
-        format: temp.format
+#         format: temp.format
       }
     
   .then ->
@@ -112,11 +112,11 @@ module.exports.build_event = (raw_data)->
       ip_address: raw_data.headers["CF-Connecting-IP"] or raw_data.ip or raw_data.ips
       session: raw_data.session
       protected: raw_data.query.protected == "true"
-      asset_url: raw_data.asset_url
-      product: raw_data.publisher.product
+#       asset_url: raw_data.asset_url
+#       product: raw_data.publisher.product
       publisher: {
         id: String(raw_data.publisher.id)
-        name: raw_data.publisher.name
+#         name: raw_data.publisher.name
         key: raw_data.publisher.key
       }
       billing: billing
@@ -124,9 +124,9 @@ module.exports.build_event = (raw_data)->
       campaign: campaign
       creative: creative
       industry: industry
-      page_url: {
-        raw: raw_data.query.page_url or raw_data.referrer
-      }
+#       page_url: {
+#         raw: raw_data.query.page_url or raw_data.referrer
+#       }
       user_agent: {
         raw: raw_data.headers["user-agent"]
 #         client: {

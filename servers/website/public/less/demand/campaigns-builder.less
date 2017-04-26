@@ -2,7 +2,7 @@
 @import '../global/colors';
 
 .container.campaigns-builder-dashboard .display {
-  overflow: visible;
+  overflow: hidden;
   
   .section {
     .full-input {
@@ -31,6 +31,10 @@
       &.last {
         margin: 0;
       }
+    }
+    
+    .scrape-button {
+      margin: 0 0 0 5px;
     }
     
     .selection_table {  
@@ -83,6 +87,19 @@
       font-family: "Ubuntu";
       font-size: 2em;
       padding: 20px 0;
+    }
+  }
+  
+  .image-list {
+    margin-top: -30px !important;
+    text-align: center;
+    
+    .image {
+      width: 245px;
+      height: 245px;
+      background-size: cover;
+      display: inline-block;
+      margin: 5px;
     }
   }
   
