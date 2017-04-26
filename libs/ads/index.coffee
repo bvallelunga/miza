@@ -25,7 +25,7 @@ module.exports.build_event = (raw_data)->
   
     LIBS.models.Advertiser.findById(raw_data.advertiser).then (temp)->      
       advertiser = {
-        id: String(temp.id)
+#         id: String(temp.id)
         key: temp.key
 #         name: temp.name
       }
@@ -115,7 +115,7 @@ module.exports.build_event = (raw_data)->
 #       asset_url: raw_data.asset_url
 #       product: raw_data.publisher.product
       publisher: {
-        id: String(raw_data.publisher.id)
+#         id: String(raw_data.publisher.id)
 #         name: raw_data.publisher.name
         key: raw_data.publisher.key
       }
@@ -199,21 +199,22 @@ module.exports.send = (raw_data)->
       "Product": event.product
       "Protected": event.protected
       "Asset Type": event.type
-      "Publisher ID": event.publisher.id
-      "Publisher Name": event.publisher.name
-      "Publisher Key": event.publisher.key
+      "Publisher ID": raw_data.publisher.id
+      "Publisher Name": raw_data.publisher.name
+      "Publisher Key": raw_data.publisher.key
       "Industry ID": event.industry.id
-      "Industry Name": event.industry.name
-      "Industry CPM": event.industry.cpm
-      "Advertiser ID": event.advertiser.id
-      "Advertiser Name": event.advertiser.name
+#       "Industry Name": event.industry.name
+#       "Advertiser ID": event.advertiser.id
+#       "Advertiser Name": event.advertiser.name
       "Advertiser Key": event.advertiser.key
       "Creative ID": event.creative.id
-      "Creative Format": event.creative.format
+#       "Creative Format": event.creative.format
       "Campaign ID": event.campaign.id
-      "Campaign Name": event.campaign.name
-      "Campaign Type": event.campaign.type
+#       "Campaign Name": event.campaign.name
+#       "Campaign Type": event.campaign.type
       "Campaign House": event.billing.house
+      "Campaign Amount": event.billing.amount
+      "Campaign Model": event.billing.model
     }
     
     # Activate Publisher 
