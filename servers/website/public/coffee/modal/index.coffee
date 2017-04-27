@@ -14,6 +14,10 @@ $ ->
     button.addClass("loading").html(waiting)
   
     $.post(form.attr("action"), form.serialize(), (response)->  
+      if form.data("callback")?
+        button.html(original).removeClass "loading"
+        return window[form.data("callback")](response)
+      
       if response.message?
         alert response.message
       

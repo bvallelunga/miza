@@ -1,8 +1,6 @@
 class Dashboard
-
-  $industry_options: []
-  $selection_table: null
-  $selection_empty: null
+  
+  $iframe: {}  
 
   constructor: ->
     @$total_budget = $(".quote-box .quote")
@@ -14,7 +12,7 @@ class Dashboard
   
     $(".range-display").each ->
       $(@).dateRangePicker({
-        container: ".container .display"
+        container: $(@).parents(".display")
         showShortcuts: false
         showTopbar: false
         autoClose: true
@@ -25,7 +23,10 @@ class Dashboard
         language:'en'
         startDate: $(@).data("start-date")
         extraClass: "date-dropdown"
-      })
+      })      
+      
+    $('.bid-selector input[type=radio][name=bid_type]').change ->
+      $(".bid-input").toggle this.value == "manual"
       
     $(".is-house").change ->
       _this.update_budget()
@@ -36,10 +37,71 @@ class Dashboard
     _this.$input_budget.on "keyup change", ->
       _this.update_budget()
  
+  
+  update_scrape: (response)->  
+    _this = @
+
+    $(".scrape-done").show()
+    $(".image-list").toggle response.image_selection
+    $(".creative-images").remove()
+    $(".creative-link").val response.link
+    $(".creative-config").val JSON.stringify response.config
+    
+    @iframe = {
+      link: response.link
+      config: response.config
+      format: response.format
+    }
+    
+    if response.image_selection
+      $images = response.images.map (url, i)->
+        $image = $("""
+          <div class="image" data-id="image_#{i}" style="background-image:url(#{url})" data-url="#{url}">
+            <div class="hover fa fa-check"></div>
+          </div>
+        """)
+        
+        $image.click ->
+          to_active = not $image.hasClass "active"
+
+          if to_active and $(".image-list .active").length < 4
+            $image.addClass "active"
+            $(".scrape-done form").append $ """
+              <input type="hidden" class="#{$image.data("id")} creative-images" name="creative[config][images][]" value="#{$image.data("url")}" required/>
+            """
+            
+          if not to_active
+            $image.removeClass "active"
+            $(".scrape-done form .#{$image.data("id")}").remove()
+            
+          _this.iframe.config.images = ($(".creative-images").map -> $(@).val()).toArray()
+          _this.update_iframe()
+          
+        return $image
+        
+      $(".image-list .list").html $images
+    
+    else
+      _this.update_iframe()
+      
+      response.config.images.forEach (image)->
+        $(".scrape-done form").append $ """
+          <input type="hidden" class="creative-images" name="creative[config][images][]" value="#{image}" required/>
+        """
+      
         
   update_budget: ->
     BUDGET = if $(".is-house").val() == "true" then 0 else @$input_budget.val()
     @$total_budget.text numeral(BUDGET).format("$0,000.00")  
+    
+  
+  update_iframe: ->
+    $iframe = $(".simulator-iframe")
+    
+    if @iframe.config.images.length > 0
+      $iframe.attr("src", "#{$iframe.data("base-src")}&#{$.param(@iframe)}")
+    else
+      $iframe.attr("src", "").hide()
   
 
 $ ->
@@ -47,3 +109,4 @@ $ ->
     return
 
   dashboard = new Dashboard()
+  window.campaign_scrape = dashboard.update_scrape.bind(dashboard)

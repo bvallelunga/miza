@@ -92,3 +92,24 @@ module.exports.ad_frame = (req, res, next)->
     type: "request"
     publisher: req.publisher
   }
+
+module.exports.demo_frame = (req, res, next)->
+  creative = LIBS.models.Creative.build({
+    format: req.query.format
+    link: req.query.link
+    config: req.query.config
+  })
+  
+  format = creative.format.split(' ').join('')
+  res.render "ad/frame/#{format}", {
+    publisher: req.publisher
+    miza_script: req.miza_script
+    creative: creative
+    frame: req.query.frame
+    is_protected: true
+    demo: true
+    width: req.query.width
+    height: req.query.height
+  }
+    
+

@@ -18,6 +18,7 @@ module.exports = {
   helpers: require "./helpers"
   emails: require "./emails"
   exchanges: require "./exchanges"
+  scrapers: require "./scrapers"
   init: ->
     @sequelize().then (models)=>
       @models = models

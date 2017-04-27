@@ -1,3 +1,27 @@
+<% if(user.is_admin) { %>
+  <div class="section">
+    <div class="header">House <span class="bubble">ADMIN</span></div>
+    <p>
+      House ads are designed for testing and will not show up on a publisher's dashboard or payouts. 
+      They will be marked as free so you don't have to pay to run the campaign.
+    </p>
+    <table class="targeting-table shifted">
+      <tr>
+        <td class="title">Enabled<span>REQUIRED</span></td>
+        <td valign="top">
+          <div class="group">
+            <div class="fa fa-sort"></div>
+            <select class="input only is-house" name="is_house">
+              <option value="false" selected>False</option>
+              <option value="true">True</option>
+            </select>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+<% } %>
+
 <div class="section">
   <div class="split half left quote-box">
     <div class="quote">$0.00</div>

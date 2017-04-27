@@ -60,6 +60,17 @@ module.exports = (sequelize, DataTypes)->
               return rej error
           
             res response.body
+      
+      
+      demo_frame: ->
+        host = CONFIG.web_server.domain.split(".").slice(-2).join(".")
+        link = "//#{LIBS.models.defaults.demo_publisher.key}.#{host}/demo?"
+        params = [
+          "width=300"
+          "height=300"
+        ].join("&")
+        
+        return link + params
     }
     
     instanceMethods: {

@@ -1,11 +1,2 @@
 <a class="dashboard-back fa fa-arrow-left" href="/demand/<%= advertiser.key %>/campaigns"></a>
-
-<div class="display full builder">
-  <form method="POST" action="<%= path %>">
-    <% include ../../../includes/csrf %>
-    <input type="hidden" name="format" value="<%= format %>" />
-    <div>
-      <%- include("./" + format + ".ejs") %>
-    </div>
-  </form>
-</div>
+<%- include("./" + format + ".ejs") %>

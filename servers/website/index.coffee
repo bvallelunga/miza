@@ -115,7 +115,8 @@ module.exports = (srv)->
   app.get  "/demand/:advertiser/campaign/:campaign/charts", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaign.fetch, routes.demand.campaign.get_charts
   app.get  "/demand/:advertiser/:dashboard/:subdashboard", routes.auth.is_authenticated, routes.demand.auth, routes.demand.fetch_data, routes.demand.get_dashboard
   app.post "/demand/new", routes.auth.is_authenticated, routes.demand.create.post
-  app.post "/demand/:advertiser/campaigns/create", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaigns.post_create
+  app.post "/demand/:advertiser/campaigns/create", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaigns.builder.create
+  app.post "/demand/:advertiser/campaigns/create/scrape", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaigns.builder.scrape
   app.post "/demand/:advertiser/campaigns/list", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaigns.post_list
   app.post "/demand/:advertiser/campaigns/update", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaigns.post_updates
   app.post "/demand/:advertiser/campaign/:campaign", routes.auth.is_authenticated, routes.demand.auth, routes.demand.campaign.fetch, routes.demand.campaign.post_update

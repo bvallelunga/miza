@@ -108,6 +108,10 @@
         width: 155px;
       }
       
+      .bottom .profile span {
+        font-weight: normal;
+      }
+      
       .bottom .follow {
         color: #3897F0;
         border: solid 1px #3897F0;
@@ -153,16 +157,16 @@
   <body>
     <a class="container" target="_blank" href="/<%= creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo) %>">
       <div class="grid">
-        <div class="slider">
+        <div class="slider" <% if(creative.config.images.length < 2) { %>style="display: none"<% } %>>
           <div class="slide"></div>
         </div>
-        <div class="image" style='background-image: url("https://instagram.fsnc1-1.fna.fbcdn.net/t51.2885-15/s1080x1080/e15/fr/16908677_248774508864763_5590590261542518784_n.jpg");'></div>
-        <div class="image" style='background-image: url("https://instagram.fsnc1-1.fna.fbcdn.net/t51.2885-15/e35/16788858_1857582131130592_2921286748711419904_n.jpg");'></div>
-        <div class="image" style='background-image: url("https://instagram.fsnc1-1.fna.fbcdn.net/t51.2885-15/e35/14719051_1891085144445970_5969700852892434432_n.jpg");'></div>
+        <% creative.config.images.forEach(function(image) { %>
+          <div class="image" style='background-image: url("<%= image %>");'></div>
+        <% }) %>
       </div>
       <div class="bottom">
-        <div class="picture" style='background-image: url("https://instagram.fsnc1-1.fna.fbcdn.net/t51.2885-19/s320x320/13651958_1742962575941736_1340493441_a.jpg")'></div>
-        <div class="profile">filterdabrian</div>
+        <div class="picture" style='background-image: url("<%= creative.config.user.profile_image %>")'></div>
+        <div class="profile"><%= creative.config.user.username %></div>
         <div class="follow">Follow</div>
         <div class="clear"></div>
       </div>

@@ -19,6 +19,7 @@ module.exports = (req, res, next)->
   res.locals.hostname = req.get("host")
   res.locals.url = res.locals.host + req.originalUrl
   res.locals.path = req.originalUrl
+  res.locals.pathname = req.path
   res.locals.title = ""
   res.locals.css = ""
   res.locals.js = ""
