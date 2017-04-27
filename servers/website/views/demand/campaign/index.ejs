@@ -14,7 +14,14 @@
       </td>
       <td class="section">
         <div class="decription">Pricing</div>
-        <div class="title uppercase"><%= campaign.type %></div>
+        <div class="title uppercase">
+          <%= campaign.type %>
+          <% if(campaign.type == "cpm") { %>
+            <span class="info fa fa-info-circle tooltip" title="Cost per thousand impressions."></span>
+          <% } else if(campaign.type == "cpc") { %>
+            <span class="info fa fa-info-circle tooltip" title="Cost per individual click."></span>
+          <% } %>
+        </div>
       </td>
       <td class="section">
         <div class="decription">Status</div>

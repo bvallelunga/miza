@@ -1,9 +1,14 @@
+moment = require "moment"
+
 module.exports.scrape = (req, res, next)-> 
   scraper = null
 
   switch req.body.format
     when "instagram_profile" 
       scraper = LIBS.scrapers.instagram.profile
+      
+    when "instagram_post" 
+      scraper = LIBS.scrapers.instagram.post
     
     else 
       return next "Invalid campaign format type: #{req.body.format}"
@@ -13,8 +18,8 @@ module.exports.scrape = (req, res, next)->
   .catch(next)
 
 
-module.exports.create = (req, res, next)-> 
-  if not req.body.creative.image_url.length > 0
+module.exports.create = (req, res, next)->   
+  if req.body.creative.format == "300 x 250" and not req.body.creative.image_url.length > 0
     return next "Please make sure you have uploaded an image for your creative"
     
   if not req.body.creative.link.length > 0
@@ -96,9 +101,17 @@ module.exports.create = (req, res, next)->
             }
           })
         
-        creative: LIBS.models.Creative.fetch_image(req.body.creative.image_url).then (image)->
+        creative: Promise.resolve().then ->
+          if req.body.creative.image_url.length > 0
+            return LIBS.models.Creative.fetch_image(req.body.creative.image_url)
+        
+          return new Buffer(1)
+        .then (image)->
           trackers = req.body.creative.trackers.split("\n")
           config = {}
+          
+          try
+            config = JSON.parse(req.body.creative.config)
           
           if req.user.is_admin and req.body.creative.disable_incentive.length > 0
             config.disable_incentive = Number req.body.creative.disable_incentive
@@ -111,7 +124,7 @@ module.exports.create = (req, res, next)->
             campaign_id: campaign.id
             link: campaign.utm_link(req.body.creative.link)
             trackers: req.body.creative.trackers.split("\n")
-            format: "300 x 250"
+            format: req.body.creative.format
             image: image
             config: config
           })

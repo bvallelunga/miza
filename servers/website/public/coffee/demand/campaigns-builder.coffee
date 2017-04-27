@@ -52,6 +52,7 @@ class Dashboard
       config: response.config
       format: response.format
     }
+    @update_iframe()
     
     if response.image_selection
       $images = response.images.map (url, i)->
@@ -66,28 +67,17 @@ class Dashboard
 
           if to_active and $(".image-list .active").length < 4
             $image.addClass "active"
-            $(".scrape-done form").append $ """
-              <input type="hidden" class="#{$image.data("id")} creative-images" name="creative[config][images][]" value="#{$image.data("url")}" required/>
-            """
             
           if not to_active
             $image.removeClass "active"
-            $(".scrape-done form .#{$image.data("id")}").remove()
             
-          _this.iframe.config.images = ($(".creative-images").map -> $(@).val()).toArray()
+          _this.iframe.config.images = ($(".image-list .image.active").map -> $(@).data("url")).toArray()
+          $(".creative-config").val JSON.stringify _this.iframe.config
           _this.update_iframe()
           
         return $image
         
-      $(".image-list .list").html $images
-    
-    else
-      _this.update_iframe()
-      
-      response.config.images.forEach (image)->
-        $(".scrape-done form").append $ """
-          <input type="hidden" class="creative-images" name="creative[config][images][]" value="#{image}" required/>
-        """
+      $(".image-list .list").html $images      
       
         
   update_budget: ->

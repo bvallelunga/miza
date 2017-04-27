@@ -167,7 +167,7 @@
       <div class="bottom">
         <div class="picture" style='background-image: url("<%= creative.config.user.profile_image %>")'></div>
         <div class="profile"><%= creative.config.user.username %></div>
-        <div class="follow">Follow</div>
+        <div class="follow"><%= creative.config.action || "Follow" %></div>
         <div class="clear"></div>
       </div>
     </a>
