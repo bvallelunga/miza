@@ -7,9 +7,9 @@ module.exports.product = (url)->
   if hostname != "etsy.com" or url_parsed.pathname.indexOf("listing") == -1
     return Promise.reject "Please provide an etsy product url."
   
-  LIBS.scrapers.scrape(url).then ($)->  
-    images = ($("#image-carousel li img").map ->
-      return $(@).attr("src")
+  LIBS.scrapers.scrape(url).then ($)->    
+    images = ($("#image-carousel li").map ->
+      return $(@).data("full-image-href")
     ).toArray()
   
     title = $("#listing-page-cart h1").text().trim()
