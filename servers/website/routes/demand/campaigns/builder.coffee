@@ -15,6 +15,9 @@ module.exports.scrape = (req, res, next)->
       
     when "amazon_product" 
       scraper = LIBS.scrapers.amazon.product
+      
+    when "etsy_product" 
+      scraper = LIBS.scrapers.etsy.product
     
     else 
       return next "Invalid campaign format type: #{req.body.format}"

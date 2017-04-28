@@ -19,7 +19,7 @@ module.exports.post = (req, res, next)->
     req.user.addAdvertiser(advertiser).then ->
       res.json {
         success: true
-        next: "/demand/#{advertiser.key}/campaigns"
+        next: "/demand/#{advertiser.key}/campaigns?new_advertiser"
       }
     
   .catch next

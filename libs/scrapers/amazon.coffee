@@ -32,7 +32,7 @@ module.exports.product = (url)->
             name: $("#bylineInfo_feature_div a").text().trim()
             url: $("#bylineInfo_feature_div a").attr("href")
           }
-          reviews: parseInt $("#acrCustomerReviewText").text()
+          additional: $("#acrCustomerReviewText").text()
         }
         site: "amazon"
       }

@@ -59,7 +59,7 @@
   </div>
 </div>
 
-<div class="modal">
+<div class="modal <%= !!new_advertiser ? "" : "hidden" %>">
   <div class="close">
     <span class="fa fa-close"></span>
   </div>
@@ -118,13 +118,11 @@
         <div class="name">Product</div>
         <div class="subname">Amazon</div>
       </a>
-<!--
-      <a href="<%= path %>/create?format=etsy_store">
+      <a href="<%= path %>/create?format=etsy_product">
         <div class="fa fa-etsy" style="color: #F26223"></div>
         <div class="name">Product</div>
         <div class="subname">Etsy</div>
       </a>
--->
     </div>
     <div class="list">
       <div class="header">Custom Templates</div>

@@ -9,6 +9,8 @@ module.exports.fetch = (req, res, next)->
   req.data.config = {
     advertiser: req.advertiser.key
   }
+  req.data.new_advertiser = req.query.new_advertiser? or req.session.new_advertiser
+  req.session.new_advertiser = false
   
   if not req.subdashboard
     req.data.js.push("data-table")
