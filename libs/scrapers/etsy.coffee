@@ -33,7 +33,7 @@ module.exports.product = (url)->
             name: $(".shop-name a[itemprop=url] span").text().trim()
             url: $(".shop-name a[itemprop=url]").attr("href")
           }
-          additional: $("#variations p").text()
+          additional: $(".review-rating-count").text().replace(/\(|\)/g, "")
         }
         site: "etsy"
       }

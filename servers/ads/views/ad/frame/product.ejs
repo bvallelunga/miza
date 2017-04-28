@@ -132,7 +132,10 @@
         </div>
         <div class="product-information">
           <strong><%= creative.config.product.title %></strong>
-          <span><%= creative.config.product.brand.name %>&nbsp;&nbsp;&bull;&nbsp;&nbsp;<%= creative.config.product.additional %></span>
+          <span>
+          <%= creative.config.product.brand.name %><% if(!!creative.config.product.additional) { 
+            %>&nbsp;&nbsp;&bull;&nbsp;&nbsp;<%= creative.config.product.additional %><% 
+          } %></span>
         </div>
         <div class="clear"></div>
       </div>
