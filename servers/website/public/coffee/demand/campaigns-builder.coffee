@@ -31,6 +31,14 @@ class Dashboard
     $(".is-house").change ->
       _this.update_budget()
       
+    
+    $(".targeting-select").click ->
+      $(".targeting-hide").show()
+      $(@).hide()
+      $(".chosen-select").chosen({
+        inherit_select_classes: true
+      })
+      
     $(".pricing-input select").change ->
       $("placeholder").text $(this).val().toUpperCase()
       

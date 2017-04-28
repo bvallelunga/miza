@@ -1,4 +1,4 @@
 $ ->
-  $(".chosen-select").chosen({
+  $(".chosen-select:visible").chosen({
     inherit_select_classes: true
   })
