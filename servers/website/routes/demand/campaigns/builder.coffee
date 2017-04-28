@@ -12,6 +12,9 @@ module.exports.scrape = (req, res, next)->
       
     when "twitter_account" 
       scraper = LIBS.scrapers.twitter.account
+      
+    when "amazon_product" 
+      scraper = LIBS.scrapers.amazon.product
     
     else 
       return next "Invalid campaign format type: #{req.body.format}"
