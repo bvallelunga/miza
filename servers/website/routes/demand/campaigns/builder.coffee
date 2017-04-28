@@ -49,6 +49,13 @@ module.exports.create = (req, res, next)->
   .then (targeting)->    
     bid = Number req.body.bid
     budget = Number req.body.budget
+    creative_config = {}
+          
+    try
+      creative_config = JSON.parse(req.body.creative.config)
+      
+    if creative_config.images.length == 0
+      return Promise.reject "Please make sure you have selected at least 1 image."
     
     if bid == NaN
       return Promise.reject "Please make sure you entered a valid bid"
@@ -111,13 +118,9 @@ module.exports.create = (req, res, next)->
           return new Buffer(1)
         .then (image)->
           trackers = req.body.creative.trackers.split("\n")
-          config = {}
-          
-          try
-            config = JSON.parse(req.body.creative.config)
           
           if req.user.is_admin and req.body.creative.disable_incentive.length > 0
-            config.disable_incentive = Number req.body.creative.disable_incentive
+            creative_config.disable_incentive = Number req.body.creative.disable_incentive
           
           if trackers.length == 1 and trackers[0].length == 0
             trackers = []
@@ -129,7 +132,7 @@ module.exports.create = (req, res, next)->
             trackers: req.body.creative.trackers.split("\n")
             format: req.body.creative.format
             image: image
-            config: config
+            config: creative_config
           })
       })
       
