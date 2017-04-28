@@ -1,4 +1,5 @@
 country_data = require 'country-data'
+numeral = require "numeral"
 
 module.exports.fetch = (req, res, next)->
   req.data.js.push("date-range")
@@ -27,11 +28,30 @@ module.exports.fetch = (req, res, next)->
       "dk", "fi"
     ]
     
-    LIBS.models.Industry.listed().then (industries)->
-      req.data.industries = industries
-      next()
-    
-    .catch next
+    Promise.props({
+      industries: LIBS.models.Industry.listed().then (industries)->
+        req.data.industries = industries
+        
+      auto_bid: LIBS.models.Campaign.findAll({
+        where: {
+          status: {
+            $ne: "completed"
+          }
+        }
+      }).then (campaigns)->
+        bid = 0
+        auto_bid_min = 0.45
+        
+        for campaign in campaigns
+          bid += campaign.amount
+        
+        bid = bid/campaigns.length
+        bid += bid * 0.15
+
+        req.data.auto_bid_min = numeral(auto_bid_min).format("0.00")
+        req.data.auto_bid_max = numeral(bid + (bid * 0.5)).format("0.00")
+        req.data.auto_bid = Number numeral(Math.max auto_bid_min, bid).format("0.00")
+    }).then(-> next()).catch next
     
   else
     res.redirect "/demand/#{req.advertiser.key}/campaigns"

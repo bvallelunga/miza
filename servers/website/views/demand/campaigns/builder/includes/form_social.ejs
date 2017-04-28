@@ -84,9 +84,11 @@
               <strong>Manual</strong> - Enter a bid based on what link clicks are worth to you.
               <div class="group left-align bid-input hidden" style="margin-top: 15px">
                 <div class="fa fa-dollar"></div>
-                <input type="number" name="bid" placeholder="1.50" step="0.01" min="0.02" value="0.90" required/>
+                <input type="number" name="bid" placeholder="1.50" step="0.01" min="0.02" value="<%= auto_bid %>" required/>
               </div>
-              <div class="bid-input hidden" style="margin-top: 10px; font-weight: bold; color: rgba(0,0,0,0.3)">Recommended bid between $0.50 - $1.50</div>
+              <div class="bid-input hidden" style="margin-top: 10px; font-weight: bold; color: rgba(0,0,0,0.3)">
+                Recommended bid between $<%= auto_bid_min %> - $<%= auto_bid_max %>
+              </div>
             </label>
             <div class="clear"></div>
           </div>
