@@ -1,6 +1,4 @@
 URL = require "url"
-scraper = require 'product-scraper'
-
 
 module.exports.product = (url)->
   url_parsed = URL.parse url
