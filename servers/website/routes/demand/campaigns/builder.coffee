@@ -60,7 +60,7 @@ module.exports.create = (req, res, next)->
     try
       creative_config = JSON.parse(req.body.creative.config)
       
-    if creative_config.images.length == 0
+    if req.body.creative.config? and creative_config.images.length == 0
       return Promise.reject "Please make sure you have selected at least 1 image."
     
     if bid == NaN
