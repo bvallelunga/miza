@@ -1,4 +1,4 @@
-request = require "request"
+request = require "request-promise"
 
 module.exports = (sequelize, DataTypes)->
 
@@ -50,17 +50,11 @@ module.exports = (sequelize, DataTypes)->
         
       
       fetch_image: (url)->
-        new Promise (res, rej)->
-          request {
-            method: "GET"
-            encoding: null
-            url: url
-          }, (error, response, body)=>
-            if error?
-              return rej error
-          
-            res response.body
-      
+        request({
+          method: "GET"
+          encoding: null
+          url: url
+        })
       
       demo_frame: ->
         host = CONFIG.web_server.domain.split(".").slice(-2).join(".")
