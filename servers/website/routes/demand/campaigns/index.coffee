@@ -42,17 +42,16 @@ module.exports.fetch = (req, res, next)->
         }
       }).then (campaigns)->
         bid = 0
-        auto_bid_min = 0.45
         
         for campaign in campaigns
           bid += campaign.amount
         
-        bid = bid/campaigns.length
+        bid = Math.max(0.02, bid/campaigns.length)
         bid += bid * 0.15
 
-        req.data.auto_bid_min = numeral(auto_bid_min).format("0.00")
+        req.data.auto_bid_min = numeral(bid - (bid * 0.5)).format("0.00")
         req.data.auto_bid_max = numeral(bid + (bid * 0.5)).format("0.00")
-        req.data.auto_bid = Number numeral(Math.max auto_bid_min, bid).format("0.00")
+        req.data.auto_bid = Number numeral(bid).format("0.00")
     }).then(-> next()).catch next
     
   else
