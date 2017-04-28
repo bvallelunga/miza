@@ -45,6 +45,7 @@ class Dashboard
     $(".image-list").toggle response.image_selection
     $(".creative-images").remove()
     $(".creative-link").val response.link
+    $(".creative-format").val response.format
     $(".creative-config").val JSON.stringify response.config
     
     @iframe = {

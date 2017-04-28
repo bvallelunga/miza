@@ -9,6 +9,9 @@ module.exports.scrape = (req, res, next)->
       
     when "instagram_post" 
       scraper = LIBS.scrapers.instagram.post
+      
+    when "twitter_account" 
+      scraper = LIBS.scrapers.twitter.account
     
     else 
       return next "Invalid campaign format type: #{req.body.format}"

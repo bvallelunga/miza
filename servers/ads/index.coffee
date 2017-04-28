@@ -15,7 +15,7 @@ module.exports = (srv)->
   app.use routes.core.auth.has_publisher
   app.use routes.core.auth.has_opted_out
   app.use LIBS.bugsnag.requestHandler
-    
+      
   
   # Routes  
   app.get "/check", routes.core.check

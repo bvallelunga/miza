@@ -91,6 +91,25 @@
   }
 </style>
 <script>
+  window["<%= publisher.key %>"] = { 
+    frame: "<%= frame %>",
+    creative: "<%= creative.id || "" %>",
+    advertiser: "<%= creative.advertiser_id || "" %>",
+    campaign: "<%= creative.campaign_id || "" %>",
+    industry: "<%= creative.industry_id || "" %>"
+  };      
+  
+  window.parent.window.postMessage({
+    name: "frame.show",
+    frame: "<%= frame %>",
+    width: <%- width %>,
+    height: <%- height %>
+  }, "*");
+  
+  <% if(!demo) { %>
+    <%- miza_script %>
+  <% } %>
+
   function showInformation() {
     document.getElementsByTagName("information")[0].style.display = "block";
     document.getElementsByClassName("footer-show")[0].style.display = "none";

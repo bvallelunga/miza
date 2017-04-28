@@ -1,6 +1,5 @@
 scraper = require 'insta-scraper'
 request = require "request-promise"
-numeral = require "numeral"
 URL = require "url"
 
 module.exports.profile = (url)->
@@ -41,7 +40,7 @@ module.exports.post = (url)->
   hostname = url_parsed.hostname.split(".").slice(-2).join(".")
   
   if hostname != "instagram.com"
-    return Promise.reject "Please provide an instagram profile url."
+    return Promise.reject "Please provide an instagram post url."
   
   code = url_parsed.pathname.slice(1).split("/")[1]
   request('https://www.instagram.com/p/' + code + '/?__a=1').then (response)->

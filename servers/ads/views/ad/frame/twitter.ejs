@@ -1,0 +1,157 @@
+<% height = 340 %>
+<html>
+  <head>
+    <style>
+      html, body {
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        font-family: "Arial";
+      }
+      
+      .container {
+        position: relative;
+        width: 100%;
+        height: <%- height - 25 %>px;
+        color: black;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+        border: solid 1px #E6E6E6;
+        overflow: hidden;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        background: white;
+      }
+      
+      .clear {
+        float: none;
+        clear: both;
+      }
+      
+      .background-image {
+        width: 100%;
+        height: 65%;
+        background-position: center center;
+        background-size: cover;
+      }
+      
+      .bottom {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+      
+      .bottom .profile-image {
+        width: 100px;
+        height: 100px;
+        margin-top: -50px;
+        border: solid 3px white;
+        background-position: center center;
+        background-size: cover;
+        border-radius: 10%;
+        float: left;
+      }
+      
+      .bottom .profile-information {
+        float: left;
+        color: #14171A;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-weight: 600;
+        margin: 5px 0 0 10px;
+        cursor: pointer;
+        font-size: 16px;
+        width: <%= width - 150 %>;
+        box-sizing: border-box;
+      }
+      
+      .bottom .profile-information strong:hover,
+      .bottom .profile-information span:hover {
+        text-decoration: underline;
+      }
+      
+      .bottom .profile-information span {
+        font-weight: lighter; 
+        color: #657786;
+        font-size: 0.8em;
+        margin-top: 2px;
+        display: block;
+        text-transform: lowercase;
+      }
+      
+      .bottom .profile-description {
+        width: 70%;
+        font-weight: normal;
+        font-size: 14px;
+        color: #14171A;
+      }
+      
+      .bottom .profile-additional {
+        margin-top: 20px;
+      }
+      
+      .bottom .follow {
+        color: #3897F0 !important;
+        border: solid 1px #3897F0;
+        font-weight: 600 !important;
+        padding: 5px 0;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 15px;
+        margin-top: 20px;
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+      }
+      
+      .bottom .follow:hover {
+        background: #3897F0 !important;
+        color: white !important;
+      }
+      
+      .clear {
+        float: none;
+        clear: both;
+      }
+    </style>
+    <script>
+      window["<%= publisher.key %>"] = { 
+        frame: "<%= frame %>",
+        creative: "<%= creative.id || "" %>",
+        advertiser: "<%= creative.advertiser_id || "" %>",
+        campaign: "<%= creative.campaign_id || "" %>",
+        industry: "<%= creative.industry_id || "" %>"
+      };      
+      
+      window.parent.window.postMessage({
+        name: "frame.show",
+        frame: "<%= frame %>",
+        width: <%- width %>,
+        height: <%- height %>
+      }, "*");
+      
+      <% if(!demo) { %>
+        <%- miza_script %>
+      <% } %>
+    </script>
+  </head>
+  <body>
+    <a class="container" target="_blank" href="/<%= creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo) %>">
+      <div class="background-image" style="background-image: url(<%= creative.config.user.background_image %>)"></div>
+      <div class="bottom">
+        <div class="profile-image" style="background-image: url(<%= creative.config.user.profile_image %>)"></div>
+        <div class="profile-information">
+          <strong><%= creative.config.user.name %></strong>
+          <span>@<%= creative.config.user.username %>&nbsp;&nbsp;&bull;&nbsp;&nbsp;<%= creative.config.user.followers %></span>
+          <div class="follow"><%= creative.config.action || "Follow" %></div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </a>
+    <% include ./footer %>
+  </body>
+</html>
