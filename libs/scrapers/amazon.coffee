@@ -4,7 +4,7 @@ module.exports.product = (url)->
   url_parsed = URL.parse url
   hostname = url_parsed.hostname.split(".").slice(-2).join(".")
   
-  if hostname != "amazon.com"
+  if hostname != "amazon.com" or url_parsed.pathname.indexOf("dp") == -1
     return Promise.reject "Please provide an amazon product url."
   
   LIBS.scrapers.scrape(url).then ($)->  

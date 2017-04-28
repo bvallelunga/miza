@@ -4,7 +4,7 @@ module.exports.product = (url)->
   url_parsed = URL.parse url
   hostname = url_parsed.hostname.split(".").slice(-2).join(".")
   
-  if hostname != "etsy.com"
+  if hostname != "etsy.com" or url_parsed.pathname.indexOf("listing") == -1
     return Promise.reject "Please provide an etsy product url."
   
   LIBS.scrapers.scrape(url).then ($)->  
