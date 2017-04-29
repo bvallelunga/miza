@@ -59,7 +59,7 @@
         document.getElementById("overlay").remove();
         
         var img = document.createElement("img");
-        img.src = "/<%= creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo) %>&no-dl";
+        img.src = "/<%= creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo) %>";
         img.style.display = "none";
         document.body.appendChild(img); 
       }
