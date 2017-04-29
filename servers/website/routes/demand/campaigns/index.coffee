@@ -23,7 +23,6 @@ module.exports.fetch = (req, res, next)->
     req.data.js.push("modal", "chosen-select")
     req.data.models = ["cpm", "cpc"]
     req.data.model = "cpc"
-    req.data.model_action = "link clicks"
     req.data.format = req.query.format or "image"
     req.data.country_data = country_data
     req.data.approved_countries = [
@@ -32,11 +31,6 @@ module.exports.fetch = (req, res, next)->
       "ph", "in", "cn", "jp", "no",
       "dk", "fi"
     ]
-    
-    if req.data.format == "soundcloud"
-      req.data.model = "cpm"
-      req.data.model_action = "views"
-      req.data.models = ["cpm"]
     
     Promise.props({
       industries: LIBS.models.Industry.listed().then (industries)->
