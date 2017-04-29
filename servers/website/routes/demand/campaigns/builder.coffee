@@ -18,6 +18,9 @@ module.exports.scrape = (req, res, next)->
       
     when "etsy_product" 
       scraper = LIBS.scrapers.etsy.product
+      
+    when "soundcloud" 
+      scraper = LIBS.scrapers.soundcloud
     
     else 
       return next "Invalid campaign format type: #{req.body.format}"

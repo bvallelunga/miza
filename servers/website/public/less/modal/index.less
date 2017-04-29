@@ -87,14 +87,14 @@ footer {
   }
   
   &:not(.form-table) {
-    input:not([type="checkbox"]), .input,
+    input:not([type="checkbox"]):not([type="radio"]), .input,
     textarea, .textarea  {
       background: white;
       .box-shadow(0 0 0px 1000px white inset);
     }
   }
   
-  input:not([type="checkbox"]), .input,
+  input:not([type="checkbox"]):not([type="radio"]), .input,
   textarea, .textarea {
     width: 100%;
     padding: 16px 15px;

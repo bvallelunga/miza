@@ -5,7 +5,6 @@ module.exports.fetch = (req, res, next)->
   req.data.js.push("date-range")
   req.data.css.push("date-range")
   req.data.dashboard_width = "medium"
-  req.data.format = req.query.format or "image"
   req.data.config = {
     advertiser: req.advertiser.key
   }
@@ -22,6 +21,10 @@ module.exports.fetch = (req, res, next)->
     req.subdashboard = "builder"
     req.data.css.push("chosen-select")
     req.data.js.push("modal", "chosen-select")
+    req.data.models = ["cpm", "cpc"]
+    req.data.model = "cpc"
+    req.data.model_action = "link clicks"
+    req.data.format = req.query.format or "image"
     req.data.country_data = country_data
     req.data.approved_countries = [
       "us", "ca", "mx", "de", "gb",
@@ -29,6 +32,11 @@ module.exports.fetch = (req, res, next)->
       "ph", "in", "cn", "jp", "no",
       "dk", "fi"
     ]
+    
+    if req.data.format == "soundcloud"
+      req.data.model = "cpm"
+      req.data.model_action = "views"
+      req.data.models = ["cpm"]
     
     Promise.props({
       industries: LIBS.models.Industry.listed().then (industries)->

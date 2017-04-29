@@ -1,0 +1,48 @@
+<% height = 370 %>
+<html>
+  <head>
+    <style>
+      html, body {
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        font-family: "Arial";
+      }
+      
+      .container {
+        position: relative;
+        width: 100%;
+        height: <%- height - 25 %>px;
+        color: black;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+        border: solid 1px #E6E6E6;
+        overflow: hidden;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        background: white;
+      }
+      
+      iframe {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: none;
+        outline: none;
+      } 
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <iframe scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=<%= encodeURIComponent(creative.config.url)%>&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
+    </div>
+    <% include ./footer %>
+  </body>
+</html>

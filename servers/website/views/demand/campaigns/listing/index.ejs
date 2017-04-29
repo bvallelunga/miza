@@ -59,66 +59,79 @@
   </div>
 </div>
 
-<div class="modal <%= !!new_advertiser ? "" : "hidden" %>">
+<div class="modal display full <%= !!new_advertiser ? "" : "hidden" %>">
   <div class="close">
     <span class="fa fa-close"></span>
   </div>
   
-  <div class="display">
-    <div class="title">What Are You Advertising?</div>
+  <div class="title">What Are You Advertising?</div>
+  <div class="listings">
     <div class="list">
       <div class="header">Social Profiles</div>
-      <a href="<%= path %>/create?format=instagram_profile">
+      <a href="<%= pathname %>/create?format=instagram_profile">
         <div class="fa fa-instagram" style="color: #282828"></div>
         <div class="name">Profile</div>
         <div class="subname">Instagram</div>
       </a>
-      <a href="<%= path %>/create?format=instagram_post">
+      <a href="<%= pathname %>/create?format=instagram_post">
         <div class="fa fa-instagram" style="color: #282828"></div>
         <div class="name">Post</div>
         <div class="subname">Instagram</div>
       </a>
-      <a href="<%= path %>/create?format=twitter_account">
+      <a href="<%= pathname %>/create?format=twitter_account">
         <div class="fa fa-twitter blue"></div>
         <div class="name">Account</div>
         <div class="subname">Twitter</div>
       </a>
-<!--
-      <a href="<%= path %>/create?format=snapchat_account">
+    </div>
+    <div class="list">
+      <div class="header">Music</div>
+      <a href="<%= pathname %>/create?format=soundcloud">
+        <div class="fa fa-soundcloud orange"></div>
+        <div class="name">Artist</div>
+        <div class="subname">SoundCloud</div>
+      </a>
+      <a href="<%= pathname %>/create?format=soundcloud">
+        <div class="fa fa-soundcloud orange"></div>
+        <div class="name">Playlist</div>
+        <div class="subname">SoundCloud</div>
+      </a>
+      <a href="<%= pathname %>/create?format=soundcloud">
+        <div class="fa fa-soundcloud orange"></div>
+        <div class="name">Track</div>
+        <div class="subname">SoundCloud</div>
+      </a>
+  <!--
+      <a href="<%= pathname %>/create?format=snapchat_account">
         <div class="fa fa-snapchat-ghost yellow"></div>
         <div class="name">Account</div>
         <div class="subname">Snapchat</div>
       </a>
-      <a href="<%= path %>/create?format=spotify_account">
+      <a href="<%= pathname %>/create?format=spotify_account">
         <div class="fa fa-spotify green"></div>
         <div class="name">Profile</div>
         <div class="subname">Spotify</div>
       </a>
-      <a href="<%= path %>/create?format=soundcloud_profile">
-        <div class="fa fa-soundcloud orange"></div>
-        <div class="name">Profile</div>
-        <div class="subname">Soundcloud</div>
-      </a>
-      <a href="<%= path %>/create?format=youtube_channel">
+      <a href="<%= pathname %>/create?format=youtube_channel">
         <div class="fa fa-youtube red"></div>
         <div class="name">Channel</div>
         <div class="subname">Youtube</div>
       </a>
-      <a href="<%= path %>/create?format=youtube_video">
+      <a href="<%= pathname %>/create?format=youtube_video">
         <div class="fa fa-youtube red"></div>
         <div class="name">Video</div>
         <div class="subname">Youtube</div>
       </a>
--->
+  -->
     </div>
     <div class="list">
       <div class="header">Products & Stores</div>
-      <a href="<%= path %>/create?format=amazon_product">
+      <a href="<%= pathname %>/create?format=amazon_product">
         <div class="fa fa-amazon" style="color: #FF9900"></div>
         <div class="name">Product</div>
         <div class="subname">Amazon</div>
       </a>
-      <a href="<%= path %>/create?format=etsy_product">
+      <a href="<%= pathname %>/create?format=etsy_product">
         <div class="fa fa-etsy" style="color: #F26223"></div>
         <div class="name">Product</div>
         <div class="subname">Etsy</div>
@@ -126,14 +139,14 @@
     </div>
     <div class="list">
       <div class="header">Custom Templates</div>
-<!--
-      <a href="<%= path %>/create?format=video">
+  <!--
+      <a href="<%= pathname %>/create?format=video">
         <div class="fa fa-play-circle purple"></div>
         <div class="name">Video</div>
         <div class="subname">Custom</div>
       </a>
--->
-      <a href="<%= path %>/create">
+  -->
+      <a href="<%= pathname %>/create">
         <div class="fa fa-image purple"></div>
         <div class="name">Image</div>
         <div class="subname">Custom</div>
