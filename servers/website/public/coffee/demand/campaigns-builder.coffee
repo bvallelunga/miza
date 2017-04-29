@@ -28,6 +28,9 @@ class Dashboard
     $('.bid-selector input[type=radio][name=bid_type]').change ->
       $(".bid-input").toggle this.value == "manual"
       
+      if this.value == "automatic"
+        $(".bid-input input").val $(".bid-input input").data("reset-value")
+      
     $(".is-house").change ->
       _this.update_budget()
       
