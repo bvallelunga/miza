@@ -22,7 +22,10 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
       allowNull: false
       validate: {
-        isIn: [['300 x 250', "social", "twitter", "soundcloud", "product"]]
+        isIn: {
+          args: [['300 x 250', "social", "twitter", "soundcloud", "product"]]
+          msg: "Invalid creative format"
+        }
       }          
     }
     image: { 

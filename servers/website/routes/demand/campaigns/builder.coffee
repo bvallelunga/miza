@@ -89,63 +89,64 @@ module.exports.create = (req, res, next)->
     quantity_requested = Math.floor(budget/temp_bid)
     status = if start_date then "queued" else "running"
     
-    LIBS.models.Campaign.create({
-      name: req.body.name
-      type: req.body.model
-      status: status
-      start_at: start_date or new Date()
-      end_at: end_date
-      advertiser_id: req.advertiser.id
-      amount: if is_house then 0 else bid
-      quantity_requested: quantity_requested
-      config: {
-        is_house: is_house
-        targeting: req.body.targeting or {}
-      }
-    }).then (campaign)->    
-      Promise.props({
-        campaign: campaign
-        industries: Promise.map targeting, (industry)->
-          LIBS.models.CampaignIndustry.create({
-            type: req.body.model
-            status: campaign.status
-            advertiser_id: req.advertiser.id
-            campaign_id: campaign.id
-            industry_id: industry.id
-            name: industry.name
-            amount: if is_house then 0 else bid
-            targeting: req.body.targeting or {}
-            config: {
-              is_house: is_house
-            }
-          })
-        
-        creative: Promise.resolve().then ->
-          if req.body.creative.image_url.length > 0
-            return LIBS.models.Creative.fetch_image(req.body.creative.image_url)
-        
-          return new Buffer(1)
-        .then (image)->
-          trackers = req.body.creative.trackers.split("\n")
+    LIBS.models.sequelize.transaction (t)->
+      LIBS.models.Campaign.create({
+        name: req.body.name
+        type: req.body.model
+        status: status
+        start_at: start_date or new Date()
+        end_at: end_date
+        advertiser_id: req.advertiser.id
+        amount: if is_house then 0 else bid
+        quantity_requested: quantity_requested
+        config: {
+          is_house: is_house
+          targeting: req.body.targeting or {}
+        }
+      }, {transaction: t}).then (campaign)->    
+        Promise.props({
+          campaign: campaign
+          industries: Promise.map targeting, (industry)->
+            LIBS.models.CampaignIndustry.create({
+              type: req.body.model
+              status: campaign.status
+              advertiser_id: req.advertiser.id
+              campaign_id: campaign.id
+              industry_id: industry.id
+              name: industry.name
+              amount: if is_house then 0 else bid
+              targeting: req.body.targeting or {}
+              config: {
+                is_house: is_house
+              }
+            }, {transaction: t})
           
-          if req.user.is_admin and req.body.creative.disable_incentive.length > 0
-            creative_config.disable_incentive = Number req.body.creative.disable_incentive
+          creative: Promise.resolve().then ->
+            if req.body.creative.image_url.length > 0
+              return LIBS.models.Creative.fetch_image(req.body.creative.image_url)
           
-          if trackers.length == 1 and trackers[0].length == 0
-            trackers = []
-        
-          LIBS.models.Creative.create({
-            advertiser_id: req.advertiser.id
-            campaign_id: campaign.id
-            link: campaign.utm_link(req.body.creative.link)
-            trackers: req.body.creative.trackers.split("\n")
-            format: req.body.creative.format
-            image: image
-            config: creative_config
-          })
-      })
+            return new Buffer(1)
+          .then (image)->
+            trackers = req.body.creative.trackers.split("\n")
+            
+            if req.user.is_admin and req.body.creative.disable_incentive.length > 0
+              creative_config.disable_incentive = Number req.body.creative.disable_incentive
+            
+            if trackers.length == 1 and trackers[0].length == 0
+              trackers = []
+          
+            LIBS.models.Creative.create({
+              advertiser_id: req.advertiser.id
+              campaign_id: campaign.id
+              link: campaign.utm_link(req.body.creative.link)
+              trackers: req.body.creative.trackers.split("\n")
+              format: req.body.creative.format
+              image: image
+              config: creative_config
+            }, {transaction: t})
+        })
       
-  .then (data)->
+  .then (data)->  
     res.json({
       success: true
       next: "/demand/#{req.advertiser.key}/campaign/#{data.campaign.id}"
