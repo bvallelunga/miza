@@ -55,10 +55,10 @@
     </style>
   </head>
   <body>
-    <a target="_blank" href="/<%= creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo) %>">
+    <a target="_blank" href="/<%- creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo) %>">
       <table>
         <tr>
-          <td style='background-image: url("data:image;base64,<%= creative.image.toString('base64') %>")'></td>
+          <td style='background-image: url("data:image;base64,<%- creative.image.toString('base64') %>")'></td>
         </tr>
         <% if(!!creative.description) { %>
           <tr>

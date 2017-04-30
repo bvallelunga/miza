@@ -14,7 +14,17 @@ module.exports.ping = (req, res, next)->
   }
 
   
-module.exports.impression = (req, res, next)->
+module.exports.impression = (req, res, next)->    
+  if req.query.campaign?
+    viewed_campaigns = req.signedCookies.viewed_campaigns or {}
+    viewed_campaigns[req.query.campaign] = new Date()
+    
+    res.cookie "viewed_campaigns", viewed_campaigns, { 
+      httpOnly: true
+      signed: true 
+      maxAge: 10000 * 60 * 1000
+    }
+  
   res.end utils.pixel_tracker
   
   LIBS.ads.track req, {

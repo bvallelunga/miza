@@ -181,7 +181,7 @@ module.exports.send = (raw_data)->
   if agent.version == "unknown" 
     agent.version = null
   
-  LIBS.ads.build_event(raw_data).then (event)->    
+  LIBS.ads.build_event(raw_data).then (event)->        
     # Keen Tracking
     LIBS.keen.tracking.addEvent "ads.event.#{event.type}", event
     

@@ -140,10 +140,10 @@
     </script>
   </head>
   <body>
-    <a class="container" target="_blank" href="/<%= creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo) %>">
-      <div class="background-image" style="background-image: url(<%= creative.config.user.background_image %>)"></div>
+    <a class="container" target="_blank" href="/<%- creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo) %>">
+      <div class="background-image" style="background-image: url(<%- creative.config.user.background_image %>)"></div>
       <div class="bottom">
-        <div class="profile-image" style="background-image: url(<%= creative.config.user.profile_image %>)"></div>
+        <div class="profile-image" style="background-image: url(<%- creative.config.user.profile_image %>)"></div>
         <div class="profile-information">
           <strong><%= creative.config.user.name %></strong>
           <span>@<%= creative.config.user.username %>&nbsp;&nbsp;&bull;&nbsp;&nbsp;<%= creative.config.user.followers %></span>

@@ -62,7 +62,7 @@ module.exports = (req, res, next)->
       
     return data
       
-  .then (data)->
+  .then (data)->    
     LIBS.ads.track req, {
       type: if data.media == "link" then "click" else "asset"
       asset_url: data.href

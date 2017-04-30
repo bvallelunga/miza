@@ -1,3 +1,5 @@
+moment = require "moment"
+
 module.exports = (req)->  
   profile = LIBS.exchanges.utils.profile(req)
   
@@ -21,6 +23,11 @@ module.exports = (req)->
     
     # Campaign Blocking
     blocked_campaigns = req.signedCookies.clicked_campaigns or []
+    viewed_campaigns = req.signedCookies.viewed_campaigns or {}
+    
+    for id, viewed_at of viewed_campaigns
+      if moment.duration(new Date() - new Date(viewed_at)).asHours() < 2
+        blocked_campaigns.push Number id
     
     if blocked_campaigns.length > 0
       query.campaign_id = {
@@ -62,8 +69,8 @@ module.exports = (req)->
     # Find Campaign Industries
     # Grab a random set of 5 campaigns
     # Then we sort the 5 campaigns by bid
-    # 60% of the time the highest bid will
-    # be shown. 40% of the time the a random
+    # 70% of the time the highest bid will
+    # be shown. 30% of the time the a random
     # creative will be chosen
     LIBS.models.CampaignIndustry.findAll({
       where: query
@@ -76,10 +83,10 @@ module.exports = (req)->
       if campaignIndustries.length == 0
         return Promise.reject LIBS.exchanges.errors.AD_NOT_FOUND
       
-      # 40% of the time we show select a random bid
+      # 20% of the time we show select a random bid
       # this is done to ensure the low bids get
       # some impressions
-      if Math.random() <= 0.60
+      if Math.random() <= 0.70
         campaignIndustries = campaignIndustries.sort (a, b)->
           return b.amount - a.amount
         

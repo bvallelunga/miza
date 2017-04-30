@@ -71,6 +71,7 @@ module.exports.optout = (req, res, next)->
 module.exports.ad_frame = (req, res, next)->
   LIBS.exchanges.fetch(req).then (creative)->
     format = creative.format.split(' ').join('')
+    
     res.render "ad/frame/#{format}", {
       publisher: req.publisher
       miza_script: req.miza_script

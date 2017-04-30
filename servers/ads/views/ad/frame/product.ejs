@@ -172,13 +172,13 @@
     </script>
   </head>
   <body>
-    <a class="container" target="_blank" href="/<%= creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo) %>">
+    <a class="container" target="_blank" href="/<%- creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo) %>">
       <div class="grid">
         <div class="slider" <% if(creative.config.images.length < 2) { %>style="display: none"<% } %>>
           <div class="slide"></div>
         </div>
         <% creative.config.images.forEach(function(image) { %>
-          <div class="image" style="background-image: url(<%= image %>)"></div>
+          <div class="image" style="background-image: url(<%- image %>)"></div>
         <% }) %>
       </div>
       <div class="bottom">
