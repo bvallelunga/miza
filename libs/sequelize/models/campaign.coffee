@@ -258,7 +258,12 @@ module.exports = (sequelize, DataTypes)->
     hooks: {
       beforeCreate: (campaign)->
         campaign.quantity_needed = campaign.quantity_requested
-        
+      
+      
+      beforeUpdate: (campaign)->
+        if campaign.changed("status") and campaign.status == "completed" and not campaign.end_at
+          campaign.end_at = new Date()
+      
             
       afterUpdate: (campaign)->
         campaign.getIndustries().each (industry)->

@@ -97,6 +97,10 @@ module.exports = ->
       client_secret: process.env.PAYPAL_SECRET
     }
     
+    indeed: {
+      publisher: "8024337020086060"
+    }
+    
     changelog: "ypg6GJ"
     
     default_user_access: [
