@@ -21,6 +21,12 @@ module.exports.scrape = (req, res, next)->
       
     when "soundcloud" 
       scraper = LIBS.scrapers.soundcloud
+      
+    when "kickstarter_project" 
+      scraper = LIBS.scrapers.kickstarter
+      
+    when "indiegogo_project" 
+      scraper = LIBS.scrapers.indiegogo
     
     else 
       return next "Invalid campaign format type: #{req.body.format}"

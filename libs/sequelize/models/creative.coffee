@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes)->
       allowNull: false
       validate: {
         isIn: {
-          args: [['300 x 250', "social", "twitter", "soundcloud", "product"]]
+          args: [['300 x 250', "social", "twitter", "soundcloud", "product", "crowdsource"]]
           msg: "Invalid creative format"
         }
       }          

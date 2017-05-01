@@ -7,7 +7,7 @@ module.exports.profile = (url)->
   hostname = url_parsed.hostname.split(".").slice(-2).join(".")
   
   if hostname != "instagram.com"
-    return Promise.reject "Please provide an instagram profile url."
+    return Promise.reject "Please provide an Instagram profile url."
     
   username = url_parsed.pathname.slice(1).split("/")[0]
 

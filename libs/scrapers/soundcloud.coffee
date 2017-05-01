@@ -5,7 +5,7 @@ module.exports = (url)->
   hostname = url_parsed.hostname.split(".").slice(-2).join(".")
   
   if hostname != "soundcloud.com"
-    return Promise.reject "Please provide an soundcloud url."
+    return Promise.reject "Please provide an SoundCloud url."
   
   return Promise.resolve {
     image_selection: false

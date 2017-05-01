@@ -6,7 +6,7 @@ module.exports.account = (url)->
   hostname = url_parsed.hostname.split(".").slice(-2).join(".")
   
   if hostname != "twitter.com"
-    return Promise.reject "Please provide an twitter account url."
+    return Promise.reject "Please provide an Twitter account url."
     
   username = url_parsed.pathname.slice(1).split("/")[0]  
   

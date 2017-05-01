@@ -5,7 +5,7 @@ module.exports.product = (url)->
   hostname = url_parsed.hostname.split(".").slice(-2).join(".")
   
   if hostname != "etsy.com" or url_parsed.pathname.indexOf("listing") == -1
-    return Promise.reject "Please provide an etsy product url."
+    return Promise.reject "Please provide an Etsy product url."
   
   LIBS.scrapers.scrape(url).then ($)->    
     images = ($("#image-carousel li").map ->
