@@ -37,6 +37,9 @@ module.exports = (req, res)->
         config: {
           results: data.results
         }
+        trackers: [
+          "http://gdc.indeed.com/rpc/apilog?a=apiresults"
+        ]
       })
       
   
