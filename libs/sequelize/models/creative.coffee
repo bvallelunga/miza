@@ -84,10 +84,10 @@ module.exports = (sequelize, DataTypes)->
         return link + params
       
       
-      attributed_link: (publisher, industry, is_protected, is_demo)->          
-        @link += if @link.indexOf("?") == -1 then "?" else "&"
+      attributed_link: (publisher, industry, is_protected, is_demo, link=@link)->          
+        link += if link.indexOf("?") == -1 then "?" else "&"
       
-        original_url = "#{@link}utm_publisher=#{publisher}"
+        original_url = "#{link}utm_publisher=#{publisher}"
         link = "#{ new Buffer(original_url).toString("base64") }?"
         params = [
           "link"

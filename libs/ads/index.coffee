@@ -20,7 +20,7 @@ module.exports.build_event = (raw_data)->
       raw_data[key] = null
   
   Promise.resolve().then ->
-    if not raw_data.advertiser?
+    if not Number raw_data.advertiser
       return Promise.resolve()
   
     LIBS.models.Advertiser.findById(raw_data.advertiser).then (temp)->      
@@ -31,7 +31,7 @@ module.exports.build_event = (raw_data)->
       }
       
   .then ->
-    if not raw_data.campaign?
+    if not Number raw_data.campaign
       return Promise.resolve()
   
     LIBS.models.Campaign.findById(raw_data.campaign).then (temp)->
@@ -60,7 +60,7 @@ module.exports.build_event = (raw_data)->
       return temp.increment(increments)
         
   .then ->
-    if not raw_data.industry?
+    if not Number raw_data.industry
       return Promise.resolve()
   
     LIBS.models.CampaignIndustry.findById(raw_data.industry).then (temp)-> 
@@ -88,7 +88,7 @@ module.exports.build_event = (raw_data)->
       return temp.increment(increments)
         
   .then ->
-    if not raw_data.creative?
+    if not Number raw_data.creative
       return Promise.resolve()
   
     LIBS.models.Creative.findById(raw_data.creative).then (temp)->

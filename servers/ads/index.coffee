@@ -1,4 +1,5 @@
-app = require('express')()
+express = require 'express'
+app = express()
 ejs = require "ejs"
 routes = require("./routes")()
 
@@ -15,6 +16,7 @@ module.exports = (srv)->
   app.use routes.core.auth.has_publisher
   app.use routes.core.auth.has_opted_out
   app.use LIBS.bugsnag.requestHandler
+  app.use "/public", express.static __dirname + '/public'
       
   
   # Routes  

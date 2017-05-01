@@ -5,7 +5,7 @@ module.exports = {
   miza: require "./miza"
   indeed: require "./indeed"
   fetch: (req)->
-    return LIBS.exchanges.miza(req)# .catch ->
-#       return LIBS.exchanges.indeed(req)
+    return LIBS.exchanges.miza(req).catch ->
+      return LIBS.exchanges.indeed(req)
 
 }

@@ -1,0 +1,131 @@
+<% width = 300; height = 370 %>
+<html>
+  <head>
+    <style>
+      html, body {
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        font-family: "Arial";
+      }
+      
+      a {
+        text-decoration: none;
+      }
+      
+      .container {
+        position: relative;
+        width: 100%;
+        height: <%- height - 25 %>px;
+        color: black;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+        border: solid 1px #E6E6E6;
+        overflow: hidden;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        background: white;
+        padding-bottom: 50px;
+      }
+      
+      .bottom {
+        background: white;
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        position: absolute;
+        z-index: 2;
+        bottom: 0;
+        box-sizing: border-box;
+        text-align: right;
+        color: #657786;
+        border-top: solid 1px #f3f3f3;
+        box-shadow: 3px 0 10px 2px rgba(0,0,0,0.1);
+      }
+      
+      .bottom .logo {
+        width: 75px;
+        height: 20px;
+        margin-left: 5px;
+        margin-bottom: -2px;
+        background-image: url("/public/indeed.png");
+        background-position: left center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        display: inline-block;
+      }
+      
+      .listing {
+        width: 100%;
+        height: <%- height - 70 %>px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+      }
+      
+      .item {
+        position: relative;
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
+        box-sizing: border-box;
+        border-top: solid 1px #f3f3f3;
+        display: block;
+      }
+      
+      .item:hover {
+        background: #f7f7ff;
+      }
+      
+      .item:first-child {
+        border: none;
+      }
+      
+      .item .title {
+        font-size: 15px;
+        font-weight: bold;
+        color: #0000CC; 
+        margin-bottom: 2px;
+      }
+      
+      .item .location {
+        font-size: 13px;
+        font-weight: lighter;
+        color: #666;
+        margin-bottom: 5px;
+      }
+      
+      .item .description {
+        font-size: 13px;
+        color: black;
+        margin-bottom: 3px;
+        line-height: 17px;
+      }
+      
+      .item .posted_at {
+        font-size: 12px;
+        color: #c3c3c3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="listing">
+        <% creative.config.results.forEach(function(job) { %>
+          <a class="item" target="_blank" href="/<%- creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo, job.url) %>">
+            <div class="title"><%= job.jobtitle %></div>
+            <div class="location"><%= job.company %> - <%= job.formattedLocation %></div>
+            <div class="description"><%- job.snippet %></div>
+            <div class="posted_at"><%= job.formattedRelativeTime %></div>
+          </a>
+        <% }) %>
+      </div>
+      <div class="bottom">
+        jobs by <span class="logo"></span>
+      </div>
+    </div>
+    <% include ./footer %>
+  </body>
+</html>
