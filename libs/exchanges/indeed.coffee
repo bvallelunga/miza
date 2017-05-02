@@ -1,4 +1,5 @@
 request = require "request-promise"
+geoip = require 'geoip-lite'
 
 module.exports = (req, res)-> 
   start = req.signedCookies.indeed or 0
@@ -33,6 +34,15 @@ module.exports = (req, res)->
   
   
 module.exports.listing = (query, req, start=0)->
+  ip = req.headers["CF-Connecting-IP"] or req.ip or req.ips
+  lookup = geoip.lookup(ip)
+  location = ""
+  country = ""
+  
+  if lookup?
+    location = "#{lookup.city}, #{lookup.region}"
+    country = lookup.country.toLowerCase()
+
   request({
     url: "http://api.indeed.com/ads/apisearch"
     json: true
@@ -43,9 +53,11 @@ module.exports.listing = (query, req, start=0)->
       limit: 5
       start: start
       chnl: req.publisher.key
-      userip: req.headers["CF-Connecting-IP"] or req.ip or req.ips
+      userip: ip
       useragent: req.headers['user-agent']
       filter: 1
+      l: location
+      co: country
       q: query.toLowerCase()
     }
   })

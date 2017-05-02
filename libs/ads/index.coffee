@@ -1,6 +1,5 @@
 # Imports
 useragent = new require 'express-useragent'
-geoip = require 'geoip-lite'
 moment = require 'moment'
 
 module.exports.build_event = (raw_data)->
