@@ -6,27 +6,26 @@ module.exports = (req, res)->
   
   if start > 10
     start = 0
-   
-  req.publisher.getIndustry().then (industry)->  
-    LIBS.exchanges.indeed.listing(
-      industry.name, req, start
-    ).then (data)->   
-      res.cookie "indeed", ++start, { 
-        httpOnly: true
-        signed: true 
-        maxAge: 24 * 60 * 60 # 1 day
+    
+  LIBS.exchanges.indeed.listing(
+    "", req, start
+  ).then (data)->   
+    res.cookie "indeed", ++start, { 
+      httpOnly: true
+      signed: true 
+      maxAge: 24 * 60 * 60 # 1 day
+    }
+    
+    return LIBS.models.Creative.build({
+      format: "indeed"
+      config: {
+        results: data.results
+        search: ""
       }
-      
-      return LIBS.models.Creative.build({
-        format: "indeed"
-        config: {
-          results: data.results
-          search: industry.name.toLowerCase()
-        }
-        trackers: [
-          "http://gdc.indeed.com/rpc/apilog?a=apiresults"
-        ]
-      })
+      trackers: [
+        "http://gdc.indeed.com/rpc/apilog?a=apiresults"
+      ]
+    })
       
   
   
