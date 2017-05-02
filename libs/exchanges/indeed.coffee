@@ -46,7 +46,7 @@ module.exports.listing = (query, req, start=0)->
       publisher: CONFIG.indeed.publisher
       format: "json"
       v: 2
-      limit: 5
+      limit: 20
       start: start
       chnl: req.publisher.key
       userip: ip
