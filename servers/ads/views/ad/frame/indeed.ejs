@@ -158,13 +158,21 @@
     <script src="//code.jquery.com/jquery-3.1.0.min.js"></script>
     <script>
       $(function() {
-        $(".search").keypress(function() {          
+        var query = null
+        
+        $(".search").keyup(function() { 
+          query = $(this).val()
+                   
           $.get("/indeed", {
-            value: $(this).val(),
+            value: query,
             protected: <%- is_protected %>,
             demo: <%- demo %>
-          }).done(function(response) {
-            $(".listing").html(response.map(function(job) {
+          }).done(function(response) {            
+            if(response.query != query) {
+              return false
+            }
+            
+            $(".listing").html(response.results.map(function(job) {
               return $([
                 '<a class="item" target="_blank" href="' + job.url + '">',
                 '<div class="title">' + job.title + '</div>',
