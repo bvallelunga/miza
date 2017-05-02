@@ -6,7 +6,7 @@ module.exports = (req, res)->
   
   if start > 10
     start = 0
-    
+  
   LIBS.exchanges.indeed.listing(
     "", req, start
   ).then (data)->   
@@ -34,7 +34,7 @@ module.exports.listing = (query, req, start=0)->
   lookup = geoip.lookup(ip)
   location = ""
   country = ""
-  
+   
   if lookup
     location = "#{lookup.city}, #{lookup.region}"
     country = lookup.country.toLowerCase()

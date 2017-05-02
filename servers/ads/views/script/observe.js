@@ -129,12 +129,17 @@ API.observer = function() {
 
 
 API.migrate = function(element) {
-  if(!API.hash_value("m-creative") && API.iframes.length > 0 && <%- publisher.config.ad_coverage %> < Math.random()) {
+  var iframe_length = API.iframes.length
+  
+  if(!API.hash_value("m-creative") && iframe_length > 0 && <%- publisher.config.ad_coverage %> < Math.random()) {
     return element.parentNode.removeChild(element)
   }
   
   var iframe = API.iframe(element);
   var div = API.document.createElement("div")
   div.appendChild(iframe)
-  element.parentNode.replaceChild(div, element)
+  
+  setTimeout(function() {
+    element.parentNode.replaceChild(div, element)
+  }, iframe_length * 1000)
 }
