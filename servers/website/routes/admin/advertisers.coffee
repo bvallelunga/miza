@@ -1,22 +1,22 @@
 module.exports.get = (req, res, next)->
   LIBS.models.Advertiser.findAll({
-      order: [
-        ['name', 'ASC']
-      ]
-      include: [
-        {
-          model: LIBS.models.Transfer
-          as: "transfers"
-        }
-        {
-          model: LIBS.models.User
-          as: "admin_contact"
-        }
-        {
-          model: LIBS.models.User
-          as: "owner"
-        }
-      ]
+    order: [
+      ['name', 'ASC']
+    ]
+    include: [
+      {
+        model: LIBS.models.Transfer
+        as: "transfers"
+      }
+      {
+        model: LIBS.models.User
+        as: "admin_contact"
+      }
+      {
+        model: LIBS.models.User
+        as: "owner"
+      }
+    ]
   }).then (advertisers)->  
     res.render "admin/advertisers", {
       js: req.js.renderTags "modal", "admin-table", "fa"

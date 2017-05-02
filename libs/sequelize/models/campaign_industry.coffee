@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
       allowNull: false
       validate: {
-        isIn: [['queued', 'running', 'paused', 'completed']]
+        isIn: [['pending', 'queued', 'running', 'paused', 'completed', 'rejected']]
       }
       set: (value)->
         @setDataValue("status", value)

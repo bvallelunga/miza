@@ -35,13 +35,6 @@ module.exports.post_update = (req, res, next)->
     if req.body.action == "delete"
       return req.campaign.destroy()
       
-    if req.campaign.status == "queued"
-      if req.body.action == "running"
-        req.campaign.start_at = new Date()
-        
-      else if req.body.action == "paused"
-        return Promise.reject "Queued campaigns can not be paused"
-      
     req.campaign.status = req.body.action
     req.campaign.save()
   
@@ -145,9 +138,14 @@ module.exports.get_publishers = (req, res, next)->
   
 
 module.exports.get_charts = (req, res, next)->
+  start_date = req.campaign.start_at or new Date()
   end_date = req.campaign.end_at or new Date()
+  
+  if start_date > end_date
+    end_date = start_date
+
   month_timeframe = JSON.stringify({
-    start: moment.utc(req.campaign.start_at).startOf("day").toISOString()
+    start: moment.utc(start_date).startOf("day").toISOString()
     end: moment.utc(end_date).add(2, "day").startOf("day").toISOString()
   })
   

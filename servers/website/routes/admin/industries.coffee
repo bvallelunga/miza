@@ -16,9 +16,7 @@ module.exports.get = (req, res, next)->
 
 
 module.exports.update = (req, res, next)->
-  Promise.all req.body.industries.map (industry)->
-    console.log Number industry.cpc
-  
+  Promise.all req.body.industries.map (industry)->  
     return LIBS.models.Industry.update({
       name: industry.name
       cpm: Number industry.cpm

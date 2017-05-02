@@ -73,7 +73,6 @@ module.exports.post_updates = (req, res, next)->
         }
       })
     
-    
     LIBS.models.Campaign.findAll({
       where: {
         advertiser_id: req.advertiser.id
@@ -81,10 +80,13 @@ module.exports.post_updates = (req, res, next)->
           $in: req.body.campaigns
         }
         status: {
-          $ne: "completed"
+          $notIn: ["completed", "rejected"]
         }
       }
     }).each (campaign)->
+      if campaign.status == "pending" and req.body.action != "completed"
+        return Promise.resolve()
+    
       if campaign.status == "queued"
         if req.body.action == "running"
           campaign.start_at = new Date()
@@ -116,6 +118,10 @@ module.exports.post_list = (req, res, next)->
         start_at: {
           $lte: new Date req.body.dates.start
         }
+      }, {
+        status: "pending"
+      }, {
+        status: "rejected"
       }]
     }
     include: [{

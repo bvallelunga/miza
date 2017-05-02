@@ -32,7 +32,7 @@ download = (url, query, headers)->
       data.content = response.body
     
     else 
-      data.content = response.body.toString("ascii")
+      data.content = response.body.toString("utf8")
       
     return data
 

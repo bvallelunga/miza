@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes)->
       allowNull: false
       validate: {
         isIn: {
-          args: [['queued', 'running', 'paused', 'completed']]
+          args: [['pending', 'queued', 'running', 'paused', 'completed', 'rejected']]
           msg: "Invalid campaign status"
         }
       }
@@ -251,21 +251,41 @@ module.exports = (sequelize, DataTypes)->
     }
     
     validate: {
-      notCompleted: ->            
-        if @changed("status") and @previous("status") == "completed"
-          throw new Error "A campaign's status can not be changed after it is complete."
+      notCompleted: ->                 
+        if @changed("status")
+          if @previous("status") == "completed"
+            throw new Error "Completed campaigns can not be changed."
+            
+          if @previous("status") == "rejected" and not @admin_override
+            throw new Error "Rejected campaigns can not be changed."
+            
+          if @previous("status") == "queued" and @status == "paused"
+            throw new Error "Queued campaigns can not be paused."
+
     }
     hooks: {
       beforeCreate: (campaign)->
         campaign.quantity_needed = campaign.quantity_requested
-      
+        
+        
+      afterCreate: (campaign)->
+        if campaign.status == "pending"
+          LIBS.slack.message {
+            text: "A new campaign has been created and is awaiting our approval! <#{CONFIG.web_server.host}/admin/pending_campaigns|Pending Campaigns>"
+          }
+
       
       beforeUpdate: (campaign)->
-        if campaign.changed("status") and campaign.status == "completed" and not campaign.end_at
-          campaign.end_at = new Date()
+        if campaign.changed("status")
+          if campaign.previous("status") == "pending"
+            campaign.start_at = campaign.start_at or new Date()
+         
+          if campaign.status == "completed" 
+            campaign.start_at = campaign.start_at or new Date()
+            campaign.end_at = campaign.end_at or new Date()
       
             
-      afterUpdate: (campaign)->
+      afterUpdate: (campaign)->      
         campaign.getIndustries().each (industry)->
           if industry.status != "complete"              
             industry.status = campaign.status

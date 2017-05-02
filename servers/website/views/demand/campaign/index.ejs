@@ -1,5 +1,15 @@
 <a class="dashboard-back fa fa-arrow-left" href="/demand/<%= advertiser.key %>/campaigns"></a>
 
+<% if(campaign.status == "rejected") { %>
+<div class="warning" style="padding-left: 20px; padding-right: 20px; text-align: left;">
+  MODERATOR NOTES: 
+  <%= campaign.config.rejection_notes %>
+  <br><br>
+  Please create a new campaign with the appropriate fixes. We
+  will approve it as soon as possible.
+</div>
+<% } %>
+
 <div class="display full">
   <table class="top-bar"> 
     <tr>   
@@ -25,7 +35,16 @@
       </td>
       <td class="section">
         <div class="decription">Status</div>
-        <div class="title cap"><%= campaign.status %></div>
+        <div class="title cap">
+          <%= campaign.status %>
+          <% if(campaign.status == "pending") { %>
+            <span class="info fa fa-info-circle tooltip" title="Your campaign is awaiting approval<br>from our moderation team."></span>
+          <% } else if(campaign.status == "queued") { %>
+            <span class="info fa fa-info-circle tooltip" title="Campaign will go live on the designated start date (UTC)."></span>
+          <% } else if(campaign.status == "rejected") { %>
+            <span class="info fa fa-info-circle tooltip" title="Campaign has been rejected. Please<br>see the moderators notes."></span>
+          <% } %>
+        </div>
       </td>
       <td class="section">
         <div class="decription">Bid</div>
@@ -41,7 +60,13 @@
       </td>
       <td class="section" style="min-width:255px;">
         <div class="actions campaign right" data-url="/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>">
-          <% if(campaign.status != "completed") { %>
+          <% if(campaign.status == "pending" || campaign.status == "completed" || campaign.status == "rejected") { %>
+            <div class="action" data-action="delete" data-confirm="Please confirm you want to delete!">
+              <span class="fa fa-trash"></span>
+              <span class="fa fa-spin fa-refresh" style="display:none"></span>
+              Delete
+            </div>
+          <% } else { %>
             <% if(campaign.status == "running") { %>
               <div class="action" data-action="paused">
                 <span class="fa fa-pause"></span>
@@ -59,12 +84,6 @@
               <span class="fa fa-archive"></span>
               <span class="fa fa-spin fa-refresh" style="display:none"></span>
               Archive
-            </div>
-          <% } else { %>
-            <div class="action" data-action="delete" data-confirm="Please confirm you want to delete!">
-              <span class="fa fa-trash"></span>
-              <span class="fa fa-spin fa-refresh" style="display:none"></span>
-              Delete
             </div>
           <% } %>
         </div>
@@ -99,7 +118,7 @@
       </td>
       <td class="section">
         <div class="decription">Start Date</div>
-        <div class="title"><%= moment(campaign.start_at).format("MMM DD") %></div>
+        <div class="title"><%= campaign.start_at ? moment(campaign.start_at).format("MMM DD") : "NONE" %></div>
       </td>
       <td class="section">
         <div class="decription">End Date</div>

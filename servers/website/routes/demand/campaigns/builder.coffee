@@ -93,14 +93,13 @@ module.exports.create = (req, res, next)->
     is_house = req.body.is_house == "true" and req.user.is_admin
     temp_bid = if req.body.model == "cpm" then bid/1000 else bid
     quantity_requested = Math.floor(budget/temp_bid)
-    status = if start_date then "queued" else "running"
     
     LIBS.models.sequelize.transaction (t)->
       LIBS.models.Campaign.create({
         name: req.body.name
         type: req.body.model
-        status: status
-        start_at: start_date or new Date()
+        status: "pending"
+        start_at: start_date
         end_at: end_date
         advertiser_id: req.advertiser.id
         amount: if is_house then 0 else bid

@@ -2,7 +2,7 @@ path = require "./path"
 downloader = require "./downloader"
 
 module.exports = (req, res, next)->
-  path(req.get('host'), req.path).then (path)->
+  path(req.get('host'), req.path, req).then (path)->
     return downloader path, req.query, {
       referer: req.query.page_url
       "user-agent": req.get("user-agent")

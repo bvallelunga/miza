@@ -88,7 +88,7 @@ module.exports = (sequelize, DataTypes)->
         link += if link.indexOf("?") == -1 then "?" else "&"
       
         original_url = "#{link}utm_publisher=#{publisher}"
-        link = "#{ new Buffer(original_url).toString("base64") }?"
+        link = "#{ @protected_url(link) }?"
         params = [
           "link"
         ]
@@ -103,6 +103,9 @@ module.exports = (sequelize, DataTypes)->
           ]
         
         return link + params.join("&")
-        
+     
+     
+      protected_url: (link)->
+        return new Buffer(link).toString("base64")
     }
   }
