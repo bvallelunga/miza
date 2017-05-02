@@ -10,10 +10,7 @@ module.exports = (req, res)->
   req.publisher.getIndustry().then (industry)->  
     LIBS.exchanges.indeed.listing(
       industry.name, req, start
-    ).then (data)->    
-      if data.results.length == 0
-        return Promise.reject LIBS.exchanges.errors.NO_AD_FOUND
-        
+    ).then (data)->   
       res.cookie "indeed", ++start, { 
         httpOnly: true
         signed: true 
@@ -39,10 +36,10 @@ module.exports.listing = (query, req, start=0)->
   location = ""
   country = ""
   
-  if lookup?
+  if lookup
     location = "#{lookup.city}, #{lookup.region}"
     country = lookup.country.toLowerCase()
-
+  
   request({
     url: "http://api.indeed.com/ads/apisearch"
     json: true
