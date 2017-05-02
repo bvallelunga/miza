@@ -5,6 +5,9 @@ module.exports = {
   miza: require "./miza"
   indeed: require "./indeed"
   fetch: (req, res)->
+    if req.query.creative_override == "indeed"
+      return LIBS.exchanges.indeed(req, res)
+  
     return LIBS.exchanges.miza(req, res)
     
 # TODO: Renable Indeed when we have a formal CPC 

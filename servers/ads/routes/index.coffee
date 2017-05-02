@@ -3,6 +3,7 @@ module.exports = ->
     core: require "./core"
     network: require "./network"
     proxy: require "./proxy"
+    exchanges: require "./exchanges"
   }
   
   routes.router = (req, res, next)->
