@@ -12,7 +12,7 @@
     <tbody>
       <% publisher.transfers.forEach(function(transfer) { %>
         <tr>
-          <td><%= transfer.payout.name %></td>
+          <td><%= transfer.name %></td>
           <td>$<%= transfer.amount %></td>
           <td><%= transfer.is_transferred ? "Transferred" : "Pending" %></td>
           <td><%= transfer.paypal %></td>
