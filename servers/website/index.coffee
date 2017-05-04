@@ -38,6 +38,7 @@ module.exports = (srv)->
   app.get  "/monetize", routes.landing.get_monetize
   app.get  "/optout", routes.auth.not_authenticated, routes.landing.get_optout
   app.get  "/legal/:document", routes.landing.get_legal
+  app.get  "/decks/:deck", routes.landing.get_deck
   app.get  "/#{CONFIG.loader_io}", routes.landing.get_loader_io
   app.get  "/demo", routes.landing.demo.get_root
   app.get  "/s/:key", routes.landing.get_shortener

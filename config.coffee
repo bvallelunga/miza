@@ -159,6 +159,11 @@ module.exports = ->
       terms: "https://docs.google.com/document/d/1707xqsMKnh8tOGI584KSWPp87OCIZkeAf8mNXfnrsyQ/pub?embedded=true"
     }
     
+    decks: {
+      demand: "https://docs.google.com/presentation/d/17C881dJBgJQ3Ry39FkTtie3729DndbnDxOh-QPvlM5Q/embed?start=false&loop=false&delayms=30000"
+      supply: "https://docs.google.com/presentation/d/1cQLKvN8ZWOa7vjRIuWZSdqudgSND-IUyv0KLtTpKupo/embed?start=false&loop=false&delayms=30000"
+    }
+    
     intercom: {
       app_id: process.env.INTERCOM
       api_key: process.env.INTERCOM_KEY

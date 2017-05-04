@@ -42,6 +42,20 @@ module.exports.get_legal = (req, res, next)->
   }
   
 
+module.exports.get_deck = (req, res, next)->
+  document_url = CONFIG.decks[req.params.deck]
+
+  if not document_url?
+    return res.redirect "/"
+
+  res.render "landing/decks", {
+    js: req.js.renderTags "landing"
+    css: req.css.renderTags "landing"
+    document_url: document_url
+    title: "Decks"
+  }
+  
+
 module.exports.get_optout = (req, res, next)->
   res.render "landing/optout", {
     js: req.js.renderTags "modal"
