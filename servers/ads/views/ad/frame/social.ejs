@@ -26,16 +26,27 @@
         background: white;
       }
       
-      .slider {
+      .sliders {
         position: absolute;
         top: 10px;
-        left: 50px;
-        right: 50px;
+        left: 10px;
+        right: 10px;
+      }
+      
+      .slider-container {
+        float: left;
+        padding: 0 2px;
+        box-sizing: border-box;
+      }
+      
+      .slider {
         background: rgba(255, 255, 255, 0.6);
         height: 2px;
         border-radius: 15px;
         overflow: hidden;
         z-index: 1;
+        position: relative;
+        width: 100%;
       }
       
       .slider .slide {
@@ -137,8 +148,14 @@
   <body>
     <a class="container" target="_blank" href="/<%- creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo) %>">
       <div class="grid">
-        <div class="slider" <% if(creative.config.images.length < 2) { %>style="display: none"<% } %>>
-          <div class="slide"></div>
+        <div class="sliders">
+          <% creative.config.images.forEach(function(image) { %>
+            <div class="slider-container" style="width: <%- (1/creative.config.images.length) * 100 %>%">
+              <div class="slider" <% if(creative.config.images.length < 2) { %>style="display: none"<% } %>>
+                <div class="slide"></div>
+              </div>
+            </div>
+          <% }) %>
         </div>
         <% creative.config.images.forEach(function(image) { %>
           <div class="image" style='background-image: url("<%- image %>");'></div>
@@ -153,22 +170,23 @@
     </a>
     <% include ./footer %>
     <script>
-      var slider = document.getElementsByClassName("slide")[0]
+      var sliders = document.getElementsByClassName("slide")
       var images = document.getElementsByClassName("image")
       images = Array().slice.call(images || [])
       
       show_slide = function(index) {      
         images[index].style.display = "block"
-        slider.style.width = "0%"
+        sliders[index].style.width = "0%"
         
         var count = 0
-        var time = 5000
+        var time = 10000
         var interval = setInterval(function() {
-          count += 10
-          slider.style.width = (count/time * 100) + "%"
+          count += 20
+          sliders[index].style.width = (count/time * 100) + "%"
           
           if(count > time) {
             clearInterval(interval)
+            sliders[index].style.width = "0%"
             images[index++].style.display = "none"
             if(index >= images.length) {
               index = 0

@@ -23,7 +23,7 @@ module.exports = (req)->
     
     # Campaign Blocking
     blocked_campaigns = req.signedCookies.clicked_campaigns or []
-    viewed_campaigns = req.signedCookies.viewed_campaigns or {}
+    viewed_campaigns = {} #req.signedCookies.viewed_campaigns or {}
     
     for id, viewed_at of viewed_campaigns
       if moment.duration(new Date() - new Date(viewed_at)).asHours() < 2

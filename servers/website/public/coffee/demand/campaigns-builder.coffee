@@ -77,7 +77,7 @@ class Dashboard
         $image.click ->
           to_active = not $image.hasClass "active"
 
-          if to_active and $(".image-list .active").length < 4
+          if to_active and $(".image-list .active").length < 10
             $image.addClass "active"
             
           if not to_active
