@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes)->
           as: 'admin_contact' 
         }
         
+        models.UserAccess.belongsTo models.Advertiser, {
+          as: 'advertiser'
+        }
+        
     }
     instanceMethods: {      
       intercom: ->   

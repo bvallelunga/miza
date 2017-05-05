@@ -112,6 +112,10 @@ module.exports = ->
         email: "ambrish@miza.io"
         is_admin: true
         publisher: 1
+      }, {
+        email: "william.xu@miza.io"
+        is_admin: true
+        publisher: 1
       }
     ]
     

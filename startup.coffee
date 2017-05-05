@@ -8,7 +8,7 @@ GLOBAL.CONFIG = require("./config")()
 
 # Enable Concurrency
 module.exports = (concurrency, callback)->
-  if concurrency
+  if concurrency and CONFIG.concurrency > 1
     require("throng") CONFIG.concurrency, ->
       startup callback
       
