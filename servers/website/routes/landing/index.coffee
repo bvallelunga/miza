@@ -53,6 +53,7 @@ module.exports.get_deck = (req, res, next)->
     css: req.css.renderTags "landing"
     document_url: document_url
     title: "Decks"
+    user_simulate: true
   }
   
 
