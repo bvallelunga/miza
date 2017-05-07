@@ -6,4 +6,8 @@
     document.getElementsByTagName('head')[0]
       .appendChild(script);
   })(window, "//<%= publisher.endpoint %>");
+  
+  window.<%= publisher.key %>_callback = function(element) {
+    console.log("Could not fill ad unit: ", element)
+  }
 </script>

@@ -76,7 +76,13 @@ API.start_observing = function() {
     var element = API.document.querySelector("." + event.data.frame)
     
     if(event.data.name == "frame.remove") {
-      element.parentNode.parentNode.removeChild(element.parentNode)
+      var publisher_callback = API.window["<%= publisher.key %>_callback"]
+      var parentNode = element.parentNode.parentNode
+      parentNode.removeChild(element.parentNode)
+      
+      if(!!publisher_callback) {
+        publisher_callback(parentNode)
+      }
     }
     
     if(event.data.name == "frame.show") {
