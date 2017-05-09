@@ -20,6 +20,7 @@ create_user = (models)->
       password: randomstring.generate(15)
       name: "Demo User"
       is_demo: true
+      type: "all"
     }
   })
   
@@ -35,6 +36,7 @@ create_publishers = (models)->
         is_demo: true
         product: "network"
         industry_id: 1
+        fee: 0.75
       }
     }) 
   ]

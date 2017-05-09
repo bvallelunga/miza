@@ -14,7 +14,7 @@ module.exports = ->
     env: process.env
     is_prod: is_prod
     is_dev: is_dev
-    port: process.env.PORT or 3030
+    port: process.env.PORT_OVERRIDE or process.env.PORT or 3030
     concurrency: process.env.WEB_CONCURRENCY or 1
     args: process.argv.slice(2)
     
@@ -110,6 +110,10 @@ module.exports = ->
         publisher: 1
       }, {
         email: "ambrish@miza.io"
+        is_admin: true
+        publisher: 1
+      }, {
+        email: "william.xu@miza.io"
         is_admin: true
         publisher: 1
       }

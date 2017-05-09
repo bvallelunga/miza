@@ -10,7 +10,7 @@ module.exports = (sequelize, models)->
       host: pg_server.hostname
       port: pg_server.port
       user: if pg_server.auth? then pg_server.auth.split(':')[0] else ""
-      password: if pg_server.auth? then pg_server.auth.split(':')[1] else ""
+      password: if pg_server.auth? then pg_server.auth.split(':')[1] else null
       database: pg_server.path.substring(1)
       ssl: CONFIG.postgres.ssl
     }
