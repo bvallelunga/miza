@@ -7,7 +7,7 @@ module.exports.up = (sequelize, models)->
       cpm: 2.25
       cpc: 1
       max_impressions: 100000
-      private: true
+      private: false
     }
   ], (data)->
     models.Industry.findOrCreate({
