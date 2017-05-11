@@ -1,5 +1,5 @@
 <% include ../includes/start %>
 <div class="decks">
-  <iframe src="<%= document_url %>"></iframe>
+  <iframe name="iframe" src="<%= document_url %>" onload="this.contentWindow.focus()"></iframe>
 </div>
 <% include ../includes/end %>

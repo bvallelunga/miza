@@ -116,3 +116,4 @@ module.exports.get_shortener = (req, res, next)->
   
   
 module.exports.supply = require "./supply"
+module.exports.demand = require "./demand"

@@ -1,10 +1,12 @@
 <% include ../includes/start %>
 <% include ../includes/header %>
 <div class="container medium">
-  <% include ../includes/logo %>
+  <a href="/">
+    <% include ../includes/logo %>
+  </a>
   <span>
     Opting out of Miza Ads will disable the ability for Ad Networks
-    to deliver ads while Ad Blockers are enabled <strong>for only this IP Address</strong>. 
+    to deliver ads while Ad Blockers are enabled <strong>for only this IP</strong>. 
   </span>
   <form class="form" method="POST" action="/optout">
     <% include ../includes/csrf %>

@@ -2,7 +2,9 @@ module.exports.get_root = (req, res, next)->
   res.render "landing/supply/home", {
     js: req.js.renderTags "landing", "fa"
     css: req.css.renderTags "landing"
+    title: "Publisher"
   }
+
 
 module.exports.get_monetize = (req, res, next)->
   res.render "landing/supply/monetize", {
@@ -10,6 +12,7 @@ module.exports.get_monetize = (req, res, next)->
     css: req.css.renderTags "landing"
     title: "Monetize"
   }  
+
 
 module.exports.get_demo = (req, res, next)->
   res.render "landing/supply/demo", {

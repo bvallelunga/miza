@@ -33,10 +33,15 @@ module.exports = (srv)->
   
   
   # Landing Routes
-  app.get  "/supply", routes.auth.not_authenticated, routes.landing.supply.get_root
+  app.get  "/supply", routes.landing.supply.get_root
   app.get  "/supply/monetize", routes.landing.supply.get_monetize
   app.get  "/supply/demo", routes.landing.supply.get_demo
   app.get  "/supply/demo/:demo", routes.landing.supply.get_demo_ad
+  app.get  "/demand", routes.landing.demand.get_root
+  app.get  "/demand/social", routes.landing.demand.get_social
+  app.get  "/demand/music", routes.landing.demand.get_music
+  app.get  "/demand/commerce", routes.landing.demand.get_commerce
+  app.get  "/demand/enterprise", routes.landing.demand.get_enterprise
   app.get  "/about", routes.landing.get_about
   app.get  "/optout", routes.auth.not_authenticated, routes.landing.get_optout
   app.get  "/legal/:document", routes.landing.get_legal
