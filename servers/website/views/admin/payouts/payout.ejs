@@ -96,7 +96,7 @@
         <% payout.transfers.forEach(function(transfer) { %>
           <tr>
             <td>
-              <a href="/supply/<%= transfer.publisher.key %>/analytics" target="_blank"><%= transfer.publisher.name %></a>
+              <a href="/dashboard/supply/<%= transfer.publisher.key %>/analytics" target="_blank"><%= transfer.publisher.name %></a>
             </td>
             <td><%= transfer.metrics.profit %></td>
             <td><%= transfer.metrics.revenue %></td>

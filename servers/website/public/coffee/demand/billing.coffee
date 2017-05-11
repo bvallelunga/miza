@@ -5,7 +5,7 @@ class Dashboard
       $spinner = $(@).find(".fa-spin").show()
       $original = $(@).find(":not(.fa-spin)").hide()
           
-      $.post("/demand/#{config.advertiser}/billing/charges", {
+      $.post("/dashboard/demand/#{config.advertiser}/billing/charges", {
         _csrf: config.csrf
         action: $(@).data("action")
       }).done ->

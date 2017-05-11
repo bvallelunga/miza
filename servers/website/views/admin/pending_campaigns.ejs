@@ -17,7 +17,7 @@
           <% campaigns.forEach(function(campaign, i) { %>
             <input type="hidden" name="campaigns[<%= i %>][id]" value="<%= campaign.id %>" required>
             <tr valign="top">
-              <td valign="top"><a target="_blank" href="/demand/<%= campaign.advertiser.key %>/campaign/<%= campaign.id %>"><%= campaign.name %></a></td>
+              <td valign="top"><a target="_blank" href="/dashboard/demand/<%= campaign.advertiser.key %>/campaign/<%= campaign.id %>"><%= campaign.name %></a></td>
               <td valign="top"><%= moment(campaign.created_at).format("MMM DD, YYYY") %></td>
               <td valign="top">
                 <div class="group">

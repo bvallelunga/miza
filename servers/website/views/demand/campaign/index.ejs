@@ -1,4 +1,4 @@
-<a class="dashboard-back fa fa-arrow-left" href="/demand/<%= advertiser.key %>/campaigns"></a>
+<a class="dashboard-back fa fa-arrow-left" href="/dashboard/demand/<%= advertiser.key %>/campaigns"></a>
 
 <% if(campaign.status == "rejected") { %>
 <div class="warning" style="padding-left: 20px; padding-right: 20px; text-align: left;">
@@ -59,7 +59,7 @@
         <div class="title green"><%= campaign.metrics.spend %></div>
       </td>
       <td class="section" style="min-width:255px;">
-        <div class="actions campaign right" data-url="/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>">
+        <div class="actions campaign right" data-url="/dashboard/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>">
           <% if(campaign.status == "pending" || campaign.status == "completed" || campaign.status == "rejected") { %>
             <div class="action" data-action="delete" data-confirm="Please confirm you want to delete!">
               <span class="fa fa-trash"></span>
@@ -136,7 +136,7 @@
 
 <div class="display full table">
   <div class="table-header">
-    <div class="actions left <%= campaign.status != "running" ? "disabled" : "" %>" data-url="/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/industries">
+    <div class="actions left <%= campaign.status != "running" ? "disabled" : "" %>" data-url="/dashboard/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/industries">
       <div class="action" data-action="running">
         <span class="fa fa-play"></span>
         <span class="fa fa-spin fa-refresh" style="display:none"></span>
@@ -154,7 +154,7 @@
     </div>
   </div>
   <div class="table-body">
-    <table class="hidden" data-url="/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/industries" data-columns="<%= JSON.stringify([
+    <table class="hidden" data-url="/dashboard/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/industries" data-columns="<%= JSON.stringify([
       { "data": "id" },
       { "data": "name" },
       { "data": "status" },
@@ -219,7 +219,7 @@
   <div class="display full table">
     <div class="table-header admin">
       <div class="warning-banner">Admin Only</div>
-      <div class="actions left" data-url="/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/publishers">
+      <div class="actions left" data-url="/dashboard/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/publishers">
         <div class="action" data-action="enable">
           <span class="fa fa-circle"></span>
           <span class="fa fa-spin fa-refresh" style="display:none"></span>
@@ -237,7 +237,7 @@
       </div>
     </div>
     <div class="table-body">
-      <table class="hidden" data-url="/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/publishers" data-columns="<%= JSON.stringify([
+      <table class="hidden" data-url="/dashboard/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/publishers" data-columns="<%= JSON.stringify([
         { "data": "id" },
         { "data": "name" },
         { "data": "industry" },

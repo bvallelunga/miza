@@ -19,7 +19,7 @@ module.exports = (req, res, next)->
   
   .then (publisher)->
     if not publisher?
-      return res.redirect "/supply"
+      return res.redirect "/dashboard/supply"
       
     publisher.associations({
       owner: true

@@ -154,7 +154,7 @@ module.exports.create = (req, res, next)->
   .then (data)->  
     res.json({
       success: true
-      next: "/demand/#{req.advertiser.key}/campaign/#{data.campaign.id}"
+      next: "/dashboard/demand/#{req.advertiser.key}/campaign/#{data.campaign.id}"
     })
     
   .catch next

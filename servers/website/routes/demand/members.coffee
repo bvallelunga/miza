@@ -52,7 +52,7 @@ module.exports.post_add = (req, res, next)->
   .then ->
     res.json {
       success: true
-      next: "/demand/#{req.advertiser.key}/members"
+      next: "/dashboard/demand/#{req.advertiser.key}/members"
     }  
     
   .catch next 
@@ -67,28 +67,28 @@ module.exports.remove_invite = (req, res, next)->
       id: req.params.invite
     }
   }).then ->
-    res.redirect "/demand/#{req.advertiser.key}/members"
+    res.redirect "/dashboard/demand/#{req.advertiser.key}/members"
     
   .catch next 
     
 
 module.exports.remove_member = (req, res, next)->
   if not req.user.is_admin and (req.user.id != req.advertiser.owner_id or req.params.member == req.advertiser.owner_id)
-    return res.redirect "/demand/#{req.advertiser.key}/members"
+    return res.redirect "/dashboard/demand/#{req.advertiser.key}/members"
   
   req.advertiser.removeMember(req.params.member).then ->
-    res.redirect "/demand/#{req.advertiser.key}/members"
+    res.redirect "/dashboard/demand/#{req.advertiser.key}/members"
     
   .catch next 
   
   
 module.exports.owner_member = (req, res, next)->
   if not req.user.is_admin
-    return res.redirect "/demand/#{req.advertiser.key}/members"
+    return res.redirect "/dashboard/demand/#{req.advertiser.key}/members"
   
   req.advertiser.owner_id = req.params.member
   req.advertiser.save().then ->
-    res.redirect "/demand/#{req.advertiser.key}/members"
+    res.redirect "/dashboard/demand/#{req.advertiser.key}/members"
     
   .catch next 
 

@@ -19,7 +19,7 @@ module.exports = (req, res, next)->
   
   .then (advertiser)->
     if not advertiser?
-      return res.redirect "/demand" 
+      return res.redirect "/dashboard/demand" 
   
     advertiser.getOwner().then (owner)->
       advertiser.owner = owner

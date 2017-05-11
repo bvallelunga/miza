@@ -67,7 +67,7 @@
             <%= publisher.fee == 0 ? "free" : "" %> 
             <%= !!publisher.owner.stripe_card ? "paying" : "" %>   
           ">
-            <td><a href="/supply/<%= publisher.key %>/analytics"><%= publisher.name %></a></td>
+            <td><a href="/dashboard/supply/<%= publisher.key %>/analytics"><%= publisher.name %></a></td>
             <td class="<%= publisher.is_activated ? "green" : "red" %>"><%= publisher.is_activated ? "Activated" : "Not Activated" %></td>
             <td><%= publisher.admin_contact ? publisher.admin_contact.name : "" %></td>
             <td>

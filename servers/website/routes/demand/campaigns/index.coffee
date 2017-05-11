@@ -57,7 +57,7 @@ module.exports.fetch = (req, res, next)->
     }).then(-> next()).catch next
     
   else
-    res.redirect "/demand/#{req.advertiser.key}/campaigns"
+    res.redirect "/dashboard/demand/#{req.advertiser.key}/campaigns"
   
   
 module.exports.post_updates = (req, res, next)->

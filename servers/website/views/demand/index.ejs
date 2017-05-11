@@ -7,7 +7,7 @@
       <span class="fa fa-sort"></span>
     </div>
     <div class="companies">
-      <a href="/demand/new">
+      <a href="/dashboard/demand/new">
         <span class="fa fa-plus"></span>
         New Advertiser
       </a>
@@ -19,7 +19,7 @@
       <% } %>
       <% advertisers.forEach(function(adv) { %>
         <% if (adv.id != advertiser.id) { %>
-          <a class="company-link" href="/demand/<%= adv.key %>/<%= dashboard %>">
+          <a class="company-link" href="/dashboard/demand/<%= adv.key %>/<%= dashboard %>">
             <%= adv.name %>
           </a>
         <% } %>

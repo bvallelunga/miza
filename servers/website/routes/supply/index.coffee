@@ -2,16 +2,16 @@ moment = require "moment"
 
 module.exports.get_root = (req, res, next)->  
   if req.user.publishers.length == 0
-    return res.redirect "/supply/new"
+    return res.redirect "/dashboard/supply/new"
     
-  res.redirect "/supply/#{req.user.publishers[0].key}/analytics"
+  res.redirect "/dashboard/supply/#{req.user.publishers[0].key}/analytics"
 
 
 module.exports.get_dashboard = (req, res, next)->
   js = ["dashboard", "supply", "fa"]
   css = ["dashboard", "supply"]
   dashboard = req.params.dashboard
-  dashboard_path = "/supply/#{req.publisher.key}"
+  dashboard_path = "/dashboard/supply/#{req.publisher.key}"
   dashboards = [
     "setup", "analytics", "members", "settings", "payouts"
   ]

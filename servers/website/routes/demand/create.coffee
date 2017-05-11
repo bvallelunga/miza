@@ -1,6 +1,6 @@
 module.exports.get = (req, res, next)->
   if req.user.advertisers.length > 0 and not req.user.is_admin
-    return res.redirect "/demand"
+    return res.redirect "/dashboard/demand"
 
   res.render "demand/create", {
     js: req.js.renderTags "modal", "fa"
@@ -19,7 +19,7 @@ module.exports.post = (req, res, next)->
     req.user.addAdvertiser(advertiser).then ->
       res.json {
         success: true
-        next: "/demand/#{advertiser.key}/campaigns?new_advertiser"
+        next: "/dashboard/demand/#{advertiser.key}/campaigns?new_advertiser"
       }
     
   .catch next

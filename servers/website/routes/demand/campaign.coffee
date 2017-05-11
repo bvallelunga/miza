@@ -14,7 +14,7 @@ module.exports.fetch = (req, res, next)->
     }]
   }).then (campaign)->
     if not campaign?
-      return res.redirect "/demand/#{req.advertiser.key}/campaigns"
+      return res.redirect "/dashboard/demand/#{req.advertiser.key}/campaigns"
   
     if req.data?
       req.data.dashboard_width = "large"

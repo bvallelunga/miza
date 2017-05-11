@@ -140,7 +140,7 @@ class Dashboard
         tables[1].draw()    
   
   
-    $.get("/demand/#{config.advertiser}/campaign/#{config.campaign}/charts").done (response)=>
+    $.get("/dashboard/demand/#{config.advertiser}/campaign/#{config.campaign}/charts").done (response)=>
       for name, data of response
         chart = @charts[name]
         

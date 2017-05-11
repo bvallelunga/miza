@@ -10,9 +10,9 @@ module.exports = DASHBOARDS = {
 
 module.exports.get_root = (req, res, next)->   
   if req.user.advertisers.length == 0
-    return res.redirect "/demand/new"
+    return res.redirect "/dashboard/demand/new"
     
-  res.redirect "/demand/#{req.user.advertisers[0].key}/campaigns"
+  res.redirect "/dashboard/demand/#{req.user.advertisers[0].key}/campaigns"
   
   
 module.exports.fetch_data = (req, res, next)->
@@ -25,7 +25,7 @@ module.exports.fetch_data = (req, res, next)->
   req.subdashboard = req.params.subdashboard or null
   
   if not (dashboard = DASHBOARDS[req.dashboard])?
-    return res.redirect "/demand/#{ req.advertiser.key }/campaigns"
+    return res.redirect "/dashboard/demand/#{ req.advertiser.key }/campaigns"
   
   Promise.resolve().then ->  
     if not req.user.is_admin
@@ -44,7 +44,7 @@ module.exports.get_dashboard = (req, res, next)->
     type: "demand"
     dashboard: req.dashboard
     subdashboard: req.subdashboard
-    dashboard_path: "/demand/#{ req.advertiser.key }"
+    dashboard_path: "/dashboard/demand/#{ req.advertiser.key }"
     dashboard_width: ""
   }
   
