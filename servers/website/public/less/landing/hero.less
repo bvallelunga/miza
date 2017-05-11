@@ -39,14 +39,103 @@
     opacity: 0.8;
   }
 
-  .navigation {  
+  .navigation { 
     padding: 20px 0 80px;
+    
+    .navigation-modal {
+      z-index: 5;
+      position: fixed;
+      background: #232F3B;
+      width: 580px;
+      padding: 10px 0;
+      top: 75px;
+      left: 0;
+      color: white;
+      display: none;
+      .border-radius(4px);
+      .box-shadow(0 5px 15px 0 rgba(0,0,0,0.4));
+      
+      .arrow {
+        position: absolute;
+        top: -11px;
+        left: 50%;
+        margin-left: -12px;
+        font-size: 25px;
+        color: #232F3B;
+        width: 25px;
+        text-align: center; 
+      }
+      
+      .item {
+        display: inline-block;
+        margin: 20px;
+        width: 250px;
+        float: left;
+        .clearfix();
+        
+        &:hover {
+          .fa, .name {
+            color: white !important;
+          }
+        }
+        
+        &.blue {
+          .fa, .name {
+            color: @blue;
+          }
+        }
+        
+        &.green {
+          .fa, .name {
+            color: @green;
+          }
+        }
+        
+        &.purple {
+          .fa, .name {
+            color: #e243f3;
+          }
+        }
+        
+        &.orange {
+          .fa, .name {
+            color: #FF8825;
+          }
+        }
+        
+        .fa {
+          display: inline-block;
+          width: 30px;
+          text-align: right;
+          float: left;
+          font-size: 2em;
+          margin-top: 5px;
+        }
+        
+        .info {
+          float: right;
+          width: 200px;
+          
+          .name {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+          }
+          
+          .desc {
+            color: #6b7c93;
+            font-size: 1.1em;
+          }
+        }
+      }
+    }
     
     .left .shortcuts { 
       display: inline-block;
       margin: -10px 0 0 30px;
     
-      a {
+      div, a {
         display: inline-block;
         padding: 8px 17px;
         text-align: center;
@@ -55,10 +144,14 @@
         font-size: 1.2em;
         font-weight: bold;
         text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
-        
-        &:hover {
-          text-decoration: underline;
-        }
+      }
+      
+      div {
+        cursor: default;
+      }
+      
+      a:hover {
+        text-decoration: underline;
       }
     }
       

@@ -4,15 +4,69 @@
       <% include ../includes/logo.ejs %>
     </a>
     <div class="shortcuts">
-      <% if(!user) { %>
-        <a href="/">Product</a>
-      <% } %>
-      <a href="/demo">Live Demo</a>
-      <a href="/monetize">Monetize</a>
-      <a href="/about">About Us</a>
+      <div data-for="demand">Advertisers</div>
+      <div data-for="supply">Publishers</div>
+      <a href="/about">Company</a>
     </div>
   </div>
   <div class="right">
     <% include ../includes/header %>
+  </div>
+  
+  <div class="navigation-modal demand">
+    <div class="arrow fa fa-arrow-up"></div>
+    <a class="item blue" href="/demand/social">
+      <span class="fa fa-twitter"></span>
+      <div class="info">
+        <div class="name">Social</div>
+        <div class="desc">Amass a following on Twitter and Instagram.</div>
+      </div>
+    </a>
+    <a class="item green" href="/demand/music">
+      <span class="fa fa-spotify"></span>
+      <div class="info">
+        <div class="name">Music</div>
+        <div class="desc">Discover new Spotify and SoundCloud fans.</div>
+      </div>
+    </a>
+    <a class="item orange" href="/demand/commerce">
+      <span class="fa fa-amazon"></span>
+      <div class="info">
+        <div class="name">Commerce</div>
+        <div class="desc">Show your Amazon, Etsy, Kickstarter and Indiegogo products to millions.</div>
+      </div>
+    </a>
+    <a class="item purple" href="/demand/enterprise">
+      <span class="fa fa-asterisk"></span>
+      <div class="info">
+        <div class="name">Enterprise</div>
+        <div class="desc">Let's build a unique experience custom tailored your brand.</div>
+      </div>
+    </a>
+  </div>
+  
+  <div class="navigation-modal supply">
+    <div class="arrow fa fa-arrow-up"></div>
+    <a class="item blue" href="/supply">
+      <span class="fa fa-life-saver"></span>
+      <div class="info">
+        <div class="name">Product</div>
+        <div class="desc">Monetize your ad blocked inventory in minutes.</div>
+      </div>
+    </a>
+    <a class="item purple" href="/supply/demo">
+      <span class="fa fa-flash"></span>
+      <div class="info">
+        <div class="name">Live Demo</div>
+        <div class="desc">See how our ad units behave with an ad blocker.</div>
+      </div>
+    </a>
+    <a class="item green" href="/supply/monetize">
+      <span class="fa fa-dollar"></span>
+      <div class="info">
+        <div class="name">Monetize</div>
+        <div class="desc">Curious about our payouts and CPMs?</div>
+      </div>
+    </a>
   </div>
 </div>

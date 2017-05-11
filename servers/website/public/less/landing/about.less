@@ -4,6 +4,11 @@
 .hero.about {
   overflow: visible;
   background: white;
+  background-image: url("/imgs/office.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  min-height: 0;
   .box-shadow(none);
   
   &:before {
@@ -14,7 +19,7 @@
     right:  -100px;
     transform: none;
     opacity: 1;
-    .box-shadow(inset 0 100px 180px white);
+    .box-shadow(inset 0 380px 600px white);
   }
   
   .brief {
@@ -22,6 +27,7 @@
     font-weight: lighter;
     margin: 10px auto 50px;
     width: 80%;
+    height: 450px;
     
     h2 {
       font-size: 2.5em;
@@ -54,6 +60,7 @@
     text-align: center;
     background: black;
     text-align: center;
+    min-height: 50px;
     
     &:before {
       content: "";
@@ -61,7 +68,7 @@
       z-index: 0;
       top: -115px;
       width: 100%;
-      height: 115px;
+      height: 120px;
       left: 0;
       right: 0;
       background: url("/imgs/landmarks.png");
@@ -107,7 +114,17 @@
       text-shadow: none;
     }
     
-    .left .shortcuts a {
+    .navigation-modal {
+      background: #232F3B;
+      color: white;
+      
+      .arrow {
+        color: #232F3B;
+      }
+    }
+    
+    .left .shortcuts a,
+    .left .shortcuts div {
       color: #536170;
       text-shadow: none;
     }

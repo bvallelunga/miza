@@ -2,6 +2,19 @@ $ ->
   go_quotes()
   old_product = ""
   
+  $(".navigation .shortcuts div").mouseover ->
+    $element = $(@) 
+    modal_width = 580
+    $(".navigation-modal").fadeOut(250)
+    left = $element.offset().left + $element.outerWidth()/2 - modal_width/2
+     
+    $(".navigation-modal.#{$element.data("for")}")
+      .css("left", left)
+      .fadeIn(250)
+    
+  $(".navigation-modal").mouseleave ->
+    $(@).fadeOut(250)
+  
   if $(".hero").hasClass "demo"
     blocker true
   

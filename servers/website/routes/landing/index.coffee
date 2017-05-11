@@ -1,12 +1,5 @@
 request = require "request"
-moment = require "moment"
-
-module.exports.get_root = (req, res, next)->
-  res.render "landing/home", {
-    js: req.js.renderTags "landing", "fa"
-    css: req.css.renderTags "landing"
-  }
-  
+moment = require "moment"  
 
 module.exports.get_about = (req, res, next)->
   res.render "landing/about", {
@@ -14,14 +7,6 @@ module.exports.get_about = (req, res, next)->
     css: req.css.renderTags "landing"
     title: "About Us"
   } 
-  
-
-module.exports.get_monetize = (req, res, next)->
-  res.render "landing/monetize", {
-    js: req.js.renderTags "landing", "fa"
-    css: req.css.renderTags "landing"
-    title: "Monetize"
-  }  
 
 
 module.exports.get_loader_io = (req, res, next)->
@@ -130,4 +115,4 @@ module.exports.get_shortener = (req, res, next)->
   .catch next
   
   
-module.exports.demo = require "./demo"
+module.exports.supply = require "./supply"

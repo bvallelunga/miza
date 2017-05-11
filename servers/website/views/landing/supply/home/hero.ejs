@@ -1,16 +1,16 @@
 <div id="hero" class="hero">
   <div class="container">
-    <% include ../header %>
+    <% include ../../header %>
     <div class="graphic"></div>
     <header class="header">
-      <h1>Beating ad blockers<br>made simple!</h1>
+      <h1>Monetize your ad blocked inventory!</h1>
       <h2>
         Over 300 million people worldwide will never
         see the ads on your site, <span>until today.</span>
       </h2>
       <div class="actionable">
         <form class="form" method="POST" action="/access/request">
-          <% include ../../includes/csrf %>
+          <% include ../../../includes/csrf %>
           <input class="top-long" name="name" type="text" placeholder="Full Name" required/>
           <input class="top-short" name="phone" type="tele" placeholder="Work Phone"/>
           <div class="clear"></div>
