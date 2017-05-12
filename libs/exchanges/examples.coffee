@@ -4,7 +4,10 @@ module.exports = (req, res)->
   
   Promise.resolve().then ->
     if example == "twitter"
-      LIBS.scrapers.twitter.account("https://twitter.com/#{profile or "nike"}")
+      return LIBS.scrapers.twitter.account("https://twitter.com/#{profile or "nike"}")
+      
+    else if example == "indeed"
+      return LIBS.exchanges.indeed(req, res)
       
     else if example == "soundcloud"
       LIBS.scrapers.soundcloud("https://soundcloud.com/#{profile or "bassk-music/odeza-all-we-need-bassk-remix"}")

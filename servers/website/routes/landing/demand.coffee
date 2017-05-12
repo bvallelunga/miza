@@ -2,7 +2,7 @@ module.exports.get_root = (req, res, next)->
   res.render "landing/demand/home", {
     js: req.js.renderTags "landing", "fa"
     css: req.css.renderTags "landing"
-    title: "Advertiser"
+    title: "Enterprise Advertising"
   }
 
 
@@ -28,12 +28,3 @@ module.exports.get_commerce = (req, res, next)->
     css: req.css.renderTags "landing"
     title: "Commerce Self Serve"
   }
-
-
-module.exports.get_enterprise = (req, res, next)->
-  res.render "landing/demand/enterprise", {
-    js: req.js.renderTags "landing", "fa"
-    css: req.css.renderTags "landing"
-    title: "Enterprise Advertising"
-  }
-
