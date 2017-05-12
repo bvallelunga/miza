@@ -16,12 +16,14 @@
     </tr>
   </table>
 </information>
-<footer class="footer-show" onclick="showInformation()">
-  Why am I seeing this advertisement?
-</footer>
-<footer class="footer-hide" onclick="hideInformation()">
-  Close information dialogue
-</footer>
+<% if(!demo) { %>
+  <footer class="footer-show" onclick="showInformation()">
+    Why am I seeing this advertisement?
+  </footer>
+  <footer class="footer-hide" onclick="hideInformation()">
+    Close information dialogue
+  </footer>
+<% } %>
 <% creative.trackers.forEach(function(tracker) { %>
   <img src="/<%= new Buffer(tracker).toString("base64") %>?no-dl" width="0" height="0" style="display:none" />
 <% }) %>

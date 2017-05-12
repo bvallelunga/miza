@@ -38,13 +38,75 @@
     transform: rotate(45deg);
     opacity: 0.8;
   }
+  
+  &.dark-navigation {
+    .box-shadow(none);
+    
+    &:before {
+      opacity: 0.4;
+      background-image: url("/imgs/landing-dark.png");
+    }
+    
+    .navigation {           
+      .logo {
+        color: @blue;
+        text-shadow: none;
+      }
+      
+      .navigation-modal {
+        background: #232F3B;
+        color: white;
+        border: solid 2px rgba(0,0,0,0.2);
+        width: 584px;
+        
+        .arrow {
+          color: #232F3B;
+        }
+        
+        .item:hover {
+          .fa, .name {
+            color: white !important;
+          }
+        }
+      }
+      
+      .left .shortcuts a,
+      .left .shortcuts div {
+        color: #536170;
+        text-shadow: none;
+      }
+      
+      .fixed-side-nav { 
+        a {
+          background: @blue;
+          color: white;
+          
+          &:not(.inverse):hover {
+            color: white;
+            background: @blue;
+          }
+          
+          &.inverse {
+            background: transparent;
+            color: @blue;
+            text-shadow: none;
+            
+            &:hover {
+              text-decoration: underline;
+              .box-shadow(none);
+            }
+          }
+        }
+      }
+    }
+  }
 
   .navigation { 
     padding: 20px 0 80px;
-    
+        
     .navigation-modal {
       z-index: 5;
-      position: fixed;
+      position: absolute;
       background: white;
       width: 580px;
       padding: 10px 0;
@@ -103,6 +165,12 @@
           }
         }
         
+        &.etsy {
+          .fa, .name {
+            color: #F26223;
+          }
+        }
+        
         .fa {
           display: inline-block;
           width: 30px;
@@ -137,11 +205,11 @@
     
       div, a {
         display: inline-block;
-        padding: 8px 17px;
+        margin: 8px 17px;
         text-align: center;
         min-width: 90px;
         color: rgba(255, 255, 255, 0.8);
-        font-size: 1.2em;
+        font-size: 1.3em;
         font-weight: bold;
         text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
       }
@@ -164,7 +232,7 @@
         color: @blue;
         cursor: pointer;
         min-width: 80px;
-        font-size: 1.2em;
+        font-size: 1.3em;
         .transition();
         
         &:hover {
@@ -197,6 +265,42 @@
     }
   }
   
+  .examples {
+    width: 38%;
+    float: left;
+    position: relative;
+    
+    iframe {
+      position: absolute;
+      width: 300px;
+      height: 350px;
+      top: 40px;
+      display: none;
+      
+      &:first-child {
+        right: 0;
+        z-index: 1;
+        .transform(scale(1.2));
+      }
+      
+      &:last-child {
+        top: 125px;
+        right: 150px;
+        z-index: 2;
+        .transform(scale(1.1));
+      }
+      
+      &:only-child {
+        width: 330px;
+        height: 380px;
+        top: 50px;
+        right: inherit !important;
+        left: 25px !important;
+        z-index: 1;
+      }
+    }
+  }
+  
   header {
     width: 55%;
     float: right;
@@ -219,6 +323,49 @@
         color: white;
         text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
         font-weight: bold;
+      }
+    }
+    
+    .login-buttons {
+      margin-top: 35px;
+      
+      a {
+        width: 48%;
+        display: block;
+        padding: 15px;
+        box-sizing: border-box;
+        font-size: 1.3em;
+        border: solid 2px transparent;
+        text-align: center;
+        font-weight: lighter;
+        transition: ease-in-out transform 0.25s;
+        .border-radius(4px);
+        
+        &:hover {
+          .transform(scale(1.05, 1.05));
+        }
+        
+        .fa {
+          margin-right: 10px;
+        }
+        
+        &.black {
+          background: black;
+          color: white;
+          border-color: black;
+        }
+        
+        &.blue {
+          background: #1DA1F2;
+          color: white;
+          border-color: #1DA1F2;
+        }
+        
+        &.orange {
+          background: #FF8825;
+          color: white;
+          border-color: #FF8825;
+        }
       }
     }
     

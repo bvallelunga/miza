@@ -28,6 +28,7 @@ module.exports = (srv)->
   app.get "/c", routes.network.script, routes.network.script_send # LEGACY: Carbon
   app.get "/a", routes.network.script, routes.network.ad_frame
   app.get "/demo", routes.network.script, routes.network.demo_frame
+  app.get "/example", routes.network.script, routes.network.example_frame, routes.network.demo_frame
   app.get "/oo", routes.network.optout
   
   app.get "/indeed", routes.exchanges.indeed

@@ -1,6 +1,15 @@
 request = require "request"
 moment = require "moment"  
 
+module.exports.get_root = (req, res, next)->
+  return res.redirect "/supply"
+
+  res.render "landing/home", {
+    js: req.js.renderTags "landing", "fa"
+    css: req.css.renderTags "landing"
+  }
+
+
 module.exports.get_about = (req, res, next)->
   res.render "landing/about", {
     js: req.js.renderTags "landing", "fa"

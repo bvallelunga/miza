@@ -33,6 +33,7 @@ module.exports = (srv)->
   
   
   # Landing Routes
+  app.get  "/", routes.landing.get_root
   app.get  "/supply", routes.landing.supply.get_root
   app.get  "/supply/monetize", routes.landing.supply.get_monetize
   app.get  "/supply/demo", routes.landing.supply.get_demo

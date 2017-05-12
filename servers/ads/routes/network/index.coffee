@@ -93,9 +93,18 @@ module.exports.ad_frame = (req, res, next)->
     type: "request"
     publisher: req.publisher
   }
+  
+
+module.exports.example_frame = (req, res, next)->
+  LIBS.exchanges.fetch(req, res).then (creative)->  
+    req.creative = creative
+    next()
+    
+  .catch next
+  
 
 module.exports.demo_frame = (req, res, next)->
-  creative = LIBS.models.Creative.build({
+  creative = req.creative or LIBS.models.Creative.build({
     format: req.query.format
     link: req.query.link
     config: req.query.config

@@ -68,6 +68,17 @@ module.exports = (sequelize, DataTypes)->
         ].join("&")
         
         return link + params
+        
+      example_frame: (override)->
+        host = CONFIG.web_server.domain.split(".").slice(-2).join(".")
+        link = "//#{LIBS.models.defaults.demo_publisher.key}.#{host}/example?"
+        params = [
+          "width=300"
+          "height=300"
+          "creative_override=example_#{override}"
+        ].join("&")
+        
+        return link + params
     }
     
     instanceMethods: {

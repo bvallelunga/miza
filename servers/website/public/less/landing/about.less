@@ -12,13 +12,13 @@
   .box-shadow(none);
   
   &:before {
-    background: none;
+    background: none !important;
     top: 0;
     bottom: 0;
     left:  -100px;
     right:  -100px;
     transform: none;
-    opacity: 1;
+    opacity: 1 !important;
     .box-shadow(inset 0 380px 600px white);
   }
   
@@ -107,55 +107,5 @@
       }
     }
   }
-  
-  .navigation {            
-    .logo {
-      color: @blue;
-      text-shadow: none;
-    }
-    
-    .navigation-modal {
-      background: #232F3B;
-      color: white;
-      
-      .arrow {
-        color: #232F3B;
-      }
-      
-      .item:hover {
-        .fa, .name {
-          color: white !important;
-        }
-      }
-    }
-    
-    .left .shortcuts a,
-    .left .shortcuts div {
-      color: #536170;
-      text-shadow: none;
-    }
-    
-    .fixed-side-nav { 
-      a {
-        background: @blue;
-        color: white;
-        
-        &:not(.inverse):hover {
-          color: white;
-          background: @blue;
-        }
-        
-        &.inverse {
-          background: transparent;
-          color: @blue;
-          text-shadow: none;
-          
-          &:hover {
-            text-decoration: underline;
-            .box-shadow(none);
-          }
-        }
-      }
-    }
-  }
+
 }

@@ -4,9 +4,15 @@ module.exports = {
   utils: require "./utils"
   miza: require "./miza"
   indeed: require "./indeed"
+  examples: require "./examples"
   fetch: (req, res)->
-    if req.query.creative_override == "indeed"
+    creative_override = req.query.creative_override or ""
+  
+    if creative_override == "indeed"
       return LIBS.exchanges.indeed(req, res)
+    
+    if creative_override.indexOf("example_") > -1
+      return LIBS.exchanges.examples(req, res)
   
     return LIBS.exchanges.miza(req, res)
     
