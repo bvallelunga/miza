@@ -1,25 +1,27 @@
-<div id="hero" class="hero">
+<div id="hero" class="hero commerce dark-navigation">
   <div class="container">
     <% include ../../header %>
-    <div class="graphic"></div>
+    <div class="examples">
+      <iframe src="<%= LIBS.models.Creative.example_frame("kickstarter") %>" onload="this.style.display='block';"></iframe>
+      <iframe src="<%= LIBS.models.Creative.example_frame("etsy") %>" onload="this.style.display='block';"></iframe>
+    </div>
+    
     <header class="header">
-      <h1>Monetize your ad blocked inventory!</h1>
+      <h1>Grow awareness for your products!</h1>
       <h2>
-        Over 300 million people worldwide will never
-        see the ads on your site, <span>until today.</span>
+        Have your Amazon, Etsy, Kickstarter, and Indiegogo products seen by millions daily.
       </h2>
       <div class="actionable">
-        <form class="form" method="POST" action="/access/request">
+        <form class="form" method="POST" action="/register">
           <% include ../../../includes/csrf %>
-          <input class="top-long" name="name" type="text" placeholder="Full Name" required/>
-          <input class="top-short" name="phone" type="tele" placeholder="Work Phone"/>
+          <input type="hidden" name="type" value="demand" />
+          <input class="top-short left" name="name" type="text" placeholder="Micheal Scott" required/>
+          <input class="top-long right" name="email" type="email" placeholder="micheal.scott@dunderm.com"/>
           <div class="clear"></div>
-          <input class="top-long" name="website" type="text" placeholder="Work Website" required/>
-          <input class="top-short" name="title" type="text" placeholder="Job Title" required/>
+          <input class="last" name="password" type="password" placeholder="Strong Password" required/>
+          <button class="button">Create Account</button>
           <div class="clear"></div>
-          <input class="last" name="email" type="email" placeholder="Work email" required/>
-          <button class="button">Request Demo</button>
-          <div class="clear"></div>
+          <div class="error"></div>
         </form>
       </div>
     </header>

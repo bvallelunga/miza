@@ -19,7 +19,7 @@ module.exports.post = (req, res, next)->
       email: email
     }
   }).then (accesses)-> 
-    if accesses.length == 0
+    if accesses.length == 0 and req.body.type != "demand"
       return next "Sorry, Miza is invite only at this point. Please reach out to our team for an invite!"
   
     admin_contact = null

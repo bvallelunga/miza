@@ -24,7 +24,7 @@ module.exports.get_music = (req, res, next)->
 
 module.exports.get_commerce = (req, res, next)->
   res.render "landing/demand/commerce", {
-    js: req.js.renderTags "landing", "fa"
+    js: req.js.renderTags "landing", "fa", "modal"
     css: req.css.renderTags "landing"
     title: "Commerce Self Serve"
   }

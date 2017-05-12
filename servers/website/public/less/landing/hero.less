@@ -332,13 +332,13 @@
       a {
         width: 48%;
         display: block;
-        padding: 15px;
+        padding: 15px 0;
         box-sizing: border-box;
         font-size: 1.3em;
-        border: solid 2px transparent;
         text-align: center;
         font-weight: lighter;
         transition: ease-in-out transform 0.25s;
+        border-bottom: solid 2px rgba(0,0,0,0.1);
         .border-radius(4px);
         
         &:hover {
@@ -347,24 +347,29 @@
         
         .fa {
           margin-right: 10px;
+          font-size: 1.3em;
+          position: relative;
+          top: 2px;
         }
         
         &.black {
-          background: black;
+          background: #232F3B;
           color: white;
-          border-color: black;
         }
         
         &.blue {
           background: #1DA1F2;
           color: white;
-          border-color: #1DA1F2;
         }
         
         &.orange {
           background: #FF8825;
           color: white;
-          border-color: #FF8825;
+        }
+        
+        &.red {
+          background: #EB1478;
+          color: white;
         }
       }
     }
@@ -402,6 +407,11 @@
           
           &.top-short {
             width: 43%;
+            float: right;
+          }
+          
+          &.top-half {
+            width: 49.5%;
             float: right;
           }
         }

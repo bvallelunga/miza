@@ -89,7 +89,7 @@ module.exports.post_beta = (req, res, next)->
   
 module.exports.get_dashboard = (req, res, next)->
   if not (req.user.is_admin or req.user.type == "all")
-    return res.redirect "/#{req.user.type}"
+    return res.redirect "/dashboard/#{req.user.type}"
     
   res.render "landing/dashboard", {
     title: "Dashboard"

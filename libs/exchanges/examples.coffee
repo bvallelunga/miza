@@ -6,9 +6,14 @@ module.exports = (req, res)->
     if example == "twitter"
       LIBS.scrapers.twitter.account("https://twitter.com/#{profile or "nike"}")
       
-    
     else if example == "soundcloud"
-      LIBS.scrapers.soundcloud("https://soundcloud.com/#{profile or "diplo/mo-final-song-jauz-x-diplo-remix"}")
+      LIBS.scrapers.soundcloud("https://soundcloud.com/#{profile or "bassk-music/odeza-all-we-need-bassk-remix"}")
+      
+    else if example == "kickstarter"
+      LIBS.scrapers.kickstarter("https://kickstarter.com/#{profile or "projects/creatiodesign/mellow"}")
+      
+    else if example == "etsy"
+      LIBS.scrapers.etsy.product("https://www.etsy.com/#{profile or "listing/483457805/ash-wood-mousepad"}")  
       
     else if example == "instagram"
       return {
