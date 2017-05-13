@@ -1,0 +1,78 @@
+@import '../libs/all';
+@import '../global/colors';
+
+.hero.enterprise {
+  background: white;
+  min-height: 580px;
+  
+  header {
+    h1 {
+      color: #E6525A !important;
+      margin-top: 20px;
+    }
+      
+    .actionable {
+      padding: 0;
+      background: none;
+      .box-shadow(none);
+      
+      .form {
+        input {
+          margin-bottom: 8px;
+          border-width: 1px;
+          border-color: lighten(#232F3B, 60%);  
+          .border-radius(3px);
+        }
+        
+        button {
+          font-size: 1.5em;
+          background: #E6525A;
+          border-bottom: solid 2px rgba(0,0,0,0.1);
+          .border-radius(3px);
+        }
+        
+        .error {
+          margin-top: 10px;
+          text-align: center;
+          color: @red;
+          text-transform: capitalize;
+          font-size: 1.2em;
+        }
+      }
+    }
+  }
+  
+  .examples {
+    iframe {
+      
+      &:first-child {
+        top: 70px;
+        right: 0 !important;
+        z-index: 3;
+        width: 300px;
+        height: 400px;
+        .transform(scale(1.2));
+      }
+      
+      &:nth-child(2) {
+        position: relative;
+        top: 80px;
+        left: -25px !important;
+        z-index: 2;
+        width: 300px;
+        height: 400px;
+        .transform(scale(1.1));
+      }
+      
+      &:last-child {
+        top: 50px;
+        left: -120px !important;
+        z-index: 1;
+        width: 300px;
+        height: 400px;
+        .transform(scale(0.80));
+      }
+      
+    }
+  }
+}

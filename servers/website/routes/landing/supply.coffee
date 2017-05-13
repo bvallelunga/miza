@@ -31,3 +31,18 @@ module.exports.get_demo_ad = (req, res, next)->
     publisher: publisher
     user: LIBS.models.defaults.demo_user
   }
+  
+
+module.exports.post_partnership = (req, res, next)->
+  res.render "landing/partnership", {
+    title: "Partnership"
+    css: req.css.renderTags "modal"
+  }
+  
+  LIBS.intercom.createContact {
+    email: req.body.email
+  }
+  
+  LIBS.slack.message {
+    text: "#{req.body.name} (#{req.body.email}, #{req.body.phone}) who is the #{req.body.title} of #{req.body.website} requested a publisher demo."
+  }

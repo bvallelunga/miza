@@ -28,3 +28,18 @@ module.exports.get_commerce = (req, res, next)->
     css: req.css.renderTags "landing"
     title: "Commerce Self Serve"
   }
+
+
+module.exports.post_partnership = (req, res, next)->
+  res.render "landing/partnership", {
+    title: "Partnership"
+    css: req.css.renderTags "modal"
+  }
+  
+  LIBS.intercom.createContact {
+    email: req.body.email
+  }
+  
+  LIBS.slack.message {
+    text: "#{req.body.name} (#{req.body.email}, #{req.body.phone}) requested a partnership as an enterprise advetiser."
+  }

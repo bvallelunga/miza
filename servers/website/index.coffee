@@ -49,7 +49,8 @@ module.exports = (srv)->
   app.get  "/#{CONFIG.loader_io}", routes.landing.get_loader_io
   app.get  "/s/:key", routes.landing.get_shortener
   app.post "/optout", routes.auth.not_authenticated, routes.landing.post_optout
-  app.post "/access/request", routes.auth.not_authenticated, routes.landing.post_beta
+  app.post "/supply/partnership", routes.auth.not_authenticated, routes.landing.supply.post_partnership
+  app.post "/demand/partnership", routes.auth.not_authenticated, routes.landing.demand.post_partnership
   
   
   # Auth Routes

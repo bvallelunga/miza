@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes)->
     description_html: {
       type: DataTypes.VIRTUAL
       get: ->
-        return @get("description")
+        return (@get("description") or "")
           .replace(/&/g, '&amp;')
           .replace(/>/g, '&gt;')
           .replace(/</g, '&lt;')
@@ -69,12 +69,12 @@ module.exports = (sequelize, DataTypes)->
         
         return link + params
         
-      example_frame: (override)->
+      example_frame: (override, width=300, height=300)->
         host = CONFIG.web_server.domain.split(".").slice(-2).join(".")
         link = "//#{LIBS.models.defaults.demo_publisher.key}.#{host}/example?"
         params = [
-          "width=300"
-          "height=300"
+          "width=#{width}"
+          "height=#{height}"
           "creative_override=example_#{override}"
         ].join("&")
         

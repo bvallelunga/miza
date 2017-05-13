@@ -1,27 +1,29 @@
-<div id="hero" class="hero">
+<div id="hero" class="hero enterprise dark-navigation">
   <div class="container">
     <% include ../../header %>
-    <div class="graphic"></div>
+    <div class="examples">
+      <iframe src="<%= LIBS.models.Creative.example_frame("enterprise", 300, 400) %>" onload="this.style.display='block';"></iframe>
+      <iframe src="<%= LIBS.models.Creative.example_frame("twitter_nike", 300, 400) %>" onload="this.style.display='block';"></iframe>
+      <iframe src="<%= LIBS.models.Creative.example_frame("instagram", 300, 400) %>" onload="this.style.display='block';"></iframe>
+    </div>
+    
     <header class="header">
-      <h1>Monetize your ad blocked inventory!</h1>
+      <h1>Lets craft a story for your brand!</h1>
       <h2>
-        Over 300 million people worldwide will never
-        see the ads on your site, <span>until today.</span>
+        User's love engaging with stories. We'll 
+        work with your team to create an experience tailored specifically for your brand.
       </h2>
       <div class="actionable">
-        <form class="form" method="POST" action="/access/request">
+        <form class="form" method="POST" action="/demand/partnership">
           <% include ../../../includes/csrf %>
           <input class="top-long" name="name" type="text" placeholder="Full Name" required/>
           <input class="top-short" name="phone" type="tele" placeholder="Work Phone"/>
           <div class="clear"></div>
-          <input class="top-long" name="website" type="text" placeholder="Work Website" required/>
-          <input class="top-short" name="title" type="text" placeholder="Job Title" required/>
-          <div class="clear"></div>
           <input class="last" name="email" type="email" placeholder="Work email" required/>
-          <button class="button">Request Demo</button>
+          <button class="button">Reach Out!</button>
           <div class="clear"></div>
-        </form>
-      </div>
+        </form
+      </form>
     </header>
     <div class="clear"></div>
   </div>

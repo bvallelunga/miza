@@ -70,21 +70,6 @@ module.exports.post_optout = (req, res, next)->
       message: "We have disabled Miza protected ads for your IP address"
       next: "/"
     }
-
-
-module.exports.post_beta = (req, res, next)->
-  res.render "landing/access_requested", {
-    title: "Access Requested"
-    css: req.css.renderTags "modal"
-  }
-  
-  LIBS.intercom.createContact {
-    email: req.body.email
-  }
-  
-  LIBS.slack.message {
-    text: "#{req.body.name} (#{req.body.email}, #{req.body.phone}) who is the #{req.body.title} of #{req.body.website} requested a demo."
-  }
   
   
 module.exports.get_dashboard = (req, res, next)->

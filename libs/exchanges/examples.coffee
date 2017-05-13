@@ -7,7 +7,8 @@ module.exports = (req, res)->
       return LIBS.scrapers.twitter.account("https://twitter.com/#{profile or "nike"}")
       
     else if example == "indeed"
-      return LIBS.exchanges.indeed(req, res)
+      return LIBS.exchanges.indeed(req, res).then (data)->
+        return data.toJSON()
       
     else if example == "soundcloud"
       LIBS.scrapers.soundcloud("https://soundcloud.com/#{profile or "bassk-music/odeza-all-we-need-bassk-remix"}")
@@ -18,6 +19,26 @@ module.exports = (req, res)->
     else if example == "etsy"
       LIBS.scrapers.etsy.product("https://www.etsy.com/#{profile or "listing/483457805/ash-wood-mousepad"}")  
       
+    
+    else if example == "enterprise"
+      return {
+        format: "social"
+        link: "http://www.nike.com"
+        config: {
+          user: {
+            username: "nike"
+            profile_image: "https://instagram.fsnc1-1.fna.fbcdn.net/t51.2885-19/s320x320/17126848_1779368432381854_3589478532054515712_a.jpg"
+          }
+          images: [
+            "https://instagram.fsnc1-1.fna.fbcdn.net/t51.2885-15/s640x640/e15/17267994_662187833965528_317544803552198656_n.jpg"
+            "https://instagram.fsnc1-1.fna.fbcdn.net/t51.2885-15/e15/p640x640/17587195_754539068042759_7184793937549197312_n.jpg"
+            "https://instagram.fsnc1-1.fna.fbcdn.net/t51.2885-15/e35/16123569_972384529562038_1390565919155027968_n.jpg"
+          ]
+          action: "Purchase on Nike"
+        }
+      }
+      
+    
     else if example == "instagram"
       return {
         format: "social"
