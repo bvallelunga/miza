@@ -33,7 +33,7 @@ module.exports = (srv)->
   
   
   # Landing Routes
-  app.get  "/", routes.landing.get_root
+  app.get  "/", routes.auth.not_authenticated, routes.landing.get_root
   app.get  "/supply", routes.landing.supply.get_root
   app.get  "/supply/monetize", routes.landing.supply.get_monetize
   app.get  "/supply/demo", routes.landing.supply.get_demo
@@ -43,14 +43,14 @@ module.exports = (srv)->
   app.get  "/demand/music", routes.landing.demand.get_music
   app.get  "/demand/commerce", routes.landing.demand.get_commerce
   app.get  "/about", routes.landing.get_about
-  app.get  "/optout", routes.auth.not_authenticated, routes.landing.get_optout
+  app.get  "/optout", routes.landing.get_optout
   app.get  "/legal/:document", routes.landing.get_legal
   app.get  "/decks/:deck", routes.landing.get_deck
   app.get  "/#{CONFIG.loader_io}", routes.landing.get_loader_io
   app.get  "/s/:key", routes.landing.get_shortener
-  app.post "/optout", routes.auth.not_authenticated, routes.landing.post_optout
-  app.post "/supply/partnership", routes.auth.not_authenticated, routes.landing.supply.post_partnership
-  app.post "/demand/partnership", routes.auth.not_authenticated, routes.landing.demand.post_partnership
+  app.post "/optout", routes.landing.post_optout
+  app.post "/supply/partnership", routes.landing.supply.post_partnership
+  app.post "/demand/partnership", routes.landing.demand.post_partnership
   
   
   # Auth Routes
