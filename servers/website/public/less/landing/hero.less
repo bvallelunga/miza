@@ -47,6 +47,52 @@
       background-image: url("/imgs/landing-dark.png");
     }
     
+    .actionable {
+      padding: 0;
+      background: none;
+      .box-shadow(none);
+      
+      .form {
+        input {
+          margin-bottom: 8px;
+          border-width: 1px;
+          border-color: lighten(#232F3B, 60%);  
+          .border-radius(3px);
+        }
+        
+        button {
+          font-size: 1.25em;
+          background: @blue;
+          border-bottom: solid 2px rgba(0,0,0,0.1);
+          .border-radius(3px);
+          
+          &.green {
+            background: #1FC662;
+          }
+          
+          &.red {
+            background: #E6525A;
+          }
+          
+          &.purple {
+            background: #6A4CA6;
+          }
+          
+          &.orange {
+            background: #F26223;
+          }
+        }
+        
+        .error {
+          margin-top: 10px;
+          text-align: center;
+          color: @red;
+          text-transform: capitalize;
+          font-size: 1.2em;
+        }
+      }
+    }
+    
     header {
       h1 {
         color: @blue;

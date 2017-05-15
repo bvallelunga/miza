@@ -12,12 +12,6 @@ module.exports = (sequelize, DataTypes)->
     }
     domain: { 
       type: DataTypes.STRING
-      allowNull: false
-      validate: {
-        isUrl: {
-          msg: "Must be valid domain name"
-        }
-      }
       set: (value)->
         value = @extract_domain value
         @setDataValue 'domain', value
@@ -129,6 +123,7 @@ module.exports = (sequelize, DataTypes)->
     }
     instanceMethods: {      
       extract_domain: (website)->
+        if not website then return ""
         domain = url.parse website.toLowerCase()
         hostname = (domain.hostname || domain.pathname).split(".").slice(-2).join(".")
         return "#{hostname}#{if domain.port? then (":" + domain.port) else "" }"    

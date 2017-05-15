@@ -10,12 +10,19 @@
       <h2>
         Have millions of people listen to your tracks, albums, and playlists through our ads.
       </h2>
-      <div class="login-buttons">
-        <a class="orange left" href="/oauth/soundcloud">
-          <span class="fa fa-soundcloud"></span>
-          Grow your SoundCloud
-        </a>
-        <div class="clear"></div>
+      <div class="actionable">
+        <form class="form" method="POST" action="/register">
+          <% include ../../../includes/csrf %>
+          <input type="hidden" name="type" value="demand" />
+          <input type="hidden" name="type_engage" value="Music" />
+          <input class="top-short left" name="name" type="text" placeholder="Micheal Scott" required/>
+          <input class="top-long right" name="email" type="email" placeholder="micheal.scott@dunderm.com"/>
+          <div class="clear"></div>
+          <input class="last" name="password" type="password" placeholder="Strong Password" required/>
+          <button class="button orange">Sign Up <span class="fa fa-arrow-right"></span></button>
+          <div class="clear"></div>
+          <div class="error"></div>
+        </form>
       </div>
     </header>
     <div class="clear"></div>

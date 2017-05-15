@@ -186,6 +186,16 @@ module.exports = ->
       projectId: process.env.KEEN_PROJECT
     }
     
+    instagram: {
+      id: "f1d654febba44d20a0cc9b3350d10729"
+      secret: "8edf78e91163458a87f06fb4e43ff207"
+    }
+    
+    twitter: {
+      id: "QSJo8xGdB9B6HJcyA1OyGNgot"
+      secret: "bm911wujgElV205B6rod48lLqJySkcMMt6CSI6daEm7WLwkJZ5"
+    }
+    
     promises: {
       warnings: false
       longStackTraces: true

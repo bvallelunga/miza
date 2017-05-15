@@ -32,7 +32,7 @@
       </tr>
       <tr>
         <td class="title">Website</td>
-        <td><input type="url" name="domain" value="http://<%= advertiser.domain %>" placeholder="http://techcrunch.com" required></td>
+        <td><input type="url" name="domain" value="<%= !!advertiser.domain ? "http://" + advertiser.domain : ""  %>" placeholder="http://techcrunch.com" required></td>
       </tr>
       <tr>
         <td class="title">Account Owner</td>

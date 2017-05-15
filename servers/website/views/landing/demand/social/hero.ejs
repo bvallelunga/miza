@@ -11,16 +11,19 @@
       <h2>
         Grow your brand through interactive ads that are shown to millions of people daily.
       </h2>
-      <div class="login-buttons">
-        <a class="black left" href="/oauth/instagram">
-          <span class="fa fa-instagram"></span>
-          Grow your Instagram
-        </a>
-        <a class="blue right" href="/oauth/twitter">
-          <span class="fa fa-twitter"></span>
-          Grow your Twitter
-        </a>
-        <div class="clear"></div>
+      <div class="actionable">
+        <form class="form" method="POST" action="/register">
+          <% include ../../../includes/csrf %>
+          <input type="hidden" name="type" value="demand" />
+          <input type="hidden" name="type_engage" value="Social" />
+          <input class="top-short left" name="name" type="text" placeholder="Micheal Scott" required/>
+          <input class="top-long right" name="email" type="email" placeholder="micheal.scott@dunderm.com"/>
+          <div class="clear"></div>
+          <input class="last" name="password" type="password" placeholder="Strong Password" required/>
+          <button class="button purple">Sign Up <span class="fa fa-arrow-right"></span></button>
+          <div class="clear"></div>
+          <div class="error"></div>
+        </form>
       </div>
     </header>
     <div class="clear"></div>
