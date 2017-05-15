@@ -70,17 +70,26 @@
       }
       
       .bottom .profile-information strong:hover,
-      .bottom .profile-information span:hover {
+      .bottom .profile-information .username:hover {
         text-decoration: underline;
       }
       
-      .bottom .profile-information span {
+      .bottom .profile-information > span {
         font-weight: lighter; 
         color: #657786;
         font-size: 0.8em;
         margin-top: 2px;
         display: block;
         text-transform: lowercase;
+      }
+      
+      .bottom .profile-information > span .followers {
+        display: inline-block;
+        background: url("/public/followers.png");
+        background-repeat: no-repeat;
+        background-position: left center;
+        background-size: 16px;
+        padding-left: 20px;
       }
       
       .bottom .profile-description {
@@ -146,7 +155,9 @@
         <div class="profile-image" style="background-image: url(<%- creative.config.user.profile_image %>)"></div>
         <div class="profile-information">
           <strong><%= creative.config.user.name %></strong>
-          <span>@<%= creative.config.user.username %>&nbsp;&nbsp;&bull;&nbsp;&nbsp;<%= creative.config.user.followers %></span>
+          <span>
+            <span class="username">@<%= creative.config.user.username %></span>&nbsp;&nbsp;&bull;&nbsp;&nbsp;<span class="followers"><%= creative.config.user.followers %></span>
+          </span>
           <div class="follow"><%= creative.config.action || "Follow" %></div>
         </div>
         <div class="clear"></div>
