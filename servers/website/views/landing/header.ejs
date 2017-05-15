@@ -4,13 +4,27 @@
       <% include ../includes/logo.ejs %>
     </a>
     <div class="shortcuts">
-      <a href="/demand" class="dynamic" data-for="demand">Advertisers</a>
       <a href="/supply" class="dynamic" data-for="supply">Publishers</a>
+      <a href="/demand" class="dynamic" data-for="demand">Advertisers</a>
       <a href="/about">Company</a>
     </div>
   </div>
   <div class="right">
-    <% include ../includes/header %>
+    <div class="fixed-side-nav">
+      <% if(user && user.is_admin) { %>
+        <a class="inverse" href="/admin">Admin Center</a>
+      <% } %>
+      <% if(user && !user.is_demo) { %>
+        <a href="/dashboard">Dashboard</a>
+        <span>
+          <a class="main" href="/account">Account</a>
+          <a class="dropdown-item red" href="/logout">Sign Out</a>
+        </span>
+      <% } else { %>
+        <a href="/login" class="inverse">Log In</a>
+        <a href="#" onclick="Intercom('show')">Contact Us</a>
+      <% } %>
+    </div>
   </div>
   
   <div class="navigation-modal">

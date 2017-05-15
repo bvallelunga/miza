@@ -41,5 +41,5 @@ module.exports.post_partnership = (req, res, next)->
   }
   
   LIBS.slack.message {
-    text: "#{req.body.name} (#{req.body.email}, #{req.body.phone}) requested a partnership as an enterprise advetiser."
+    text: "#{req.body.name} (#{req.body.email}, #{req.body.phone}) requested a partnership as an enterprise advertiser."
   }
