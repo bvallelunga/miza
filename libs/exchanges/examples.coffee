@@ -34,7 +34,7 @@ module.exports = (req, res)->
             "https://instagram.fsnc1-1.fna.fbcdn.net/t51.2885-15/e15/p640x640/17587195_754539068042759_7184793937549197312_n.jpg"
             "https://instagram.fsnc1-1.fna.fbcdn.net/t51.2885-15/e35/16123569_972384529562038_1390565919155027968_n.jpg"
           ]
-          action: "Purchase on Nike"
+          action: "Customize on Nike"
         }
       }
       
