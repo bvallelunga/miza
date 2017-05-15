@@ -6,7 +6,7 @@ $ ->
   $(".navigation .shortcuts .dynamic").mouseover ->
     $element = $(@) 
     modal_width = 580
-    left = $element.position().left + $element.outerWidth()/2 - modal_width/2
+    left = $element.position().left + $element.outerWidth(true)/2 - modal_width/2
     
     $(".navigation-modal .dynamic").hide()
      
