@@ -23,6 +23,7 @@ module.exports = (sequelize, models)->
     }
     migrations: {
       params: [ knex, models ]
+      pattern: /^\d+[\w-]+\.coffee$/
       path: "#{__dirname}/pending"
     }
     logger: (message)-> 
