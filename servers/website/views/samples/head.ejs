@@ -1,10 +1,10 @@
 <script type='text/javascript'>           	
   (function(window, base) {
     var script = document.createElement("script");
+    var head = document.getElementsByTagName('head')[0];
     script.src = base;
     script.async = true;
-    document.getElementsByTagName('head')[0]
-      .appendChild(script);
+    head.appendChild(script);
   })(window, "//<%= publisher.endpoint %>");
   
   window.<%= publisher.key %>_callback = function(element) {
