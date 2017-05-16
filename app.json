@@ -40,22 +40,19 @@
     },
     "NODE_ENV": {
       "required": true
-    }
-    "APP_NAME": {
-      "required": true
-    }
+    },
     "PAYPAL_MODE": {
       "required": true
-    }
+    },
     "PAYPAL_ID": {
       "required": true
-    }
+    },
     "PAYPAL_SECRET": {
       "required": true
-    }
+    },
     "KEEN_PROJECT": {
       "required": true
-    }
+    },
     "KEEN_MASTER_KEY": {
       "required": true
     }
