@@ -73,8 +73,9 @@ module.exports = ->
       "none": "none"
     }
     interval = interval_list[interval]
-    name = "#{CONFIG.keen.prefix}-#{name}"      
-    keen.request("get", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}/results", data).then (response)->
+    name = "#{CONFIG.keen.prefix}-#{name}"    
+
+    keen.request("get", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{name}/results", data).then (response)->       
       results = []
       index = -1
       subframe = null
@@ -125,13 +126,14 @@ module.exports = ->
       return response
   
   
-  keen.fetchDefinitions = (url=null)->
+  keen.fetchDefinitions = (url=null, array=[])->
     keen.request("get", url or "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets").then (response)->
-      Promise.each response.datasets, (dataset)->
-        console.log dataset.dataset_name
+      array = array.concat response.datasets
       
       if response.next_page_url
-        keen.fetchDefinitions response.next_page_url
-
-
+        return keen.fetchDefinitions response.next_page_url, array 
+        
+      return array
+   
+   
   return keen

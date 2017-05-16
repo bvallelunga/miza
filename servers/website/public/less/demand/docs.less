@@ -1,7 +1,7 @@
 @import '../libs/all';
 @import '../global/colors';
 
-.setup-dashboard .display {
+.container.docs-dashboard .display {
   padding: 20px;
   
   h2 {
@@ -46,23 +46,4 @@
     .border-radius(4px);
   }
   
-  .guide {
-    display: none;
-    
-    &.active {
-      display: block;
-    }
-  }
-  
-  a {
-    color: @blue;
-    
-    &.red {
-      color: @red;
-    }
-    
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 }

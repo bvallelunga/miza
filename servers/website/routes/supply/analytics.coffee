@@ -25,10 +25,10 @@ module.exports.get = (req, res, next)->
     view_count: flattener query "publisher-ping-count"
     fill_count: flattener query "publisher-request-count"
     protection_count: flattener query "publisher-ping-protected-count"
-    os_chart: query "publisher-os-protected-count"
-    devices_chart: query "publisher-device-protected-count"
-    countries_chart: query "publisher-country-protected-count"
-    browsers_chart: query "publisher-browser-protected-count"
+    os_chart: limiter query "publisher-os-protected-count"
+    devices_chart: limiter query "publisher-device-protected-count"
+    countries_chart: limiter query "publisher-country-protected-count"
+    browsers_chart: limiter query "publisher-browser-protected-count"
     ctr_count: LIBS.keen.errors.DATA
   }).then (analytics)->         
     if analytics.devices_chart.result?
@@ -91,3 +91,16 @@ flattener = (promise)->
       metadata: data.metadata
       result: result
     }
+
+
+limiter = (promise)->
+  promise.then (data)->        
+    if not data.result? or data.result.length == 0
+      return data
+    
+    data.result = data.result.sort (a, b)->
+      return b.result - a.result
+      
+    .slice(0, 15)
+  
+    return data
