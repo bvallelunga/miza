@@ -2,8 +2,8 @@ API.iframes = []
 
 API.iframe = function(element) {
   var parent = element.parentNode || {}
-  var width = element.offsetWidth || parent.offsetWidth
-  var height = element.offsetHeight || parent.offsetHeight
+  var width = API.width_parser(element)
+  var height = API.height_parser(element)
   
   if(width == 0 || height == 0) {
     var classNames = API.to_array(parent.classList)
@@ -39,6 +39,20 @@ API.iframe = function(element) {
   
   API.iframes.push(iframe)
   return iframe
+}
+
+API.width_parser = function(element) {
+  var parent = element.parentNode || {}
+  var w = element.offsetWidth || element.style.width || element.style.minWidth || element.style.maxWidth
+  var w2 = parent.offsetWidth || parent.style.width || parent.style.minWidth || parent.style.maxWidth
+  return parseInt(w || w2)
+}
+
+API.height_parser = function(element) {
+  var parent = element.parentNode || {}
+  var w = element.offsetHeight || element.style.height || element.style.minHeight || element.style.maxHeight
+  var w2 = parent.offsetHeight || parent.style.height || parent.style.minHeight || parent.style.maxHeight
+  return parseInt(w || w2)
 }
 
 API.blocker_check = function(window, callback) {

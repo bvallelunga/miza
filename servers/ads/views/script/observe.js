@@ -2,7 +2,7 @@ API.observables = {
   query: [
     ".adsbygoogle", ".dp-ad-chrome iframe", "#_carbonads_js",
     'div[id*="div-gpt-ad-"]', '.ad-tag[data-ad-size*="300x250"]',
-    '.proper-ad-unit', 'div[id*="crt-"]',
+    '.proper-ad-unit', 'div[id*="crt-"]', ".adswidget", ".adblock_awareness"
   ].join(","),
   xpaths: [
     "//body//script[contains(., 'OA_show')]/parent::*",
@@ -87,6 +87,7 @@ API.start_observing = function() {
     
     if(event.data.name == "frame.show") {
       var parent = element.parentNode
+      parent.parentNode.style.display = "block !important"
       parent.style.position = "relative"
       parent.style.minHeight = event.data.height + "px"
       parent.style.minWidth = event.data.width + "px"
@@ -136,8 +137,10 @@ API.observer = function() {
 
 API.migrate = function(element) {
   var iframe_length = API.iframes.length
+  var width = API.width_parser(element)
   
-  if(!API.hash_value("m-creative") && iframe_length > 0 && <%- publisher.config.ad_coverage %> < Math.random()) {
+  // TODO: Move WIDTH cap logic to server side
+  if(width > 500 || !API.hash_value("m-creative") && iframe_length > 0 && <%- publisher.config.ad_coverage %> < Math.random()) {
     return element.parentNode.removeChild(element)
   }
   

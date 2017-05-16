@@ -29,7 +29,7 @@ module.exports = (req)->
       if moment.duration(new Date() - new Date(viewed_at)).asHours() < 2
         blocked_campaigns.push Number id
     
-    if blocked_campaigns.length > 0
+    if not req.publisher.is_demo and blocked_campaigns.length > 0
       query.campaign_id = {
         $notIn: blocked_campaigns
       }
