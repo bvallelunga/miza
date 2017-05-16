@@ -68,7 +68,7 @@ module.exports.get_publishers = (req, res, next)->
       index_by: String(req.campaign.id)
       timeframe: month_timeframe
     }).then (response)->
-      return response.result.map (data)-> data.value
+      return response.result
   
   Promise.props({
     impressions: query "campaign-publisher-impression-count"
@@ -79,14 +79,14 @@ module.exports.get_publishers = (req, res, next)->
       clicks: {}
     }
     
-    for name, intervals of data    
-      for interval in intervals
-        for publishers in interval
-          key = publishers["publisher.key"]
-          if not metrics[name][key]?
-            metrics[name][key] = 0
-            
-          metrics[name][key] += publishers["result"]
+    for name, publishers of data        
+      for publisher in publishers               
+        key = publisher["publisher.key"]
+        
+        if not metrics[name][key]?
+          metrics[name][key] = 0
+          
+        metrics[name][key] += publisher["result"]
         
     return metrics
     
@@ -153,7 +153,7 @@ module.exports.get_charts = (req, res, next)->
     LIBS.keen.fetchDataset(query_name, {
       index_by: String(req.campaign.id)
       timeframe: month_timeframe
-    }).catch (error)->
+    }, "daily").catch (error)->
       LIBS.bugsnag.notify error
       console.log error
       return LIBS.keen.errors.DATA

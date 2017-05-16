@@ -1,11 +1,11 @@
 moment = require "moment"
 
 module.exports.get = (req, res, next)->  
-  query = (query_name, timeframe)->
+  query = (query_name, timeframe, interval)->
     LIBS.keen.fetchDataset(query_name, {
       index_by: req.publisher.key
       timeframe: timeframe or "this_1_months"
-    }).catch (error)->
+    }, interval).catch (error)->
       LIBS.bugsnag.notify error
       console.log error
       return LIBS.keen.errors.DATA
@@ -17,18 +17,18 @@ module.exports.get = (req, res, next)->
   
   Promise.props({
     impressions_chart: Promise.all([
-      query "publisher-impression-chart", month_timeframe
-      query "publisher-click-chart", month_timeframe
+      query "publisher-impression-chart", month_timeframe, "daily"
+      query "publisher-click-chart", month_timeframe, "daily"
     ])
     impression_count: flattener query "publisher-impression-count"
     click_count: flattener query "publisher-click-count"
     view_count: flattener query "publisher-ping-count"
     fill_count: flattener query "publisher-request-count"
     protection_count: flattener query "publisher-ping-protected-count"
-    os_chart: flattener query "publisher-os-protected-count"
-    devices_chart: flattener query "publisher-device-protected-count"
-    countries_chart: flattener query "publisher-country-protected-count"
-    browsers_chart: flattener query "publisher-browser-protected-count"
+    os_chart: query "publisher-os-protected-count"
+    devices_chart: query "publisher-device-protected-count"
+    countries_chart: query "publisher-country-protected-count"
+    browsers_chart: query "publisher-browser-protected-count"
     ctr_count: LIBS.keen.errors.DATA
   }).then (analytics)->         
     if analytics.devices_chart.result?
@@ -79,8 +79,15 @@ module.exports.get = (req, res, next)->
 
 flattener = (promise)->
   promise.then (data)->        
-    if data.result?
-      return {
-        metadata: data.metadata
-        result: data.result[0].value
-      }
+    if not data.result? or data.result.length == 0
+      return data
+      
+    result = 0
+    
+    for temp in data.result
+      result += temp.value
+  
+    return {
+      metadata: data.metadata
+      result: result
+    }

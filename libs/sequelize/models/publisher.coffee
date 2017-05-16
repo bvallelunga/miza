@@ -98,8 +98,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Impression Chart"
             analysis_type: "count"
             event_collection : "ads.event.impression"
-            timeframe: "this_3_months"
-            interval: "daily"
+            timeframe: "this_1_months"
+            interval: "every_2_hours"
             filters: [{
               operator: "ne"
               property_name: "billing.house"
@@ -112,8 +112,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Click Chart"
             analysis_type: "count"
             event_collection : "ads.event.click"
-            timeframe: "this_3_months"
-            interval: "daily"
+            timeframe: "this_1_months"
+            interval: "every_2_hours"
             filters: [{
               operator: "ne"
               property_name: "billing.house"
@@ -126,8 +126,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Impression Count"
             analysis_type: "count"
             event_collection : "ads.event.impression"
-            timeframe: "this_1_year"
-            interval: "monthly"
+            timeframe: "this_1_months"
+            interval: "every_2_hours"
             filters: [{
               operator: "ne"
               property_name: "billing.house"
@@ -140,8 +140,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Click Count"
             analysis_type: "count"
             event_collection : "ads.event.click"
-            timeframe: "this_1_year"
-            interval: "monthly"
+            timeframe: "this_1_months"
+            interval: "every_2_hours"
             filters: [{
               operator: "ne"
               property_name: "billing.house"
@@ -154,8 +154,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Request Count"
             analysis_type: "count"
             event_collection : "ads.event.request"
-            timeframe: "this_1_year"
-            interval: "monthly"
+            timeframe: "this_1_months"
+            interval: "every_2_hours"
             filters: [{
               operator: "ne"
               property_name: "billing.house"
@@ -168,8 +168,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Ping Count"
             analysis_type: "count"
             event_collection : "ads.event.ping"
-            timeframe: "this_1_year"
-            interval: "monthly"
+            timeframe: "this_1_months"
+            interval: "every_2_hours"
             filters: [{
               operator: "ne"
               property_name: "billing.house"
@@ -182,8 +182,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Ping Protected Count"
             analysis_type: "count"
             event_collection : "ads.event.ping"
-            timeframe: "this_1_year"
-            interval: "monthly"
+            timeframe: "this_1_months"
+            interval: "every_2_hours"
             filters: [{
               "operator": "eq"
               "property_name": "protected"
@@ -200,8 +200,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher OS Protected Count"
             analysis_type: "count"
             event_collection : "ads.event.ping"
-            timeframe: "this_1_year"
-            interval: "monthly"
+            timeframe: "this_1_months"
+            interval: "every_2_hours"
             filters: [{
               "operator": "eq"
               "property_name": "protected"
@@ -221,8 +221,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Device Protected Count"
             analysis_type: "count"
             event_collection : "ads.event.ping"
-            timeframe: "this_1_year"
-            interval: "monthly"
+            timeframe: "this_1_months"
+            interval: "every_2_hours"
             filters: [{
               "operator": "eq"
               "property_name": "protected"
@@ -242,8 +242,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Country Protected Count"
             analysis_type: "count"
             event_collection : "ads.event.ping"
-            timeframe: "this_1_year"
-            interval: "monthly"
+            timeframe: "this_1_months"
+            interval: "every_2_hours"
             group_by: [
               "location.country"
             ]
@@ -267,8 +267,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Publisher Browser Protected Count"
             analysis_type: "count"
             event_collection : "ads.event.ping"
-            timeframe: "this_1_year"
-            interval: "monthly"
+            timeframe: "this_1_months"
+            interval: "every_2_hours"
             group_by: [
               "user_agent.parsed.browser.family"
             ]
