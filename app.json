@@ -1,7 +1,6 @@
 {
   "name": "miza",
-  "scripts": {
-  },
+  "scripts": {},
   "env": {
     "APP_NAME": {
       "required": true
@@ -41,10 +40,25 @@
     },
     "NODE_ENV": {
       "required": true
+    },
+    "PAYPAL_MODE": {
+      "required": true
+    },
+    "PAYPAL_ID": {
+      "required": true
+    },
+    "PAYPAL_SECRET": {
+      "required": true
+    },
+    "KEEN_PROJECT": {
+      "required": true
+    },
+    "KEEN_MASTER_KEY": {
+      "required": true
     }
   },
   "formation": {
-    "tracking_worker": {
+    "tracker": {
       "quantity": 1,
       "size": "free"
     },
@@ -62,11 +76,15 @@
     "heroku-postgresql",
     "rabbitmq-bigwig",
     "rediscloud",
-    "scheduler"
+    "mongolab",
+    "newrelic"
   ],
   "buildpacks": [
     {
       "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-pgbouncer"
     }
   ]
 }
