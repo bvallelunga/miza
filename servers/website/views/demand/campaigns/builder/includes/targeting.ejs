@@ -9,7 +9,7 @@
       <td valign="top">
         <select class="chosen-select full" name="industries[]" multiple data-placeholder="Select the industries to target...">
           <% industries.forEach(function(industry, i) { %>
-            <option value="<%= industry.id %>"><%= industry.name %></option>
+            <option value="<%= industry.id %>"><%= industry.name %><%= industry.private ? " (Admin Only)" : "" %></option>
           <% }) %>
         </select>
       </td>

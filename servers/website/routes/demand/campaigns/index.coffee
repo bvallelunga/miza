@@ -33,7 +33,7 @@ module.exports.fetch = (req, res, next)->
     ]
     
     Promise.props({
-      industries: LIBS.models.Industry.listed().then (industries)->
+      industries: LIBS.models.Industry.listed(req.user.is_admin).then (industries)->
         req.data.industries = industries
         
       auto_bid: LIBS.models.Campaign.findAll({

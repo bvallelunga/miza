@@ -41,14 +41,18 @@ module.exports = (sequelize, DataTypes)->
     }
   }, {
     classMethods: {
-      listed: ->
-        LIBS.models.Industry.findAll({
-          where: {
-            private: false
-            max_impressions: {
-              $gt: 0
-            }
+      listed: (is_admin)->
+        query = {
+          max_impressions: {
+            $gt: 0
           }
+        }
+        
+        if not is_admin
+          query.private = false
+      
+        LIBS.models.Industry.findAll({
+          where: query
           order: [
             ['name', 'ASC']
           ]
