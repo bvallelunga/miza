@@ -1,49 +1,88 @@
 @import '../libs/all';
 @import '../global/colors';
 
-.container.docs-dashboard .display {
-  padding: 20px;
-  
-  h2 {
-    font-size: 2em;
-    margin: 0 0 35px 0;
+.container.docs-dashboard {
+  .sidebar {
+    position: fixed;
   }
-  
-  h3 {
-    margin: 60px 0 0 0;
-    
-    span {
-      color: @blue;
-      padding-left: 5px;
-    }
-  }
-  
-  & > span, p {
-    font-size: 1.1em;
-    line-height: 1.8em;
-  }
-  
-  p {
-    margin: 15px 0; 
-    display: inline-block; 
-    
-    span {
-      color: #D0456F;
-      padding: 1px 5px;
-      margin: 0 3px;
-      font-size: 0.85em;
-      border: solid 1px rgba(0,0,0,0.05); 
-      background: rgba(0,0,0,0.02);
-      .border-radius(3px);
-    }
-  }
-  
-  pre code {
-    font-size: 1em;
+
+
+  .display {
     padding: 20px;
-    border: solid 1px rgba(0,0,0,0.05); 
-    background: rgba(0,0,0,0.01);
-    .border-radius(4px);
+    
+    .section {
+      padding-top: 60px;
+    }
+    
+    h2 {
+      font-size: 2em;
+    }
+    
+    h3 {      
+      span {
+        color: @blue;
+        padding-left: 5px;
+      }
+    }
+    
+    & > span {
+      color: #E6525A;
+    }
+    
+    & > span, p {
+      font-size: 1.1em;
+      line-height: 1.8em;
+    }
+    
+    img {
+      width: 100%;
+      margin: 10px 0;
+    }
+    
+    p {
+      margin: 15px 0; 
+      display: inline-block; 
+      
+      span {
+        color: #D0456F;
+        padding: 1px 5px;
+        margin: 0 3px;
+        font-size: 0.85em;
+        border: solid 1px rgba(0,0,0,0.05); 
+        background: rgba(0,0,0,0.02);
+        .border-radius(3px);
+      }
+    }
+    
+    .mini-table table {
+      max-width: 100%;
+      
+      tbody {
+        text-align: left;
+        
+        a {
+          color: @blue;
+          
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+      
+      pre code {
+        width: 100%;
+      }
+    }
+    
+    pre code {
+      font-size: 1em;
+      display: block;
+      text-align: left;
+      background: transparent;
+      padding: 0;
+      margin: 0;
+      overflow-x: scroll;
+    }
+    
   }
-  
 }

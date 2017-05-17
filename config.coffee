@@ -179,7 +179,7 @@ module.exports = ->
     }
     
     keen: {
-      prefix: "v3"
+      prefix: "v5"
       readKey: process.env.KEEN_MASTER_KEY
       writeKey: process.env.KEEN_MASTER_KEY
       masterKey: process.env.KEEN_MASTER_KEY
