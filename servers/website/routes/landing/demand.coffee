@@ -2,7 +2,7 @@ module.exports.get_root = (req, res, next)->
   res.locals.media.graph = "/imgs/graph/enterprise.png"
 
   res.render "landing/demand/home", {
-    js: req.js.renderTags "landing", "fa", "modal"
+    js: req.js.renderTags "landing", "fa"
     css: req.css.renderTags "landing"
     title: "Lets Craft A Story"
   }
