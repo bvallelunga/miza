@@ -96,7 +96,13 @@ module.exports.create = (req, res, next)->
     status = "pending"
     
     if req.user.is_admin
-      status = if start_date? then "queued" else "running"
+      if start_date?
+        status = "queued"
+        
+      else
+        status = "running" 
+        start_date = new Date()
+      
     
     LIBS.models.sequelize.transaction (t)->
       LIBS.models.Campaign.create({
@@ -114,6 +120,7 @@ module.exports.create = (req, res, next)->
         }
       }, {transaction: t}).then (campaign)->    
         Promise.props({
+          advertiser: req.advertiser.activate()
           campaign: campaign
           industries: Promise.map targeting, (industry)->
             LIBS.models.CampaignIndustry.create({

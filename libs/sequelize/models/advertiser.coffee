@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.BOOLEAN
       defaultValue: false
     }
+    is_activated: {
+      type: DataTypes.BOOLEAN
+      defaultValue: false
+    }
     config: {
       type: DataTypes.JSONB
       defaultValue: {}
@@ -121,7 +125,14 @@ module.exports = (sequelize, DataTypes)->
         }
 
     }
-    instanceMethods: {      
+    instanceMethods: {  
+      activate: ->
+        if @is_activated
+          return Promise.resolve @
+      
+        @is_activated = true
+        return @save()
+          
       extract_domain: (website)->
         if not website then return ""
         domain = url.parse website.toLowerCase()

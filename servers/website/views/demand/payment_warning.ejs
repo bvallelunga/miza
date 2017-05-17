@@ -1,7 +1,7 @@
-<% if(!advertiser.owner.stripe_card) { %>
+<% if(advertiser.is_activated && !advertiser.owner.stripe_card) { %>
   <div class="warning orange">
-    Thank you for using <%= company %>! Would you mind entering in your 
-    <a href="/account/billing?next=<%= path %>">billing details</a>?<br>
-    We will only charge your account once you have approved it! 
+    Would you mind entering in your <a href="/account/billing?next=<%= path %>">billing details</a>?
+    <br>
+    We will ONLY bill you for what you have spent when your campaigns are completed.
   </div>
 <% } %>

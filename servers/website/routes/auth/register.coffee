@@ -77,6 +77,7 @@ module.exports.post = (req, res, next)->
             name: "#{req.user.name} (#{req.body.type_engage})"
             owner_id: req.user.id
             admin_contact_id: req.user.admin_contact_id
+            auto_approve: 1
           }, {transaction: t}).then (advertiser)->
             req.user.addAdvertiser(advertiser)
             next_page = "/dashboard/demand/#{advertiser.key}/campaigns?new_advertiser"

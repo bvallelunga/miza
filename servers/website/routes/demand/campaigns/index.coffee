@@ -46,13 +46,13 @@ module.exports.fetch = (req, res, next)->
         cpc = 0
         avg_ctr = 0.2
         
-        for campaign in campaigns
+        for campaign in campaigns        
           if campaign.type == "cpc"
             cpc += campaign.amount
           else if campaign.type == "cpm"
-            cpc += 0.1 * campaign.amount / campaign.ctr
+            cpc += 0.1 * campaign.amount / avg_ctr
         
-        cpc = Math.max(0.45, cpc/campaigns.length or 0)
+        cpc = Math.max(0.45, cpc/(campaigns.length or 1))
         cpc += cpc * 0.1
         cpm = cpc * avg_ctr * 10
 
