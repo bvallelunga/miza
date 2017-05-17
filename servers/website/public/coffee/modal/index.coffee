@@ -1,7 +1,7 @@
 $ ->
   title = document.title.split(" | ")[0].split(" ").join("_")
 
-  $("form:not(.ignore)").on "submit", (e)->
+  $("form:not(.ignore):not(.loading)").on "submit", (e)->
     e.preventDefault()
     e.stopPropagation()
   
@@ -29,7 +29,15 @@ $ ->
         success: true
       }
       
-      window.location.href = response.next
+      if fbq? and response.registration? and response.registration.success
+        fbq 'track', 'CompleteRegistration', {
+          type: response.registration.type
+        }
+      
+      setTimeout ->
+        window.location.href = response.next
+        
+      , 1000
     
     ).fail (error)->
       json = error.responseJSON

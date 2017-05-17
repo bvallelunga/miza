@@ -86,6 +86,10 @@ module.exports.post = (req, res, next)->
       res.json {
         success: true
         next: next_page
+        registration: {
+          success: true
+          type: "#{req.body.type}_#{req.body.type_engage}".toLowerCase()
+        }
       }
       
   .catch next
