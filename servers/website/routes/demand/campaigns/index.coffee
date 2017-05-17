@@ -36,24 +36,34 @@ module.exports.fetch = (req, res, next)->
       industries: LIBS.models.Industry.listed(req.user.is_admin).then (industries)->
         req.data.industries = industries
         
-      auto_bid: LIBS.models.Campaign.findAll({
+      auto_bid_cpm: LIBS.models.Campaign.findAll({
         where: {
           status: {
             $ne: "completed"
           }
         }
       }).then (campaigns)->
-        bid = 0
+        cpc = 0
+        avg_ctr = 0.2
         
         for campaign in campaigns
-          bid += campaign.amount
+          if campaign.type == "cpc"
+            cpc += campaign.amount
+          else if campaign.type == "cpm"
+            cpc += 0.1 * campaign.amount / campaign.ctr
         
-        bid = Math.max(0.02, bid/campaigns.length)
-        bid += bid * 0.15
+        cpc = Math.max(0.45, cpc/campaigns.length or 0)
+        cpc += cpc * 0.1
+        cpm = cpc * avg_ctr * 10
 
-        req.data.auto_bid_min = numeral(bid - (bid * 0.5)).format("0.00")
-        req.data.auto_bid_max = numeral(bid + (bid * 0.5)).format("0.00")
-        req.data.auto_bid = Number numeral(bid).format("0.00")
+        req.data.auto_bid_cpm_min = numeral(cpm - (cpm * 0.25)).format("0.00")
+        req.data.auto_bid_cpm_max = numeral(cpm + (cpm * 0.25)).format("0.00")
+        req.data.auto_bid_cpm = numeral(cpm).format("0.00")
+        
+        req.data.auto_bid_cpc_min = numeral(cpc - (cpc * 0.25)).format("0.00")
+        req.data.auto_bid_cpc_max = numeral(cpc + (cpc * 0.25)).format("0.00")
+        req.data.auto_bid_cpc = numeral(cpc).format("0.00")
+        
     }).then(-> next()).catch next
     
   else

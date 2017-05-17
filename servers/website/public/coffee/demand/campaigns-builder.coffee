@@ -25,11 +25,21 @@ class Dashboard
         extraClass: "date-dropdown"
       })      
       
+    
+    $('.bid-selector input[type=radio][name=model]').change ->
+      model = this.value
+      $(".bid-suggestion").hide()
+      $(".bid-#{model}").show()
+      $(".bid-input input").val $(".bid-input input").data("reset-#{model}")
+    
+    
     $('.bid-selector input[type=radio][name=bid_type]').change ->
-      $(".bid-input").toggle this.value == "manual"
+      model = $("input[name=model]:checked").val()
+      $(".bid-suggestion").hide()
+      $(".bid-input, .bid-#{model}").toggle this.value == "manual"
       
       if this.value == "automatic"
-        $(".bid-input input").val $(".bid-input input").data("reset-value")
+        $(".bid-input input").val $(".bid-input input").data("reset-#{model}")
       
     $(".is-house").change ->
       _this.update_budget()
