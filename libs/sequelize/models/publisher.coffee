@@ -201,7 +201,7 @@ module.exports = (sequelize, DataTypes)->
             analysis_type: "count"
             event_collection : "ads.event.ping"
             timeframe: "this_1_months"
-            interval: "every_15_hours"
+            interval: "every_1_days"
             filters: [{
               "operator": "eq"
               "property_name": "protected"
@@ -222,7 +222,7 @@ module.exports = (sequelize, DataTypes)->
             analysis_type: "count"
             event_collection : "ads.event.ping"
             timeframe: "this_1_months"
-            interval: "every_15_hours"
+            interval: "every_1_days"
             filters: [{
               "operator": "eq"
               "property_name": "protected"
@@ -243,7 +243,7 @@ module.exports = (sequelize, DataTypes)->
             analysis_type: "count"
             event_collection : "ads.event.ping"
             timeframe: "this_1_months"
-            interval: "every_15_hours"
+            interval: "every_1_days"
             group_by: [
               "location.country"
             ]
@@ -268,7 +268,7 @@ module.exports = (sequelize, DataTypes)->
             analysis_type: "count"
             event_collection : "ads.event.ping"
             timeframe: "this_1_months"
-            interval: "every_15_hours"
+            interval: "every_1_days"
             group_by: [
               "user_agent.parsed.browser.family"
             ]

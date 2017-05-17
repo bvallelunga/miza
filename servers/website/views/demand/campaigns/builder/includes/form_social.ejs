@@ -3,28 +3,30 @@
   <div class="section">
     <div class="header">Ad Preview</div>
     <br>
-    <img class="browser-frame" src="/imgs/browser-frame.png"/>
-    <div class="creative-display">
-      <div class="left paragraphs">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line half"></div>
-        <br>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line three-fourths"></div>
+    <div class="browser">
+      <img class="browser-frame" src="/imgs/browser-frame.png"/>
+      <div class="creative-display">
+        <div class="left paragraphs">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line half"></div>
+          <br>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line three-fourths"></div>
+        </div>
+        <div class="right creative">
+          <div><iframe class="simulator-iframe hidden" data-base-src="<%= LIBS.models.Creative.demo_frame() %>"></iframe></div>
+        </div>
+        <div class="clear"></div>
       </div>
-      <div class="right creative">
-        <div><iframe class="simulator-iframe hidden" data-base-src="<%= LIBS.models.Creative.demo_frame() %>"></iframe></div>
-      </div>
-      <div class="clear"></div>
     </div>
   </div>
   
