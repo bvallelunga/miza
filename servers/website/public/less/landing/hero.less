@@ -38,51 +38,51 @@
     transform: rotate(45deg);
     opacity: 0.8;
   }
-  
+
   &.dark-navigation {
     .box-shadow(inset 0 -1px 0 rgba(0,0,0,0.025));
-    
+
     &:before {
       opacity: 0.4;
       background-image: url("/imgs/landing-dark.png");
     }
-    
+
     .actionable {
       padding: 0;
       background: none;
       .box-shadow(none);
-      
+
       .form {
         input {
           margin-bottom: 8px;
           border-width: 1px;
-          border-color: lighten(#232F3B, 60%);  
+          border-color: lighten(#232F3B, 60%);
           .border-radius(3px);
         }
-        
+
         button {
           font-size: 1.25em;
           background: @blue;
           border-bottom: solid 2px rgba(0,0,0,0.1);
           .border-radius(3px);
-          
+
           &.green {
             background: #1FC662;
           }
-          
+
           &.red {
             background: #E6525A;
           }
-          
+
           &.purple {
             background: #6A4CA6;
           }
-          
+
           &.orange {
             background: #F26223;
           }
         }
-        
+
         .error {
           margin-top: 10px;
           text-align: center;
@@ -92,67 +92,67 @@
         }
       }
     }
-    
+
     header {
       h1 {
         color: @blue;
         text-shadow: 0 1px 0 rgba(0,0,0,0.2);
       }
-      
+
       h2 {
         color: black;
-        
+
         span {
           color: @text;
           text-shadow: none;
         }
       }
     }
-    
-    .navigation {           
+
+    .navigation {
       .logo {
         color: @blue;
         text-shadow: none;
       }
-      
+
       .navigation-modal {
         background: #232F3B;
         color: white;
         border: solid 2px rgba(0,0,0,0.2);
         width: 584px;
-        
+
         .arrow {
           color: #232F3B;
         }
-        
+
         .item:hover {
           .fa, .name {
             color: white !important;
           }
         }
       }
-      
+
       .left .shortcuts a,
       .left .shortcuts div {
         color: #536170;
         text-shadow: none;
       }
-      
-      .fixed-side-nav { 
+
+      .fixed-side-nav {
         a {
           background: @blue;
           color: white;
-          
+
           &:not(.inverse):hover {
             color: white;
             background: @blue;
           }
-          
+
           &.inverse {
             background: transparent;
             color: @blue;
             text-shadow: none;
-            
+
             &:hover {
               text-decoration: underline;
               .box-shadow(none);
@@ -163,9 +163,9 @@
     }
   }
 
-  .navigation { 
+  .navigation {
     padding: 20px 0 80px;
-        
+
     .navigation-modal {
       z-index: 5;
       position: absolute;
@@ -178,7 +178,7 @@
       display: none;
       .border-radius(4px);
       .box-shadow(0 5px 15px 0 rgba(0,0,0,0.4));
-      
+
       .arrow {
         position: absolute;
         top: -11px;
@@ -187,58 +187,58 @@
         font-size: 25px;
         color: white;
         width: 25px;
-        text-align: center; 
+        text-align: center;
       }
-      
+
       .item {
         display: inline-block;
         margin: 20px;
         width: 250px;
         float: left;
         .clearfix();
-        
+
         &:hover {
           .fa, .name {
             color: #232F3B !important;
           }
         }
-        
+
         &.blue {
           .fa, .name {
             color: @blue;
           }
         }
-        
+
         &.green {
           .fa, .name {
             color: @green;
           }
         }
-        
+
         &.red {
           .fa, .name {
             color: #E6525A;
           }
         }
-        
+
         &.purple {
           .fa, .name {
             color: #e243f3;
           }
         }
-        
+
         &.orange {
           .fa, .name {
             color: #FF8825;
           }
         }
-        
+
         &.etsy {
           .fa, .name {
             color: #F26223;
           }
         }
-        
+
         .fa {
           display: inline-block;
           width: 30px;
@@ -246,24 +246,24 @@
           float: left;
           font-size: 2em;
           margin-top: 5px;
-          
+
           &.kickstarter {
             font-family: "Ubuntu";
             font-weight: bolder;
           }
         }
-        
+
         .info {
           float: right;
           width: 200px;
-          
+
           .name {
             font-size: 1.3em;
             font-weight: bold;
             margin-bottom: 4px;
             text-transform: uppercase;
           }
-          
+
           .desc {
             color: #6b7c93;
             font-size: 1.1em;
@@ -271,11 +271,11 @@
         }
       }
     }
-    
-    .left .shortcuts { 
+
+    .left .shortcuts {
       display: inline-block;
       margin: -10px 0 0 30px;
-    
+
       div, a {
         display: inline-block;
         margin: 8px 17px;
@@ -286,20 +286,20 @@
         font-weight: bold;
         text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
       }
-      
+
       div {
         cursor: default;
       }
-      
+
       a:hover {
         text-decoration: underline;
       }
     }
-      
-    .fixed-side-nav { 
+
+    .fixed-side-nav {
       position: relative;
       top: 5px;
-      
+
       a {
         background: white;
         color: @blue;
@@ -307,19 +307,19 @@
         min-width: 80px;
         font-size: 1.3em;
         .transition();
-        
+
         &:hover {
           background: white;
           color: @blue;
           .box-shadow(0 5px 8px 0 rgba(0,0,0,0.2));
         }
-        
+
         &.inverse {
           background: transparent;
           color: rgba(255, 255, 255, 0.8);
           font-weight: bold;
           text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
-          
+
           &:hover {
             text-decoration: underline;
             .box-shadow(none);
@@ -327,42 +327,42 @@
         }
       }
     }
-    
+
     .logo {
       color: white;
       text-shadow: 0 3px 0 rgba(0,0,0,0.5);
-      
+
       sup {
         color: rgba(255,255,255,0.5);
       }
     }
   }
-  
+
   .examples {
     width: 38%;
     float: left;
     position: relative;
-    
+
     iframe {
       position: absolute;
       width: 300px;
       height: 350px;
       top: 40px;
       display: none;
-      
+
       &:first-child {
         right: 0;
         z-index: 1;
         .transform(scale(1.2));
       }
-      
+
       &:last-child {
         top: 125px;
         right: 150px;
         z-index: 2;
         .transform(scale(1.1));
       }
-      
+
       &:only-child {
         width: 330px;
         height: 380px;
@@ -373,11 +373,11 @@
       }
     }
   }
-  
+
   header {
     width: 55%;
     float: right;
-    
+
     h1 {
       font-family: "Ubuntu";
       font-weight: bold;
@@ -386,22 +386,22 @@
       text-shadow: 0 2px 0 rgba(0,0,0,0.15);
       margin-bottom: 10px;
     }
-    
+
     h2 {
       color: rgba(0,0,0,0.5);
       font-size: 1.8em;
       font-weight: bold;
-      
+
       span {
         color: white;
         text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
         font-weight: bold;
       }
     }
-    
+
     .login-buttons {
       margin-top: 35px;
-      
+
       a {
         width: 48%;
         display: block;
@@ -413,52 +413,52 @@
         transition: ease-in-out transform 0.25s;
         border-bottom: solid 2px rgba(0,0,0,0.1);
         .border-radius(4px);
-        
+
         &:hover {
           .transform(scale(1.05, 1.05));
         }
-        
+
         .fa {
           margin-right: 10px;
           font-size: 1.3em;
           position: relative;
           top: 2px;
         }
-        
+
         &.black {
           background: #232F3B;
           color: white;
         }
-        
+
         &.blue {
           background: #1DA1F2;
           color: white;
         }
-        
+
         &.orange {
           background: #FF8825;
           color: white;
         }
-        
+
         &.red {
           background: #EB1478;
           color: white;
         }
       }
     }
-    
-    .actionable {  
+
+    .actionable {
       position: relative;
       margin-top: 35px;
       padding: 5px 5px 7px 5px;
       background: rgba(0,0,0,0.5);
       .box-shadow(~"inset 0 -1px 2px rgba(14,41,57,0.15), inset 0 1px 2px rgba(14,41,57,0.15), 0 0 20px 4px rgba(0,0,0,0.15)");
       .border-radius(6px);
-            
+
       .form {
         width: 100%;
         display: block;
-        
+
         input {
           width: 71%;
           height: 60px;
@@ -468,51 +468,51 @@
           margin-bottom: 5px;
           border-color: rgba(0,0,0,0.7);
           .border-radius(4px);
-          
+
           &.last {
             margin-bottom: 0;
           }
-          
+
           &.top-long {
             width: 56%;
             float: left;
           }
-          
+
           &.top-short {
             width: 43%;
             float: right;
           }
-          
+
           &.top-half {
             width: 49.5%;
             float: right;
           }
         }
-        
+
         button {
           width: 28%;
           height: 60px;
           float: right;
           border: none;
           font-weight: bold;
-          .border-radius(4px); 
+          .border-radius(4px);
         }
       }
     }
   }
-  
+
   .graphic {
     position: absolute;
     top: 120px;
     right: 60%;
     width: 100%;
     height: 600px;
-    float: left; 
+    float: left;
     background: rgba(0,0,0,0.4);
     border: solid 4px rgba(0,0,0,0.1);
-    .border-radius(10px); 
+    .border-radius(10px);
     overflow: hidden;
-    
+
     &:before {
       position: absolute;
       top: 0;
@@ -524,6 +524,53 @@
       background-position: right top;
       background-size: cover;
       background-repeat: no-repeat;
+    }
+  }
+}
+
+@media only screen and (max-width: 470px) {
+  .container {
+    min-width: 256px;
+    width: 0;
+  }
+  .hero {
+    .navigation {
+      padding: 20px 0 60px;
+      .left {
+        .shortcuts {
+          display: none;
+        }
+      }
+      .right {
+        display: none;
+      }
+    }
+    .examples {
+      display: none;
+    }
+
+    .header {
+      width: 100%;
+      position: relative;
+      float: none;
+      text-align: center;
+      h1 {
+        font-size: 2em;
+      }
+      h2 {
+        font-size: 1.3em;
+      }
+      .actionable {
+        .form {
+          button,
+          input.top-long,
+          input.top-short,
+          input.last {
+            width: 100%;
+            margin-bottom: 8px;
+          }
+        }
+      }
     }
   }
 }
