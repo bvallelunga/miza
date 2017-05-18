@@ -218,6 +218,34 @@ module.exports = (sequelize, DataTypes)->
     }
     
     instanceMethods: {
+      email_status: (email_type)->
+        console.log email_type
+        
+        campaign = @
+      
+        @getAdvertiser({
+          include: [{
+            model: LIBS.models.User
+            as: "members"
+            where: {
+              is_admin: false
+            }
+          }]
+        }).then (advertiser)->
+          LIBS.emails.send email_type, advertiser.members.map (user)->
+            return {
+              to: user.email
+              host: CONFIG.web_server.host
+              data: {
+                user: user
+                campaign: campaign
+                advertiser: advertiser
+              }
+            }
+          
+          .catch console.log
+      
+      
       utm_link: (link)->        
         link += if link.indexOf("?") == -1 then "?" else "&"
         
@@ -256,7 +284,7 @@ module.exports = (sequelize, DataTypes)->
           if @previous("status") == "completed"
             throw new Error "Completed campaigns can not be changed."
             
-          if @previous("status") == "rejected" and not @admin_override
+          if @previous("status") == "rejected" and not @admin_override and @status != "completed"
             throw new Error "Rejected campaigns can not be changed."
             
           if @previous("status") == "queued" and @status == "paused"
@@ -279,13 +307,15 @@ module.exports = (sequelize, DataTypes)->
         if campaign.changed("status")
           if campaign.previous("status") == "pending"
             campaign.start_at = campaign.start_at or new Date()
+            campaign.email_status("campaign_#{ if campaign.status == "rejected" then "rejected" else "approved" }")
          
           if campaign.status == "completed" 
             campaign.start_at = campaign.start_at or new Date()
             campaign.end_at = campaign.end_at or new Date()
+            campaign.email_status("campaign_completed")
       
             
-      afterUpdate: (campaign)->      
+      afterUpdate: (campaign)->                  
         campaign.getIndustries().each (industry)->
           if industry.status != "complete"              
             industry.status = campaign.status

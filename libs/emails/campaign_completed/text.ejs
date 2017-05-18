@@ -1,0 +1,8 @@
+Dear <%= data.user.name %>,
+
+Great news! Your campaign "<%= data.campaign.name %>" has met its goals and spent <%= data.campaign.metrics.spend %> of 
+the <%= data.campaign.metrics.budget %> budgeted, which will be charged for on <%= moment(data.advertiser.auto_approve_at).format("MMM DD") %>.
+
+You can see it's performance here: <%= host %>/dashboard/demand/<%= data.advertiser.key %>/campaign/<%= data.campaign.id %>
+
+-- <%= company %> Support
