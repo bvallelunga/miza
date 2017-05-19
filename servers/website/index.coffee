@@ -42,6 +42,7 @@ module.exports = (srv)->
   app.get  "/demand/social", routes.landing.demand.get_social
   app.get  "/demand/music", routes.landing.demand.get_music
   app.get  "/demand/commerce", routes.landing.demand.get_commerce
+  app.get  "/demand/docs/api", routes.demand.docs.unauthorized
   app.get  "/about", routes.landing.get_about
   app.get  "/optout", routes.landing.get_optout
   app.get  "/legal/:document", routes.landing.get_legal
