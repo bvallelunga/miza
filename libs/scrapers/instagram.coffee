@@ -2,14 +2,8 @@ scraper = require 'insta-scraper'
 request = require "request-promise"
 URL = require "url"
 
-module.exports.profile = (url)->
-  url_parsed = URL.parse url
-  hostname = url_parsed.hostname.split(".").slice(-2).join(".")
-  
-  if hostname != "instagram.com"
-    return Promise.reject "Please provide an Instagram profile url."
-    
-  username = url_parsed.pathname.slice(1).split("/")[0]
+module.exports.profile = (username)->
+  username = username.replace("http://", "").replace("@", "")
 
   new Promise (res, rej)->  
     scraper.getAccountMedia username, (error, response)->          
@@ -23,7 +17,7 @@ module.exports.profile = (url)->
       
       return res {
         image_selection: true
-        link: url
+        link: "https://instagram.com/#{username}"
         format: "social"
         config: {
           user: user
