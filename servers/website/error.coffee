@@ -19,6 +19,9 @@ module.exports = (err, req, res, next)->
       return error.message
     
     .join "\n"
+    
+  else if err.stack?
+    message = "An error has occurred and our team has been notified. Sorry for the inconvenience."
 
   if send_bug
     if CONFIG.is_prod
@@ -40,7 +43,7 @@ module.exports = (err, req, res, next)->
     js: req.js.renderTags "modal"
     css: req.css.renderTags "modal"
     error: """
-    An error has occurred 😱 but don't fret, our team has been notified.
+    An error has occurred but don't fret, our team has been notified.
     """
   }
   

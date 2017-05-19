@@ -14,7 +14,7 @@ module.exports.profile = (url)->
   new Promise (res, rej)->  
     scraper.getAccountMedia username, (error, response)->          
       if error? or response.length == 0
-        return rej "This user does not have a public account with images."
+        return rej "Please make sure your profile is public and has images."
       
       user = {
         username: response[0].user.username
@@ -69,4 +69,4 @@ module.exports.post = (url)->
     }
     
   .catch ->
-    Promise.reject "This user does not have a public account with images."
+    Promise.reject "Please make sure your profile is public and has images."

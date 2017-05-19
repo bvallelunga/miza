@@ -32,6 +32,9 @@ module.exports.scrape = (req, res, next)->
     else 
       return next "Invalid campaign format type: #{req.body.format}"
 
+  if req.body.scrape_url.indexOf("http://") == -1 or req.body.scrape_url.indexOf("https://") == -1
+    req.body.scrape_url = "http://#{req.body.scrape_url}"
+
   scraper(req.body.scrape_url).then (response)->
     res.json(response)
   .catch(next)
