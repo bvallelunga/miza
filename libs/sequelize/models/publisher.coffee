@@ -355,7 +355,7 @@ module.exports = (sequelize, DataTypes)->
       
       publisher_activated: ->
         LIBS.slack.message {
-          text: "#{@name} publisher is now activate! <#{CONFIG.web_server.host}/publisher/#{@key}/analytics|Publisher Analytics>"
+          text: "#{@name} publisher is now activate! <#{CONFIG.web_server.host}/dashboard/supply/#{@key}/analytics|Publisher Analytics>"
         }
         
         
