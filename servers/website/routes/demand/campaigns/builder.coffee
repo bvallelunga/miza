@@ -178,10 +178,15 @@ module.exports.create = (req, res, next)->
         .then ->
           return campaign
       
-  .then (campaign)->  
+  .then (campaign)-> 
+    next_dashboard = "campaign"
+    
+    if req.advertiser.owner.id == req.user.id and not req.advertiser.owner.stripe_card?
+      next_dashboard = "add_card"
+   
     res.json({
       success: true
-      next: "/dashboard/demand/#{req.advertiser.key}/campaign/#{campaign.id}"
+      next: "/dashboard/demand/#{req.advertiser.key}/#{next_dashboard}/#{campaign.id}"
     })
     
   .catch next

@@ -15,14 +15,20 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
       allowNull: false
       validate: {
-        isIn: [['cpm', 'cpc']]
+        isIn: {
+          args: [['cpm', 'cpc']]
+          msg: "Invalid campaign type."
+        }
       }
     }
     status: {
       type: DataTypes.STRING
       allowNull: false
       validate: {
-        isIn: [['queued', 'running', 'paused', 'completed']]
+        isIn: {
+          msg: "Invalid campaign status."
+          args: [['pending', 'queued', 'running', 'paused', 'completed']]
+        }
       }
       set: (value)->
         @setDataValue("status", value)

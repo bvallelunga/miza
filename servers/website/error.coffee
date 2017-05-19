@@ -20,7 +20,7 @@ module.exports = (err, req, res, next)->
     
     .join "\n"
     
-  else if err.stack?
+  else if err.stack? and not err.type?
     message = "An error has occurred and our team has been notified. Sorry for the inconvenience."
 
   if send_bug
