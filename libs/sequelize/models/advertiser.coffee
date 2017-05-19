@@ -33,6 +33,13 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.JSONB
       defaultValue: {}
     }
+    credits: {
+      type: DataTypes.DECIMAL(6,3)
+      defaultValue: 0
+      allowNull: false
+      get: ->      
+        return Number @getDataValue("credits")
+    }
     billed_spend: {
       type: DataTypes.VIRTUAL
       get: ->      

@@ -9,10 +9,13 @@ module.exports.fetch = (req, res, next)->
   
 
 module.exports.post_update = (req, res, next)->
-  req.advertiser.update({
-    name: req.body.name
-    domain: req.body.domain or null
-  }).then ->
+  req.advertiser.name = req.body.name
+  req.advertiser.domain = req.body.domain or null
+  
+  if req.user.is_admin
+    req.advertiser.credits = Number req.body.credits
+  
+  req.advertiser.save().then ->
     res.json({
       success: true
       next: req.path

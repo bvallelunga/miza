@@ -34,6 +34,20 @@
         <td class="title">Website</td>
         <td><input type="url" name="domain" value="<%= !!advertiser.domain ? "http://" + advertiser.domain : ""  %>" placeholder="http://techcrunch.com" required></td>
       </tr>
+      <% if(user.is_admin) { %>
+        <tr>
+          <td class="title">
+            Credits
+            <span class="info fa fa-info-circle tooltip" title="Only admins can perform this action."></span>
+          </td>
+          <td>
+            <div class="group left-align">
+              <div class="fa fa-dollar"></div>
+              <input class="only number" type="number" name="credits" value="<%= advertiser.credits %>" placeholder="0" min="0" step="1" required>
+            </div>
+          </td>
+        </tr>
+      <% } %>
       <tr>
         <td class="title">Account Owner</td>
         <td><input type="text" value="<%= advertiser.owner.name %>" disabled></td>

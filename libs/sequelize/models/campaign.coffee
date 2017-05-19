@@ -15,20 +15,14 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
       allowNull: false
       validate: {
-        isIn: {
-          args: [['cpm', 'cpc']]
-          msg: "Invalid campaign pricing model"
-        }
+        isIn: [['cpm', 'cpc']]
       }
     }
     status: {
       type: DataTypes.STRING
       allowNull: false
       validate: {
-        isIn: {
-          args: [['pending', 'queued', 'running', 'paused', 'completed', 'rejected']]
-          msg: "Invalid campaign status"
-        }
+        isIn: [['queued', 'running', 'paused', 'completed']]
       }
       set: (value)->
         @setDataValue("status", value)
@@ -83,7 +77,14 @@ module.exports = (sequelize, DataTypes)->
         }
       }
       get: ->      
-        return Number @getDataValue("amount")
+        return Number(@getDataValue("amount"))
+    }
+    credits: {
+      type: DataTypes.DECIMAL(6,3)
+      defaultValue: 0
+      allowNull: false
+      get: ->      
+        return Number @getDataValue("credits")
     }
     model_cost: {
       type: DataTypes.VIRTUAL
@@ -100,14 +101,16 @@ module.exports = (sequelize, DataTypes)->
     }
     spend: {
       type: DataTypes.VIRTUAL
-      get: ->      
+      get: -> 
+        cost = 0
+           
         if @type == "cpm"
-          return @model_cost * @impressions
+          cost = @model_cost * @impressions
           
         else if @type == "cpc"
-          return @model_cost * @clicks
+          cost = @model_cost * @clicks
           
-        return 0
+        return Math.max(0, cost - @credits)
     }
     progress: {
       type: DataTypes.VIRTUAL
@@ -131,6 +134,7 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.VIRTUAL
       get: ->      
         return {
+          credits: numeral(@credits).format("$0[,]000.00")
           amount: numeral(@amount).format("$0[,]000.00")
           impressions: numeral(@impressions).format("0[,]000")
           quantity_needed: numeral(@quantity_needed).format("0[,]000")
@@ -173,8 +177,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Impression Chart"
             analysis_type: "count"
             event_collection : "ads.event.impression"
-            timeframe: "this_1_years"
-            interval: "every_1_day"
+            timeframe: "this_3_months"
+            interval: "daily"
           }
           {
             timezone: "UTC"
@@ -182,8 +186,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Click Chart"
             analysis_type: "count"
             event_collection : "ads.event.click"
-            timeframe: "this_1_years"
-            interval: "every_1_day"
+            timeframe: "this_3_months"
+            interval: "daily"
           }
           {
             timezone: "UTC"
@@ -191,8 +195,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Publisher Impression Count"
             analysis_type: "count"
             event_collection : "ads.event.impression"
-            timeframe: "this_1_years"
-            interval: "every_1_day"
+            timeframe: "this_3_months"
+            interval: "monthly"
             group_by: [
               "publisher.key"
             ]
@@ -203,8 +207,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Publisher Click Count"
             analysis_type: "count"
             event_collection : "ads.event.click"
-            timeframe: "this_1_years"
-            interval: "every_1_day"
+            timeframe: "this_3_months"
+            interval: "monthly"
             group_by: [
               "publisher.key"
             ]
@@ -218,34 +222,6 @@ module.exports = (sequelize, DataTypes)->
     }
     
     instanceMethods: {
-      email_status: (email_type)->
-        console.log email_type
-        
-        campaign = @
-      
-        @getAdvertiser({
-          include: [{
-            model: LIBS.models.User
-            as: "members"
-            where: {
-              is_admin: false
-            }
-          }]
-        }).then (advertiser)->
-          LIBS.emails.send email_type, advertiser.members.map (user)->
-            return {
-              to: user.email
-              host: CONFIG.web_server.host
-              data: {
-                user: user
-                campaign: campaign
-                advertiser: advertiser
-              }
-            }
-          
-          .catch console.log
-      
-      
       utm_link: (link)->        
         link += if link.indexOf("?") == -1 then "?" else "&"
         
@@ -279,43 +255,16 @@ module.exports = (sequelize, DataTypes)->
     }
     
     validate: {
-      notCompleted: ->                 
-        if @changed("status")
-          if @previous("status") == "completed"
-            throw new Error "Completed campaigns can not be changed."
-            
-          if @previous("status") == "rejected" and not @admin_override and @status != "completed"
-            throw new Error "Rejected campaigns can not be changed."
-            
-          if @previous("status") == "queued" and @status == "paused"
-            throw new Error "Queued campaigns can not be paused."
-
+      notCompleted: ->            
+        if @changed("status") and @previous("status") == "completed"
+          throw new Error "A campaign's status can not be changed after it is complete."
     }
     hooks: {
       beforeCreate: (campaign)->
         campaign.quantity_needed = campaign.quantity_requested
         
-        
-      afterCreate: (campaign)->
-        if campaign.status == "pending"
-          LIBS.slack.message {
-            text: "A new campaign has been created and is awaiting our approval! <#{CONFIG.web_server.host}/admin/pending_campaigns|Pending Campaigns>"
-          }
-
-      
-      beforeUpdate: (campaign)->
-        if campaign.changed("status")
-          if campaign.previous("status") == "pending"
-            campaign.start_at = campaign.start_at or new Date()
-            campaign.email_status("campaign_#{ if campaign.status == "rejected" then "rejected" else "approved" }")
-         
-          if campaign.status == "completed" 
-            campaign.start_at = campaign.start_at or new Date()
-            campaign.end_at = campaign.end_at or new Date()
-            campaign.email_status("campaign_completed")
-      
             
-      afterUpdate: (campaign)->                  
+      afterUpdate: (campaign)->
         campaign.getIndustries().each (industry)->
           if industry.status != "complete"              
             industry.status = campaign.status

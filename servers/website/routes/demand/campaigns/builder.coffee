@@ -1,4 +1,5 @@
 moment = require "moment"
+numeral = require "numeral"
 
 module.exports.scrape = (req, res, next)-> 
   scraper = null
@@ -93,7 +94,15 @@ module.exports.create = (req, res, next)->
     is_house = req.body.is_house == "true" and req.user.is_admin
     temp_bid = if req.body.model == "cpm" then bid/1000 else bid
     quantity_requested = Math.floor(budget/temp_bid)
+    bid = if is_house then 0 else bid
+    credits = budget
     status = "pending"
+    
+    if quantity_requested <= 0 
+      return Promise.reject "Please increase your budget by at least #{numeral(temp_bid - budget).format("$0.00")}" 
+    
+    if credits > req.advertiser.credits
+      credits = req.advertiser.credits
     
     if req.user.is_admin
       if start_date?
@@ -102,7 +111,6 @@ module.exports.create = (req, res, next)->
       else
         status = "running" 
         start_date = new Date()
-      
     
     LIBS.models.sequelize.transaction (t)->
       LIBS.models.Campaign.create({
@@ -112,17 +120,19 @@ module.exports.create = (req, res, next)->
         start_at: start_date
         end_at: end_date
         advertiser_id: req.advertiser.id
-        amount: if is_house then 0 else bid
+        amount: bid
+        credits: credits
         quantity_requested: quantity_requested
         config: {
           is_house: is_house
           targeting: req.body.targeting or {}
         }
-      }, {transaction: t}).then (campaign)->    
-        Promise.props({
-          advertiser: req.advertiser.activate()
-          campaign: campaign
-          industries: Promise.map targeting, (industry)->
+      }, {transaction: t}).then (campaign)->           
+        req.advertiser.update({
+          is_activated: true
+          credits: Math.max(0, req.advertiser.credits - credits)
+        }, {transaction: t}).then ->
+          Promise.map targeting, (industry)->
             LIBS.models.CampaignIndustry.create({
               type: req.body.model
               status: campaign.status
@@ -130,14 +140,15 @@ module.exports.create = (req, res, next)->
               campaign_id: campaign.id
               industry_id: industry.id
               name: industry.name
-              amount: if is_house then 0 else bid
+              amount: bid
               targeting: req.body.targeting or {}
               config: {
                 is_house: is_house
               }
             }, {transaction: t})
-          
-          creative: Promise.resolve().then ->
+        
+        .then ->
+          Promise.resolve().then ->
             if req.body.creative.image_url.length > 0
               return LIBS.models.Creative.fetch_image(req.body.creative.image_url)
           
@@ -160,12 +171,14 @@ module.exports.create = (req, res, next)->
               image: image
               config: creative_config
             }, {transaction: t})
-        })
+            
+        .then ->
+          return campaign
       
-  .then (data)->  
+  .then (campaign)->  
     res.json({
       success: true
-      next: "/dashboard/demand/#{req.advertiser.key}/campaign/#{data.campaign.id}"
+      next: "/dashboard/demand/#{req.advertiser.key}/campaign/#{campaign.id}"
     })
     
   .catch next

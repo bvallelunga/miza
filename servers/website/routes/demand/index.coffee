@@ -18,8 +18,8 @@ module.exports.get_root = (req, res, next)->
   
 module.exports.fetch_data = (req, res, next)->
   req.data = {
-    js: [ "demand", "dashboard", "fa" ]
-    css: [ "demand", "dashboard" ]
+    js: [ "demand", "dashboard", "fa", "tooltip" ]
+    css: [ "demand", "dashboard", "tooltip"  ]
     advertisers: req.user.advertisers
   }
   req.dashboard = req.params.dashboard or null
