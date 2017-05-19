@@ -32,7 +32,7 @@ module.exports.post_add = (req, res, next)->
     if not campaign?
       return next "Invalid campaign type"
       
-    campaign.credits = campaign.budget
+    campaign.credits = Math.min campaign.budget, 50
     campaign.save()
     
   .then ->
