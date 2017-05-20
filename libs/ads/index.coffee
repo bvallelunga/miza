@@ -6,9 +6,13 @@ module.exports.build_event = (raw_data)->
   demensions = {}
   battery = {}
   advertiser = {}
-  campaign = {}
-  creative = {}
   industry = {}
+  campaign = {
+    id: String(raw_data.campaign)
+  }
+  creative = {
+    id: String(raw_data.creative)
+  }
   billing = {
     house: false
   }
@@ -36,11 +40,11 @@ module.exports.build_event = (raw_data)->
     LIBS.models.Campaign.findById(raw_data.campaign).then (temp)->
       if not temp? then return
       
-      campaign = {
-        id: String(temp.id)
+#       campaign = {
+#         id: String(temp.id)
 #         name: temp.name
 #         type: temp.type
-      }
+#       }
       
       increments = {}
       
@@ -86,17 +90,17 @@ module.exports.build_event = (raw_data)->
       
       return temp.increment(increments)
         
-  .then ->
-    if not Number raw_data.creative
-      return Promise.resolve()
-  
-    LIBS.models.Creative.findById(raw_data.creative).then (temp)->
-      if not temp? then return
-        
-      creative = {
-        id: String(temp.id)
-#         format: temp.format
-      }
+#   .then ->  
+#     if not Number raw_data.creative
+#       return Promise.resolve()
+#   
+#     LIBS.models.Creative.findById(raw_data.creative).then (temp)->
+#       if not temp? then return
+#         
+#       creative = {
+#         id: String(temp.id)
+# #         format: temp.format
+#       }
     
   .then ->
 #     if raw_data.query.battery?
