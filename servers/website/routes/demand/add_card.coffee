@@ -47,7 +47,7 @@ module.exports.post_add = (req, res, next)->
   .then (campaign)->
     credits -= campaign.credits
     
-    req.advertiser.credits = credits
+    req.advertiser.credits += credits
     req.advertiser.save()
     
   .then ->
