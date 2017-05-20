@@ -29,6 +29,7 @@
 <% } %>
 <div class="container <%= dashboard_width %> <%= dashboard + (!!subdashboard ? ("-" + subdashboard) : "") %>-dashboard">
   <% include ./payment_warning %>
+  <% include ./credits_notice %>
   <%- include("./" + dashboard + "/index.ejs") %>
   <div class="clear"></div>
 </div>

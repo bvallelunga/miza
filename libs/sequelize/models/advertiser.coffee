@@ -86,6 +86,7 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.VIRTUAL
       get: ->      
         return {
+          credits: numeral(@credits).format("$0[,]000.00")
           billed_spend: numeral(@billed_spend).format("$0[,]000.00")
           pending_spend: numeral(@pending_spend).format("$0[,]000.00")
           upcoming_charges: numeral(@upcoming_charges).format("$0[,]000.00")
