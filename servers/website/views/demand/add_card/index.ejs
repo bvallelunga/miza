@@ -1,8 +1,8 @@
 <form class="form card" method="POST" action="/dashboard/demand/<%= advertiser.key %>/add_card/<%= campaign.id %>">
   <% include ../../includes/csrf %>
-  <div class="header">Free Campaign!</div>
+  <div class="header">Get $<%= CONFIG.advertiser.incentive %> free!</div>
   <div class="subheader">
-    Enter your billing information to get up to $50 off your campaign. 
+    Enter your billing information to get up to $<%= CONFIG.advertiser.incentive %>  off your campaigns. 
     For future campaigns, we will only charge your card for what has been spent out of the budget.
   </div>
   
