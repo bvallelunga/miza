@@ -79,8 +79,8 @@ module.exports.ad_frame = (req, res, next)->
       frame: req.query.frame
       is_protected: req.query.protected
       demo: req.query.demo == "true"
-      width: req.query.width
-      height: req.query.height
+      width: Number req.query.width or 0
+      height: Number req.query.height or 0
     }
     
   .catch (error)->
@@ -118,8 +118,8 @@ module.exports.demo_frame = (req, res, next)->
     frame: req.query.frame
     is_protected: true
     demo: true
-    width: req.query.width
-    height: req.query.height
+    width: Number req.query.width or 0
+    height: Number req.query.height or 0
   }
     
 

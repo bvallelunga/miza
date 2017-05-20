@@ -45,14 +45,14 @@ API.width_parser = function(element) {
   var parent = element.parentNode || { style: {} }
   var w = element.offsetWidth || element.style.width || element.style.minWidth || element.style.maxWidth;
   var w2 = parent.offsetWidth || parent.style.width || parent.style.minWidth || parent.style.maxWidth;
-  return parseInt(w || w2)
+  return parseInt(w || w2) || 0
 }
 
 API.height_parser = function(element) {
   var parent = element.parentNode || { style: {} }
   var w = element.offsetHeight || element.style.height || element.style.minHeight || element.style.maxHeight
   var w2 = parent.offsetHeight || parent.style.height || parent.style.minHeight || parent.style.maxHeight
-  return parseInt(w || w2)
+  return parseInt(w || w2) || 0
 }
 
 API.blocker_check = function(window, callback) {
