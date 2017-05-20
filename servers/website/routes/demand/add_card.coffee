@@ -12,6 +12,7 @@ module.exports.fetch = (req, res, next)->
     if not campaign?
       return res.redirect "/dashboard/demand/#{req.advertiser.key}/campaigns"
     
+    req.advertiser.credits = 0
     req.data.subdashboard = ""
     req.data.campaign = campaign
     req.data.dashboard_width = ""
