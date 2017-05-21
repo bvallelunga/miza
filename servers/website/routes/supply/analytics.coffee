@@ -43,7 +43,6 @@ module.exports.get = (req, res, next)->
     else
       analytics.protection_count = LIBS.keen.errors.DATA
     
-    
     if analytics.fill_count.result? and analytics.impression_count.result?
       analytics.fill_count.result = Math.min 100, Math.floor (analytics.impression_count.result/Math.max(1, analytics.fill_count.result)) * 100
       analytics.fill_count.result = Number analytics.fill_count.result.toFixed(2)

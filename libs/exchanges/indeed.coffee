@@ -16,7 +16,7 @@ module.exports = (req, res)->
       maxAge: 24 * 60 * 60 # 1 day
     }
     
-    return LIBS.models.Creative.build({
+    creative = LIBS.models.Creative.build({
       format: "indeed"
       config: {
         results: data.results
@@ -26,6 +26,11 @@ module.exports = (req, res)->
         "http://gdc.indeed.com/rpc/apilog?a=apiresults"
       ]
     })
+    
+    creative.id = "indeed"
+    creative.campaign_id = "indeed"
+    creative.advertiser_id = "indeed"
+    return creative
       
   
   

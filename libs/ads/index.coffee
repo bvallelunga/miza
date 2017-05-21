@@ -5,14 +5,10 @@ moment = require 'moment'
 module.exports.build_event = (raw_data)->
   demensions = {}
   battery = {}
-  advertiser = {}
   industry = {}
-  campaign = {
-    id: String(raw_data.campaign)
-  }
-  creative = {
-    id: String(raw_data.creative)
-  }
+  advertiser = {}
+  campaign = {}
+  creative = {}
   billing = {
     house: false
   }
@@ -24,6 +20,11 @@ module.exports.build_event = (raw_data)->
   
   Promise.resolve().then ->
     if not Number raw_data.advertiser
+      if raw_data.advertiser?
+        advertiser = {
+          key: String(raw_data.advertiser)
+        }
+        
       return Promise.resolve()
   
     LIBS.models.Advertiser.findById(raw_data.advertiser).then (temp)->      
@@ -35,6 +36,11 @@ module.exports.build_event = (raw_data)->
       
   .then ->
     if not Number raw_data.campaign
+      if raw_data.campaign?
+        campaign = {
+          id: String(raw_data.campaign)
+        }
+        
       return Promise.resolve()
   
     LIBS.models.Campaign.findById(raw_data.campaign).then (temp)->
@@ -90,7 +96,12 @@ module.exports.build_event = (raw_data)->
       
       return temp.increment(increments)
         
-#   .then ->  
+  .then ->
+    if raw_data.creative?
+      creative = {
+        id: raw_data.creative
+      }
+    
 #     if not Number raw_data.creative
 #       return Promise.resolve()
 #   
@@ -184,7 +195,9 @@ module.exports.send = (raw_data)->
   if agent.version == "unknown" 
     agent.version = null
   
-  LIBS.ads.build_event(raw_data).then (event)->        
+  LIBS.ads.build_event(raw_data).then (event)->    
+    console.log event
+      
     # Keen Tracking
     LIBS.keen.tracking.addEvent "ads.event.#{event.type}", event
     
