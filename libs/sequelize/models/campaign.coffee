@@ -183,8 +183,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Impression Chart"
             analysis_type: "count"
             event_collection : "ads.event.impression"
-            timeframe: "this_3_months"
-            interval: "daily"
+            timeframe: "this_1_years"
+            interval: "every_1_day"
           }
           {
             timezone: "UTC"
@@ -192,8 +192,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Click Chart"
             analysis_type: "count"
             event_collection : "ads.event.click"
-            timeframe: "this_3_months"
-            interval: "daily"
+            timeframe: "this_1_years"
+            interval: "every_1_day"
           }
           {
             timezone: "UTC"
@@ -201,8 +201,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Publisher Impression Count"
             analysis_type: "count"
             event_collection : "ads.event.impression"
-            timeframe: "this_3_months"
-            interval: "monthly"
+            timeframe: "this_1_years"
+            interval: "every_1_day"
             group_by: [
               "publisher.key"
             ]
@@ -213,8 +213,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Publisher Click Count"
             analysis_type: "count"
             event_collection : "ads.event.click"
-            timeframe: "this_3_months"
-            interval: "monthly"
+            timeframe: "this_1_years"
+            interval: "every_1_day"
             group_by: [
               "publisher.key"
             ]
@@ -228,6 +228,32 @@ module.exports = (sequelize, DataTypes)->
     }
     
     instanceMethods: {
+      email_status: (email_type)->        
+        campaign = @
+        
+        @getAdvertiser({
+          include: [{
+            model: LIBS.models.User
+            as: "members"
+            where: {
+              is_admin: false
+            }
+          }]
+        }).then (advertiser)->
+          LIBS.emails.send email_type, advertiser.members.map (user)->
+            return {
+              to: user.email
+              host: CONFIG.web_server.host
+              data: {
+                user: user
+                campaign: campaign
+                advertiser: advertiser
+              }
+            }
+          
+          .catch console.log
+
+      
       utm_link: (link)->        
         link += if link.indexOf("?") == -1 then "?" else "&"
         
@@ -262,15 +288,38 @@ module.exports = (sequelize, DataTypes)->
     
     validate: {
       notCompleted: ->            
-        if @changed("status") and @previous("status") == "completed"
-          throw new Error "A campaign's status can not be changed after it is complete."
+        if @changed("status")
+          if @previous("status") == "completed"
+            throw new Error "Completed campaigns can not be changed."
+           
+          if @previous("status") == "rejected" and not @admin_override and @status != "completed"
+            throw new Error "Rejected campaigns can not be changed."
+           
+          if @previous("status") == "queued" and @status == "paused"
+            throw new Error "Queued campaigns can not be paused."
+ 
     }
     hooks: {
-      beforeCreate: (campaign)->
-        campaign.quantity_needed = campaign.quantity_requested
-        
+      afterCreate: (campaign)->
+        if campaign.status == "pending"
+          LIBS.slack.message {
+            text: "A new campaign has been created and is awaiting our approval! <#{CONFIG.web_server.host}/admin/pending_campaigns|Pending Campaigns>"
+          }
+
+      
+      beforeUpdate: (campaign)->
+        if campaign.changed("status")
+          if campaign.previous("status") == "pending"
+            campaign.start_at = campaign.start_at or new Date()
+            campaign.email_status("campaign_#{ if campaign.status == "rejected" then "rejected" else "approved" }")
+         
+          if campaign.status == "completed" 
+            campaign.start_at = campaign.start_at or new Date()
+            campaign.end_at = campaign.end_at or new Date()
+            campaign.email_status("campaign_completed")
+      
             
-      afterUpdate: (campaign)->
+      afterUpdate: (campaign)-> 
         campaign.getIndustries().each (industry)->
           if industry.status != "complete"              
             industry.status = campaign.status
