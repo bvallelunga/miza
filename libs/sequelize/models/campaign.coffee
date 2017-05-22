@@ -300,6 +300,10 @@ module.exports = (sequelize, DataTypes)->
  
     }
     hooks: {
+      beforeCreate: (campaign)->
+        campaign.quantity_needed = campaign.quantity_requested
+
+      
       afterCreate: (campaign)->
         if campaign.status == "pending"
           LIBS.slack.message {

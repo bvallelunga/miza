@@ -125,6 +125,7 @@ module.exports.create = (req, res, next)->
         advertiser_id: req.advertiser.id
         amount: bid
         credits: credits
+        quantity_needed: quantity_requested
         quantity_requested: quantity_requested
         config: {
           is_house: is_house
