@@ -19,12 +19,12 @@ module.exports.build_event = (raw_data)->
       raw_data[key] = null
   
   Promise.resolve().then ->
-    if not Number raw_data.advertiser
-      if raw_data.advertiser?
-        advertiser = {
-          key: String(raw_data.advertiser)
-        }
-        
+    if raw_data.advertiser?
+      advertiser = {
+        key: String(raw_data.advertiser)
+      }
+  
+    if not Number raw_data.advertiser        
       return Promise.resolve()
   
     LIBS.models.Advertiser.findById(raw_data.advertiser).then (temp)->      
@@ -35,12 +35,12 @@ module.exports.build_event = (raw_data)->
       }
       
   .then ->
-    if not Number raw_data.campaign
-      if raw_data.campaign?
-        campaign = {
-          id: String(raw_data.campaign)
-        }
-        
+    if raw_data.campaign?
+      campaign = {
+        id: String(raw_data.campaign)
+      }
+  
+    if not Number raw_data.campaign   
       return Promise.resolve()
   
     LIBS.models.Campaign.findById(raw_data.campaign).then (temp)->
@@ -69,6 +69,11 @@ module.exports.build_event = (raw_data)->
       return temp.increment(increments)
         
   .then ->
+    if raw_data.industry_id?
+      industry = {
+        id: String(raw_data.industry)
+      }
+  
     if not Number raw_data.industry
       return Promise.resolve()
   
@@ -195,9 +200,7 @@ module.exports.send = (raw_data)->
   if agent.version == "unknown" 
     agent.version = null
   
-  LIBS.ads.build_event(raw_data).then (event)->    
-    console.log event
-      
+  LIBS.ads.build_event(raw_data).then (event)->          
     # Keen Tracking
     LIBS.keen.tracking.addEvent "ads.event.#{event.type}", event
     
