@@ -203,7 +203,9 @@ class Dashboard
     }).done (response)=>
       for name, data of response
         chart = @charts[name]
-                
+        
+        if not chart? then continue
+              
         if data.success      
           if name == "impressions_chart"
             chart.data(data.result[0]).call(->
