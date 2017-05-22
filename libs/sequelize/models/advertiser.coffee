@@ -239,8 +239,10 @@ module.exports = (sequelize, DataTypes)->
             name: @name
             custom_attributes: {
               type: "advertiser"
-              card: !!@owner.stripe_card
+              card: if @owner? then !!@owner.stripe_card else false
               auto_approve: @auto_approve
+              activated: @is_activated
+              credits: @credits
               admin: if @admin_contact? then @admin_contact.name else null
             }
           }
