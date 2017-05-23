@@ -1,7 +1,6 @@
 module.exports.fetch = (req, res, next)->
   req.data.dashboard_width = "medium"
-  req.data.js.push "tooltip", "modal"
-  req.data.css.push "tooltip"
+  req.data.js.push "modal"
   
   Promise.props({
     members: req.advertiser.getMembers()

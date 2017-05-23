@@ -14,12 +14,7 @@ module.exports = {
     if creative_override.indexOf("example_") > -1
       return LIBS.exchanges.examples(req, res)
   
-    return LIBS.exchanges.miza(req, res)
-    
-# TODO: Renable Indeed when we have a formal CPC 
-#       rate from them
-#
-#     return LIBS.exchanges.miza(req, res).catch ->
-#       return LIBS.exchanges.indeed(req, res)
+    return LIBS.exchanges.miza(req, res).catch ->
+      return LIBS.exchanges.indeed(req, res)
 
 }

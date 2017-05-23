@@ -12,7 +12,7 @@ $ ->
     }
   })
   
-  $("form").on "submit", (e)->
+  $("form:not(.loading)").on "submit", (e)->
     e.preventDefault()
     e.stopPropagation()
     

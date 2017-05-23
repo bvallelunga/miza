@@ -23,13 +23,15 @@ module.exports.get = (req, res, next)->
     impression_count: flattener query "publisher-impression-count"
     click_count: flattener query "publisher-click-count"
     view_count: flattener query "publisher-ping-count"
-    fill_count: flattener query "publisher-request-count"
+    request_count: flattener query "publisher-request-count"
+    delivery_count: flattener query "publisher-delivery-count"
     protection_count: flattener query "publisher-ping-protected-count"
     os_chart: limiter query "publisher-os-protected-count"
     devices_chart: limiter query "publisher-device-protected-count"
     countries_chart: limiter query "publisher-country-protected-count"
     browsers_chart: limiter query "publisher-browser-protected-count"
     ctr_count: LIBS.keen.errors.DATA
+    fill_count: LIBS.keen.errors.DATA
   }).then (analytics)->         
     if analytics.devices_chart.result?
       for device in analytics.devices_chart.result
@@ -44,12 +46,12 @@ module.exports.get = (req, res, next)->
       analytics.protection_count = LIBS.keen.errors.DATA
     
     
-    if analytics.fill_count.result? and analytics.impression_count.result?
-      analytics.fill_count.result = Math.min 100, Math.floor (analytics.impression_count.result/Math.max(1, analytics.fill_count.result)) * 100
-      analytics.fill_count.result = Number analytics.fill_count.result.toFixed(2)
-    
-    else
-      analytics.fill_count = LIBS.keen.errors.DATA
+    if analytics.request_count.result? and analytics.delivery_count.result?
+      result = Math.min 100, Math.floor (analytics.delivery_count.result/Math.max(1, analytics.request_count.result)) * 100
+      analytics.fill_count = {
+        metadata: analytics.delivery_count.metadata
+        result: Number result.toFixed(2)
+      }
     
     
     if analytics.click_count.result? and analytics.impression_count.result?

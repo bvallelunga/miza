@@ -1,6 +1,6 @@
 module.exports = require("../template") {
   intervals: [
-    ["intercom.advertiser", "0 * * * *"]
+    ["intercom.advertiser", "4 * * * *"]
   ]
   config: {
     priority: "medium"

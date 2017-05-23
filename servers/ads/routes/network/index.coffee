@@ -69,6 +69,11 @@ module.exports.optout = (req, res, next)->
 
  
 module.exports.ad_frame = (req, res, next)->
+  LIBS.ads.track req, {
+    type: "request"
+    publisher: req.publisher
+  }
+  
   LIBS.exchanges.fetch(req, res).then (creative)->  
     format = creative.format.split(' ').join('')
     
@@ -79,8 +84,13 @@ module.exports.ad_frame = (req, res, next)->
       frame: req.query.frame
       is_protected: req.query.protected
       demo: req.query.demo == "true"
-      width: req.query.width
-      height: req.query.height
+      width: Number req.query.width or 0
+      height: Number req.query.height or 0
+    }
+    
+    LIBS.ads.track req, {
+      type: "delivery"
+      publisher: req.publisher
     }
     
   .catch (error)->
@@ -88,11 +98,6 @@ module.exports.ad_frame = (req, res, next)->
     res.render "ad/remove", {
       frame: req.query.frame
     }
-    
-  LIBS.ads.track req, {
-    type: "request"
-    publisher: req.publisher
-  }
   
 
 module.exports.example_frame = (req, res, next)->
@@ -118,8 +123,8 @@ module.exports.demo_frame = (req, res, next)->
     frame: req.query.frame
     is_protected: true
     demo: true
-    width: req.query.width
-    height: req.query.height
+    width: Number req.query.width or 0
+    height: Number req.query.height or 0
   }
     
 

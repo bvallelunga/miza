@@ -1,7 +1,10 @@
 module.exports.fetch = (req, res, next)->
+  if req.subdashboard
+    return res.redirect "/dashboard/demand/#{req.advertiser.key}/docs"
+
   req.data.dashboard_width = "large"
-  req.data.js.push "tooltip", "code"
-  req.data.css.push "tooltip", "code"
+  req.data.js.push "code"
+  req.data.css.push "code"
   next()
   
   

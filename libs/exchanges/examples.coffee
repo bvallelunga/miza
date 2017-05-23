@@ -4,7 +4,7 @@ module.exports = (req, res)->
   
   Promise.resolve().then ->
     if example == "twitter"
-      return LIBS.scrapers.twitter.account("https://twitter.com/#{profile or "nike"}")
+      return LIBS.scrapers.twitter.account(profile or "nike")
       
     else if example == "indeed"
       return LIBS.exchanges.indeed(req, res).then (data)->

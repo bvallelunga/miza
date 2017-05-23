@@ -1,4 +1,4 @@
-<% if(advertiser && advertiser.is_activated && !advertiser.owner.stripe_card) { %>
+<% if(advertiser && advertiser.is_activated && !advertiser.owner.stripe_card && advertiser.credits == 0) { %>
   <div class="warning orange">
     Would you mind entering in your <a href="/account/billing?next=<%= path %>">billing details</a>?
     <br>

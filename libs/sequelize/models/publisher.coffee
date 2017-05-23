@@ -164,6 +164,20 @@ module.exports = (sequelize, DataTypes)->
           }
           {
             timezone: "UTC"
+            dataset_name: "publisher-delivery-count"
+            display_name: "Publisher Delivery Count"
+            analysis_type: "count"
+            event_collection : "ads.event.delivery"
+            timeframe: "this_1_months"
+            interval: "every_2_hours"
+            filters: [{
+              operator: "ne"
+              property_name: "billing.house"
+              property_value: true
+            }]
+          }
+          {
+            timezone: "UTC"
             dataset_name: "publisher-ping-count"
             display_name: "Publisher Ping Count"
             analysis_type: "count"
@@ -355,7 +369,7 @@ module.exports = (sequelize, DataTypes)->
       
       publisher_activated: ->
         LIBS.slack.message {
-          text: "#{@name} publisher is now activate! <#{CONFIG.web_server.host}/publisher/#{@key}/analytics|Publisher Analytics>"
+          text: "#{@name} publisher is now activate! <#{CONFIG.web_server.host}/dashboard/supply/#{@key}/analytics|Publisher Analytics>"
         }
         
         

@@ -7,6 +7,8 @@ module.exports = (url)->
   if hostname != "soundcloud.com"
     return Promise.reject "Please provide an SoundCloud url."
   
+  url = url.replace("www.", "")
+  
   return Promise.resolve {
     image_selection: false
     link: url

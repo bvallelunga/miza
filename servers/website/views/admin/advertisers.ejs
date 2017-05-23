@@ -11,6 +11,7 @@
           <th>Admin Contact</th>
           <th>Billed Spend</th>
           <th>Pending Spend</th>
+          <th class="number">Credits</th>
           <th class="number">Auto Approve Spend (Days)</th>
         </tr>
       </thead>
@@ -23,6 +24,12 @@
             <td><%= advertiser.admin_contact ? advertiser.admin_contact.name : "" %></td>
             <td><%= advertiser.metrics.billed_spend %></td>
             <td><%= advertiser.metrics.pending_spend %></td>
+            <td>
+              <div class="group left-align">
+                <div class="fa fa-dollar"></div>
+                <input class="only number" type="number" name="advertisers[<%= i %>][credits]" value="<%= advertiser.credits %>" placeholder="0" min="0" step="1" required>
+              </div>
+            </td>
             <td>
               <div class="group left-align">
                 <div class="fa fa-calendar"></div>

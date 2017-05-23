@@ -1,19 +1,12 @@
-URL = require "url"
 twitter = require "scrape-twitter"
 
-module.exports.account = (url)->
-  url_parsed = URL.parse url
-  hostname = url_parsed.hostname.split(".").slice(-2).join(".")
-  
-  if hostname != "twitter.com"
-    return Promise.reject "Please provide an Twitter account url."
-    
-  username = url_parsed.pathname.slice(1).split("/")[0]  
+module.exports.account = (username)->
+  username = username.replace("http://", "").replace("@", "") 
   
   twitter.getUserProfile(username).then (account)->    
     return  {
       image_selection: false
-      link: url
+      link: "https://twitter.com/#{username}"
       format: "twitter"
       config: {
         user: {

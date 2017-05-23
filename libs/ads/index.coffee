@@ -5,10 +5,10 @@ moment = require 'moment'
 module.exports.build_event = (raw_data)->
   demensions = {}
   battery = {}
+  industry = {}
   advertiser = {}
   campaign = {}
   creative = {}
-  industry = {}
   billing = {
     house: false
   }
@@ -19,7 +19,12 @@ module.exports.build_event = (raw_data)->
       raw_data[key] = null
   
   Promise.resolve().then ->
-    if not Number raw_data.advertiser
+    if raw_data.advertiser?
+      advertiser = {
+        key: String(raw_data.advertiser)
+      }
+  
+    if not Number raw_data.advertiser        
       return Promise.resolve()
   
     LIBS.models.Advertiser.findById(raw_data.advertiser).then (temp)->      
@@ -30,17 +35,22 @@ module.exports.build_event = (raw_data)->
       }
       
   .then ->
-    if not Number raw_data.campaign
+    if raw_data.campaign?
+      campaign = {
+        id: String(raw_data.campaign)
+      }
+  
+    if not Number raw_data.campaign   
       return Promise.resolve()
   
     LIBS.models.Campaign.findById(raw_data.campaign).then (temp)->
       if not temp? then return
       
-      campaign = {
-        id: String(temp.id)
+#       campaign = {
+#         id: String(temp.id)
 #         name: temp.name
 #         type: temp.type
-      }
+#       }
       
       increments = {}
       
@@ -59,6 +69,11 @@ module.exports.build_event = (raw_data)->
       return temp.increment(increments)
         
   .then ->
+    if raw_data.industry_id?
+      industry = {
+        id: String(raw_data.industry)
+      }
+  
     if not Number raw_data.industry
       return Promise.resolve()
   
@@ -87,16 +102,21 @@ module.exports.build_event = (raw_data)->
       return temp.increment(increments)
         
   .then ->
-    if not Number raw_data.creative
-      return Promise.resolve()
-  
-    LIBS.models.Creative.findById(raw_data.creative).then (temp)->
-      if not temp? then return
-        
+    if raw_data.creative?
       creative = {
-        id: String(temp.id)
-#         format: temp.format
+        id: raw_data.creative
       }
+    
+#     if not Number raw_data.creative
+#       return Promise.resolve()
+#   
+#     LIBS.models.Creative.findById(raw_data.creative).then (temp)->
+#       if not temp? then return
+#         
+#       creative = {
+#         id: String(temp.id)
+# #         format: temp.format
+#       }
     
   .then ->
 #     if raw_data.query.battery?
@@ -180,7 +200,7 @@ module.exports.send = (raw_data)->
   if agent.version == "unknown" 
     agent.version = null
   
-  LIBS.ads.build_event(raw_data).then (event)->        
+  LIBS.ads.build_event(raw_data).then (event)->          
     # Keen Tracking
     LIBS.keen.tracking.addEvent "ads.event.#{event.type}", event
     

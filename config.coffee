@@ -74,6 +74,10 @@ module.exports = ->
       }
     }
     
+    advertiser: {
+      incentive: 50
+    }
+    
     logger: (->  
       if is_prod 
         return logging_defaults.production

@@ -1,6 +1,6 @@
 module.exports = require("../template") {
   intervals: [
-    ["stripe.register", '0 0 * * *']
+    ["stripe.register", '* * * * *']
   ]
   config: {
     priority: "medium"

@@ -33,6 +33,13 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.JSONB
       defaultValue: {}
     }
+    credits: {
+      type: DataTypes.DECIMAL(6,3)
+      defaultValue: 0
+      allowNull: false
+      get: ->      
+        return Number @getDataValue("credits")
+    }
     billed_spend: {
       type: DataTypes.VIRTUAL
       get: ->      
@@ -79,6 +86,7 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.VIRTUAL
       get: ->      
         return {
+          credits: numeral(@credits).format("$0[,]000.00")
           billed_spend: numeral(@billed_spend).format("$0[,]000.00")
           pending_spend: numeral(@pending_spend).format("$0[,]000.00")
           upcoming_charges: numeral(@upcoming_charges).format("$0[,]000.00")
@@ -231,8 +239,10 @@ module.exports = (sequelize, DataTypes)->
             name: @name
             custom_attributes: {
               type: "advertiser"
-              card: !!@owner.stripe_card
+              card: if @owner? then !!@owner.stripe_card else false
               auto_approve: @auto_approve
+              activated: @is_activated
+              credits: @credits
               admin: if @admin_contact? then @admin_contact.name else null
             }
           }

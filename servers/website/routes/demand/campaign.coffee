@@ -19,8 +19,8 @@ module.exports.fetch = (req, res, next)->
     if req.data?
       req.data.dashboard_width = "large"
       req.data.campaign = campaign
-      req.data.js.push "keen", "data-table", "tooltip"
-      req.data.css.push "keen", "data-table", "tooltip"
+      req.data.js.push "keen", "data-table"
+      req.data.css.push "keen", "data-table"
   
     req.campaign = campaign
     req.subdashboard = null

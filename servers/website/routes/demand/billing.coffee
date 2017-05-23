@@ -2,9 +2,6 @@ module.exports.fetch = (req, res, next)->
   if req.subdashboard
     return res.redirect "/dashboard/demand/#{req.advertiser.key}/billing"
   
-  req.data.js.push "tooltip"
-  req.data.css.push "tooltip"
-  
   Promise.resolve().then ->
     req.advertiser.getTransfers({
       order: [

@@ -56,7 +56,12 @@
       </td>
       <td class="section">
         <div class="decription">Spend</div>
-        <div class="title green"><%= campaign.metrics.spend %></div>
+        <div class="title green">
+          <%= campaign.metrics.spend %>
+          <% if(campaign.credits > 0) { %>
+            <span class="info fa fa-info-circle tooltip" title="Your spend has been discounted by <%= campaign.metrics.credits %>"></span>
+          <% } %>
+        </div>
       </td>
       <td class="section" style="min-width:255px;">
         <div class="actions campaign right" data-url="/dashboard/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>">

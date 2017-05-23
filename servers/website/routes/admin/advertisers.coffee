@@ -33,6 +33,7 @@ module.exports.post = (req, res, next)->
   Promise.all req.body.advertisers.map (advertiser)->  
     return LIBS.models.Advertiser.update({
       auto_approve: Number advertiser.auto_approve
+      credits: Number advertiser.credits
     }, {
       returning: false
       individualHooks: true

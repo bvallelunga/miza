@@ -135,6 +135,7 @@ module.exports = (srv)->
   app.post "/dashboard/demand/:advertiser/billing/charges", routes.auth.is_authenticated, routes.demand.auth, routes.demand.billing.post_charges
   app.post "/dashboard/demand/:advertiser/settings", routes.auth.is_authenticated, routes.demand.auth, routes.demand.settings.post_update
   app.post "/dashboard/demand/:advertiser/members/add", routes.auth.is_authenticated, routes.demand.auth, routes.demand.members.post_add
+  app.post "/dashboard/demand/:advertiser/add_card/:campaign", routes.auth.is_authenticated, routes.demand.auth, routes.demand.add_card.post_add
   
   
   # Publisher Routes
