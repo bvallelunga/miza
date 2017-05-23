@@ -2,6 +2,12 @@ $ ->
   go_quotes()
   old_product = ""
 
+
+  $(".nav-button").click ->
+    $(".navigation-menu").fadeIn(250).show();
+  $(".close-navigation-menu").click ->
+    $(".navigation-menu").fadeOut(250);
+
   $(".navigation .shortcuts .dynamic").mouseover ->
     $element = $(@)
     modal_width = 580
@@ -15,6 +21,7 @@ $ ->
       }, 250)
       .fadeIn(250)
       .find(".#{$element.data("for")}").show()
+
 
   timeout = null
   isOnModal = false;

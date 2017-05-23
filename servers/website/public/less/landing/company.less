@@ -1,14 +1,14 @@
 @import '../libs/all';
 @import '../global/colors';
 
-.company {  
+.company {
   padding: 40px 0;
-  
+
   .container {
     width: 900px;
     padding: 25px 0;
   }
-  
+
   h3 {
     font-weight: lighter;
     font-size: 3em;
@@ -17,27 +17,36 @@
     margin-bottom: 10px;
     font-family: "Ubuntu";
   }
-  
+
   p {
     font-size: 1.6em;
     color: #8B9BAD;
     font-weight: lighter;
-    
+
     strong {
       color: darken(#8B9BAD, 5%);
     }
-    
+
     a {
       color: @blue;
-      
+
       &:hover {
         text-decoration: underline;
       }
     }
-    
+
     .paypal {
       width: 200px;
       margin-top: 20px;
+    }
+  }
+}
+
+@media only screen and (max-width: 470px) {
+  .company {
+    .container {
+      width: 100%;
+      padding: 25px 25px;
     }
   }
 }
