@@ -44,6 +44,7 @@
     margin-top: 5px;
     height: 20px;
     width: 12px;
+    color: white;
   }
 
   &.dark-navigation {
@@ -673,6 +674,17 @@
     width: 0;
   }
   .hero {
+    .graphic {
+      display: none;
+    }
+    &.dark-navigation {
+      .navigation {
+        .right,
+        .fa {
+          color: #666666;
+        }
+      }
+    }
     .navigation {
       padding: 20px 0 60px;
       .left {
