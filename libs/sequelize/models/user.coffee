@@ -111,7 +111,10 @@ module.exports = (sequelize, DataTypes)->
     instanceMethods: {
       hash: hasher
       
-      stripe_generate: ->      
+      stripe_generate: (override)-> 
+        if @stripe_id? and not override?
+          return Promise.resolve @
+      
         return LIBS.stripe.customers.create({
           email: @email
           description: @name
@@ -124,35 +127,36 @@ module.exports = (sequelize, DataTypes)->
           return @save()
           
       stripe_billing_card: (card)->
-        return LIBS.stripe.customers.update(@stripe_id, {
-          source: card.id
-        }).then (customer)=>                
-          return @update({
-            stripe_card: card.card
-          })
+        @stripe_generate().then =>
+          return LIBS.stripe.customers.update(@stripe_id, {
+            source: card.id
+          }).then (customer)=>                
+            return @update({
+              stripe_card: card.card
+            })
           
-      stripe_payout_card: (card)->
-        console.log card.card
-      
-        if card.card.funding != "debit"
-          return Promise.reject "Please use a debit card."
-      
-        return LIBS.stripe.customers.createSource(@stripe_id, {
-          source: card.id
-        }).then (customer)=>                
-          return @update({
-            stripe_payout: card.card
-          })
+      stripe_payout_card: (card)->      
+        @stripe_generate().then =>
+          if card.card.funding != "debit"
+            return Promise.reject "Please use a debit card."
+        
+          return LIBS.stripe.customers.createSource(@stripe_id, {
+            source: card.id
+          }).then (customer)=>                
+            return @update({
+              stripe_payout: card.card
+            })
           
       stripe_update: ->
-        return LIBS.stripe.customers.update(@stripe_id, {
-          email: @email
-          description: @name
-          metadata: {
-            id: @id
-            name: @name
-          }
-        })
+        @stripe_generate().then =>
+          return LIBS.stripe.customers.update(@stripe_id, {
+            email: @email
+            description: @name
+            metadata: {
+              id: @id
+              name: @name
+            }
+          })
       
       
       intercom: (api)->   
