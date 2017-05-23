@@ -52,7 +52,7 @@ module.exports.get = (req, res, next)->
         metadata: analytics.delivery_count.metadata
         result: Number result.toFixed(2)
       }
-    
+
     
     if analytics.click_count.result? and analytics.impression_count.result?
       analytics.ctr_count = {

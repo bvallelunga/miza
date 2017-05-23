@@ -28,6 +28,10 @@
   </div>
 <% } %>
 <div class="container <%= dashboard_width %> <%= dashboard + (!!subdashboard ? ("-" + subdashboard) : "") %>-dashboard">
+  <% notices.forEach(function(notice) { %> 
+    <div class="warning orange"><%= notice.message %></div>
+  <% }) %>
+  
   <% include ./payment_warning %>
   <% include ./credits_notice %>
   <%- include("./" + dashboard + "/index.ejs") %>

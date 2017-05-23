@@ -90,6 +90,23 @@ module.exports.get_dashboard = (req, res, next)->
       ]
     }).then (publishers)->
       props.publishers = publishers
+      return props 
+      
+  .then (props)->
+    LIBS.models.Notice.findAll({
+      where: {
+        target: {
+          $in: ["demand", "both"]
+        }
+        start_at: {
+          $lte: new Date()
+        }
+        end_at: {
+          $gte: new Date()
+        }
+      }
+    }).then (notices)->
+      props.notices = notices
       return props
   
   .then (props)->
