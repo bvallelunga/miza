@@ -96,7 +96,7 @@ module.exports.get_dashboard = (req, res, next)->
     LIBS.models.Notice.findAll({
       where: {
         target: {
-          $in: ["demand", "both"]
+          $in: ["supply", "both"]
         }
         start_at: {
           $lte: new Date()
