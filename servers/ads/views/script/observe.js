@@ -3,7 +3,7 @@ API.observables = {
     ".adsbygoogle", ".dp-ad-chrome iframe", "#_carbonads_js",
     'div[id*="div-gpt-ad-"]', '.ad-tag[data-ad-size*="300x250"]',
     '.proper-ad-unit', 'div[id*="crt-"]', ".adswidget", ".adblock_awareness",
-    ".rec_container .rec_article", 'div[id*="kmni_"]'
+    'div[id*="kmni_"]'
   ].join(","),
   xpaths: [
     "//body//script[contains(., 'OA_show')]/parent::*",
