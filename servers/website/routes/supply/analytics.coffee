@@ -27,17 +27,10 @@ module.exports.get = (req, res, next)->
     delivery_count: flattener query "publisher-delivery-count"
     protection_count: flattener query "publisher-ping-protected-count"
     os_chart: limiter query "publisher-os-protected-count"
-    devices_chart: limiter query "publisher-device-protected-count"
-    countries_chart: limiter query "publisher-country-protected-count"
     browsers_chart: limiter query "publisher-browser-protected-count"
     ctr_count: LIBS.keen.errors.DATA
     fill_count: LIBS.keen.errors.DATA
   }).then (analytics)->         
-    if analytics.devices_chart.result?
-      for device in analytics.devices_chart.result
-        if device["user_agent.parsed.device.family"] == "Other"
-          device["user_agent.parsed.device.family"] = "Desktop"
-      
     if analytics.protection_count.result? and analytics.view_count.result?
       analytics.protection_count.result = Math.min 100, Math.floor (analytics.protection_count.result/Math.max(1, analytics.view_count.result)) * 100
       analytics.protection_count.result = Number(analytics.protection_count.result.toFixed(2))

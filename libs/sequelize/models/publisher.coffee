@@ -215,7 +215,7 @@ module.exports = (sequelize, DataTypes)->
             analysis_type: "count"
             event_collection : "ads.event.ping"
             timeframe: "this_1_months"
-            interval: "every_1_days"
+            interval: "every_5_hours"
             filters: [{
               "operator": "eq"
               "property_name": "protected"
@@ -231,58 +231,12 @@ module.exports = (sequelize, DataTypes)->
           }
           {
             timezone: "UTC"
-            dataset_name: "publisher-device-protected-count"
-            display_name: "Publisher Device Protected Count"
-            analysis_type: "count"
-            event_collection : "ads.event.ping"
-            timeframe: "this_1_months"
-            interval: "every_1_days"
-            filters: [{
-              "operator": "eq"
-              "property_name": "protected"
-              "property_value": true
-            }, {
-              operator: "ne"
-              property_name: "billing.house"
-              property_value: true
-            }]
-            group_by: [
-              "user_agent.parsed.device.family"
-            ]
-          }
-          {
-            timezone: "UTC"
-            dataset_name: "publisher-country-protected-count"
-            display_name: "Publisher Country Protected Count"
-            analysis_type: "count"
-            event_collection : "ads.event.ping"
-            timeframe: "this_1_months"
-            interval: "every_1_days"
-            group_by: [
-              "location.country"
-            ]
-            filters: [{
-              "operator": "eq"
-              "property_name": "protected"
-              "property_value": true
-            }, {
-              "operator": "ne"
-              "property_name": "location.country"
-              "property_value": null
-            }, {
-              operator: "ne"
-              property_name: "billing.house"
-              property_value: true
-            }]
-          }
-          {
-            timezone: "UTC"
             dataset_name: "publisher-browser-protected-count"
             display_name: "Publisher Browser Protected Count"
             analysis_type: "count"
             event_collection : "ads.event.ping"
             timeframe: "this_1_months"
-            interval: "every_1_days"
+            interval: "every_5_hours"
             group_by: [
               "user_agent.parsed.browser.family"
             ]

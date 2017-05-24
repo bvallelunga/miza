@@ -44,7 +44,7 @@
       } 
     </style>
   </head>
-  <body>
+  <body class="<%= mobile ? "mobile" : "" %>">
     <div class="container">
       <div id="overlay" onmousedown="trackClick()"></div>
       <iframe scrolling="no" frameborder="no" src="<%- creative.config.embed %>"></iframe>

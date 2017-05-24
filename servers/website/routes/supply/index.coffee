@@ -13,7 +13,7 @@ module.exports.get_dashboard = (req, res, next)->
   dashboard = req.params.dashboard
   dashboard_path = "/dashboard/supply/#{req.publisher.key}"
   dashboards = [
-    "setup", "analytics", "members", "settings", "payouts"
+    "setup", "setup_mobile", "analytics", "members", "settings", "payouts"
   ]
   dashboard_size = ""
   ads_domain = CONFIG.ads_server.domain
@@ -27,7 +27,8 @@ module.exports.get_dashboard = (req, res, next)->
     ads_domain = req.hostname
   
   switch dashboard
-    when "setup"
+    when "setup", "setup_mobile"
+      dashboard_size = "large"
       js.push "code"
       css.push "code"
       

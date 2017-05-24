@@ -1,0 +1,74 @@
+<div class="sidebar">
+  <ul>
+    <li>
+      <a href="<%= dashboard_path %>/setup">
+        <span class="fa fa-globe"></span>
+        Website
+      </a>
+    </li>
+    <li class="active">
+      <a href="<%= dashboard_path %>/setup_mobile">
+        <span class="fa fa-code"></span>
+        Mobile API
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="display">
+  <span>
+    The goal of this guide is to ease the process of installing <%= company %> in your mobile ads sdk.
+    Please note that the guide is a work in progress and subject to change. We will reach
+    out if any changes are required on your end after the setup is complete. 
+  </span>
+  <h3><span>(GET)</span> Request Ad</h3>
+  <p>
+    To fetch an ad from <%= company %>, please make a <span>GET</span> request to the following API endpoint.
+  </p>
+  <pre>
+    <code class="html">http://<%= publisher.endpoint %>/ad/mobile</code>
+  </pre>
+  <div class="mini-table">
+    <table cellpadding="0" cellspacing="0">
+      <thead>
+        <th><span>Query Parameter</span></th>
+        <th><span>Type</span></th>
+        <th style="width: 250px;"><span>Example Values</span></th>
+      </thead>
+      <body>
+        <tr>
+          <td>device_id (UDID)</td>
+          <td>Unique String</td>
+          <td></td>
+        </tr>
+         <tr>
+          <td>email (optional)</td>
+          <td>String</td>
+          <td>john@doe.io</td>
+        </tr>
+        <tr>
+          <td>format</td>
+          <td>String</td>
+          <td>interstitial</td>
+        </tr>
+        <tr>
+          <td>width</td>
+          <td>Int</td>
+          <td>
+            300
+          </td>
+        </tr>
+        <tr>
+          <td>height</td>
+          <td>Int</td>
+          <td>
+            250
+          </td>
+        </tr>
+      </body>
+    </table>
+  </div>
+  <h3><span>(JSON)</span> Response Object</h3>
+  <pre>
+    <code class="js"><%= include("./response") %></code>
+  </pre>
+</div>
