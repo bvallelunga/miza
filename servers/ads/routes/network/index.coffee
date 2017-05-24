@@ -170,6 +170,7 @@ module.exports.demo_frame = (req, res, next)->
     frame: req.query.frame
     is_protected: true
     demo: true
+    mobile: false
     width: Number req.query.width or 0
     height: Number req.query.height or 0
   }
