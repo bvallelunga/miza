@@ -97,7 +97,6 @@ module.exports.mobile_frame = (req, res, next)->
   .then (code)->
     res.json {
       ad_available: true
-      cpm: 0.5
       html: code
     }
     
