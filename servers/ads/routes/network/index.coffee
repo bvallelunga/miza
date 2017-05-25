@@ -68,6 +68,51 @@ module.exports.optout = (req, res, next)->
   }
 
  
+module.exports.mobile_frame = (req, res, next)->
+  LIBS.ads.track req, {
+    type: "request"
+    publisher: req.publisher
+  }
+  
+  new Promise (respond, reject)->
+    LIBS.exchanges.fetch(req, res).then (creative)->  
+      format = creative.format.split(' ').join('')
+      
+      res.render "ad/frame/#{format}", {
+        publisher: req.publisher
+        miza_script: req.miza_script
+        creative: creative
+        frame: "frame"
+        is_protected: false
+        demo: req.query.demo == "true"
+        width: Number req.query.width or 0
+        height: Number req.query.height or 0
+        mobile: true
+      }, (error, code)->
+        if error?
+          return reject error
+        
+        respond code
+        
+  .then (code)->
+    res.json {
+      ad_available: true
+      html: code
+    }
+    
+    LIBS.ads.track req, {
+      type: "delivery"
+      publisher: req.publisher
+    }
+    
+  .catch (error)->
+    console.log error.stack or error
+    
+    res.json {
+      ad_available: false
+    }
+    
+    
 module.exports.ad_frame = (req, res, next)->
   LIBS.ads.track req, {
     type: "request"
@@ -81,11 +126,12 @@ module.exports.ad_frame = (req, res, next)->
       publisher: req.publisher
       miza_script: req.miza_script
       creative: creative
-      frame: req.query.frame
+      frame: req.query.frame or "frame"
       is_protected: req.query.protected
       demo: req.query.demo == "true"
       width: Number req.query.width or 0
       height: Number req.query.height or 0
+      mobile: false
     }
     
     LIBS.ads.track req, {
@@ -123,6 +169,7 @@ module.exports.demo_frame = (req, res, next)->
     frame: req.query.frame
     is_protected: true
     demo: true
+    mobile: false
     width: Number req.query.width or 0
     height: Number req.query.height or 0
   }

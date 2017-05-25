@@ -148,7 +148,7 @@
       <% } %>
     </script>
   </head>
-  <body>
+  <body class="<%= mobile ? "mobile" : "" %>">
     <a class="container" target="_blank" href="/<%- creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo) %>">
       <div class="background-image" style="background-image: url(<%- creative.config.user.background_image %>)"></div>
       <div class="bottom">

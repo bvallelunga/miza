@@ -149,40 +149,6 @@ class Dashboard
         }
       })
       .prepare()
-      
-    
-    # Devices Chart
-    @charts.devices_chart = new Keen.Dataviz()
-      .el('.chart.devices')
-      .height(250)
-      .type('pie')
-      .title("Ad Block Traffic by Device")
-      .chartOptions({
-        size: {
-          height: 220
-        }
-        legend: {
-          position: "right"
-        }
-      })
-      .prepare()
-      
-    
-    # Countries Chart
-    @charts.countries_chart = new Keen.Dataviz()
-      .el('.chart.countries')
-      .height(250)
-      .type('pie')
-      .title("Ad Block Traffic by Country")
-      .chartOptions({
-        size: {
-          height: 220
-        }
-        legend: {
-          position: "right"
-        }
-      })
-      .prepare()
   
   
   update: (timeframe, finished)->  

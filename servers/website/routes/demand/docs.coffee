@@ -20,4 +20,5 @@ module.exports.unauthorized = (req, res, next)->
     dashboard_width: "large"
     js: req.js.renderTags "demand", "dashboard", "fa", "tooltip", "code"
     css: req.css.renderTags "demand", "dashboard", "tooltip", "code"
+    notices: []
   }

@@ -1,0 +1,51 @@
+<% include ../includes/start %>
+<% include ../includes/navigation %>
+<div class="notices side container left short">
+  <span>Please keep the message brief and descriptive!</span>
+  <form class="form" method="POST" action="<%= path %>">
+    <% include ../includes/csrf %>
+    <input class="start_date" type="hidden" name="start_at"/>
+    <input class="end_date" type="hidden" name="end_at"/>
+    <div class="group">
+      <div class="fa fa-sort"></div>
+      <select class="input top" name="target" required>
+        <option value="both">Advertiser & Publishers</option>
+        <option value="supply">Advertisers</option>
+        <option value="demand">Publishers</option>
+      </select>
+    </div>
+    <div class="group range-picker left-align">
+      <input class="name" type="text" name="name" placeholder="Notice Range" autofill="false" required/>
+      <span class="fa small fa-calendar"></span>
+    </div>
+    <textarea class="textarea bottom" name="message" placeholder="Message to users..." required></textarea>
+    <button class="button" type="submit">Post Notice</button>
+    <div class="error"></div>
+  </form>
+</div>
+<div class="notices side container left long form-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Message</th>
+        <th>Target</th>
+        <th>Start At</th>
+        <th>End At</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% notices.forEach(function(notice) { %>
+       <tr>
+         <td><%= notice.message %></td>
+         <td class="capitalize"><%= notice.target %></td>
+         <td><%= moment(notice.start_at).format("MMM DD") %></td>
+         <td><%= moment(notice.end_at).format("MMM DD") %></td>
+         <td><a class="red" href="<%= path %>/<%= notice.id %>/delete">Delete</a></td>
+       </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<% include ../includes/end %>

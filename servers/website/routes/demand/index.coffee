@@ -37,7 +37,25 @@ module.exports.fetch_data = (req, res, next)->
       req.data.advertisers = advertisers
 
   .then ->
+    LIBS.models.Notice.findAll({
+      where: {
+        target: {
+          $in: ["demand", "both"]
+        }
+        start_at: {
+          $lte: new Date()
+        }
+        end_at: {
+          $gte: new Date()
+        }
+      }
+    }).then (notices)->
+      req.data.notices = notices
+
+  .then ->
     dashboard.fetch req, res, next
+    
+  .catch next
   
 
 module.exports.get_dashboard = (req, res, next)->

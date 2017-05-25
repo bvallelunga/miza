@@ -183,8 +183,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Impression Chart"
             analysis_type: "count"
             event_collection : "ads.event.impression"
-            timeframe: "this_1_years"
-            interval: "every_1_day"
+            timeframe: "this_500_hours"
+            interval: "every_5_hours"
           }
           {
             timezone: "UTC"
@@ -192,8 +192,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Click Chart"
             analysis_type: "count"
             event_collection : "ads.event.click"
-            timeframe: "this_1_years"
-            interval: "every_1_day"
+            timeframe: "this_500_hours"
+            interval: "every_5_hours"
           }
           {
             timezone: "UTC"
@@ -201,8 +201,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Publisher Impression Count"
             analysis_type: "count"
             event_collection : "ads.event.impression"
-            timeframe: "this_1_years"
-            interval: "every_1_day"
+            timeframe: "this_500_hours"
+            interval: "every_5_hours"
             group_by: [
               "publisher.key"
             ]
@@ -213,8 +213,8 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Publisher Click Count"
             analysis_type: "count"
             event_collection : "ads.event.click"
-            timeframe: "this_1_years"
-            interval: "every_1_day"
+            timeframe: "this_500_hours"
+            interval: "every_5_hours"
             group_by: [
               "publisher.key"
             ]

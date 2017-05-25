@@ -91,6 +91,8 @@ module.exports = (srv)->
   app.get  "/admin/advertisers", routes.auth.is_admin, routes.admin.advertisers.get
   app.get  "/admin/scheduler", routes.auth.is_admin, routes.admin.scheduler.get
   app.get  "/admin/demo", routes.auth.is_admin, routes.admin.demo.get
+  app.get  "/admin/notices", routes.auth.is_admin, routes.admin.notices.get_root
+  app.get  "/admin/notices/:notice/delete", routes.auth.is_admin, routes.admin.notices.get_delete
   app.get  "/admin/payouts", routes.auth.is_admin, routes.admin.payouts.get_root
   app.get  "/admin/pending_campaigns", routes.auth.is_admin, routes.admin.pending_campaigns.get
   app.get  "/admin/payouts/:payout", routes.auth.is_admin, routes.admin.payouts.has_payout, routes.admin.payouts.get_create
@@ -105,6 +107,7 @@ module.exports = (srv)->
   app.post "/admin/industries/create", routes.auth.is_admin, routes.admin.industries.create
   app.post "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.post
   app.post "/admin/advertisers", routes.auth.is_admin, routes.admin.advertisers.post
+  app.post "/admin/notices", routes.auth.is_admin, routes.admin.notices.post_create
   app.use  "/admin/vendor", admin_router
   
   

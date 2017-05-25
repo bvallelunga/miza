@@ -12,5 +12,5 @@ module.exports = require("../template") {
       is_demo: false
     }
   }).each (advertiser)->
-    advertiser.intercom(true).then (intercom)->
+    advertiser.intercom(true).then (intercom)->    
       LIBS.intercom.updateCompany(intercom)

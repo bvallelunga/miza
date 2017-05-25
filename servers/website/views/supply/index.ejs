@@ -31,6 +31,10 @@
 <% } %>
 <% include ../includes/navigation %>
 <div class="container <%= dashboard_size %> <%= dashboard %>-dashboard">
+  <% props.notices.forEach(function(notice) { %> 
+    <div class="warning orange"><%= notice.message %></div>
+  <% }) %>
+  
   <% if(publisher.is_activated) { %>
     <% include ./payout_warning %>
   <% } else { %>

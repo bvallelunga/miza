@@ -1,6 +1,5 @@
 numeral = require "numeral"
 
-
 module.exports.has_payout = (req, res, next)->
   LIBS.models.Payout.findById(req.params.payout).then (payout)->
     if not payout?

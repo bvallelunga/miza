@@ -13,7 +13,7 @@ module.exports.get_dashboard = (req, res, next)->
   dashboard = req.params.dashboard
   dashboard_path = "/dashboard/supply/#{req.publisher.key}"
   dashboards = [
-    "setup", "analytics", "members", "settings", "payouts"
+    "setup", "setup_mobile", "analytics", "members", "settings", "payouts"
   ]
   dashboard_size = ""
   ads_domain = CONFIG.ads_server.domain
@@ -27,7 +27,8 @@ module.exports.get_dashboard = (req, res, next)->
     ads_domain = req.hostname
   
   switch dashboard
-    when "setup"
+    when "setup", "setup_mobile"
+      dashboard_size = "large"
       js.push "code"
       css.push "code"
       
@@ -90,6 +91,23 @@ module.exports.get_dashboard = (req, res, next)->
       ]
     }).then (publishers)->
       props.publishers = publishers
+      return props 
+      
+  .then (props)->
+    LIBS.models.Notice.findAll({
+      where: {
+        target: {
+          $in: ["supply", "both"]
+        }
+        start_at: {
+          $lte: new Date()
+        }
+        end_at: {
+          $gte: new Date()
+        }
+      }
+    }).then (notices)->
+      props.notices = notices
       return props
   
   .then (props)->

@@ -2,6 +2,8 @@
 	if(typeof title == "object") {
 		title = title.join(site_delimeter);
 	}
+	
+	title = title.replace(/\_/g, " ").replace(/\b\w/g, function(l){ return l.toUpperCase() })
 
 	if(title_first) {
 		full_title = (title) ? (title + site_delimeter + site_title) : site_title;
