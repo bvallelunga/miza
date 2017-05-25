@@ -134,6 +134,5 @@ module.exports = ->
         return keen.fetchDefinitions response.next_page_url, array 
         
       return array
-   
-   
+
   return keen

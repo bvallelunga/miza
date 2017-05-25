@@ -19,7 +19,7 @@ module.exports = (req, res)->
     creative = LIBS.models.Creative.build({
       format: "indeed"
       config: {
-        results: data.results
+        results: data.results or []
         search: ""
       }
       trackers: [
@@ -42,7 +42,7 @@ module.exports.listing = (query, req, start=0)->
    
   if lookup
     location = "#{lookup.city}, #{lookup.region}"
-    country = lookup.country.toLowerCase()
+    country = (lookup.country or "").toLowerCase()
   
   request({
     url: "http://api.indeed.com/ads/apisearch"
@@ -59,6 +59,6 @@ module.exports.listing = (query, req, start=0)->
       filter: 1
       l: location
       co: country
-      q: query.toLowerCase()
+      q: (query or "").toLowerCase()
     }
   })
