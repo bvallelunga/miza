@@ -63,7 +63,6 @@
           "Card": "<%= user.stripe_card %>",
           "Paypal": "<%= user.paypal %>",
           "Admin": <%- user.is_admin %>,
-          "Publishers": <%- user.publishers.length %>,
           "Created On": "<%= user.created_at.toISOString() %>"
         });
       <% } %>
@@ -97,7 +96,12 @@
       <% if(user && !user.is_admin && !user.is_demo && !user_simulate) { %>
         FS.identify('<%= user.id %>', {
           displayName: '<%= user.name %>',
-          email: '<%= user.email %>'
+          email: '<%= user.email %>',
+          "Stripe": "<%= user.stripe_id %>",
+          "Card": "<%= user.stripe_card %>",
+          "Paypal": "<%= user.paypal %>",
+          "Admin": <%- user.is_admin %>,
+          "Created On": "<%= moment(user.created_at).format("MMM DD, YYYY") %>"
         });
       <% } %>
     </script>
