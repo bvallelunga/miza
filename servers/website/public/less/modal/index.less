@@ -11,38 +11,38 @@ footer {
   margin: 0 auto;
   padding-top: 125px;
   text-align: center;
-  
+
   &.invite-page {
     padding-top: 120px;
   }
-  
+
   &.medium {
     width: 380px;
     padding-top: 130px;
   }
-  
+
   &.large {
     width: 550px;
     padding-top: 130px;
   }
-  
+
   &.large-2 {
     width: 800px;
   }
-  
+
   &.large-3 {
     width: 1000px;
   }
-   
+
   &.xlarge {
     width: 1200px;
   }
-  
+
   .logo {
     font-size: 3.5em;
     margin-bottom: 20px;
   }
-  
+
   h1.error {
     font-size: 4em;
     margin-bottom: 20px;
@@ -50,14 +50,14 @@ footer {
     font-family: "Ubuntu";
     font-weight: bold;
   }
-  
+
   p {
     color: @text;
     font-size: 2em;
     line-height: 1.5em;
     font-weight: lighter;
   }
-  
+
   span {
     color: @text;
     font-size: 1.4em;
@@ -66,12 +66,12 @@ footer {
     display: block;
     padding-bottom: 20px;
     position: relative;
-    
+
     &.red {
       color: @red;
       font-weight: normal;
     }
-    
+
     span {
       position: absolute;
       width: 50px;
@@ -82,13 +82,13 @@ footer {
       cursor: pointer;
       color: rgba(0,0,0,0.15);
       text-align: center;
-      
+
       &:hover {
         color: @blue;
       }
     }
   }
-  
+
   &:not(.form-table) {
     input:not([type="checkbox"]):not([type="radio"]), .input,
     textarea, .textarea  {
@@ -96,66 +96,66 @@ footer {
       .box-shadow(0 0 0px 1000px white inset);
     }
   }
-  
-  input:not([type="checkbox"]):not([type="radio"]), 
+
+  input:not([type="checkbox"]):not([type="radio"]),
   .input, textarea, .textarea {
     width: 100%;
     padding: 16px 15px;
     border-top-width: 0;
     .border-radius(0);
-    
+
     &.only {
       border-top-width: 1px;
       margin-bottom: 15px;
       .border-radius(3px);
     }
-    
+
     &.top {
       margin: 0;
       border-top-width: 1px;
       .border-radius(3px 3px 0 0);
     }
-    
+
     &.bottom {
       margin-bottom: 15px;
       .border-radius(0 0 3px 3px);
     }
   }
-  
+
   textarea {
     margin-bottom: 10px;
     height: 200px;
   }
-  
+
   .split input {
     width: 50%;
     display: inline-block;
-    
+
     &.left {
       .border-radius(0 0 0 3px);
       border-right: none;
     }
-    
+
     &.right {
       .border-radius(0 0 3px 0);
     }
   }
-  
+
   .group {
     position: relative;
-    
+
     &.left-align {
       .fa, a {
         top: 14px;
         left: 15px;
         right: initial;
       }
-      
+
       input {
         padding-left: 40px
       }
     }
-    
+
     .fa, a {
       position: absolute;
       font-size: 1.5em;
@@ -164,43 +164,43 @@ footer {
       color: rgba(0,0,0,0.1);
       z-index: 1;
     }
-    
+
     a {
       font-size: 1em;
       font-weight: bold;
       color: @blue;
       text-transform: uppercase;
-      
+
       &:hover {
         text-decoration: underline;
       }
     }
   }
-  
+
   .checkbox-group {
     margin-bottom: 15px;
     text-align: center;
     .clearfix();
-    
+
     label {
       font-size: 0.85em;
       display: inline-block;
       margin-left: 10px;
-      
+
       a {
         color: @blue;
-      
+
         &:hover {
           text-decoration: underline;
         }
       }
     }
   }
-  
+
   .selectors {
     margin: 10px -10px -10px -10px;
     .clearfix();
-    
+
     .select {
       position: relative;
       cursor: pointer;
@@ -212,34 +212,34 @@ footer {
       border: solid 2px #F1F1F1;
       display: inline-block;
       .border-radius(4px);
-      
+
       &:hover {
         border-color: @blue;
-        
+
         .pricing {
           background: @blue;
           color: white;
         }
       }
-      
+
       .fa {
         margin: 15px 0;
         font-size: 4em;
         color: @blue;
       }
-      
+
       .name {
         margin-top: 15px;
         font-size: 1.2em;
         font-weight: bold;
       }
-      
+
       .desc {
         font-size: 1em;
         margin-top: 2px;
         font-weight: lighter;
       }
-      
+
       .pricing {
         margin: 30px -10px -15px -10px;
         padding: 15px 0;
@@ -249,25 +249,40 @@ footer {
       }
     }
   }
-    
+
   button {
     .border-radius(3px);
   }
-  
+
   .stripe {
     width: 150px;
     margin-top: 50px;
   }
-  
+
   .error {
     margin-top: 10px;
     color: #C50000;
     font-size: 1.2em;
     font-weight: lighter;
   }
-  
+
   .jp-card .jp-card-front .jp-card-logo {
     overflow: hidden;
     .border-radius(2px);
+  }
+}
+
+@media only screen and (max-width: 470px) {
+  body {
+    width: 100%;
+    min-width: 370px;
+  }
+
+  .container {
+    margin-bottom: 125px;
+  }
+
+  footer {
+    position: relative;
   }
 }
