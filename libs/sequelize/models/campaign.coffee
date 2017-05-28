@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes)->
       validate: {
         isIn: {
           msg: "Invalid campaign status."
-          args: [['pending', 'queued', 'running', 'paused', 'completed']]
+          args: [['pending', 'queued', 'running', 'paused', 'completed', 'rejected']]
         }
       }
       set: (value)->
