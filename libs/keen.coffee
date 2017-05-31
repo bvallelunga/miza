@@ -41,20 +41,6 @@ module.exports = ->
         .end (error, result)->
           if error? then return rej error.response.error
           return res result.body
-  
-  
-   keen.deleteDataset = (dataset)->
-    console.log "KEEN Dataset Deleted: #{dataset}"
-    keen.request("delete", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{dataset}")
-  
-  
-  keen.deleteDatasets = (url=null)->
-    keen.request("get", url or "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets").then (response)->
-      Promise.each response.datasets, (dataset)->
-        keen.deleteDataset dataset.dataset_name
-      
-      if response.next_page_url
-        keen.fetchDefinitions response.next_page_url
 
   
   keen.createDataset = (name, data)->  
@@ -134,6 +120,24 @@ module.exports = ->
         return keen.fetchDefinitions response.next_page_url, array 
         
       return array
-   
-   
+      
+  
+  keen.deleteOldDatasets = ->
+    keen.fetchDefinitions().each (dataset)->
+      name = dataset.dataset_name
+      
+      if name.indexOf(CONFIG.keen.prefix) == -1
+        return LIBS.keen.deleteDataset(name)    
+  
+  
+  keen.deleteDataset = (dataset)->
+    console.log "KEEN Dataset Deleted: #{dataset}"
+    keen.request("delete", "https://api.keen.io/3.0/projects/#{CONFIG.keen.projectId}/datasets/#{dataset}")
+  
+  
+  keen.deleteDatasets = (url=null)->
+    keen.fetchDefinitions().each (dataset)->
+      keen.deleteDataset dataset.dataset_name
+
+
   return keen

@@ -74,12 +74,7 @@ module.exports = (srv)->
   app.post "/account/password", routes.auth.is_authenticated, routes.account.password.post
   app.post "/account/billing", routes.auth.is_authenticated, routes.account.billing.post
   
-  
-  # Admin 3rd Party Dashboards
-  admin_router = express.Router()
-  admin_router.use "/scheduler", routes.auth.is_admin, Agendash(LIBS.agenda, CONFIG.agenda_dash)
-  
-  
+
   # Admin Routes
   app.get  "/admin", routes.auth.is_admin, routes.admin.get_root
   app.get  "/admin/invites", routes.auth.is_admin, routes.admin.invites.get
@@ -108,7 +103,12 @@ module.exports = (srv)->
   app.post "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.post
   app.post "/admin/advertisers", routes.auth.is_admin, routes.admin.advertisers.post
   app.post "/admin/notices", routes.auth.is_admin, routes.admin.notices.post_create
-  app.use  "/admin/vendor", admin_router
+  
+    # Admin 3rd Party Dashboards
+  if LIBS.agenda?
+    admin_router = express.Router()
+    admin_router.use "/scheduler", routes.auth.is_admin, Agendash(LIBS.agenda, CONFIG.agenda_dash)
+    app.use  "/admin/vendor", admin_router
   
   
   # Dashboard Routes

@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes)->
       validate: {
         isIn: {
           msg: "Invalid campaign status."
-          args: [['pending', 'queued', 'running', 'paused', 'completed']]
+          args: [['pending', 'queued', 'running', 'paused', 'completed', 'rejected']]
         }
       }
       set: (value)->
@@ -183,7 +183,7 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Impression Chart"
             analysis_type: "count"
             event_collection : "ads.event.impression"
-            timeframe: "this_500_hours"
+            timeframe: "this_3_months"
             interval: "every_5_hours"
           }
           {
@@ -192,7 +192,7 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Click Chart"
             analysis_type: "count"
             event_collection : "ads.event.click"
-            timeframe: "this_500_hours"
+            timeframe: "this_3_months"
             interval: "every_5_hours"
           }
           {
@@ -201,7 +201,7 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Publisher Impression Count"
             analysis_type: "count"
             event_collection : "ads.event.impression"
-            timeframe: "this_500_hours"
+            timeframe: "this_3_months"
             interval: "every_5_hours"
             group_by: [
               "publisher.key"
@@ -213,7 +213,7 @@ module.exports = (sequelize, DataTypes)->
             display_name: "Campaign Publisher Click Count"
             analysis_type: "count"
             event_collection : "ads.event.click"
-            timeframe: "this_500_hours"
+            timeframe: "this_3_months"
             interval: "every_5_hours"
             group_by: [
               "publisher.key"
@@ -235,12 +235,12 @@ module.exports = (sequelize, DataTypes)->
           include: [{
             model: LIBS.models.User
             as: "members"
-            where: {
-              is_admin: false
-            }
           }]
-        }).then (advertiser)->
-          LIBS.emails.send email_type, advertiser.members.map (user)->
+        }).then (advertiser)->            
+          members = advertiser.members.filter (user)->
+            return not user.is_admin
+          
+          .map (user)->
             return {
               to: user.email
               host: CONFIG.web_server.host
@@ -250,8 +250,8 @@ module.exports = (sequelize, DataTypes)->
                 advertiser: advertiser
               }
             }
-          
-          .catch console.log
+        
+          LIBS.emails.send(email_type, members).catch console.log
 
       
       utm_link: (link)->        
