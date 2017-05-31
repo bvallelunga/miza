@@ -235,12 +235,12 @@ module.exports = (sequelize, DataTypes)->
           include: [{
             model: LIBS.models.User
             as: "members"
-            where: {
-              is_admin: false
-            }
           }]
-        }).then (advertiser)->
-          LIBS.emails.send email_type, advertiser.members.map (user)->
+        }).then (advertiser)->            
+          members = advertiser.members.filter (user)->
+            return not user.is_admin
+          
+          .map (user)->
             return {
               to: user.email
               host: CONFIG.web_server.host
@@ -250,8 +250,8 @@ module.exports = (sequelize, DataTypes)->
                 advertiser: advertiser
               }
             }
-          
-          .catch console.log
+        
+          LIBS.emails.send(email_type, members).catch console.log
 
       
       utm_link: (link)->        
