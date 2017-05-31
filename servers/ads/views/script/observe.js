@@ -119,6 +119,33 @@ API.start_observing = function() {
     if(event.data.name == "frame.impression") {
       API.impression_check(element)
     }
+    
+    if(event.data.name == "fullscreen.show") {
+      var iframe = document.createElement('iframe')
+      var random = "f" + Math.random().toString(36).substring(7)
+      
+      iframe.style.outline = "none";
+      iframe.style.border = "none";
+      iframe.style.overflow = "hidden";
+      iframe.style.background = "black";
+      iframe.style.position = "fixed";
+      iframe.style.top = "0";
+      iframe.style.left = "0";
+      iframe.style.right = "0";      
+      iframe.style.bottom = "0";
+      iframe.style.zIndex = "100000";
+      iframe.width = "100%";
+      iframe.height = "100%";
+      iframe.className = random;
+      iframe.src = API.base + event.data.url + "&frame=" + random;
+      API.document.body.appendChild(iframe);
+    }
+    
+    if(event.data.name == "fullscreen.remove") {
+      var parentNode = element.parentNode
+      parentNode.removeChild(element)
+    }
+    
   }, false);
 }
 

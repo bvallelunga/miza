@@ -153,6 +153,25 @@ module.exports.example_frame = (req, res, next)->
     
   .catch next
   
+  
+
+module.exports.video_frame = (req, res, next)->
+  LIBS.exchanges.video(req, res).then (creative)->
+    if not req.publisher.is_demo
+      res.cookie "optout", true, { 
+        httpOnly: true
+        signed: true 
+        maxAge: 7 * 24 * 60 * 60 * 1000
+      }
+    
+    res.render "ad/video/#{creative.config.video}", {
+      publisher: req.publisher
+      creative: creative
+      frame: req.query.frame
+      is_protected: true
+    }
+  
+
 
 module.exports.demo_frame = (req, res, next)->
   creative = req.creative or LIBS.models.Creative.build({

@@ -1,0 +1,66 @@
+<% width = Math.max(300, Math.min(400, width)); height = Math.max(250, Math.min(400, height)); %>
+<html>
+  <head>
+    <style>
+      html, body {
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        font-family: "Arial";
+      }
+      
+      .container {
+        position: relative;
+        width: 100%;
+        height: <%- height - 25 %>px;
+        color: black;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+        overflow: hidden;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        background: black;
+        padding: 20px 20px;
+        box-sizing: border-box;
+        cursor: pointer;
+      }
+      
+      h1 {
+        font-size: 2em;
+        color: white;
+        margin: 0 0 5px 0;
+      }
+      
+      h2 {
+        font-size: 1em;
+        color: #55b7f3;
+        margin: 0;
+      }
+      
+      img {
+        width: 35%;
+        margin: 25px auto 0;
+        display: block;
+      }
+    </style>
+  </head>
+  <body class="<%= mobile ? "mobile" : "" %>">
+    <div class="container" onclick="startVideo()">
+      <h1>Tired of ads?</h1>
+      <h2>Watch this video from our sponsor for <u>1 week</u> of NO ads!</h2>
+      <img src="/public/play.png"/>
+    </div>
+    <% include ./footer %>
+  </body>
+  <script>
+    function startVideo() {
+      window.parent.window.postMessage({
+        name: "fullscreen.show",
+        url: "/<%- creative.video_link(publisher.id, creative.industry_id, is_protected, demo) %>"
+      }, "*");
+    }
+  </script>
+</html>
