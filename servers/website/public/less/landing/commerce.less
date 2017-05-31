@@ -4,24 +4,24 @@
 .hero.commerce {
   background: white;
   min-height: 600px;
-  
+
   header {
     h1 {
       color: #1FC662 !important;
     }
   }
-  
+
   .examples {
     iframe {
       height: 450px;
-      
+
       &:first-child {
         top: 20px;
         left: -40px;
         z-index: 1;
         .transform(scale(1.125));
       }
-      
+
       &:last-child {
         top: 125px;
         right: 0px;
@@ -30,4 +30,30 @@
       }
     }
   }
+}
+
+@media only screen and (max-width: 900px) {
+  .hero.commerce {
+    .examples {
+      iframe {
+        &:first-child {
+          display: none !important;
+        }
+        &:last-child {
+          top: 60px;
+          transform: scale(1);
+        }
+      }
+    }
+  }
+  // .examples {
+  //   iframe {
+  //     &:first-child {
+  //       .transform(scale:(1));
+  //     }
+  //     &:last-child {
+  //       display: none;
+  //     }
+  //   }
+  // }
 }
