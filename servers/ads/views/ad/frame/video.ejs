@@ -1,4 +1,5 @@
-<% width = Math.max(300, Math.min(400, width)); height = Math.max(300, Math.min(400, height)); %>
+<% width = Math.max(300, Math.min(730, width)); height = 300; %>
+<% if(width >= 700) { height = 115 } %>
 <html>
   <head>
     <style>
@@ -68,11 +69,11 @@
         letter-spacing: .025em;
         color: #00ade6;
         text-decoration: none;
-        transition: all .25s ease;
+        transition: transform .25s ease;
       }
       
       .button:hover {
-        transform: scale(1.1);
+        transform: scale(1.05);
       }
       
       .hint {
@@ -85,14 +86,54 @@
         text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.125);
         opacity: 0.75;
       }
+      
+      @media (min-width: 700px) {
+        .container {
+          padding: 15px;
+        }
+        
+        .information {
+          float: left;
+        }
+        
+        .information h1 {
+          font-size: 2em;
+          margin-bottom: 5px;
+        }
+        
+        .information h2 {
+          font-size: 1em;
+          margin-bottom: 5px;
+        }
+        
+        .actionable {
+          float: right;
+        }
+        
+        .actionable .button {
+          margin: 0;
+          font-size: 18px;
+          padding: 12px 0;
+          width: 160px;
+        }
+        
+        .actionable .hint {
+          font-size: 0.75em;
+          margin-top: 5px;
+        }
+      }
     </style>
   </head>
   <body class="<%= mobile ? "mobile" : "" %>">
     <div class="container" onclick="startVideo()">
-      <h1>Tired of ads?</h1>
-      <h2>Watch a brief video from a sponsor for 1 week of no ads!</h2>
-      <div class="button">Go Ad Free!</div>
-      <div class="hint">video less than 1 minute</div>
+      <div class="information">
+        <h1>Tired of ads?</h1>
+        <h2>Watch a brief video from a sponsor for 1 week of no ads!</h2>
+      </div>
+      <div class="actionable">
+        <div class="button">Go Ad Free!</div>
+        <div class="hint">video less than 1 minute</div>
+      </div>
     </div>
     <% include ./footer %>
   </body>
