@@ -1,4 +1,4 @@
-<% width = Math.max(300, Math.min(400, width)); height = Math.max(250, Math.min(400, height)); %>
+<% width = Math.max(300, Math.min(400, width)); height = Math.max(300, Math.min(400, height)); %>
 <html>
   <head>
     <style>
@@ -22,36 +22,65 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
-        background: black;
+        background: white;
+        background-image: url("/public/bg.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: left center;
         padding: 20px 20px;
         box-sizing: border-box;
         cursor: pointer;
+        border: solid 1px black;
       }
       
       h1 {
-        font-size: 2em;
+        font-size: 2.25em;
         color: white;
-        margin: 0 0 5px 0;
+        margin: 0 0 10px 0;
+        text-shadow: 2px 3px 0 rgba(0,0,0,0.2);
+        font-weight: bold;
       }
       
       h2 {
-        font-size: 1em;
-        color: #55b7f3;
+        font-size: 1.1em;
+        color: #F5F0FB;
         margin: 0;
+        text-shadow: 0 2px 0 rgba(0,0,0,0.3);
+        font-weight: lighter;
       }
       
-      img {
-        width: 35%;
-        margin: 25px auto 0;
+      .button {
+        width: 180px;
+        margin: 50px auto 0;
         display: block;
+        text-transform: uppercase;
+        background: white;
+        border-radius: 4px;
+        color: white;
+        text-align: center;
+        padding: 15px 0;
+        white-space: nowrap;
+        box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.3);
+        border-radius: 4px;
+        font-size: 18px;
+        font-weight: bolder;
+        text-transform: uppercase;
+        letter-spacing: .025em;
+        color: #FF6D7E;
+        text-decoration: none;
+        transition: all .25s ease;
+      }
+      
+      .button:hover {
+        transform: scale(1.1);
       }
     </style>
   </head>
   <body class="<%= mobile ? "mobile" : "" %>">
     <div class="container" onclick="startVideo()">
       <h1>Tired of ads?</h1>
-      <h2>Watch this video from our sponsor for <u>1 week</u> of NO ads!</h2>
-      <img src="/public/play.png"/>
+      <h2>Watch a video from one of our sponsors for 1 week of NO ads!</h2>
+      <div class="button">Go Ad Free!</div>
     </div>
     <% include ./footer %>
   </body>
