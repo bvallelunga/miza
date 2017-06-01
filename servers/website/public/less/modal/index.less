@@ -177,6 +177,36 @@ footer {
     }
   }
 
+  .mobile-intercom {
+    z-index: 10000;
+    display: none;
+    background: #fff;
+    max-width: 220px;
+    width: calculate(100% - 100px);
+    box-shadow: 0 2px 8px 0 rgba(35,47,53,.09);
+    position: fixed;
+    bottom: 20px;
+    right: 20px !important;
+    padding: 10px 10px;
+  }
+  
+  .intercom-chat-card-body {
+
+  }
+
+  .intercom-chat-dismiss-button-mobile {
+    position: absolute;
+    opacity: 1;
+    background: url(https://js.intercomcdn.com/images/close@2x.7ae99936.png);
+    top: 10px;
+    right: 3px;
+    width: 12px;
+    height: 12px;
+    padding: 10px;
+    background-size: 12px 12px;
+    background-repeat: no-repeat;
+  }
+
   .checkbox-group {
     margin-bottom: 15px;
     text-align: center;
@@ -280,6 +310,11 @@ footer {
 
   .container {
     margin-bottom: 125px;
+
+
+    .mobile-intercom {
+      display: block;
+    }
   }
 
   footer {
