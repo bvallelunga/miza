@@ -161,7 +161,7 @@ module.exports.video_frame = (req, res, next)->
       res.cookie "optout", true, { 
         httpOnly: true
         signed: true 
-        maxAge: 7 * 24 * 60 * 60 * 1000
+        maxAge: 24 * 60 * 60 * 1000
       }
     
     res.render "ad/video/#{creative.config.video}", {
