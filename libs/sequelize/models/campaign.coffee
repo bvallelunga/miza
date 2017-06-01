@@ -184,7 +184,7 @@ module.exports = (sequelize, DataTypes)->
             analysis_type: "count"
             event_collection : "ads.event.impression"
             timeframe: "this_3_months"
-            interval: "every_5_hours"
+            interval: "every_6_hours"
           }
           {
             timezone: "UTC"
@@ -193,7 +193,7 @@ module.exports = (sequelize, DataTypes)->
             analysis_type: "count"
             event_collection : "ads.event.click"
             timeframe: "this_3_months"
-            interval: "every_5_hours"
+            interval: "every_6_hours"
           }
           {
             timezone: "UTC"
@@ -202,7 +202,7 @@ module.exports = (sequelize, DataTypes)->
             analysis_type: "count"
             event_collection : "ads.event.impression"
             timeframe: "this_3_months"
-            interval: "every_5_hours"
+            interval: "every_6_hours"
             group_by: [
               "publisher.key"
             ]
@@ -214,7 +214,7 @@ module.exports = (sequelize, DataTypes)->
             analysis_type: "count"
             event_collection : "ads.event.click"
             timeframe: "this_3_months"
-            interval: "every_5_hours"
+            interval: "every_6_hours"
             group_by: [
               "publisher.key"
             ]
