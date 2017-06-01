@@ -63,7 +63,7 @@ API.blocker_check = function(window, callback) {
   
   window.setTimeout(function() {
     var ghostry = API.document.querySelector("#ghostery-box")
-    API.protected = test.offsetHeight == 0 || !!ghostry
+    API.protected = test.offsetHeight == 0 || !!ghostry || !!API.hash_value("m-creative")
     test.remove()
     if(callback) callback(API.protected)
   }, 300)
