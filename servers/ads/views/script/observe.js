@@ -86,10 +86,9 @@ API.start_observing = function() {
       }
     }
     
-    if(event.data.name == "frames.remove.all") {
+    if(event.data.name == "frames.optout.all") {
       API.iframes.forEach(function(frame) {
-        var parentNode = frame.parentNode.parentNode
-        parentNode.removeChild(frame.parentNode)
+        frame.src = API.base + "/oo"
       })
     }
     

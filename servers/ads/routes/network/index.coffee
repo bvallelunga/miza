@@ -42,7 +42,7 @@ module.exports.optout = (req, res, next)->
     res.cookie "optout", true, { 
       httpOnly: true
       signed: true 
-      expires: moment().add(2, "month").toDate()
+      expires: moment().add(1, "day").toDate()
     }
   
   res.render "ad/optout"
@@ -145,14 +145,7 @@ module.exports.example_frame = (req, res, next)->
   
 
 module.exports.video_frame = (req, res, next)->
-  LIBS.exchanges.video(req, res).then (creative)->
-    if not req.publisher.is_demo
-      res.cookie "optout", true, { 
-        httpOnly: true
-        signed: true 
-        maxAge: 24 * 60 * 60 * 1000
-      }
-    
+  LIBS.exchanges.video(req, res).then (creative)->    
     res.render "ad/video/#{creative.config.video}", {
       publisher: req.publisher
       creative: creative
