@@ -24,6 +24,7 @@ $ ->
     miza_revenue = total_revenue * fee
     miza_commission = miza_revenue * commission
     
+    $(".page-views .value").text numeral(views * visits).format "0,000"
     $(".total-impressions .value").text numeral(impressions).format "0,000"
     $(".miza-impressions .value").text numeral(miza_impression).format "0,000"
     $(".total-revenue .value").text numeral(total_revenue).format "$0,000"
