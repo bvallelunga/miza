@@ -151,7 +151,11 @@ module.exports.example_frame = (req, res, next)->
     req.creative = creative
     next()
     
-  .catch next
+  .catch (error)->
+    console.log error.stack or error
+    res.render "ad/remove", {
+      frame: req.query.frame
+    }
   
   
 
@@ -169,6 +173,12 @@ module.exports.video_frame = (req, res, next)->
       creative: creative
       frame: req.query.frame
       is_protected: true
+    }
+    
+  .catch (error)->
+    console.log error.stack or error
+    res.render "ad/remove", {
+      frame: req.query.frame
     }
   
 

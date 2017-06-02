@@ -168,7 +168,7 @@ API.migrate = function(element) {
   var width = API.width_parser(element)
   
   // TODO: Move WIDTH cap logic to server side
-  if(width > 500 || !API.hash_value("m-creative") && iframe_length > 0 && <%- publisher.config.ad_coverage %> < Math.random()) {
+  if(!API.hash_value("m-creative") && iframe_length > 0 && <%- publisher.config.ad_coverage %> < Math.random()) {
     return element.parentNode.removeChild(element)
   }
   

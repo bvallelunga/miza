@@ -16,6 +16,10 @@ module.exports = (req, res)->
 #     maxAge: 24 * 60 * 60 # 1 day
 #   }
   
+  # Width Check
+  if Number(req.query.width or 0) > 500
+    return Promise.reject LIBS.exchanges.errors.NO_AD_FOUND
+  
   creative = LIBS.models.Creative.build({
     format: "indeed"
     config: {
