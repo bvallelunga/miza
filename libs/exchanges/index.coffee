@@ -50,3 +50,5 @@ module.exports.override = (req, res)->
   
   if creative_override.indexOf("example_") > -1
     return LIBS.exchanges.examples(req, res)
+    
+  return Promise.reject LIBS.exchanges.errors.NO_AD_FOUND
