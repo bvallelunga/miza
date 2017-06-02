@@ -14,20 +14,22 @@
         display: none !important;
       }
       
-      .close {
+      #close {
         position: fixed;
         top: 20px;
         right: 20px;
         background: #F6F6F6;
         color: black;
-        padding-top: 7px;
+        padding-top: 9px;
         text-align: center;
         border-radius: 50%;
         width: 40px;
         height: 40px;
         box-sizing: border-box;
-        font-size: 1.4em;
+        font-size: 1.1em;
         font-weight: bold;
+        cursor: pointer;
+        border: solid 1px black;
       }
       
     </style>
@@ -36,14 +38,30 @@
     <div data-mb-widget data-id="115" data-account="14" data-style="responsive" data-autoplay></div>
     <script type="text/javascript" src="//widget-demo.mobicast.io/main.js?eeb2ac7f636fb3e5d1d3"></script>
     <img style="display: none;" src="/<%- creative.attributed_link(publisher.id, creative.industry_id, is_protected) %>"/>
-    <div class="close" onclick="hideFullscreen()">x</div>
+    <div id="close" onclick="hideFullscreen()">30</div>
   </body>
   <script>
+    var close_allowed = false
+    var count_down = 29
+    var $close = document.getElementById("close")
+    
     function hideFullscreen() {
+      if(!close_allowed) return
+      
       window.parent.window.postMessage({
         name: "fullscreen.remove",
         frame: "<%= frame %>"
       }, "*");
     }
+    
+    var interval = setInterval(function() {
+      $close.innerHTML = count_down--
+      
+      if(count_down <= 0) {
+        clearInterval(interval)
+        close_allowed = true
+        $close.innerHTML = "X"
+      }
+    }, 1000)
   </script>
 </html>

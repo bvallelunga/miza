@@ -8,7 +8,7 @@
         padding: 0;
         margin: 0;
         overflow: hidden;
-        font-family: "Arial";
+        font-family: 'Open Sans', sans-serif;
       }
       
       .container {
@@ -35,15 +35,16 @@
       }
       
       h1 {
-        font-size: 2.25em;
+        font-size: 2.2em;
         color: white;
         margin: 0 0 10px 0;
         text-shadow: 1px 2px 0 rgba(0,0,0,0.2);
         font-weight: bold;
+        line-height: 0.9em;
       }
       
       h2 {
-        font-size: 1.1em;
+        font-size: 1em;
         color: #32325D;
         margin: 0;
         text-shadow: 0 1px 0 rgba(255,255,255,0.1);
@@ -52,7 +53,7 @@
       
       .button {
         width: 180px;
-        margin: 45px auto 0;
+        margin: 30px auto 0;
         display: block;
         text-transform: uppercase;
         background: white;
@@ -89,15 +90,16 @@
       
       @media (min-width: 700px) {
         .container {
-          padding: 15px;
+          padding: 8px 10px;
         }
         
         .information {
           float: left;
+          width: 60%;
         }
         
         .information h1 {
-          font-size: 2em;
+          font-size: 1.8em;
           margin-bottom: 5px;
         }
         
@@ -123,15 +125,16 @@
         }
       }
     </style>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,400,700" rel="stylesheet">
   </head>
   <body class="<%= mobile ? "mobile" : "" %>">
     <div class="container" onclick="startVideo()">
       <div class="information">
         <h1>Tired of ads?</h1>
-        <h2>Watch a brief video from a sponsor for 24 hours of no ads!</h2>
+        <h2>24 hours of ad free browsing on <strong><%= publisher.name %></strong> for watching a brief video from our sponsor!</h2>
       </div>
       <div class="actionable">
-        <div class="button">Go Ad Free!</div>
+        <div class="button">Watch Now</div>
         <div class="hint">video less than 1 minute</div>
       </div>
     </div>
