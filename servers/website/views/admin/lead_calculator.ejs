@@ -1,0 +1,41 @@
+<% include ../includes/start %>
+<% include ../includes/navigation %>
+<div class="container side short left">
+  <form class="form" method="POST" action="">
+    <% include ../includes/csrf %>
+    <span>Calculate Lead Metrics</span>
+    <div>
+      <input class="top number views" type="text" placeholder="Page Views: 10,000,000" required>
+      <input class="number visits" type="text" placeholder="Page Visits: 5" required>
+      <input class="number units" type="text" placeholder="Ads Per Page: 2" required>
+      <input class="protection" type="text" placeholder="Ad Blocker: 20%" required>
+      <input class="ctr" type="text" placeholder="CTR: 0.1%" required>
+      <input class="fee" type="text" placeholder="Miza Fee: 40%" required>
+      <input class="commission" type="text" placeholder="Commission: 3%" required>
+      <input class="bottom cpc" type="text" placeholder="CPC: $0.50" required>
+    </div>
+  </form>
+</div>
+<div class="container form-table side long left lead-calculator">
+  <div class="field total-impressions left">
+    <div class="name">Total Impressions</div>
+    <div class="value">0</div>
+  </div>
+  <div class="field miza-impressions left">
+    <div class="name">Miza Impressions</div>
+    <div class="value">0</div>
+  </div>
+  <div class="field total-revenue left">
+    <div class="name">Revenue</div>
+    <div class="value">$0</div>
+  </div>
+  <div class="field miza-revenue left">
+    <div class="name">Miza Revenue</div>
+    <div class="value">$0</div>
+  </div>
+  <div class="field commission left">
+    <div class="name">Monthly Commission</div>
+    <div class="value">$0</div>
+  </div>
+</div>
+<% include ../includes/end %>
