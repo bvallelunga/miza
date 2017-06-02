@@ -6,7 +6,7 @@ app = express()
 
 
 module.exports = (srv)->
-  # 3rd Party Ignore Routes  
+  # 3rd Party Ignore Routes
   auth_ignore_regex = new RegExp "^((?!#{[
     "/admin/vendor"
   ].join("|")})[\\s\\S])*$"
@@ -24,14 +24,14 @@ module.exports = (srv)->
   # Public Routes
   require("./assets")(app, srv,  __dirname + '/public')
   app.use "/imgs", express.static __dirname + '/public/images'
-  
-  
+
+
   # Load User & Locals
   app.use routes.router
   app.use routes.auth.load_user
   app.use require "./locals"
-  
-  
+
+
   # Landing Routes
   app.get  "/", routes.auth.not_authenticated, routes.landing.get_root
   app.get  "/supply", routes.landing.supply.get_root
@@ -52,8 +52,8 @@ module.exports = (srv)->
   app.post "/optout", routes.landing.post_optout
   app.post "/supply/partnership", routes.landing.supply.post_partnership
   app.post "/demand/partnership", routes.landing.demand.post_partnership
-  
-  
+
+
   # Auth Routes
   app.get  "/login", routes.auth.not_authenticated, routes.auth.login.get
   app.get  "/register", routes.auth.not_authenticated, routes.auth.register.get
@@ -64,8 +64,8 @@ module.exports = (srv)->
   app.post "/register", routes.auth.not_authenticated, routes.auth.register.post
   app.post "/forgot", routes.auth.not_authenticated, routes.auth.forgot.post
   app.post "/reset/:key", routes.auth.not_authenticated, routes.auth.forgot.reset_post
-  
-  
+
+
   # Account Routes
   app.get  "/account", routes.auth.is_authenticated, routes.account.get_root
   app.get  "/account/:dashboard", routes.auth.is_authenticated, routes.account.get_root
@@ -73,7 +73,7 @@ module.exports = (srv)->
   app.post "/account/notifications", routes.auth.is_authenticated, routes.account.notifications.post
   app.post "/account/password", routes.auth.is_authenticated, routes.account.password.post
   app.post "/account/billing", routes.auth.is_authenticated, routes.account.billing.post
-  
+
 
   # Admin Routes
   app.get  "/admin", routes.auth.is_admin, routes.admin.get_root
@@ -103,18 +103,16 @@ module.exports = (srv)->
   app.post "/admin/publishers", routes.auth.is_admin, routes.admin.publishers.post
   app.post "/admin/advertisers", routes.auth.is_admin, routes.admin.advertisers.post
   app.post "/admin/notices", routes.auth.is_admin, routes.admin.notices.post_create
-  
+
     # Admin 3rd Party Dashboards
   if LIBS.agenda?
     admin_router = express.Router()
     admin_router.use "/scheduler", routes.auth.is_admin, Agendash(LIBS.agenda, CONFIG.agenda_dash)
     app.use  "/admin/vendor", admin_router
-  
-  
+
   # Dashboard Routes
   app.get "/dashboard", routes.auth.is_authenticated, routes.landing.get_dashboard
-  
-  
+
   # Demand Partner Routes
   app.get  "/dashboard/demand", routes.auth.is_authenticated, routes.demand.get_root
   app.get  "/dashboard/demand/new", routes.auth.is_authenticated, routes.demand.create.get
@@ -139,8 +137,8 @@ module.exports = (srv)->
   app.post "/dashboard/demand/:advertiser/settings", routes.auth.is_authenticated, routes.demand.auth, routes.demand.settings.post_update
   app.post "/dashboard/demand/:advertiser/members/add", routes.auth.is_authenticated, routes.demand.auth, routes.demand.members.post_add
   app.post "/dashboard/demand/:advertiser/add_card/:campaign", routes.auth.is_authenticated, routes.demand.auth, routes.demand.add_card.post_add
-  
-  
+
+
   # Publisher Routes
   app.get  "/dashboard/supply", routes.auth.is_authenticated, routes.supply.get_root
   app.get  "/dashboard/supply/new", routes.auth.is_authenticated, routes.supply.create.get
@@ -153,16 +151,19 @@ module.exports = (srv)->
   app.post "/dashboard/supply/new", routes.auth.is_authenticated, routes.supply.create.post
   app.post "/dashboard/supply/:publisher/members/add", routes.auth.is_authenticated, routes.supply.auth, routes.supply.members.add
   app.post "/dashboard/supply/:publisher/settings", routes.auth.is_authenticated, routes.supply.auth, routes.supply.settings.post
-  
-  
+
+  # Mobile Routes
+  app.get "/mobile", routes.landing.get_mobile # isMobile 
+
+
   # Error Handlers
   app.get "*", routes.landing.get_not_found
-  
+
   if CONFIG.is_prod
     app.use LIBS.bugsnag.errorHandler
-  
+
   app.use require("./error")
-  
-  
+
+
   # Export
   return app

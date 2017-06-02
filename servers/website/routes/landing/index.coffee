@@ -1,5 +1,5 @@
 request = require "request"
-moment = require "moment"  
+moment = require "moment"
 
 module.exports.get_root = (req, res, next)->
   return req._routes.landing.demand.get_root(req, res, next)
@@ -10,12 +10,12 @@ module.exports.get_about = (req, res, next)->
     js: req.js.renderTags "landing", "fa"
     css: req.css.renderTags "landing"
     title: "About Us"
-  } 
+  }
 
 
 module.exports.get_loader_io = (req, res, next)->
   res.send CONFIG.loader_io
-  
+
 
 module.exports.get_legal = (req, res, next)->
   document_url = CONFIG.legal[req.params.document]
@@ -29,7 +29,7 @@ module.exports.get_legal = (req, res, next)->
     document_url: document_url
     title: "Legal"
   }
-  
+
 
 module.exports.get_deck = (req, res, next)->
   document_url = CONFIG.decks[req.params.deck]
@@ -44,7 +44,7 @@ module.exports.get_deck = (req, res, next)->
     title: "Decks"
     user_simulate: true
   }
-  
+
 
 module.exports.get_optout = (req, res, next)->
   res.render "landing/optout", {
@@ -65,19 +65,24 @@ module.exports.post_optout = (req, res, next)->
       message: "We have disabled Miza protected ads for your IP address"
       next: "/"
     }
-  
-  
+
+
 module.exports.get_dashboard = (req, res, next)->
   if not (req.user.is_admin or req.user.type == "all")
     return res.redirect "/dashboard/#{req.user.type}"
-    
+
   res.render "landing/dashboard", {
     title: "Dashboard"
     js: req.js.renderTags "fa"
     css: req.css.renderTags "admin"
     dashboard: "dashboard"
   }
-  
+
+module.exports.get_mobile = (req, res, next)->
+  res.render "landing/mobile", {
+    js: req.js.renderTags "fa"
+    css: req.css.renderTags "admin"
+  }
 
 module.exports.get_not_found = (req, res, next)->
   res.status(404).render "landing/error", {
@@ -85,7 +90,7 @@ module.exports.get_not_found = (req, res, next)->
     js: req.js.renderTags "modal"
     css: req.css.renderTags "modal"
   }
-  
+
 
 module.exports.get_shortener = (req, res, next)->
   LIBS.models.Shortener.findOne({
@@ -98,11 +103,11 @@ module.exports.get_shortener = (req, res, next)->
   }).then (shortner)->
     if not shortner?
       return req._routes.landing.get_not_found(req, res)
-      
+
     res.redirect shortner.url
-  
+
   .catch next
-  
-  
+
+
 module.exports.supply = require "./supply"
 module.exports.demand = require "./demand"
