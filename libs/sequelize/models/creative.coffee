@@ -104,6 +104,16 @@ module.exports = (sequelize, DataTypes)->
           "protected=#{is_protected}"
           "video=#{@config.video}"
         ].join("&")
+        
+      
+      click_link: (publisher, industry, is_protected, is_demo)->    
+        return "ck?" + [
+          "creative=#{@id}",
+          "advertiser=#{@advertiser_id}"
+          "campaign=#{@campaign_id}"
+          "industry=#{industry}"
+          "protected=#{is_protected}"
+        ].join("&")
       
       
       attributed_link: (publisher, industry, is_protected, is_demo, link=@link)->          
