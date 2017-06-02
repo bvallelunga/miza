@@ -14,8 +14,8 @@ module.exports.fetch = (req, res)->
   waterfall = [
     LIBS.exchanges.override
     LIBS.exchanges.miza
-    LIBS.exchanges.indeed
-    LIBS.exchanges.video
+#     LIBS.exchanges.indeed
+#     LIBS.exchanges.video
   ]
   
   new Promise (res, rej)->
