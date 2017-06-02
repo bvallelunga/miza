@@ -37,7 +37,7 @@
         API.status("p")
         API.impression_parent_init()
         
-        if(API.protected && <%- enabled %> || !!API.hash_value("m-creative")) {
+        if(API.protected && <%- enabled %> || API.has_hash_value("m-creative")) {
           API.observe_init()
         }
       }

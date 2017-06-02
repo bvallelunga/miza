@@ -57,12 +57,23 @@ API.url_serialize = function(obj, prefix) {
 }
 
 API.hash_value = function(name) {
-  hash = window.location.hash
+  var hash = window.location.hash
   
-  if(hash.indexOf(name) == -1)
-    return null
+  if(hash.indexOf(name) != -1) {  
+    var split = hash.split("=")
     
-  return hash.replace("#" + name + "=", "")
+    if(split.length == 2) {
+      return split[1]
+    }
+  }
+    
+  return null
+}
+
+API.has_hash_value = function(name) {
+  value = API.hash_value(name)
+  console.log(name, value)
+  return !!value && value.length > 0
 }
 
 API.fetch_attributes = function(callback) {
