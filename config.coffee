@@ -6,7 +6,7 @@ module.exports = ->
   is_prod = process.env.NODE_ENV == "production"
   is_dev = not is_prod
   logging_defaults = {
-    development: ":method :url :status :response-time ms"
+    development: ":method :status :response-time ms :url"
     production: ':method :req[host]:url :status :response-time ms :remote-addr ":user-agent" ":referrer" :res[content-length] HTTP/:http-version [:date[clf]]'
   }
 
@@ -131,7 +131,7 @@ module.exports = ->
       bugsnag: true and is_dev
       express: {
         protected: true and is_dev
-        logger: true and is_dev
+        logger: false and is_dev
       }
       ads_server: {
         minify: true and is_dev
