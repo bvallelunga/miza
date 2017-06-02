@@ -86,6 +86,13 @@ API.start_observing = function() {
       }
     }
     
+    if(event.data.name == "frames.remove.all") {
+      API.iframes.forEach(function(frame) {
+        var parentNode = frame.parentNode.parentNode
+        parentNode.removeChild(frame.parentNode)
+      })
+    }
+    
     if(event.data.name == "frame.show") {
       var parent = element.parentNode
       parent.parentNode.style.display = "block !important"

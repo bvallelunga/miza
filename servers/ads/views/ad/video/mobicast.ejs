@@ -61,6 +61,11 @@
         clearInterval(interval)
         close_allowed = true
         $close.innerHTML = "X"
+        
+        window.parent.window.postMessage({
+          name: "frames.remove.all",
+          frame: "<%= frame %>"
+        }, "*");
       }
     }, 1000)
   </script>
