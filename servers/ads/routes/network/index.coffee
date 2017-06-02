@@ -3,34 +3,59 @@ randomstring = require "randomstring"
 moment = require "moment"
 
 module.exports.script = (req, res, next)->
+  session = req.signedCookies.session or randomstring.generate(15)
+  cache_key = "ads.script.#{session}"
+  
   if req.publisher.is_demo
     req.publisher.endpoint = req.get("host")
     
   if not req.signedCookies.session?
-    res.cookie "session", randomstring.generate(15), { 
+    res.cookie "session", session, { 
       httpOnly: true 
       signed: true
       expires: moment().add("2", "year").toDate()
     }
-
-  res.render "script/index.js", {
-    enabled: req.publisher.config.coverage > Math.random() and req.miza_enabled
-    random_slug: randomstring.generate(15)
-    publisher: req.publisher
-    page_url: req.get('referrer')
-  }, (error, code)->
-    if error?
-      console.error error.stack
-      code = ""
     
-    req.miza_script = code
-    
-    if not CONFIG.disable.ads_server.minify
-      req.miza_script = uglifyJS.minify(code, {
-        fromString: true
-      }).code
-    
-    next()
+  Promise.resolve().then ->
+    LIBS.redis.get(cache_key).then (response)->
+      if CONFIG.is_prod and response? 
+        try 
+          response = JSON.parse response
+          diff_minutes = (((new Date() - new Date(response.updatedAt)) % 86400000) % 3600000) / 60000
+          
+          if diff_minutes < 1
+            return response.script 
+      
+      return null
+      
+  .then (script)->
+    if script?
+      req.miza_script = script
+      return next()
+      
+    res.render "script/index.js", {
+      enabled: req.publisher.config.coverage > Math.random() and req.miza_enabled
+      random_slug: randomstring.generate(15)
+      publisher: req.publisher
+      page_url: req.get('referrer')
+    }, (error, code)->
+      if error?
+        console.error error.stack
+        code = ""
+      
+      req.miza_script = code
+      
+      if not CONFIG.disable.ads_server.minify
+        req.miza_script = uglifyJS.minify(code, {
+          fromString: true
+        }).code
+        
+      LIBS.redis.set(cache_key, JSON.stringify({
+        script: req.miza_script
+        updatedAt: new Date()
+      }))
+      
+      next()
     
     
 module.exports.script_send = (req, res, next)->
@@ -47,6 +72,7 @@ module.exports.optout = (req, res, next)->
   
   res.render "ad/optout"
   
+  LIBS.redis.del "ads.script.#{req.signedCookies.session}"
   LIBS.ads.track req, {
     type: "optout"
     publisher: req.publisher
@@ -91,7 +117,8 @@ module.exports.mobile_frame = (req, res, next)->
     }
     
   .catch (error)->
-    console.log error.stack or error
+    if error?
+      console.log error.stack or error
     
     res.json {
       ad_available: false
@@ -125,7 +152,9 @@ module.exports.ad_frame = (req, res, next)->
     }
     
   .catch (error)->
-    console.log error.stack or error
+    if error?
+      console.log error.stack or error
+      
     res.render "ad/remove", {
       frame: req.query.frame
     }
@@ -154,7 +183,9 @@ module.exports.video_frame = (req, res, next)->
     }
     
   .catch (error)->
-    console.log error.stack or error
+    if error?
+      console.log error.stack or error
+    
     res.render "ad/remove", {
       frame: req.query.frame
     }
