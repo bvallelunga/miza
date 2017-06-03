@@ -55,9 +55,11 @@
         </a>
         <span class="spacer"></span>
       <% } %>
-      <a href="/account" class="<%= isActive(dashboard, "account") %>">
-        Account
-      </a>
+      <% if(!(useragent.isMobile && !user.is_admin)) { %>
+        <a href="/account" class="<%= isActive(dashboard, "account") %>">
+          Account
+        </a>
+      <% } %>
       <a href="/logout">
         Logout
       </a>

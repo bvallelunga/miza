@@ -14,6 +14,7 @@ module.exports = (req, res, next)->
   res.header 'Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
   
   #Locals    
+  res.locals.useragent = req.useragent 
   res.locals.csrf = if req.csrfToken? then req.csrfToken() else ""
   res.locals.host = "https://#{req.get("host")}"
   res.locals.hostname = req.get("host")

@@ -81,7 +81,7 @@ module.exports.get_dashboard = (req, res, next)->
 module.exports.get_mobile = (req, res, next)->
   res.render "landing/mobile", {
     js: req.js.renderTags "fa"
-    css: req.css.renderTags "admin"
+    css: req.css.renderTags "modal"
   }
 
 module.exports.get_not_found = (req, res, next)->

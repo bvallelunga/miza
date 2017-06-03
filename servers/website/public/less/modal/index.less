@@ -309,8 +309,10 @@ footer {
   }
 
   .container {
-    margin-bottom: 125px;
-
+    width: 100% !important;
+    padding-left: 20px;
+    padding-right: 20px;
+    
     &.large-2 {
       width: 100%;
       padding: 125px 20px 0 20px;
@@ -318,6 +320,12 @@ footer {
   }
 
   footer {
-    position: relative;
+    position: fixed;
+    bottom: 0;
+    font-size: 1em !important;
+    
+    li {
+      margin: 0 8px !important;
+    }
   }
 }

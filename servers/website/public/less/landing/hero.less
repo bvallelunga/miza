@@ -716,7 +716,7 @@
       iframe:only-child {
         right: 0px !important;
         left:inherit !important;
-        display: relative;
+        display: block;
       }
     }
     .header {
@@ -735,18 +735,23 @@
     min-width: 330px;
     width: 0;
   }
+  
   .hero {
     padding: 0;
+    
     .graphic {
       display: none;
     }
+    
     .navigation {
       padding: 20px 0 60px;
+      
       .left {
         .shortcuts {
           display: none;
         }
       }
+      
       .right {
         .nav-button {
           display: block;
@@ -756,6 +761,7 @@
         }
       }
     }
+    
     .examples {
       display: none;
     }
@@ -765,12 +771,15 @@
       position: relative;
       float: none;
       text-align: center;
+      
       h1 {
         font-size: 2em;
       }
+      
       h2 {
         font-size: 1.3em;
       }
+      
       .actionable {
         margin-bottom: 35px;
         .form {

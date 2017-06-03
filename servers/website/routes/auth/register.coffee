@@ -81,7 +81,7 @@ module.exports.post = (req, res, next)->
           }, {transaction: t}).then (advertiser)->
             req.user.addAdvertiser(advertiser)
             if req.useragent.isMobile
-              next_page = "/mobile/"
+              next_page = "/mobile"
 
               LIBS.emails.send "mobile_registration", [{
                 to: req.user.email
@@ -91,6 +91,7 @@ module.exports.post = (req, res, next)->
                 }
               }]
               req.session.destroy()
+              
             else
               next_page = "/dashboard/demand/#{advertiser.key}/campaigns?new_advertiser"
     .then ->
