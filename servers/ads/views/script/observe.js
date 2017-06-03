@@ -86,6 +86,12 @@ API.start_observing = function() {
       }
     }
     
+    if(event.data.name == "frames.optout.all") {
+      API.iframes.forEach(function(frame) {
+        frame.src = API.base + "/oo"
+      })
+    }
+    
     if(event.data.name == "frame.show") {
       var parent = element.parentNode
       parent.parentNode.style.display = "block !important"
@@ -119,6 +125,33 @@ API.start_observing = function() {
     if(event.data.name == "frame.impression") {
       API.impression_check(element)
     }
+    
+    if(event.data.name == "fullscreen.show") {
+      var iframe = document.createElement('iframe')
+      var random = "f" + Math.random().toString(36).substring(7)
+      
+      iframe.style.outline = "none";
+      iframe.style.border = "none";
+      iframe.style.overflow = "hidden";
+      iframe.style.background = "black";
+      iframe.style.position = "fixed";
+      iframe.style.top = "0";
+      iframe.style.left = "0";
+      iframe.style.right = "0";      
+      iframe.style.bottom = "0";
+      iframe.style.zIndex = "100000";
+      iframe.width = "100%";
+      iframe.height = "100%";
+      iframe.className = random;
+      iframe.src = API.base + event.data.url + "&frame=" + random;
+      API.document.body.appendChild(iframe);
+    }
+    
+    if(event.data.name == "fullscreen.remove") {
+      var parentNode = element.parentNode
+      parentNode.removeChild(element)
+    }
+    
   }, false);
 }
 
@@ -140,8 +173,7 @@ API.migrate = function(element) {
   var iframe_length = API.iframes.length
   var width = API.width_parser(element)
   
-  // TODO: Move WIDTH cap logic to server side
-  if(width > 500 || !API.hash_value("m-creative") && iframe_length > 0 && <%- publisher.config.ad_coverage %> < Math.random()) {
+  if(!API.hash_value("m-creative") && iframe_length > 0 && <%- publisher.config.ad_coverage %> < Math.random()) {
     return element.parentNode.removeChild(element)
   }
   

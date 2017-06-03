@@ -7,6 +7,10 @@ module.exports = (req)->
   if profile.agent.isBot
     return Promise.reject LIBS.exchanges.errors.BOT_FOUND
     
+  # Width Check
+  if Number(req.query.width) > 500
+    return Promise.reject LIBS.exchanges.errors.NO_AD_FOUND
+    
   Promise.resolve().then ->
     # Check if there is a creative override
     if req.query.creative_override

@@ -2,35 +2,39 @@ request = require "request-promise"
 geoip = require 'geoip-lite'
 
 module.exports = (req, res)-> 
-  start = req.signedCookies.indeed or 0
+#   start = req.signedCookies.indeed or 0
+#   
+#   if start > 10
+#     start = 0
+#   
+#   LIBS.exchanges.indeed.listing(
+#     "", req, start
+#   ).then (data)->   
+#   res.cookie "indeed", ++start, { 
+#     httpOnly: true
+#     signed: true 
+#     maxAge: 24 * 60 * 60 # 1 day
+#   }
   
-  if start > 10
-    start = 0
+  # Width Check
+  if Number(req.query.width or 0) > 500
+    return Promise.reject LIBS.exchanges.errors.NO_AD_FOUND
   
-  LIBS.exchanges.indeed.listing(
-    "", req, start
-  ).then (data)->   
-    res.cookie "indeed", ++start, { 
-      httpOnly: true
-      signed: true 
-      maxAge: 24 * 60 * 60 # 1 day
+  creative = LIBS.models.Creative.build({
+    format: "indeed"
+    config: {
+      results: []
+      search: ""
     }
-    
-    creative = LIBS.models.Creative.build({
-      format: "indeed"
-      config: {
-        results: data.results or []
-        search: ""
-      }
-      trackers: [
-        "http://gdc.indeed.com/rpc/apilog?a=apiresults"
-      ]
-    })
-    
-    creative.id = "indeed"
-    creative.campaign_id = "indeed"
-    creative.advertiser_id = "indeed"
-    return creative
+    trackers: [
+      "http://gdc.indeed.com/rpc/apilog?a=apiresults"
+    ]
+  })
+  
+  creative.id = "indeed"
+  creative.campaign_id = "indeed"
+  creative.advertiser_id = "indeed"
+  return Promise.resolve creative
       
   
   

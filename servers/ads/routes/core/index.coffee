@@ -31,3 +31,12 @@ module.exports.impression = (req, res, next)->
     type: "impression"
     publisher: req.publisher
   }
+  
+
+module.exports.click = (req, res, next)->
+  res.end utils.pixel_tracker
+  
+  LIBS.ads.track req, {
+    type: "click"
+    publisher: req.publisher
+  }

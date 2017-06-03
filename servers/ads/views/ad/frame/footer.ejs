@@ -75,6 +75,7 @@
     color: rgba(0,0,0,0.6);
     text-decoration: none;
     border-radius: 3px;
+    display: none;
   }
   
   information table {
@@ -90,6 +91,12 @@
     text-decoration: none;
     background: #FF0000;
     color: white;
+  }
+  
+  @media (min-height: 200px) {
+    information a {
+      display: block;
+    }
   }
 </style>
 <script>

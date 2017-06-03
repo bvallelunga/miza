@@ -1,6 +1,11 @@
 module.exports = (req, res, next)->
   creative = LIBS.models.Creative.build()
   
+  LIBS.ads.track req, {
+    type: "indeed.search"
+    publisher: req.publisher
+  }
+  
   LIBS.exchanges.indeed.listing(req.query.value, req).then (responses)->
     res.json {
       query: req.query.value 

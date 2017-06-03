@@ -1,0 +1,151 @@
+<% width = Math.max(300, Math.min(730, width)); height = 300; %>
+<% if(width >= 700) { height = 115 } %>
+<html>
+  <head>
+    <style>
+      html, body {
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        font-family: 'Open Sans', sans-serif;
+      }
+      
+      .container {
+        position: relative;
+        width: 100%;
+        height: <%- height - 25 %>px;
+        color: black;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 4px;
+        overflow: hidden;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        background: white;
+        background-image: url("/public/bg.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: left center;
+        padding: 20px 20px;
+        box-sizing: border-box;
+        cursor: pointer;
+        border: solid 1px black;
+      }
+      
+      h1 {
+        font-size: 2.2em;
+        color: white;
+        margin: 0 0 10px 0;
+        text-shadow: 1px 2px 0 rgba(0,0,0,0.2);
+        font-weight: bold;
+        line-height: 0.9em;
+      }
+      
+      h2 {
+        font-size: 1em;
+        color: #32325D;
+        margin: 0;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.1);
+        font-weight: lighter;
+      }
+      
+      .button {
+        width: 180px;
+        margin: 30px auto 0;
+        display: block;
+        text-transform: uppercase;
+        background: white;
+        border-radius: 4px;
+        color: white;
+        text-align: center;
+        padding: 15px 0;
+        white-space: nowrap;
+        box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.3);
+        border-radius: 4px;
+        font-size: 20px;
+        font-weight: bolder;
+        text-transform: uppercase;
+        letter-spacing: .025em;
+        color: #00ade6;
+        text-decoration: none;
+        transition: transform .25s ease;
+      }
+      
+      .container:hover .button {
+        transform: scale(1.05);
+      }
+      
+      .hint {
+        text-align: center;
+        width: 100%;
+        font-weight: lighter;
+        margin-top: 8px;
+        font-size: 0.9em;
+        color: #32325D;
+        text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.125);
+        opacity: 0.75;
+      }
+      
+      @media (min-width: 700px) {
+        .container {
+          padding: 8px 10px;
+        }
+        
+        .information {
+          float: left;
+          width: 60%;
+        }
+        
+        .information h1 {
+          font-size: 1.8em;
+          margin-bottom: 5px;
+        }
+        
+        .information h2 {
+          font-size: 1em;
+          margin-bottom: 5px;
+        }
+        
+        .actionable {
+          float: right;
+        }
+        
+        .actionable .button {
+          margin: 0;
+          font-size: 18px;
+          padding: 12px 0;
+          width: 160px;
+        }
+        
+        .actionable .hint {
+          font-size: 0.75em;
+          margin-top: 5px;
+        }
+      }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,400,700" rel="stylesheet">
+  </head>
+  <body class="<%= mobile ? "mobile" : "" %>">
+    <div class="container" onclick="startVideo()">
+      <div class="information">
+        <h1>Tired of ads?</h1>
+        <h2>24 hours of ad free browsing on <strong><%= publisher.name %></strong> after watching a brief video from our sponsor!</h2>
+      </div>
+      <div class="actionable">
+        <div class="button">Watch Now</div>
+        <div class="hint">video less than 1 minute</div>
+      </div>
+    </div>
+    <% include ./footer %>
+  </body>
+  <script>
+    function startVideo() {
+      window.parent.window.postMessage({
+        name: "fullscreen.show",
+        url: "/<%- creative.video_link(publisher.id, creative.industry_id, is_protected, demo) %>"
+      }, "*");
+    }
+  </script>
+</html>
