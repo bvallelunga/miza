@@ -5,15 +5,15 @@
   width: 1000px;
   margin: 40px auto;
   text-align: center;
-  
+
   h1.logo {
     font-size: 3.5em;
     margin-bottom: 20px;
   }
-  
+
   .list {
     margin: 50px 0;
-    
+
     span {
       color: @text;
       font-size: 1.8em;
@@ -24,7 +24,7 @@
       position: relative;
       text-shadow: 0 1px 0 white;
     }
-      
+
     a {
       position: relative;
       cursor: pointer;
@@ -37,18 +37,18 @@
       display: inline-block;
       .border-radius(4px);
       .box-shadow(0 3px 6px 1px rgba(0,0,0,0.03));
-      
+
       &:hover {
         border-color: @blue;
       }
-      
+
       .fa {
         margin: 30px 0;
         font-size: 4em;
         color: @blue;
         text-shadow: 0 1px 0 rgba(0,0,0,0.15);
       }
-      
+
       .name {
         margin-top: 20px;
         font-size: 1.2em;
@@ -61,13 +61,38 @@
     width: 49%;
     padding: 20px;
     .box-sizing(border-box);
-    
+
     &.short {
       width: 35% !important;
     }
-    
+
     &.long {
       width: 63% !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .container {
+    width: 100%;
+  }
+
+  .mobile-sign-in {
+    text-align: left;
+    padding: 0 20px;
+
+    h1 {
+      font-size: 1.4em;
+    }
+
+    h2 {
+      font-size: 1.1em;
+      padding-bottom: 20px;
+      color: #525f7f;
+    }
+
+    a {
+      color: #6772E5;
     }
   }
 }
