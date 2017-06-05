@@ -13,7 +13,7 @@ module.exports.fetch = (req, res)->
   waterfall = [
     LIBS.exchanges.override
     LIBS.exchanges.miza
-#     LIBS.exchanges.indeed
+    LIBS.exchanges.indeed
 #     LIBS.exchanges.video
   ]
   
