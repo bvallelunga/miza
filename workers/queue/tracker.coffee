@@ -9,7 +9,7 @@ require("../../startup") true, ->
   }]
 
   queues.forEach (queue)->
-    LIBS.queue.consume "#{queue.name}-queue", (event, ack, nack)->           
+    LIBS.queue.consume "#{queue.name}-queue", (event, ack, nack)->               
       queue.method(event).then(ack).catch (error)->
         LIBS.bugsnag.notify error
         console.log error.stack

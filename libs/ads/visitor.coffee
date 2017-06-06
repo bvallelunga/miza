@@ -24,7 +24,6 @@ module.exports.build = (raw_data)->
     }
     
     if data.device == "desktop"
-      agent = useragent.parse(raw_data.headers['user-agent'])
       data.identifier = raw_data.session
       data.data = {
         ip: raw_data.headers["CF-Connecting-IP"] or raw_data.query.ip or raw_data.ip or raw_data.ips 
@@ -34,9 +33,12 @@ module.exports.build = (raw_data)->
       }
       data.desktop = {
         session: raw_data.session
-        os: LIBS.exchanges.utils.os(agent)
-        browser: LIBS.exchanges.utils.browser(agent)
-      }
+      }   
+      
+      if data.data.user_agent?
+        agent = useragent.parse(raw_data.headers['user-agent']) 
+        data.desktop.os = LIBS.exchanges.utils.os(agent) 
+        data.desktop.browser = LIBS.exchanges.utils.browser(agent) 
       
       if (lookup = geoip.lookup(data.data.ip))?       
         data.location = {
