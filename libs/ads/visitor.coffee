@@ -29,8 +29,8 @@ module.exports.build = (raw_data)->
       data.data = {
         ip: raw_data.headers["CF-Connecting-IP"] or raw_data.query.ip or raw_data.ip or raw_data.ips 
         user_agent: raw_data.headers["user-agent"]
-        width: parseInt(raw_data.query.demensions.width) or undefined
-        height: parseInt(raw_data.query.demensions.height) or undefined
+        width: parseInt((raw_data.query.demensions or {}).width) or undefined
+        height: parseInt((raw_data.query.demensions or {}).height) or undefined
       }
       data.desktop = {
         session: raw_data.session
