@@ -29,9 +29,9 @@ module.exports.build = (raw_data)->
   
     LIBS.models.Advertiser.findById(raw_data.advertiser).then (temp)->      
       advertiser = {
-#         id: String(temp.id)
+        id: String(temp.id)
         key: temp.key
-#         name: temp.name
+        name: temp.name
       }
       
   .then ->
@@ -46,11 +46,11 @@ module.exports.build = (raw_data)->
     LIBS.models.Campaign.findById(raw_data.campaign).then (temp)->
       if not temp? then return
       
-#       campaign = {
-#         id: String(temp.id)
-#         name: temp.name
-#         type: temp.type
-#       }
+      campaign = {
+        id: String(temp.id)
+        name: temp.name
+        type: temp.type
+      }
       
       increments = {}
       
@@ -82,7 +82,7 @@ module.exports.build = (raw_data)->
            
       industry = {
         id: String(temp.industry_id)
-#         name: temp.name
+        name: temp.name
       }
       
       billing = {
@@ -107,35 +107,35 @@ module.exports.build = (raw_data)->
         id: raw_data.creative
       }
     
-#     if not Number raw_data.creative
-#       return Promise.resolve()
-#   
-#     LIBS.models.Creative.findById(raw_data.creative).then (temp)->
-#       if not temp? then return
-#         
-#       creative = {
-#         id: String(temp.id)
-# #         format: temp.format
-#       }
+    if not Number raw_data.creative
+      return Promise.resolve()
+  
+    LIBS.models.Creative.findById(raw_data.creative).then (temp)->
+      if not temp? then return
+        
+      creative = {
+        id: String(temp.id)
+        format: temp.format
+      }
     
   .then ->
-#     if raw_data.query.battery?
-#       battery = {
-#         charging: raw_data.query.battery.charging == "true"
-#         charging_time: Number(raw_data.query.battery.charging_time)
-#         level: Number(raw_data.query.battery.level)
-#       }
+    if raw_data.query.battery?
+      battery = {
+        charging: raw_data.query.battery.charging == "true"
+        charging_time: Number(raw_data.query.battery.charging_time)
+        level: Number(raw_data.query.battery.level)
+      }
     
     return {
       type: raw_data.type 
       ip_address: raw_data.headers["CF-Connecting-IP"] or raw_data.query.ip or raw_data.ip or raw_data.ips
       session: raw_data.session
       protected: raw_data.query.protected == "true"
-#       asset_url: raw_data.asset_url
-#       product: raw_data.publisher.product
+      asset_url: raw_data.asset_url
+      product: raw_data.publisher.product
       publisher: {
-#         id: String(raw_data.publisher.id)
-#         name: raw_data.publisher.name
+        id: String(raw_data.publisher.id)
+        name: raw_data.publisher.name
         key: raw_data.publisher.key
       }
       billing: billing
@@ -143,26 +143,26 @@ module.exports.build = (raw_data)->
       campaign: campaign
       creative: creative
       industry: industry
-#       page_url: {
-#         raw: raw_data.query.page_url or raw_data.referrer
-#       }
+      page_url: {
+        raw: raw_data.query.page_url or raw_data.referrer
+      }
       user_agent: {
         raw: raw_data.headers["user-agent"]
-#         client: {
-#           browser: {
-#             demensions: {
-#               width: Number(raw_data.query.demensions.width)
-#               height: Number(raw_data.query.demensions.height)
-#             }
-#             plugins: raw_data.query.plugins or []
-#             languages: raw_data.query.languages or []
-#             do_not_track: raw_data.query.do_not_track == "true"
-#           }
-#           device: {
-#             components: raw_data.query.components or []
-#             battery: battery
-#           }
-#         }
+        client: {
+          browser: {
+            demensions: {
+              width: Number(raw_data.query.width)
+              height: Number(raw_data.query.height)
+            }
+            plugins: raw_data.query.plugins or []
+            languages: raw_data.query.languages or []
+            do_not_track: raw_data.query.do_not_track == "true"
+          }
+          device: {
+            components: raw_data.query.components or []
+            battery: battery
+          }
+        }
       }
       keen: {
         timestamp: moment(raw_data.recorded_at).toISOString()
@@ -222,15 +222,15 @@ module.exports.send = (raw_data)->
       "Publisher Name": raw_data.publisher.name
       "Publisher Key": raw_data.publisher.key
       "Industry ID": event.industry.id
-#       "Industry Name": event.industry.name
-#       "Advertiser ID": event.advertiser.id
-#       "Advertiser Name": event.advertiser.name
+      "Industry Name": event.industry.name
+      "Advertiser ID": event.advertiser.id
+      "Advertiser Name": event.advertiser.name
       "Advertiser Key": event.advertiser.key
       "Creative ID": event.creative.id
-#       "Creative Format": event.creative.format
+      "Creative Format": event.creative.format
       "Campaign ID": event.campaign.id
-#       "Campaign Name": event.campaign.name
-#       "Campaign Type": event.campaign.type
+      "Campaign Name": event.campaign.name
+      "Campaign Type": event.campaign.type
       "Campaign House": event.billing.house
       "Campaign Amount": event.billing.amount
       "Campaign Model": event.billing.model
