@@ -63,13 +63,11 @@ module.exports = (req, res, next)->
     return data
       
   .then (data)->    
-    LIBS.ads.track req, {
+    LIBS.ads.event.track req, {
       type: if data.media == "link" then "click" else "asset"
       asset_url: data.href
-      publisher: req.publisher
     }
       
   
   .catch (error)->
-    console.log error.stack or error
     res.send ""
