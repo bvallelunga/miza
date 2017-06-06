@@ -150,7 +150,7 @@
       </div>
       <div class="listing">
         <% creative.config.results.forEach(function(job) { %>
-          <a class="item" target="_blank" href="/<%- creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo, job.url) %>">
+          <a class="item" target="_blank" href="/<%- creative.click_link(publisher.id, creative.industry_id, is_protected, demo, job.url) %>">
             <div class="title"><%= job.jobtitle %></div>
             <div class="location"><%= job.company %> - <%= job.formattedLocation %></div>
             <div class="description"><%- job.snippet %></div>

@@ -36,7 +36,12 @@ module.exports.impression = (req, res, next)->
   
 
 module.exports.click = (req, res, next)->
-  res.end utils.pixel_tracker
+  if req.query.next 
+    url = new Buffer(req.query.next, 'base64').toString("ascii")
+    res.redirect url
+  
+  else
+    res.end utils.pixel_tracker
   
   LIBS.ads.event.track req, {
     type: "click"

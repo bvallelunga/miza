@@ -106,13 +106,14 @@ module.exports = (sequelize, DataTypes)->
         ].join("&")
         
       
-      click_link: (publisher, industry, is_protected, is_demo)->    
+      click_link: (publisher, industry, is_protected, is_demo, link)->    
         return "ck?" + [
           "creative=#{@id}",
           "advertiser=#{@advertiser_id}"
           "campaign=#{@campaign_id}"
           "industry=#{industry}"
           "protected=#{is_protected}"
+          "next=#{@protected_url link}"
         ].join("&")
       
       
