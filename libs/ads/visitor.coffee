@@ -33,6 +33,7 @@ module.exports.build = (raw_data)->
       }
       data.desktop = {
         session: raw_data.session
+        protected: raw_data.query.protected == "true"
       }   
       
       if data.data.user_agent?
