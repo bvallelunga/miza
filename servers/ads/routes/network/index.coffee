@@ -73,16 +73,18 @@ module.exports.optout = (req, res, next)->
   res.render "ad/optout"
   
   LIBS.redis.del "ads.script.#{req.signedCookies.session}"
-  LIBS.ads.track req, {
+  LIBS.ads.event.track req, {
     type: "optout"
-    publisher: req.publisher
   }
 
  
 module.exports.mobile_frame = (req, res, next)->
-  LIBS.ads.track req, {
+  LIBS.ads.event.track req, {
     type: "request"
-    publisher: req.publisher
+  }
+  
+  LIBS.ads.visitor.track req, {
+    device: "mobile"
   }
   
   new Promise (respond, reject)->
@@ -111,9 +113,8 @@ module.exports.mobile_frame = (req, res, next)->
       html: code
     }
     
-    LIBS.ads.track req, {
+    LIBS.ads.event.track req, {
       type: "delivery"
-      publisher: req.publisher
     }
     
   .catch (error)->
@@ -126,9 +127,8 @@ module.exports.mobile_frame = (req, res, next)->
     
     
 module.exports.ad_frame = (req, res, next)->
-  LIBS.ads.track req, {
+  LIBS.ads.event.track req, {
     type: "request"
-    publisher: req.publisher
   }
   
   LIBS.exchanges.fetch(req, res).then (creative)->  
@@ -146,9 +146,8 @@ module.exports.ad_frame = (req, res, next)->
       mobile: false
     }
     
-    LIBS.ads.track req, {
+    LIBS.ads.event.track req, {
       type: "delivery"
-      publisher: req.publisher
     }
     
   .catch (error)->

@@ -1,9 +1,11 @@
 module.exports = (req, res, next)->
   creative = LIBS.models.Creative.build()
+  creative.id = "indeed"
+  creative.campaign_id = "indeed"
+  creative.advertiser_id = "indeed"
   
-  LIBS.ads.track req, {
+  LIBS.ads.event.track req, {
     type: "indeed.search"
-    publisher: req.publisher
   }
   
   LIBS.exchanges.indeed.listing(req.query.value, req).then (responses)->
@@ -11,7 +13,7 @@ module.exports = (req, res, next)->
       query: req.query.value 
       results: responses.results.map (job)->
         return {
-          url: "/" + creative.attributed_link(req.publisher.id, null, req.query.protected, req.query.demo, job.url)
+          url: "/" + creative.click_link(req.publisher.id, null, req.query.protected, req.query.demo, job.url)
           title: job.jobtitle
           location: "#{job.company} - #{job.formattedLocation}"
           description: job.snippet 

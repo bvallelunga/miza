@@ -210,6 +210,7 @@ module.exports = (sequelize, DataTypes)->
           owner: true
           admin_contact: true
           campaigns: true
+          transfers: true
         }
       
         Promise.resolve().then =>
@@ -232,6 +233,13 @@ module.exports = (sequelize, DataTypes)->
             paranoid: false
           }).then (campaigns)=>
             @campaigns = campaigns
+            
+            
+        .then =>
+          if not fetch["transfers"] or @transfers? then return
+          
+          @getTransfers().then (transfers)=>
+            @transfers = transfers
            
         .then => @
     
@@ -254,6 +262,8 @@ module.exports = (sequelize, DataTypes)->
               activated: @is_activated
               credits: @credits
               admin: if @admin_contact? then @admin_contact.name else null
+              billed_spend: @billed_spend
+              pending_spend: @pending_spend
               campaigns: @campaigns.length
               completed_campaigns: @campaigns.filter (campaign)->
                 return campaign.status == "completed"

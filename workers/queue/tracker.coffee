@@ -1,10 +1,17 @@
 # Startup & Configure
 require("../../startup") true, ->
+  queues = [{
+    name: "event"
+    method: LIBS.ads.event.send
+  }, {
+    name: "visitor"
+    method: LIBS.ads.visitor.send
+  }]
 
-  LIBS.queue.consume "event-queue", (event, ack, nack)->   
-    
-    LIBS.ads.send(event).then(ack).catch (error)->
-      LIBS.bugsnag.notify error
-      console.log error.stack
-      nack error
-    
+  queues.forEach (queue)->
+    LIBS.queue.consume "#{queue.name}-queue", (event, ack, nack)->               
+      queue.method(event).then(ack).catch (error)->
+        LIBS.bugsnag.notify error
+        console.log error.stack
+        nack error
+        

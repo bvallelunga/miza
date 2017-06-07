@@ -8,9 +8,12 @@ module.exports.check = (req, res, next)->
 module.exports.ping = (req, res, next)->
   res.end utils.pixel_tracker
   
-  LIBS.ads.track req, {
+  LIBS.ads.event.track req, {
     type: "ping"
-    publisher: req.publisher
+  }
+  
+  LIBS.ads.visitor.track req, {
+    device: "desktop"
   }
 
   
@@ -27,16 +30,19 @@ module.exports.impression = (req, res, next)->
   
   res.end utils.pixel_tracker
   
-  LIBS.ads.track req, {
+  LIBS.ads.event.track req, {
     type: "impression"
-    publisher: req.publisher
   }
   
 
 module.exports.click = (req, res, next)->
-  res.end utils.pixel_tracker
+  if req.query.next 
+    url = new Buffer(req.query.next, 'base64').toString("ascii")
+    res.redirect url
   
-  LIBS.ads.track req, {
+  else
+    res.end utils.pixel_tracker
+  
+  LIBS.ads.event.track req, {
     type: "click"
-    publisher: req.publisher
   }
