@@ -131,7 +131,7 @@ module.exports = ->
       bugsnag: true and is_dev
       express: {
         protected: true and is_dev
-        logger: false and is_dev
+        logger: true and is_dev
       }
       ads_server: {
         minify: true and is_dev
