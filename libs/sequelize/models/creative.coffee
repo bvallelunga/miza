@@ -107,14 +107,18 @@ module.exports = (sequelize, DataTypes)->
         
       
       click_link: (publisher, industry, is_protected, is_demo, link)->    
-        return "ck?" + [
+        data = [
           "creative=#{@id}",
           "advertiser=#{@advertiser_id}"
           "campaign=#{@campaign_id}"
           "industry=#{industry}"
           "protected=#{is_protected}"
-          "next=#{@protected_url link}"
-        ].join("&")
+        ]
+        
+        if link?
+          data.push "next=#{@protected_url link}"
+      
+        return "ck?" + data.join("&")
       
       
       attributed_link: (publisher, industry, is_protected, is_demo, link=@link)->          
