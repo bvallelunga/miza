@@ -179,6 +179,9 @@
 }
 
 @media only screen and (max-width: 900px) {
+  // .product .section .graphic.ad-events .event {
+  //   margin: 20px;
+  // }
   .product {
     .section {
       width: 100%;
@@ -187,12 +190,15 @@
         padding: 0 20px;
       }
       .graphic {
-        width: 100%;
+        width: 94%;
         margin-top: 0;
+        
+        &.ad-events {
+          .event {
+            margin: 20px;
+          }
+        }
       }
-    }
-    .graphic {
-
     }
   }
   .supports {
@@ -202,24 +208,38 @@
 
 @media only screen and (max-width: 470px) {
   .product {
+    
     .ifelse {
       font-size: 3em;
     }
+    
     .section {
       width: 100%;
       padding: 0 20px;
+      
       .information {
         font-size: 1.5em;
         width: 100%;
       }
+      
       .graphic {
         width: 100%;
         margin-top: 5px;
-        .ad-events {
+        
+        &.ad-events {
           .event {
+            margin: 20px auto;
+            
             .text {
               width: 100%;
               font-size: 1em;
+              text-align: center;
+            }
+            
+            .browser {
+              display: block;
+              margin: 5px auto;
+              float: none;
             }
           }
         }

@@ -4,9 +4,9 @@ $ ->
 
 
   $(".nav-button").click ->
-    $(".navigation-menu").fadeIn(250).show();
-  $(".close-navigation-menu").click ->
-    $(".navigation-menu").fadeOut(250);
+    $(".popup-menu").fadeIn(250).show();
+  $(".close-popup-menu").click ->
+    $(".popup-menu").fadeOut(250);
 
   $(".navigation .shortcuts .dynamic").mouseover ->
     $element = $(@)
