@@ -96,6 +96,17 @@
         z-index: 1;
       }
       
+      .listing .loading {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        top: 25px;
+        font-size: 20px;
+        font-weight: lighter;
+        color: #455a6d;
+        
+      }
+      
       .item {
         position: relative;
         width: 100%;
@@ -152,7 +163,7 @@
         padding: 20px 5px;
         box-sizing: border-box;
         text-align: center;
-        background-size: 250px;
+        background: white;
       }
       
       .shortcuts img {
@@ -188,7 +199,10 @@
           jobs by <span class="logo"></span>
         </div>
       </div>
-      <div class="listing"></div>
+      <div class="listing">
+        <div class="loading">loading jobs, hold tight...</div>
+        <div class="list"></div>
+      </div>
       <div class="shortcuts">
         <img src="/public/indeed-search.jpg"/>
         <div class="shortcut" data-query=" ">Local Jobs</div>
@@ -218,14 +232,14 @@
     </div>
     <script src="//code.jquery.com/jquery-3.1.0.min.js"></script>
     <script>
+      var last_query = null
+      
       $(function() {
-        var query = null
-        
         $(".search").keyup(function() { 
           query = $(this).val()
           
           if(query.length == 0) {
-            $(".listing").html("")
+            $(".listing .list").html("")
             $(".shortcuts").show().scrollTop(0)
             return false
           }
@@ -238,25 +252,27 @@
           query = query.trim()
           
           $(".search").val($(this).text())
-          $(".listing").html("")
+          $(".listing .list").html("")
           $(".shortcuts").hide()
           search(query)
         })        
       })
       
       function search(query) {
+        last_query = query
+        
         $.get("/indeed", {
           value: query,
           protected: <%- is_protected %>,
           demo: <%- demo %>
         }).done(function(response) {            
-          if(response.query != query) {
+          if(response.query != last_query) {
             return false
           }
           
           $(".shortcuts").toggle(response.results.length == 0).scrollTop(0)
           
-          $(".listing").html("").html(response.results.map(function(job) {
+          $(".listing .list").html("").html(response.results.map(function(job) {
             return $([
               '<a class="item" onmousedown="' + job.mousedown + '" target="_blank" href="' + job.url + '">',
               '<div class="title">' + job.title + '</div>',
