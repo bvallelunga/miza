@@ -12,11 +12,10 @@ module.exports = (req, res, next)->
     res.json {
       query: req.query.value 
       results: responses.results.map (job)->
-        #job.url += "&jsa=#{job.onmousedown.split("'")[1]}&inchal=apiresults"
+        job.url += "&jsa=#{job.onmousedown.split("'")[1]}&inchal=apiresults"
       
         return {
-          #url: "/" + creative.click_link(req.publisher.id, null, req.query.protected, req.query.demo, job.url)
-          url: job.url
+          url: "/" + creative.click_link(req.publisher.id, null, req.query.protected, req.query.demo, job.url)
           mousedown: job.onmousedown
           title: job.jobtitle
           location: "#{job.company} - #{job.formattedLocation}"
