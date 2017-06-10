@@ -139,7 +139,7 @@ module.exports.ad_frame = (req, res, next)->
       miza_script: req.miza_script
       creative: creative
       frame: req.query.frame or "frame"
-      is_protected: req.query.protected
+      is_protected: req.query.protected == "true"
       demo: req.query.demo == "true"
       width: Number req.query.width or 0
       height: Number req.query.height or 0
