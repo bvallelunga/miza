@@ -143,7 +143,7 @@ module.exports.ad_frame = (req, res, next)->
       demo: req.query.demo == "true"
       width: Number req.query.width or 0
       height: Number req.query.height or 0
-      mobile: false
+      mobile: req.query.mobile == "true"
     }
     
     LIBS.ads.event.track req, {
