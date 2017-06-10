@@ -191,6 +191,26 @@
         border: solid 1px rgba(0,0,0,0.3);
       }
       
+      
+      body.mobile .top {
+        height: 56px;
+      }
+      
+      body.mobile .top input {
+        width: 245px;
+        font-size: 16px;
+        padding: 10px 10px 10px 35px;
+        background-size: 15px;
+        background-position: 10px center;
+        border-color: #37A0F3;
+      }
+      
+      body.mobile .top .logo-container {
+        font-size: 14px;
+        margin-top: 21px;
+      }
+      
+      
       body.mobile footer {
         display: none;
       }
@@ -203,9 +223,23 @@
         padding-bottom: 0;
       }
       
+      body.mobile .listing {
+        margin-top: 56px;
+      }
+      
+      body.mobile .shortcuts {
+        top: 56px;
+      }
+      
       body.mobile .listing,
       body.mobile .shortcuts {
-        height: <%- height - 50 %>px;
+        height: <%- height - 56 %>px;
+      }
+      
+      body.mobile .shortcut {
+        font-size: 18px;
+        padding: 8px;
+        margin: 5px 3px;
       }
     </style>
   </head>
