@@ -1,4 +1,9 @@
-<% width = Math.min(Math.max(300, width), 500); height = Math.min(Math.max(370, height), 450) %>
+<% 
+  if(!mobile) {
+    width = Math.min(Math.max(300, width), 500)
+    height = Math.min(Math.max(370, height), 450)
+  }    
+%>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
