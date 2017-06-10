@@ -246,6 +246,23 @@
         padding: 8px;
         margin: 5px 3px;
       }
+      
+      body.mobile .item {
+        padding: 12px;
+      }
+      
+      body.mobile .item .title {
+        font-size: 17px;
+      }
+      
+      body.mobile .item .location,
+      body.mobile .item .description {
+        font-size: 15px;
+      }
+      
+      body.mobile .item .posted_at {
+        font-size: 14px;
+      }
     </style>
   </head>
   <body class="<%= mobile ? "mobile" : "" %>">
