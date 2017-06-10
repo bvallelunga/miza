@@ -173,7 +173,7 @@ API.migrate = function(element) {
   var iframe_length = API.iframes.length
   var width = API.width_parser(element)
   
-  if(!API.hash_value("m-creative") && iframe_length > 0 && <%- publisher.config.ad_coverage %> < Math.random()) {
+  if(!API.has_hash_value("m-creative") && iframe_length > 0 && <%- publisher.config.ad_coverage %> < Math.random()) {
     return element.parentNode.removeChild(element)
   }
   
