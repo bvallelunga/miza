@@ -86,7 +86,7 @@ module.exports.build = (raw_data)->
 
 module.exports.send = (raw_data)->  
   LIBS.ads.visitor.build(raw_data).then (data)->    
-    if not data.identifier?
+    if not data.identifier
       return Promise.resolve()
     
     LIBS.models.Visitor.upsert(data)
