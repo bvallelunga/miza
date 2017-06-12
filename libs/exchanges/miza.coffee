@@ -26,7 +26,10 @@ module.exports = (req)->
     
     
     # Creative Demensions
-    creative_width = parseInt(req.query.width) or 300
+    creative_width = parseInt(req.query.width)
+    
+    if not creative_width or creative_width == NaN
+      creative_width = 300
       
     query.includes.push({
       model: LIBS.models.Creative
@@ -47,13 +50,17 @@ module.exports = (req)->
     
     for id, viewed_at of viewed_campaigns
       if moment.duration(new Date() - new Date(viewed_at)).asHours() < 2
-        blocked_campaigns.push Number id
+        blocked_campaigns.push id
     
     if not req.publisher.is_demo and blocked_campaigns.length > 0
       query.where.id = {
-        $notIn: blocked_campaigns
+        $notIn: blocked_campaigns.map (id)->
+          return Number id
+        
+        .filter (id)->
+          return id != NaN
       }
-    
+      
     
     # Industry Targeting
     industry_where = {
