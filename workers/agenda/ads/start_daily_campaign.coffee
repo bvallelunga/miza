@@ -8,8 +8,6 @@ module.exports = require("../template") {
 }, (job)->
   LIBS.models.Campaign.findAll({
     where: {
-      status: "running"
-      active: false
       quantity_daily_needed: 0
       quantity_daily_requested: {
         $ne: null
