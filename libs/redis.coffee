@@ -1,10 +1,14 @@
 RedisPromise = require('then-redis')
 Redis = require('redis')
 
-
-
 # Exports
 module.exports = ->
-  redis = RedisPromise.createClient CONFIG.redis_url
-  redis.redis = Redis.createClient CONFIG.redis_url
-  return redis
+  createClient = (url)->
+    redis = RedisPromise.createClient url
+    redis.redis = Redis.createClient url
+    return redis 
+
+  return {
+    site: createClient CONFIG.redis.site 
+    ads: createClient CONFIG.redis.ads 
+  }

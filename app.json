@@ -76,6 +76,7 @@
     "heroku-postgresql",
     "rabbitmq-bigwig",
     "rediscloud",
+    "heroku-redis",
     "mongolab",
     "newrelic"
   ],

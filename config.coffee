@@ -19,7 +19,10 @@ module.exports = ->
     args: process.argv.slice(2)
     
     mongo_url: process.env.MONGODB_URI
-    redis_url: process.env.REDISCLOUD_URL
+    redis: {
+      site: process.env.REDIS_URL
+      ads: process.env.REDISCLOUD_URL
+    } 
     postgres: {
       url: process.env.DATABASE_URL
       ssl: is_local and process.env.DATABASE_URL.indexOf("localhost") == -1

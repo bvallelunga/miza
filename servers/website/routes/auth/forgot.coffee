@@ -22,7 +22,7 @@ module.exports.post = (req, res, next)->
       charset: 'alphabetic'
     })
     
-    LIBS.redis.set "user.reset.#{random}", user.id
+    LIBS.redis.site.set "user.reset.#{random}", user.id
     LIBS.emails.send "forgot_password", [{
       to: user.email
       host: req.get("host")
@@ -54,7 +54,7 @@ module.exports.reset_get = (req, res, next)->
 module.exports.reset_post = (req, res, next)->
   redis_key = "user.reset.#{req.params.key}"
 
-  LIBS.redis.get(redis_key).then (user_id)->
+  LIBS.redis.site.get(redis_key).then (user_id)->
     if not user_id?
       return next "Invalid reset key."
       
@@ -68,7 +68,7 @@ module.exports.reset_post = (req, res, next)->
         id: user_id
       }
     }).then ->
-      LIBS.redis.del redis_key
+      LIBS.redis.site.del redis_key
       req.session.user = user_id
 
       res.json {
