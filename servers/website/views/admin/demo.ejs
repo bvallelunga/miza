@@ -30,28 +30,17 @@
           After uploading your image, you will have the ability to crop and resize your image.
           Please note the description field is optional.
         </p>
-        <div class="left split fourty">
-          <table>
-            <tr>
-              <td>
-                <input name="creative[image_url]" class="simulator-image" type="hidden" role="uploadcare-uploader"
-                  data-crop="450x375 upscale" data-images-only="true" data-clearable required/>
-              </td>
-            </tr>
-            <tr>
-              <td><input class="simulator-watch simulator-link input" type="url" name="creative[link]" placeholder="Click Link" required/></td>
-            </tr>
-          </table>
-        </div>
-        <div class="right split sixity">
-          <div class="simulator">
-            <a target="_blank" href="#">
-              <img/>
-            </a>
-            <strong>Previewer</strong>
-          </div>
-        </div>
-        <div class="clear"></div>
+        <table>
+          <tr>
+            <td>
+              <input name="creative[image_url]" class="simulator-image" type="hidden" role="uploadcare-uploader"
+                data-crop="450x375 upscale" data-images-only="true" data-clearable required/>
+            </td>
+          </tr>
+          <tr>
+            <td><input class="simulator-watch simulator-link input" type="url" name="creative[link]" placeholder="Click Link" required/></td>
+          </tr>
+        </table>
         <br><br>
         <% include ../includes/csrf %>
         <button type="submit" class="button">
