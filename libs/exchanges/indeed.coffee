@@ -38,7 +38,7 @@ module.exports = (req, res)->
       
   
   
-module.exports.listing = (query, req, start=0)->
+module.exports.listing = (query, req, start=0, sponsored_only=true)->
   ip = req.headers["CF-Connecting-IP"] or req.ip or req.ips
   lookup = geoip.lookup(ip)
   location = ""
@@ -65,4 +65,12 @@ module.exports.listing = (query, req, start=0)->
       co: country
       q: (query or "").toLowerCase()
     }
-  })
+  }).then (response)->
+    if sponsored_only
+      response.results = response.results.filter (job)->
+        return job.sponsored
+    
+      if response.results.length == 0
+        return LIBS.exchanges.indeed.listing(query, req, start, false)
+                
+    return response
