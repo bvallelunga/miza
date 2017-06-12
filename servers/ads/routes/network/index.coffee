@@ -118,9 +118,7 @@ module.exports.mobile_frame = (req, res, next)->
     }
     
   .catch (error)->
-    if error?
-      console.log error.stack or error
-    
+    console.log error.stack or error
     res.json {
       ad_available: false
     }
@@ -151,9 +149,7 @@ module.exports.ad_frame = (req, res, next)->
     }
     
   .catch (error)->
-    if error?
-      console.log error.stack or error
-      
+    console.log error.stack or error
     res.render "ad/remove", {
       frame: req.query.frame
     }
@@ -182,9 +178,7 @@ module.exports.video_frame = (req, res, next)->
     }
     
   .catch (error)->
-    if error?
-      console.log error.stack or error
-    
+    console.log error.stack or error
     res.render "ad/remove", {
       frame: req.query.frame
     }

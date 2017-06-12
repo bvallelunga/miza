@@ -110,8 +110,8 @@ module.exports = (sequelize, DataTypes)->
         }  
     }
     
-    hooks: {
-      beforeCreate: (campaignIndustry)-> 
+    hooks: {        
+      beforeCreate: (campaignIndustry)->
         campaignIndustry.targeting = {
           devices: campaignIndustry.targeting.devices or null
           os: campaignIndustry.targeting.os or null
@@ -120,8 +120,7 @@ module.exports = (sequelize, DataTypes)->
           days: campaignIndustry.targeting.days or null
           blocked_publishers: []
         }
-        
-        
+      
       beforeUpdate: (campaignIndustry)->
         if campaignIndustry.changed("status") and campaignIndustry.previous("status") == "completed"
           campaignIndustry.status = "completed"

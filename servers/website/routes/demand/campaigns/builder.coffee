@@ -66,8 +66,9 @@ module.exports.create = (req, res, next)->
       where: query
     })
   .then (targeting)->    
-    bid = Number req.body.bid
-    budget = Number req.body.budget
+    bid = parseFloat req.body.bid
+    budget = parseFloat req.body.budget
+    daily_budget = parseFloat(req.body.daily_budget) or 0
     creative_config = {}
           
     try
@@ -86,7 +87,13 @@ module.exports.create = (req, res, next)->
       return Promise.reject "Please make sure you entered a valid budget"
       
     if budget < 2
-      return Promise.reject "Please make sure your budget is at least $2"
+      return Promise.reject "Please make sure your total budget is at least $2"
+      
+    if budget < daily_budget
+      return Promise.reject "Please make sure your total budget is greater than your daily budget"
+      
+    if daily_budget > 0 and daily_budget < 2
+      return Promise.reject "Please make sure your daily budget is at least $2"
     
     start_date = moment(req.body.start_date, "MM-DD-YYYY")
     start_date = if start_date.isValid() then start_date.startOf("day").toDate() else null
@@ -97,9 +104,13 @@ module.exports.create = (req, res, next)->
     is_house = req.body.is_house == "true" and req.user.is_admin
     temp_bid = if req.body.model == "cpm" then bid/1000 else bid
     quantity_requested = Math.floor(budget/temp_bid)
+    quantity_daily_requested = Math.floor(daily_budget/temp_bid)
     bid = if is_house then 0 else bid
     credits = budget
     status = "pending"
+    
+    if quantity_daily_requested <= 0
+      quantity_daily_requested = null
     
     if quantity_requested <= 0 
       return Promise.reject "Please increase your budget by at least #{numeral(temp_bid - budget).format("$0.00")}" 
@@ -127,9 +138,11 @@ module.exports.create = (req, res, next)->
         credits: credits
         quantity_needed: quantity_requested
         quantity_requested: quantity_requested
+        quantity_daily_needed: quantity_daily_requested
+        quantity_daily_requested: quantity_daily_requested
+        targeting: req.body.targeting or {}
         config: {
           is_house: is_house
-          targeting: req.body.targeting or {}
         }
       }, {transaction: t}).then (campaign)->           
         req.advertiser.update({
@@ -140,6 +153,7 @@ module.exports.create = (req, res, next)->
             LIBS.models.CampaignIndustry.create({
               type: req.body.model
               status: campaign.status
+              active: campaign.active
               advertiser_id: req.advertiser.id
               campaign_id: campaign.id
               industry_id: industry.id
@@ -159,6 +173,7 @@ module.exports.create = (req, res, next)->
             return new Buffer(1)
           .then (image)->
             trackers = req.body.creative.trackers.split("\n")
+            size = req.body.creative.size or null
             
             if req.user.is_admin and req.body.creative.disable_incentive.length > 0
               creative_config.disable_incentive = Number req.body.creative.disable_incentive
@@ -172,6 +187,7 @@ module.exports.create = (req, res, next)->
               link: campaign.utm_link(req.body.creative.link)
               trackers: req.body.creative.trackers.split("\n")
               format: req.body.creative.format
+              size: size
               image: image
               config: creative_config
             }, {transaction: t})

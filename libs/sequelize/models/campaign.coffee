@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes)->
       }
       set: (value)->
         @setDataValue("status", value)
-        @setDataValue("active", value == "running")
+        @setDataValue("active", value == "running" and (not @quantity_daily_needed? or @quantity_daily_needed > 0))
         
         if value == "complete" and not @get("end_at")
           @setDataValue("end_at", new Date())
@@ -59,6 +59,16 @@ module.exports = (sequelize, DataTypes)->
       defaultValue: 0
       get: ->      
         return Number @getDataValue("quantity_needed")
+    }
+    quantity_daily_requested: {
+      type: DataTypes.DECIMAL(15)
+      get: ->      
+        return Number(@getDataValue("quantity_daily_requested")) or null
+    }
+    quantity_daily_needed: {
+      type: DataTypes.DECIMAL(15)
+      get: ->      
+        return Number(@getDataValue("quantity_daily_needed")) or null
     }
     impressions: {
       type: DataTypes.DECIMAL(15)
@@ -118,6 +128,16 @@ module.exports = (sequelize, DataTypes)->
           
         return Math.max(0, cost - @credits)
     }
+    daily_budget: {
+      type: DataTypes.VIRTUAL
+      get: ->
+        return @model_cost * @quantity_daily_requested
+    }
+    daily_spend: {
+      type: DataTypes.VIRTUAL
+      get: -> 
+        return @model_cost * (@quantity_daily_requested - @quantity_daily_need)
+    }
     progress: {
       type: DataTypes.VIRTUAL
       get: ->
@@ -144,15 +164,23 @@ module.exports = (sequelize, DataTypes)->
           amount: numeral(@amount).format("$0[,]000.00")
           impressions: numeral(@impressions).format("0[,]000")
           quantity_needed: numeral(@quantity_needed).format("0[,]000")
-          quantity_requested: numeral(@quantity_requested).format("0[,]000")
+          quantity_requested: numeral(@quantity_requested or 0).format("0[,]000")
+          quantity_daily_needed: numeral(@quantity_daily_needed or 0).format("0[,]000")
+          quantity_daily_requested: numeral(@quantity_daily_requested).format("0[,]000")
           clicks: numeral(@clicks).format("0[,]000")
           budget: numeral(@budget).format("$0[,]000.00")
           spend: numeral(@spend).format("$0[,]000.00")
+          daily_budget: numeral(@daily_budget or 0).format("$0[,]000.00")
+          daily_spend: numeral(@daily_spend or 0).format("$0[,]000.00")
           progress: numeral(@progress).format("0[.]00%")
           ctr: numeral(@ctr).format("0[.]00%")
         }
     }
     config: {
+      type: DataTypes.JSONB
+      defaultValue: {}
+    }
+    targeting: {
       type: DataTypes.JSONB
       defaultValue: {}
     }
@@ -302,6 +330,15 @@ module.exports = (sequelize, DataTypes)->
     hooks: {
       beforeCreate: (campaign)->
         campaign.quantity_needed = campaign.quantity_requested
+        campaign.quantity_daily_needed = campaign.quantity_daily_requested
+        campaign.targeting = {
+          devices: campaign.targeting.devices or null
+          os: campaign.targeting.os or null
+          countries: campaign.targeting.countries or null
+          browsers: campaign.targeting.browsers or null
+          days: campaign.targeting.days or null
+          blocked_publishers: []
+        }
 
       
       afterCreate: (campaign)->
@@ -327,6 +364,7 @@ module.exports = (sequelize, DataTypes)->
         campaign.getIndustries().each (industry)->
           if industry.status != "complete"              
             industry.status = campaign.status
+            industry.active = campaign.active
             industry.save()
       
             

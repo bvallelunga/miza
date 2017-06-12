@@ -13,6 +13,7 @@ module.exports = (url)->
     image_selection: false
     link: url
     format: "soundcloud"
+    size: "300x370"
     config: {
       url: url
       images: [""]

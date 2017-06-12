@@ -7,6 +7,31 @@ module.exports = (sequelize, DataTypes)->
       type: DataTypes.STRING
       allowNull: false
     }
+    size: {
+      type: DataTypes.STRING
+      set: (size)->
+        @setDataValue("size", size)
+        
+        if size?
+          sizing = size.split("x")
+          @setDataValue "width", parseInt(sizing[0])
+          @setDataValue "height", parseInt(sizing[1])
+          
+        else
+          @setDataValue "width", null
+          @setDataValue "height", null
+          
+    }
+    width: {
+      type: DataTypes.DECIMAL(5,0)
+      get: ->      
+        return Number @getDataValue("width")
+    }
+    height: {
+      type: DataTypes.DECIMAL(5,0)
+      get: ->      
+        return Number @getDataValue("height")
+    }
     description: DataTypes.STRING
     description_html: {
       type: DataTypes.VIRTUAL
@@ -23,7 +48,7 @@ module.exports = (sequelize, DataTypes)->
       allowNull: false
       validate: {
         isIn: {
-          args: [['300 x 250', "social", "twitter", "soundcloud", "product", "crowdsource"]]
+          args: [["image", "social", "twitter", "soundcloud", "product", "crowdsource"]]
           msg: "Invalid creative format"
         }
       }          

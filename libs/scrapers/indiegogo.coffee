@@ -13,6 +13,7 @@ module.exports = (url)->
     image_selection: false
     link: url
     format: "crowdsource"
+    size: "300x475"
     config: {
       site: "indiegogo"
       url: url

@@ -7,10 +7,6 @@ module.exports = (req)->
   if profile.agent.isBot
     return Promise.reject LIBS.exchanges.errors.BOT_FOUND
     
-  # Width Check
-  if Number(req.query.width) > 500
-    return Promise.reject LIBS.exchanges.errors.NO_AD_FOUND
-    
   Promise.resolve().then ->
     # Check if there is a creative override
     if req.query.creative_override
@@ -19,11 +15,31 @@ module.exports = (req)->
     return false
   .then (creative)->
     if creative then return creative
-  
+    
     # Build query
     query = {
-      active: true
+      where: {
+        active: true 
+      }
+      includes: []
     }
+    
+    
+    # Creative Demensions
+    creative_width = parseInt(req.query.width) or 300
+      
+    query.includes.push({
+      model: LIBS.models.Creative
+      as: "creatives"
+      required: true
+      where: {
+        width: {
+          $lte: creative_width
+          $gte: creative_width * 0.85
+        }
+      }
+    })
+  
     
     # Campaign Blocking
     blocked_campaigns = req.signedCookies.clicked_campaigns or []
@@ -34,16 +50,29 @@ module.exports = (req)->
         blocked_campaigns.push Number id
     
     if not req.publisher.is_demo and blocked_campaigns.length > 0
-      query.campaign_id = {
+      query.where.id = {
         $notIn: blocked_campaigns
       }
     
+    
     # Industry Targeting
+    industry_where = {
+      active: true
+    }
+    
     if not req.publisher.is_demo
-      query.industry_id = req.publisher.industry_id
-      
+      industry_where.industry_id = req.publisher.industry_id
+    
+    query.includes.push({
+      model: LIBS.models.CampaignIndustry
+      as: "industries"
+      required: true
+      where: industry_where
+    })
+    
+    
     # Publisher NOT Targeting
-    query["targeting.blocked_publishers"] = {
+    query.where["targeting.blocked_publishers"] = {
       $or: [
         {
           $eq: null
@@ -52,14 +81,15 @@ module.exports = (req)->
           $notLike: "%#{'"' + req.publisher.key + '"'}%"
         }
       ]
-    }  
+    } 
+    
     
     # Additional Targeting
     targets = ["devices", "os", "browsers", "countries", "days"]
     
     for target in targets
       if profile[target]
-        query["targeting.#{target}"] = {
+        query.where["targeting.#{target}"] = {
           $or: [
             {
               $eq: null
@@ -69,44 +99,38 @@ module.exports = (req)->
             }
           ]
         }
-  
-    # Find Campaign Industries
+        
+    
+    # Find Campaigns
     # Grab a random set of 5 campaigns
     # Then we sort the 5 campaigns by bid
     # 70% of the time the highest bid will
     # be shown. 30% of the time the a random
     # creative will be chosen
-    LIBS.models.CampaignIndustry.findAll({
-      where: query
-      limit: 5
+    order_logic = ["amount", "DESC"]
+    
+    if Math.random() > 0.7
+      order_logic = LIBS.models.Sequelize.fn('RANDOM')
+      
+    final_query = {
+      where: query.where
+      include: query.includes
       order: [
-        LIBS.models.Sequelize.fn('RANDOM')
+        order_logic
         ["updated_at", "ASC"]
       ]
-    }).then (campaignIndustries)->  
-      if campaignIndustries.length == 0
-        return Promise.reject LIBS.exchanges.errors.AD_NOT_FOUND
-      
-      # 20% of the time we show select a random bid
-      # this is done to ensure the low bids get
-      # some impressions
-      if Math.random() <= 0.70
-        campaignIndustries = campaignIndustries.sort (a, b)->
-          return b.amount - a.amount
+    }
+    
+    LIBS.models.Campaign.count({
+      where: final_query.where
+    }).then (count)->
+      final_query.offset = Math.floor(Math.random() * count)
+    
+      LIBS.models.Campaign.findOne(final_query).then (campaign)->    
+        if not campaign?
+          return Promise.reject LIBS.exchanges.errors.AD_NOT_FOUND
         
-      else
-        campaignIndustries = LIBS.helpers.shuffle campaignIndustries
-      
-      campaignIndustry = campaignIndustries[0]
-      
-      LIBS.models.Creative.findOne({
-        where: {
-          advertiser_id: campaignIndustry.advertiser_id
-          campaign_id: campaignIndustry.campaign_id
-        }
-      }).then (creative)->
-        if not creative?
-          return Promise.reject LIBS.exchanges.errors.NO_AD_FOUND
-          
-        creative.industry_id = campaignIndustry.id
+        creative = campaign.creatives[0]
+        creative.industry_id = campaign.industries[0].id
         return creative
+      

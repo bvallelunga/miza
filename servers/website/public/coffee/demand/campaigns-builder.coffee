@@ -26,6 +26,15 @@ class Dashboard
       })      
       
     
+    $('.creative-size').change ->
+      $(".uploadcare-widget").remove()
+      clone = $('.creative-image').clone().attr("data-crop", "#{$(@).val()} upscale").val("")
+      parent = $('.creative-image').parent()
+      $('.creative-image').remove()
+      parent.append(clone)
+      uploadcare.initialize()
+      
+    
     $('.bid-selector input[type=radio][name=model]').change ->
       model = this.value
       $(".bid-suggestion").hide()
@@ -57,7 +66,7 @@ class Dashboard
       
     _this.$input_budget.on "keyup change", ->
       _this.update_budget()
- 
+    
   
   update_scrape: (response)->  
     _this = @
@@ -67,6 +76,7 @@ class Dashboard
     $(".creative-images").remove()
     $(".creative-link").val response.link
     $(".creative-format").val response.format
+    $(".creative-size").val response.size
     $(".creative-config").val JSON.stringify response.config
     
     @iframe = {

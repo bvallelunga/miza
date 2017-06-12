@@ -1,0 +1,32 @@
+<% width = creative.width + 2; height = creative.height + 2 %>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      html, body {
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        font-family: "Arial";
+      }
+      
+      img {
+        width: <%- creative.width %>;
+        height: <%- creative.height %>;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: solid 1px #E6E6E6;
+      }
+    </style>
+  </head>
+  <body class="<%= mobile ? "mobile" : "" %>">
+    <a target="_blank" href="/<%- creative.attributed_link(publisher.id, creative.industry_id, is_protected, demo) %>">
+      <img src='data:image;base64,<%- creative.image.toString('base64') %>'></div>
+    </a>
+    <% include ./includes/script %>
+  </body>
+</html>

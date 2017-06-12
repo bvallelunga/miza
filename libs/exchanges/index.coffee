@@ -28,13 +28,14 @@ module.exports.fetch = (req, res)->
         response = result
         
       .catch (error)->
+        if error? then console.log error
         reject = error
         
-    .then ->
+    .then ->    
       if response?
         return res response
-        
-      return rej reject or LIBS.exchanges.errors.NO_AD_FOUND
+            
+      return rej reject or LIBS.exchanges.errors.AD_NOT_FOUND
 
 
 module.exports.override = (req, res)->
@@ -49,4 +50,4 @@ module.exports.override = (req, res)->
   if creative_override.indexOf("example_") > -1
     return LIBS.exchanges.examples(req, res)
     
-  return Promise.reject LIBS.exchanges.errors.NO_AD_FOUND
+  return Promise.reject LIBS.exchanges.errors.AD_NOT_FOUND

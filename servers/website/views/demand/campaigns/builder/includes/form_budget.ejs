@@ -1,0 +1,79 @@
+<div class="section">
+  <div class="header">Budget</div>
+  <table class="top-table shifted">
+    <tr>
+      <td valign="top" class="title">Pricing<span>REQUIRED</span></td>
+      <td class="bid-selector">
+        <% if(models.indexOf("cpc") > -1) { %>
+          <div>
+            <input class="left" type="radio" name="model" value="cpc" <%= model == "cpc" ? "checked" : "" %> id="model_cpc">
+            <label class="right" style="width: 435px" for="model_cpc">
+              <strong>Clicks</strong> - We'll deliver your ads to the right people to help you get the most
+              clicks at the lowest cost.
+            </label>
+            <div class="clear"></div>
+          </div>
+        <% } %>
+        <%- models.length > 1 ? "<br>" : "" %>
+        <% if(models.indexOf("cpm") > -1) { %>
+          <div>
+            <input class="left" type="radio" name="model" value="cpm" <%= model == "cpm" ? "checked" : "" %> id="model_cpm">
+            <label class="right" style="width: 435px" for="model_cpm">
+              <strong>Impressions</strong> - We'll deliver your ads to people as many times as possible.
+            </label>
+            <div class="clear"></div>
+          </div>
+        <% } %>
+      </td>
+    </tr>
+    <tr>
+      <td class="title">Total Budget<span>REQUIRED</span></td>
+      <td>
+        <div class="group left-align budget-input last">
+          <div class="fa fa-dollar"></div>
+          <input class="number" type="text" name="budget" placeholder="150" required/>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="title">Daily Budget<span>REQUIRED</span></td>
+      <td>
+        <div class="group left-align last">
+          <div class="fa fa-dollar"></div>
+          <input class="number" type="text" name="daily_budget" placeholder="20"/>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" class="title">Bid Amount<span>REQUIRED</span></td>
+      <td class="bid-selector">
+        <div>
+          <input class="left" type="radio" name="bid_type" value="automatic" checked="checked" id="bid_automatic">
+          <label class="right" style="width: 435px" for="bid_automatic">
+            <strong>Automatic</strong> - Let <%= company %> set the bid that helps you get the most at the best price.
+          </label>
+          <div class="clear"></div>
+        </div><br>
+        <div>
+          <input class="left" type="radio" name="bid_type" value="manual" id="bid_manual">
+          <label class="right" style="width: 435px" for="bid_manual">
+            <strong>Manual</strong> - Enter your own bid based on what you feel the ad is worth.
+            <div class="bid-input hidden">
+              <div class="group left-align" style="margin-top: 15px">
+                <div class="fa fa-dollar"></div>
+                <input type="number" name="bid" placeholder="1.50" step="0.01" min="0.02" data-reset-cpm="<%= auto_bid_cpm %>" data-reset-cpc="<%= auto_bid_cpc %>" value="<%= auto_bid_cpc %>" required/>
+              </div>
+              <div class="bid-cpm bid-suggestion hidden" style="margin-top: 10px; font-weight: bold; color: rgba(0,0,0,0.3)">
+                Recommended bid between $<%= auto_bid_cpm_min %> - $<%= auto_bid_cpm_max %>
+              </div>
+              <div class="bid-cpc bid-suggestion hidden" style="margin-top: 10px; font-weight: bold; color: rgba(0,0,0,0.3)">
+                Recommended bid between $<%= auto_bid_cpc_min %> - $<%= auto_bid_cpc_max %>
+              </div>
+            </div>
+          </label>
+          <div class="clear"></div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

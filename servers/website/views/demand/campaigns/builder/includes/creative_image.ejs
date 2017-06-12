@@ -1,9 +1,8 @@
 <div class="section">
-  <input type="hidden" name="creative[format]" value="300 x 250" required/>
+  <input type="hidden" name="creative[format]" value="image" required/>
   <div class="header">Creative</div>
   <p>
-    <%= company %> supports the IAB <strong>300 x 250</strong> format. After 
-    uploading your image, you will have the ability to crop and resize your image.
+    After uploading your image, you will have the ability to crop and resize your image.
     Please note the description field is optional.
   </p>
   <br>
@@ -11,13 +10,34 @@
     <table>
       <tr>
         <td>
-          <input name="creative[image_url]" class="simulator-image" type="hidden" role="uploadcare-uploader"
-            data-crop="450x375 upscale" data-images-only="true" data-clearable required/>
+          <div class="input input-extension">
+              <div class="left">
+                Image Size
+              </div>
+              <div class="group right">
+                <div class="fa fa-sort"></div>
+                <select class="input creative-size" name="creative[size]">
+                  <option value="300x250" selected>300x250</option>
+                  <option value="728x90">728x90</option>
+                  <option value="160x600">160x600</option>
+                </select>
+              </div>
+            </div>
         </td>
       </tr>
       <tr>
         <td>
-          <input class="simulator-watch simulator-link input" type="url" name="creative[link]" placeholder="Click Link" required/>
+          <input class="creative-image" name="creative[image_url]" type="hidden" role="uploadcare-uploader" data-crop="300x250 upscale" 
+            data-images-only="true" data-clearable required/>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="right split half">
+    <table>
+      <tr>
+        <td>
+          <input class="input" type="url" name="creative[link]" placeholder="Click Link" required/>
         </td>
       </tr>
       <% if(user.is_admin) { %>
@@ -44,14 +64,6 @@
         </tr>
       <% } %>
     </table>
-  </div>
-  <div class="right split half">
-    <div class="simulator">
-      <a target="_blank" href="#">
-        <img/>
-      </a>
-      <strong>Previewer</strong>
-    </div>
   </div>
   <div class="clear"></div>
   <br><br>

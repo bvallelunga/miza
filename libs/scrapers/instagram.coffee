@@ -18,6 +18,7 @@ module.exports.profile = (username)->
       return res {
         image_selection: true
         link: "https://instagram.com/#{username}"
+        size: "300x370"
         format: "social"
         config: {
           user: user
@@ -54,6 +55,7 @@ module.exports.post = (url)->
       image_selection: false
       link: url
       format: "social"
+      size: "300x370"
       config: {
         user: user
         images: images

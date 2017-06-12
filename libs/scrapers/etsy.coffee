@@ -22,6 +22,7 @@ module.exports.product = (url)->
       image_selection: false
       link: url
       format: "product"
+      size: "300x370"
       config: {
         action: "#{price} on Etsy"
         images: images

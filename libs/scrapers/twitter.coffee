@@ -8,6 +8,7 @@ module.exports.account = (username)->
       image_selection: false
       link: "https://twitter.com/#{username}"
       format: "twitter"
+      size: "300x340"
       config: {
         user: {
           username: account.screenName

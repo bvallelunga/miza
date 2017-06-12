@@ -59,12 +59,18 @@ module.exports.build = (raw_data)->
         
         if temp.type == "cpm"
           increments["quantity_needed"] = -1
+          
+          if temp.quantity_daily_needed?
+            increments["quantity_daily_needed"] = -1
       
       if raw_data.type == "click"
         increments["clicks"] = 1
         
         if temp.type == "cpc"
           increments["quantity_needed"] = -1
+          
+          if temp.quantity_daily_needed?
+            increments["quantity_daily_needed"] = -1
       
       return temp.increment(increments)
         

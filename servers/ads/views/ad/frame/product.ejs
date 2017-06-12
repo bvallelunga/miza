@@ -126,7 +126,7 @@
         border: solid 3px white;
         border-radius: 3px;
         position: relative;
-        z-index: 10000;
+        z-index: 5;
         display: inline-block;
       }
       
@@ -185,7 +185,7 @@
       <div class="bottom">
         <div style="text-align: center">
           <div class="button-wrapper">
-            <div class="button"><%= creative.config.action || "Follow" %></div>
+            <div class="button"><%= creative.config.action || "Purchase" %></div>
           </div>
         </div>
         <div class="product-information">
@@ -226,6 +226,6 @@
       
       show_slide(0);
     </script>
-    <% include ./footer %>
+    <% include ./includes/footer %>
   </body>
 </html>
