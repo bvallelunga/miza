@@ -265,10 +265,7 @@ module.exports = (sequelize, DataTypes)->
             as: "members"
           }]
         }).then (advertiser)->            
-          members = advertiser.members.filter (user)->
-            return not user.is_admin
-          
-          .map (user)->
+          members = advertiser.members.map (user)->
             return {
               to: user.email
               host: CONFIG.web_server.host
