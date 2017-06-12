@@ -23,5 +23,6 @@ module.exports = require("../template") {
     }
   }).each (campaign)->
     campaign.status = "completed"
+    campaign.quantity_needed = 0
     campaign.save()
   

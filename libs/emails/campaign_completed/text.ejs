@@ -1,8 +1,12 @@
 Dear <%= data.user.name %>,
 
-Great news! Your campaign "<%= data.campaign.name %>" has met its goals and spent <%= data.campaign.metrics.spend %> of 
-the <%= data.campaign.metrics.budget %> budgeted, which will be charged for on <%= moment(data.advertiser.auto_approve_at).format("MMM DD") %>.
+Great news! Your campaign "<%= data.campaign.name %>" has met its goals with <%= data.campaign.metrics.impressions %> 
+impressions (views) and <%= data.campaign.metrics.clicks %> clicks. You can see a complete breakdown of the campaign's 
+performance here: <%= host %>/dashboard/demand/<%= data.advertiser.key %>/campaign/<%= data.campaign.id %>
 
-You can see it's performance here: <%= host %>/dashboard/demand/<%= data.advertiser.key %>/campaign/<%= data.campaign.id %>
+<% if(data.campaign.spend > 0) { %>
+The campaign spent <%= data.campaign.metrics.spend %> of the <%= data.campaign.metrics.budget %> budgeted, 
+which will be charged for on <%= moment(data.advertiser.auto_approve_at).format("MMM DD") %>.
+<% } %>
 
 -- <%= company %> Support
