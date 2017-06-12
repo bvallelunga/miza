@@ -91,42 +91,41 @@ module.exports.get_publishers = (req, res, next)->
     return metrics
     
   .then (metrics)->
-    req.campaign.getIndustries().then (industries)->
-      targeting = industries[0].targeting
-      end_date = req.campaign.end_at or new Date()
+    targeting = req.campaign.targeting
+    end_date = req.campaign.end_at or new Date()
+  
+    LIBS.models.Publisher.findAll({
+      where: {
+        is_activated: true
+      }
+      order: "name ASC"
+      include: [{
+        model: LIBS.models.Industry
+        as: "industry"
+      }]
+    }).map (publisher)->
+      impressions = metrics.impressions[publisher.key] or 0
+      clicks = metrics.clicks[publisher.key] or 0
     
-      LIBS.models.Publisher.findAll({
-        where: {
-          is_activated: true
+      if not targeting.blocked_publishers?
+        targeting.blocked_publishers = []
+    
+      if targeting.blocked_publishers.indexOf(publisher.key) == -1
+        status = "Enabled"
+      else
+        status = "Blocked"
+                
+      return {
+        id: publisher.key
+        name: publisher.name
+        status: status
+        industry: publisher.industry.name
+        metrics: {
+          impressions: numeral(impressions).format("1[,]000")
+          clicks: numeral(clicks).format("1[,]000")
+          ctr: numeral(clicks/(impressions or 1)).format("0.00%")
         }
-        order: "name ASC"
-        include: [{
-          model: LIBS.models.Industry
-          as: "industry"
-        }]
-      }).map (publisher)->
-        impressions = metrics.impressions[publisher.key] or 0
-        clicks = metrics.clicks[publisher.key] or 0
-      
-        if not targeting.blocked_publishers?
-          targeting.blocked_publishers = []
-      
-        if targeting.blocked_publishers.indexOf(publisher.key) == -1
-          status = "Enabled"
-        else
-          status = "Blocked"
-                  
-        return {
-          id: publisher.key
-          name: publisher.name
-          status: status
-          industry: publisher.industry.name
-          metrics: {
-            impressions: numeral(impressions).format("1[,]000")
-            clicks: numeral(clicks).format("1[,]000")
-            ctr: numeral(clicks/(impressions or 1)).format("0.00%")
-          }
-        }
+      }
     
   .then (publishers)->
     res.json {
@@ -199,30 +198,24 @@ module.exports.post_industries = (req, res, next)->
   
   
 module.exports.post_publishers = (req, res, next)->
-  Promise.resolve().then ->    
-    LIBS.models.CampaignIndustry.findAll({
-      where: {
-        advertiser_id: req.advertiser.id
-        campaign_id: req.campaign.id
-      }
-    }).each (industry)->
-      targeting = industry.targeting
+  Promise.resolve().then ->  
+    targeting = req.campaign.targeting
     
-      if not targeting.blocked_publishers?
-        targeting.blocked_publishers = []
-    
-      for publisher in req.body.selected
-        index = targeting.blocked_publishers.indexOf(publisher)
-        
-        if index > -1
-          targeting.blocked_publishers.splice(index, 1)
-          
-        if req.body.action == "block"
-          targeting.blocked_publishers.push publisher
+    if not targeting.blocked_publishers?
+      targeting.blocked_publishers = []
+  
+    for publisher in req.body.selected
+      index = targeting.blocked_publishers.indexOf(publisher)
       
-      industry.update({
-        targeting: targeting
-      })
+      if index > -1
+        targeting.blocked_publishers.splice(index, 1)
+        
+      if req.body.action == "block"
+        targeting.blocked_publishers.push publisher
+      
+    req.campaign.update({
+      targeting: targeting
+    })
   
   .then ->
     res.json {
