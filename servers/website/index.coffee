@@ -18,9 +18,7 @@ module.exports = (srv)->
   app.use require("compression")()
   app.use require("cookie-parser")()
   app.use auth_ignore_regex, require("csurf")({ cookie: true })
-  
-  if LIBS.redis.site?
-    app.use require('express-session')(CONFIG.cookies.session session, LIBS.redis.site.redis)
+  app.use require('express-session')(CONFIG.cookies.session session, LIBS.redis.redis)
   
   app.use LIBS.bugsnag.requestHandler
 

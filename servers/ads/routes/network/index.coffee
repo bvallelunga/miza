@@ -17,7 +17,7 @@ module.exports.script = (req, res, next)->
     }
     
   Promise.resolve().then ->
-    LIBS.redis.ads.get(cache_key).then (response)->
+    LIBS.redis.get(cache_key).then (response)->
       if CONFIG.is_prod and response? 
         try 
           response = JSON.parse response
@@ -50,7 +50,7 @@ module.exports.script = (req, res, next)->
           fromString: true
         }).code
         
-      LIBS.redis.ads.set(cache_key, JSON.stringify({
+      LIBS.redis.set(cache_key, JSON.stringify({
         script: req.miza_script
         updatedAt: new Date()
       }))
@@ -72,7 +72,7 @@ module.exports.optout = (req, res, next)->
   
   res.render "ad/optout"
   
-  LIBS.redis.ads.del "ads.script.#{req.signedCookies.session}"
+  LIBS.redis.del "ads.script.#{req.signedCookies.session}"
   LIBS.ads.event.track req, {
     type: "optout"
   }
