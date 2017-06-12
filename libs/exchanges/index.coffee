@@ -19,7 +19,6 @@ module.exports.fetch = (req, res)->
   
   new Promise (res, rej)->
     response = null
-    reject = null
   
     Promise.mapSeries waterfall, (func)->
       if response? then return null
@@ -27,15 +26,16 @@ module.exports.fetch = (req, res)->
       func(req, res).then (result)->
         response = result
         
-      .catch (error)->
-        if error? then console.log error
-        reject = error
+      .catch (error)->        
+        if LIBS.exchanges.errors.is_valid(error)
+          console.log error
+          LIBS.bugsnag.notify error
         
     .then ->    
       if response?
         return res response
             
-      return rej reject or LIBS.exchanges.errors.AD_NOT_FOUND
+      return rej LIBS.exchanges.errors.AD_NOT_FOUND
 
 
 module.exports.override = (req, res)->

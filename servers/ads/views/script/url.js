@@ -72,7 +72,6 @@ API.hash_value = function(name) {
 
 API.has_hash_value = function(name) {
   value = API.hash_value(name)
-  console.log(name, value)
   return !!value && value.length > 0
 }
 
