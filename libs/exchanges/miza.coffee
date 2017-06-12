@@ -116,16 +116,13 @@ module.exports = (req)->
     # creative will be chosen
     order_logic = ["amount", "DESC"]
     
-    if Math.random() > 0.7
-      order_logic = LIBS.models.Sequelize.fn('RANDOM')
+    if Math.random() < 0.3
+      order_logic = ["updated_at", "ASC"]
       
     final_query = {
       where: query.where
       include: query.includes
-      order: [
-        order_logic
-        ["updated_at", "ASC"]
-      ]
+      order: [ order_logic ]
     }
     
     LIBS.models.Campaign.count({
