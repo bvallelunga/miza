@@ -1,5 +1,17 @@
-<% width = Math.max(300, Math.min(730, width)); height = 300; %>
-<% if(width >= 700) { height = 115 } %>
+<% 
+  if(width >= 700) { 
+    width = 728
+    height = 90
+  
+  } else if(width < 300) {
+    width = 160 
+    height = 600
+    
+  } else {
+    width = 300 
+    height = 250
+  } 
+%>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -15,18 +27,17 @@
       .container {
         position: relative;
         width: 100%;
-        height: <%- height - 25 %>px;
+        height: <%- height %>px;
         color: black;
         text-decoration: none;
         display: inline-block;
-        border-radius: 4px;
         overflow: hidden;
         box-sizing: border-box;
         margin: 0;
         padding: 0;
         background: white;
         background-image: url("/public/bg.jpg");
-        background-size: cover;
+        background-size: 695px;
         background-repeat: no-repeat;
         background-position: left center;
         padding: 20px 20px;
@@ -36,12 +47,16 @@
       }
       
       h1 {
-        font-size: 2.2em;
+        font-size: 2em;
         color: white;
         margin: 0 0 10px 0;
         text-shadow: 1px 2px 0 rgba(0,0,0,0.2);
         font-weight: bold;
         line-height: 0.9em;
+      }
+      
+      h1 span {
+        display: none;
       }
       
       h2 {
@@ -53,7 +68,7 @@
       }
       
       .button {
-        width: 180px;
+        width: 155px;
         margin: 30px auto 0;
         display: block;
         text-transform: uppercase;
@@ -61,11 +76,11 @@
         border-radius: 4px;
         color: white;
         text-align: center;
-        padding: 15px 0;
+        padding: 14px 0;
         white-space: nowrap;
         box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.3);
         border-radius: 4px;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: bolder;
         text-transform: uppercase;
         letter-spacing: .025em;
@@ -83,7 +98,7 @@
         width: 100%;
         font-weight: lighter;
         margin-top: 8px;
-        font-size: 0.9em;
+        font-size: 0.8em;
         color: #32325D;
         text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.125);
         opacity: 0.75;
@@ -92,6 +107,7 @@
       @media (min-width: 700px) {
         .container {
           padding: 8px 10px;
+          background-size: cover;
         }
         
         .information {
@@ -125,13 +141,47 @@
           margin-top: 5px;
         }
       }
+      
+      @media (max-width: 160px) {
+        .container {
+          padding: 70px 10px 0;
+          background-size: cover;
+        }
+        
+        .information h1 {
+          font-size: 2em;
+          margin-bottom: 25px;
+          line-height: 35px;
+        }
+        
+        .information h1 span {
+          display: inline;
+        }  
+        
+        .information h2 {
+          font-size: 1em;
+          margin-bottom: 70px;
+        }
+        
+        .actionable .button {
+          margin: 0;
+          font-size: 16px;
+          padding: 12px 0;
+          width: 100%;
+        }
+        
+        .actionable .hint {
+          font-size: 0.75em;
+          margin-top: 5px;
+        }
+      }
     </style>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,400,700" rel="stylesheet">
   </head>
   <body class="<%= mobile ? "mobile" : "" %>">
     <div class="container" onclick="startVideo()">
       <div class="information">
-        <h1>Tired of ads?</h1>
+        <h1>Tired of <span>seeing </span>ads?</h1>
         <h2>24 hours of ad free browsing on <strong><%= publisher.name %></strong> after watching a brief video from our sponsor!</h2>
       </div>
       <div class="actionable">
@@ -139,7 +189,7 @@
         <div class="hint">video less than 1 minute</div>
       </div>
     </div>
-    <% include ./includes/footer %>
+    <% include ./includes/script %>
   </body>
   <script>
     function startVideo() {
