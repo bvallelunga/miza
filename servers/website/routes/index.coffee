@@ -6,6 +6,7 @@ module.exports = ->
     admin:      require "./admin"
     account:    require "./account"
     demand:     require "./demand"
+    api:        require "./api"
   }
   
   routes.router = (req, res, next)->

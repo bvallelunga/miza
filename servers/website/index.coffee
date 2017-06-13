@@ -8,7 +8,7 @@ app = express()
 module.exports = (srv)->
   # 3rd Party Ignore Routes
   auth_ignore_regex = new RegExp "^((?!#{[
-    "/admin/vendor"
+    "api", "/admin/vendor"
   ].join("|")})[\\s\\S])*$"
 
 
@@ -155,7 +155,14 @@ module.exports = (srv)->
   app.post "/dashboard/supply/:publisher/settings", routes.auth.is_authenticated, routes.supply.auth, routes.supply.settings.post
 
   # Mobile Routes
-  app.get "/mobile", routes.landing.get_mobile # isMobile 
+  app.get "/mobile", routes.landing.get_mobile
+  
+  
+  # Mobile API
+  app.get  "/api/publishers", routes.api.auth, routes.api.publishers
+  app.get  "/api/publishers/:publisher", routes.api.auth, routes.api.has_publisher, routes.api.publisher
+  app.get  "/api/publishers/:publisher/charts", routes.api.auth, routes.api.has_publisher, routes.supply.analytics.get
+  app.post "/api/login", routes.api.login
 
 
   # Error Handlers

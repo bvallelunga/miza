@@ -32,7 +32,7 @@ module.exports = (err, req, res, next)->
   
   res.status(403)
   
-  if req.xhr
+  if req.xhr or req.mobile_api
     return res.json {
       success: false
       message: message

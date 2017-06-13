@@ -129,10 +129,6 @@ module.exports.get_dashboard = (req, res, next)->
       publisher: req.publisher
       config: {
         publisher: req.publisher.key
-        keen: {
-          projectId: CONFIG.keen.projectId
-          readKey: req.publisher.config.keen
-        }
       }
     }
     

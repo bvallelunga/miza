@@ -164,7 +164,7 @@ class Dashboard
     timeframe.start = timeframe.start.toISOString()
     timeframe.end = timeframe.end.toISOString()
     
-    $.get("/dashboard/supply/#{config.publisher}/analytics/metrics", {
+    $.get(config.analytics_endpoint or "/dashboard/supply/#{config.publisher}/analytics/metrics", {
       timeframe: timeframe
     }).done (response)=>
       for name, data of response
