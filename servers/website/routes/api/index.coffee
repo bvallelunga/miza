@@ -74,6 +74,7 @@ module.exports.publisher = (req, res, next)->
   res.render("api/publisher", {
     js: req.js.renderTags("dashboard", "supply", "keen", "date-range", "api")
     css: req.css.renderTags("dashboard", "supply", "keen", "date-range", "api")
+    user_simulate: true
     config: {
       publisher: req.publisher.key
       analytics_endpoint: "/api/publishers/#{req.publisher.key}/charts?token=#{req.query.token}"
