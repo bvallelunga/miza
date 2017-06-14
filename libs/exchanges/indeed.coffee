@@ -39,6 +39,11 @@ module.exports = (req, res)->
   
   
 module.exports.listing = (query, req, start=0, sponsored_only=true)->
+  LIBS.ads.event.track req, {
+    type: "indeed.search"
+    feed: if sponsored_only then "sponsored" else "all"
+  }
+  
   ip = req.headers["CF-Connecting-IP"] or req.ip or req.ips
   lookup = geoip.lookup(ip)
   location = ""

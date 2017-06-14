@@ -4,10 +4,6 @@ module.exports = (req, res, next)->
   creative.campaign_id = "indeed"
   creative.advertiser_id = "indeed"
   
-  LIBS.ads.event.track req, {
-    type: "indeed.search"
-  }
-  
   LIBS.exchanges.indeed.listing(req.query.value, req).then (responses)->
     res.json {
       query: req.query.value 
