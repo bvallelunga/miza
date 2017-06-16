@@ -13,7 +13,6 @@ module.exports = (srv)->
     }
     
     ip: (req, res, next)->
-      console.log req.headers["x-forwarded-for"]
       req.ip_address = req.headers["CF-Connecting-IP"] or req.ip or req.ips
       next()
     

@@ -44,8 +44,7 @@ module.exports.listing = (query, req, start=0, sponsored_only=true)->
     feed: if sponsored_only then "sponsored" else "all"
   }
   
-  ip = req.headers["CF-Connecting-IP"] or req.ip or req.ips
-  lookup = geoip.lookup(ip)
+  lookup = geoip.lookup(req.ip_address)
   location = ""
   country = ""
    
@@ -63,7 +62,7 @@ module.exports.listing = (query, req, start=0, sponsored_only=true)->
       limit: 20
       start: start
       chnl: req.publisher.key
-      userip: ip
+      userip: req.ip_address
       useragent: req.headers['user-agent']
       filter: 1
       l: location

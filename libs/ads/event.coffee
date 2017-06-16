@@ -134,7 +134,7 @@ module.exports.build = (raw_data)->
     
     return {
       type: raw_data.type 
-      ip_address: raw_data.headers["CF-Connecting-IP"] or raw_data.query.ip or raw_data.ip or raw_data.ips
+      ip_address: raw_data.ip_address
       session: raw_data.session
       protected: raw_data.query.protected == "true"
       asset_url: raw_data.asset_url
@@ -265,8 +265,7 @@ module.exports.track = (req, data)->
   data.query = req.query
   data.session = req.signedCookies.session
   data.referrer = req.get("referrer")
-  data.ip = req.ip
-  data.ips = req.ips
+  data.ip_address = req.ip_address
   data.recorded_at = new Date()
   
   LIBS.queue.publish "event-queue", data

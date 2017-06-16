@@ -82,7 +82,7 @@ module.exports.browser = (agent)->
   
   
 module.exports.country = (req)->
-  ip = req.headers["CF-Connecting-IP"] or req.ip or req.ips
+  ip = req.ip_address
   lookup = geoip.lookup(ip)
   
   if lookup? and lookup.country?

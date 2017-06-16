@@ -6,7 +6,7 @@ module.exports = (req, res, next)->
     return downloader path, req.query, {
       referer: req.query.page_url
       "user-agent": req.get("user-agent")
-      "X-Forwarded-For": req.headers["CF-Connecting-IP"] or req.ip or req.ips
+      "X-Forwarded-For": req.ip_address
       "Miza-Network": "https://miza.io"
     }
     

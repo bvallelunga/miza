@@ -6,8 +6,7 @@ module.exports.track = (req, data)->
   data.publisher = req.publisher
   data.session = req.signedCookies.session
   data.headers = req.headers
-  data.ip = req.ip
-  data.ips = req.ips
+  data.ip_address = req.ip_address
   
   LIBS.queue.publish "visitor-queue", data
 
@@ -26,7 +25,7 @@ module.exports.build = (raw_data)->
     if data.device == "desktop"
       data.identifier = raw_data.session
       data.data = {
-        ip: raw_data.headers["CF-Connecting-IP"] or raw_data.query.ip or raw_data.ip or raw_data.ips 
+        ip: raw_data.ip_address 
         user_agent: raw_data.headers["user-agent"]
         width: parseInt((raw_data.query.demensions or {}).width) or undefined
         height: parseInt((raw_data.query.demensions or {}).height) or undefined
