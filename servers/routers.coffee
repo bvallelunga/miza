@@ -12,6 +12,11 @@ module.exports = (srv)->
       prefix: "/#{ads_secret}"
     }
     
+    ip: (req, res, next)->
+      console.log req.headers["X-Forwarded-For"]
+      req.ip_address = req.headers["CF-Connecting-IP"] or req.ip or req.ips
+      next()
+    
     engine: (req, res, next)->
       domains = req.hostname.split(".")
       slice = if domains.slice(-1)[0] == "localhost" then -1 else -2

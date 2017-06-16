@@ -27,6 +27,7 @@ require("../startup") true, ->
   app.use useragent.express()
 
   # Subdomain Routers
+  app.use routers.ip
   app.use routers.engine
 
   # Basic Auth For Dev Site
