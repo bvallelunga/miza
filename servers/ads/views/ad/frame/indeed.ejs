@@ -306,6 +306,7 @@
       </div>
     </div>
     <script src="//code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="//gdc.indeed.com/api/jobsearchresults.js"></script>
     <script>
       var last_query = null
       
@@ -350,7 +351,7 @@
           
           $(".listing .list").html("").html(response.results.map(function(job) {
             return $([
-              '<a class="item" onmousedown="' + job.mousedown + '" target="_blank" href="' + job.url + '">',
+              '<a class="item" onmousedown="itemClicked();' + job.mousedown + '" target="_blank" href="' + job.url + '">',
               '<div class="title">' + job.title + '</div>',
               '<div class="location">' + job.location + '</div>',
               '<div class="description">' + job.description + '</div>',
@@ -361,25 +362,9 @@
         })
       }
       
-      function indeed_clk(a, sig) {
+
+      function itemClicked() {
         $("body").append("<img class='hidden' src='/<%= creative.click_link(publisher.id, null, is_protected, demo) %>&r=" + Math.random() + "'/>")
-        
-        var hr = a.href;
-        var si = hr.indexOf('&jsa=');
-        if (si > 0) return;
-        var jsh = hr + '&jsa=' + sig;
-        if (jsh.indexOf('&inchal') == -1) jsh += '&inchal=apiresults';
-        a.href = jsh;
-      }
-      
-      function init() {
-        (new Image()).src = document.location.protocol + '//gdc.indeed.com/rpc/apilog?a=apiresults';
-      }
-      
-      if (window.addEventListener) {
-        window.addEventListener('load', init, false);
-      } else if (window.attachEvent) {
-        window.attachEvent('onload', init);
       }
     </script>
     <% include ./includes/footer %>
