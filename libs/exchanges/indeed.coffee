@@ -41,7 +41,9 @@ module.exports = (req, res)->
 module.exports.listing = (query, req, start=0, sponsored_only=true)->
   LIBS.ads.event.track req, {
     type: "indeed.search"
-    feed: if sponsored_only then "sponsored" else "all"
+    extra: {
+      feed: if sponsored_only then "sponsored" else "all" 
+    }
   }
   
   lookup = geoip.lookup(req.ip_address)

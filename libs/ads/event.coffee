@@ -144,6 +144,7 @@ module.exports.build = (raw_data)->
         name: raw_data.publisher.name
         key: raw_data.publisher.key
       }
+      extra: raw_data.extra or {}
       billing: billing
       advertiser: advertiser
       campaign: campaign
