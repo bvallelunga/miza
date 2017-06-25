@@ -40,12 +40,24 @@ module.exports = (req, res)->
   
 module.exports.listing = (query, req, start=0, sponsored_only=true)->  
   lookup = geoip.lookup(req.ip_address)
-  location = ""
-  country = ""
+  location = []
+  country = null
    
   if lookup
-    location = "#{lookup.city}, #{lookup.region}"
-    country = (lookup.country or "").toLowerCase()
+    if lookup.city
+      location.push lookup.city
+      
+    if lookup.region
+      location.push lookup.region
+      
+    if lookup.country
+      country = lookup.country.toLowerCase()
+  
+  if location.length > 0
+    location = location.split(", ")
+    
+  else
+    location = null
   
   request({
     url: "http://api.indeed.com/ads/apisearch"

@@ -1,3 +1,5 @@
+publicIP = require 'public-ip'
+
 module.exports = (srv)->
   ads_secret = Math.random().toString(33).slice(2)
 
@@ -13,8 +15,17 @@ module.exports = (srv)->
     }
     
     ip: (req, res, next)->
-      req.ip_address = req.headers["CF-Connecting-IP"] or req.ip or req.ips
-      next()
+      Promise.resolve().then ->
+        if CONFIG.is_local
+          return publicIP.v4()
+      
+        return req.headers["CF-Connecting-IP"] or req.ip or req.ips
+      
+      .then (ip)-> 
+        req.ip_address = ip
+        next()
+        
+      .catch next
     
     engine: (req, res, next)->
       domains = req.hostname.split(".")
