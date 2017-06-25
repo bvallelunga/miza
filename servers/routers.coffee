@@ -18,7 +18,8 @@ module.exports = (srv)->
       Promise.resolve().then ->
         if CONFIG.is_local
           return publicIP.v4()
-      
+          
+        console.log req.headers["HTTP_CF_CONNECTING_IP"], req.headers
         return req.headers["CF-Connecting-IP"] or req.ip or req.ips
       
       .then (ip)-> 
