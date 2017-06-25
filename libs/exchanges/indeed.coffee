@@ -38,14 +38,7 @@ module.exports = (req, res)->
       
   
   
-module.exports.listing = (query, req, start=0, sponsored_only=true)->
-  LIBS.ads.event.track req, {
-    type: "indeed.search"
-    extra: {
-      feed: if sponsored_only then "sponsored" else "all" 
-    }
-  }
-  
+module.exports.listing = (query, req, start=0, sponsored_only=true)->  
   lookup = geoip.lookup(req.ip_address)
   location = ""
   country = ""
@@ -78,5 +71,12 @@ module.exports.listing = (query, req, start=0, sponsored_only=true)->
     
       if response.results.length == 0
         return LIBS.exchanges.indeed.listing(query, req, start, false)
+        
+    LIBS.ads.event.track req, {
+      type: "indeed.search"
+      extra: {
+        feed: if sponsored_only then "sponsored" else "all" 
+      }
+    }
                 
     return response
