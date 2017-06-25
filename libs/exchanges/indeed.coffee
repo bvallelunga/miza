@@ -54,7 +54,7 @@ module.exports.listing = (query, req, start=0, sponsored_only=true)->
       country = lookup.country.toLowerCase()
   
   if location.length > 0
-    location = location.split(", ")
+    location = location.join(", ")
     
   else
     location = null
