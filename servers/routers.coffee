@@ -19,7 +19,7 @@ module.exports = (srv)->
         if CONFIG.is_local
           return publicIP.v4()
           
-        console.log req.headers["cf-connecting-ip"], req.headers
+        console.log req.headers["cf-connecting-ip"], req.ip, req.ips, req.headers
         return req.headers["cf-connecting-ip"] or req.ip or req.ips
       
       .then (ip)-> 
