@@ -55,6 +55,13 @@
       background-image: url("/imgs/landing-dark.png");
     }
 
+    .popup-menu {
+      .close-popup-menu:before,
+      .close-popup-menu:after {
+        background: white;
+      }
+    }
+
     .actionable {
       padding: 0;
       background: none;
@@ -208,11 +215,30 @@
 
     .close-popup-menu {
       position: absolute;
-      right: 5px;
-      top: 7px;
-      width: 29px;
-      font-size: 22px;
-      font-weight: 600;
+      right: 0;
+      top: 0;
+      width: 40px;
+      height: 40px;
+    }
+
+    .close-popup-menu:before,
+    .close-popup-menu:after {
+      content: '';
+      background: #666;
+      border-radius: 1px;
+      height: 2px;
+      top: 18px;
+      left: 10px;
+      right: 10px;
+      position: absolute;
+    }
+
+    .close-popup-menu:before {
+      transform: rotate(45deg);
+    }
+
+    .close-popup-menu:after {
+      transform: rotate(135deg);
     }
 
     .advertisers {
