@@ -264,7 +264,7 @@
       }
 
       a {
-        padding: 0 16px 5px 25px;
+        padding: 3px 25px;
         font-size: 20px;
         font-weight: bold;
         line-height: 50px;
@@ -724,9 +724,9 @@
 
 @media only screen and (max-width: 1000px) {
   .container {
-    // min-width: 470px;
     width: 100%;
   }
+
   &.dark-navigation {
     .navigation {
       .right,
@@ -734,6 +734,7 @@
         color: #666666;
       }
     }
+
     .actionable
     .form {
       button {
@@ -741,23 +742,38 @@
       }
     }
   }
+
   .hero {
     padding: 20px 60px;
+
+    .popup-menu {
+      .advertiser-list,
+      .publisher-list {
+        a {
+          font-size: 18px;
+          padding: 0 25px;
+        }
+      }
+    }
+
     .navigation {
       .left {
         .shortcuts {
           display: none;
         }
       }
+
       .right {
         .nav-button {
           display: block;
         }
+
         .fixed-side-nav {
           display: none;
         }
       }
     }
+
     .examples {
       iframe:only-child {
         right: 0px !important;
@@ -765,10 +781,12 @@
         display: relative;
       }
     }
+
     .header {
       h1 {
         font-size: 2.5em;
       }
+
       h2 {
         font-size: 1.8em
       }
