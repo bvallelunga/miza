@@ -10,7 +10,7 @@ class Dashboard
     @$table = $(".display.industries .table-body table").show()
   
     @bindings()
-    @build_charts()
+    #@build_charts()
     @update()
     
   
@@ -130,6 +130,9 @@ class Dashboard
         
   
   update: ->
+    # TODO: Uncomment when keen comes back online
+    return false
+  
     @$tables.forEach (tables)->
       $.get(tables[0].data("url")).done (response)=>
         if not response.success
@@ -138,8 +141,7 @@ class Dashboard
         tables[1].clear() 
         tables[1].rows.add(response.results)
         tables[1].draw()    
-  
-  
+
     $.get("/dashboard/demand/#{config.advertiser}/campaign/#{config.campaign}/charts").done (response)=>
       for name, data of response
         chart = @charts[name]
@@ -154,5 +156,5 @@ class Dashboard
 $ ->
   if not $(".container").hasClass "campaign-dashboard"
     return
-
+  
   dashboard = new Dashboard()
