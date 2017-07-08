@@ -78,6 +78,19 @@ module.exports.get_dashboard = (req, res, next)->
     dashboard: "dashboard"
   }
 
+
+module.exports.get_mobile_dashboard = (req, res, next)->
+  if not (req.user.is_admin or req.user.type == "all")
+    return res.redirect "/m/dashboard/#{req.user.type}"
+
+  # todo update
+  res.render "landing/dashboard", {
+    title: "Dashboard"
+    js: req.js.renderTags "fa"
+    css: req.css.renderTags "admin"
+    dashboard: "dashboard"
+  }
+
 module.exports.get_mobile = (req, res, next)->
   res.render "landing/mobile", {
     js: req.js.renderTags "fa"
