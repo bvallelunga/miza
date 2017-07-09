@@ -42,6 +42,75 @@
       <% } %>
     </div>
   </div>
+  <div class="right nav">
+    <div class="fa fa-bars fa-2x nav-button"></div>
+  </div>
+  <div class="menu">
+    <a class="close-menu"></a>
+    <div class="menu-links">
+      <% if(type == "demand") { %>
+        <a href="<%= dashboard_path %>/docs" class="<%= isActive(dashboard, "docs") %>">
+          <span class="fa fa-th-list"></span>
+          API Docs
+        </a>
+        <a href="<%= dashboard_path %>/campaigns" class="<%= isActive(dashboard, "campaigns") %> <%= isActive(dashboard, "campaign") %>">
+          <span class="fa fa-th-large"></span>
+          Campaigns
+        </a>
+        <a href="<%= dashboard_path %>/billing" class="<%= isActive(dashboard, "billing") %>">
+          <span class="fa fa-bank"></span>
+          Billing
+        </a>
+        <a href="<%= dashboard_path %>/settings" class="<%= isActive(dashboard, "settings") %> <%= isActive(dashboard, "members") %>">
+          <span class="fa fa-cog"></span>
+          Settings
+        </a>
+      <% } else if(type == "supply") {  %>
+        <a href="<%= dashboard_path %>/setup" class="<%= isActive(dashboard, "setup") %> <%= isActive(dashboard, "setup_mobile") %>">
+          <span class="fa fa-bars"></span>
+          Setup
+        </a>
+        <a href="<%= dashboard_path %>/analytics" class="<%= isActive(dashboard, "analytics") %>">
+          <span class="fa fa-pie-chart"></span>
+          Analytics
+        </a>
+        <a href="<%= dashboard_path %>/payouts" class="<%= isActive(dashboard, "payouts") %>">
+          <span class="fa fa-bank"></span>
+          Payouts
+        </a>
+        <a href="<%= dashboard_path %>/settings" class="<%= isActive(dashboard, "settings") %> <%= isActive(dashboard, "members") %>">
+          <span class="fa fa-cog"></span>
+          Settings
+        </a>
+      <% } %>
+
+      <% if(user) { %>
+        <% if(user.is_admin) { %>
+          <a href="/admin" class="<%= isActive(dashboard, "admin") %>">
+            Admin Center
+          </a>
+        <% } %>
+        <% if(user.is_admin || user.type == "all" || dashboard == "account") { %>
+          <a href="/dashboard" class="<%= isActive(dashboard, "dashboard") %>">
+            Dashboard
+          </a>
+          <span class="spacer"></span>
+        <% } %>
+        <% if(!(user.is_admin)) { %>
+          <a href="/account" class="<%= isActive(dashboard, "account") %>">
+            Account
+          </a>
+        <% } %>
+        <a href="/logout">
+          Logout
+        </a>
+      <% } else { %>
+        <a href="/login">Log In</a>
+        <span class="spacer"></span>
+        <a href="#" onclick="Intercom('show')">Contact Us</a>
+      <% } %>
+    </div>
+  </div>
   <div class="right links">
     <% if(user) { %>
       <% if(user.is_admin) { %>

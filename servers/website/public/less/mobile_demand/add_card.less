@@ -1,0 +1,96 @@
+@import '../libs/all';
+@import '../global/colors';
+
+.container.add_card-dashboard {
+  
+  .warning.orange {
+    display: none;
+  }
+  
+  .card { 
+    width: 100%;
+       
+    .view {
+      width: 49%;
+      
+      &.card-wrapper {
+        transform: scale(0.80);
+        margin-top: -20px;
+      }
+    }
+    
+    .header {
+      color: @purple;
+      font-size: 1.5em;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.2);
+      font-family: "Ubuntu";
+      font-weight: bold;
+      font-size: 4em;
+      margin-bottom: 10px;
+      display: block;
+      text-transform: uppercase;
+    }
+    
+    .subheader {
+      color: @text;
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 50px;
+    }
+    
+    .error {
+      text-align: center;
+      color: @red;
+      margin-top: 10px;
+    }
+
+    
+    input:not([type="checkbox"]):not([type="radio"]), .input {
+      border-top-width: 0;
+      font-size: 1.1em;
+      .border-radius(0);
+      
+      &.only {
+        border-top-width: 1px;
+        margin-bottom: 15px;
+        .border-radius(5px);
+      }
+      
+      &.top {
+        margin: 0;
+        border-top-width: 1px;
+        .border-radius(5px 5px 0 0);
+      }
+      
+      &.bottom {
+        margin-bottom: 15px;
+        .border-radius(0 0 5px 5px);
+      }
+    }
+    
+    .stripe {
+      width: 115px;
+      margin: 40px auto 0;
+      display: block;
+      
+      img {
+        width: 100%;
+      }
+    }
+  }
+  
+  .split input:not([type="checkbox"]):not([type="radio"]) {
+    width: 50%;
+    display: inline-block;
+    
+    &.left {
+      .border-radius(0 0 0 5px);
+      border-right: none;
+    }
+    
+    &.right {
+      .border-radius(0 0 5px 0);
+    }
+  }
+
+}

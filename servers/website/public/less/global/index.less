@@ -207,6 +207,75 @@ body {
         }
       }
     }
+
+    .nav {
+      display: none;
+
+      .nav-button {
+        color: white;
+        margin-top: 3px;
+      }
+    }
+
+    .menu {
+      background: white;
+      position: fixed;
+      top: 0px;
+      right: -360px;
+      bottom: 0px;
+      width: 360px;
+      box-shadow: 0px 10px 40px -5px rgba(37, 45, 51, 0.25);
+      z-index: 100;
+      transition: all ease-in .2s;
+
+      .menu-links {
+        flex-grow: 1;
+        padding: 40px 30px;
+        text-align: center;
+
+        a {
+          font-size: 20px;
+          letter-spacing: -0.1px;
+          display: block;
+          padding: 15px 0;
+          font-weight: bold;
+
+          &.active {
+            color: @red;
+          }
+        }
+      }
+
+      .close-menu {
+        color: black;
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        width: 40px;
+        height: 40px;
+      }
+
+      .close-menu:before,
+      .close-menu:after {
+        content: '';
+        background: #666;
+        border-radius: 1px;
+        height: 2px;
+        top: 18px;
+        left: 10px;
+        right: 10px;
+        position: absolute;
+      }
+
+      .close-menu:before {
+        transform: rotate(45deg);
+      }
+
+      .close-menu:after {
+        transform: rotate(135deg);
+      }
+    }
+
   }
 
   footer {
@@ -474,6 +543,16 @@ body {
 @media only screen and (max-width: 1000px) {
   body {
     width: 100%;
-    // min-width: 0;
+    min-width: 0;
+
+    header.navigation {
+        .links {
+          display: none;
+        }
+
+        .nav {
+          display: block;
+        }
+    }
   }
 }

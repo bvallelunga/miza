@@ -18,8 +18,8 @@ module.exports.get_root = (req, res, next)->
 
 module.exports.fetch_data = (req, res, next)->
   req.data = {
-    js: [ "demand", "dashboard", "fa", "tooltip" ]
-    css: [ "demand", "dashboard", "tooltip"  ]
+    js: [ "mobile_demand", "mobile_dashboard", "fa", "tooltip" ]
+    css: [ "mobile_demand", "mobile_dashboard", "tooltip"  ]
     advertisers: req.user.advertisers
   }
   req.dashboard = req.params.dashboard or null
@@ -72,4 +72,4 @@ module.exports.get_dashboard = (req, res, next)->
 
   data.js = req.js.renderTags.apply(req.js, data.js)
   data.css = req.css.renderTags.apply(req.css, data.css)
-  res.render "demand/index", data
+  res.render "mobile_demand/index", data
