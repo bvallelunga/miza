@@ -19,7 +19,7 @@ module.exports = (srv)->
   app.use require("cookie-parser")()
   app.use auth_ignore_regex, require("csurf")({ cookie: true })
   app.use require('express-session')(CONFIG.cookies.session session, LIBS.redis.redis)
-  
+
   app.use LIBS.bugsnag.requestHandler
 
   # Public Routes
@@ -141,6 +141,35 @@ module.exports = (srv)->
   app.post "/dashboard/demand/:advertiser/add_card/:campaign", routes.auth.is_authenticated, routes.demand.auth, routes.demand.add_card.post_add
 
 
+  # Dashboard Mobile Routes
+  app.get "/m/dashboard/", routes.auth.is_authenticated, routes.landing.get_mobile_dashboard
+
+  # Demand Mobile Partner Routes
+  app.get  "/m/dashboard/demand", routes.auth.is_authenticated, routes.mdemand.get_root
+  app.get  "/m/dashboard/demand/new", routes.auth.is_authenticated, routes.mdemand.create.get
+  app.get  "/m/dashboard/demand/:advertiser", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.get_root
+  app.get  "/m/dashboard/demand/:advertiser/:dashboard", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.fetch_data, routes.mdemand.get_dashboard
+  app.get  "/m/dashboard/demand/:advertiser/campaign/:campaign/industries", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.campaign.fetch, routes.mdemand.campaign.get_industries
+  app.get  "/m/dashboard/demand/:advertiser/campaign/:campaign/publishers", routes.auth.is_admin, routes.mdemand.auth, routes.mdemand.campaign.fetch, routes.mdemand.campaign.get_publishers
+  app.get  "/m/dashboard/demand/:advertiser/members/invite/:invite/remove", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.members.remove_invite
+  app.get  "/m/dashboard/demand/:advertiser/members/member/:member/remove", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.members.remove_member
+  app.get  "/m/dashboard/demand/:advertiser/members/member/:member/owner", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.members.owner_member
+  app.get  "/m/dashboard/demand/:advertiser/campaign/:campaign/charts", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.campaign.fetch, routes.mdemand.campaign.get_charts
+  app.get  "/m/dashboard/demand/:advertiser/:dashboard/:subdashboard", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.fetch_data, routes.mdemand.get_dashboard
+  app.post "/m/dashboard/demand/new", routes.auth.is_authenticated, routes.mdemand.create.post
+  app.post "/m/dashboard/demand/:advertiser/campaigns/create", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.campaigns.builder.create
+  app.post "/m/dashboard/demand/:advertiser/campaigns/create/scrape", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.campaigns.builder.scrape
+  app.post "/m/dashboard/demand/:advertiser/campaigns/list", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.campaigns.post_list
+  app.post "/m/dashboard/demand/:advertiser/campaigns/update", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.campaigns.post_updates
+  app.post "/m/dashboard/demand/:advertiser/campaign/:campaign", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.campaign.fetch, routes.mdemand.campaign.post_update
+  app.post "/m/dashboard/demand/:advertiser/campaign/:campaign/industries", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.campaign.fetch, routes.mdemand.campaign.post_industries
+  app.post "/m/dashboard/demand/:advertiser/campaign/:campaign/publishers", routes.auth.is_admin, routes.mdemand.auth, routes.mdemand.campaign.fetch, routes.mdemand.campaign.post_publishers
+  app.post "/m/dashboard/demand/:advertiser/billing/charges", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.billing.post_charges
+  app.post "/m/dashboard/demand/:advertiser/settings", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.settings.post_update
+  app.post "/m/dashboard/demand/:advertiser/members/add", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.members.post_add
+  app.post "/m/dashboard/demand/:advertiser/add_card/:campaign", routes.auth.is_authenticated, routes.mdemand.auth, routes.mdemand.add_card.post_add
+
+
   # Publisher Routes
   app.get  "/dashboard/supply", routes.auth.is_authenticated, routes.supply.get_root
   app.get  "/dashboard/supply/new", routes.auth.is_authenticated, routes.supply.create.get
@@ -154,10 +183,11 @@ module.exports = (srv)->
   app.post "/dashboard/supply/:publisher/members/add", routes.auth.is_authenticated, routes.supply.auth, routes.supply.members.add
   app.post "/dashboard/supply/:publisher/settings", routes.auth.is_authenticated, routes.supply.auth, routes.supply.settings.post
 
+
   # Mobile Routes
   app.get "/mobile", routes.landing.get_mobile
-  
-  
+
+
   # Mobile API
   app.get  "/api/publishers", routes.api.auth, routes.api.publishers
   app.get  "/api/publishers/:publisher", routes.api.auth, routes.api.has_publisher, routes.api.publisher

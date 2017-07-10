@@ -1,0 +1,140 @@
+@import '../libs/all';
+@import '../global/colors';
+
+.container.campaigns-listing-dashboard {
+
+  .display {
+    min-height: 450px;
+  }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #F1F5F9;
+    z-index: 100000;
+    border: none;
+    padding: 30px 50px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    .border-radius(0);
+    .box-sizing(border-box);
+
+    .close {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      font-size: 2em;
+      color: white;
+      cursor: pointer;
+      background: #BBBBBB;
+      width: 50px;
+      height: 50px;
+      padding-top: 4px;
+      text-align: center;
+      .border-radius(50%);
+    }
+
+    .title {
+      color: @text_weak;
+      font-size: 2em;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .listings {
+      display: block;
+      margin: 40px auto 0;
+      width: 100%;
+    }
+
+    .list {
+      width: calc(~'100vw - 50px');
+      padding: 20px 10px;
+      float: left;
+      // .clearfix();
+
+      .header {
+        display: block;
+        font-weight: bold;
+        margin-left: 15px;
+        font-size: 1.25em;
+      }
+
+      .list-container {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        margin-left: -50px;
+      }
+
+      ::-webkit-scrollbar {
+        width: 0px;  /* remove scrollbar space */
+        background: transparent;  /* optional: just make scrollbar invisible */
+      }
+
+      .list-wrapper {
+          width: 1000px;
+      }
+
+      a {
+        position: relative;
+        cursor: pointer;
+        width: 175px;
+        height: 148px;
+        padding: 12px 15px;
+        margin: 15px 15px;
+        text-align: center;
+        background: white;
+        border: solid 1px rgba(0,0,0,0.1);
+        display: inline-block;
+        float: left;
+        .border-radius(4px);
+        .box-shadow(0 3px 6px 1px rgba(0,0,0,0.03));
+
+        &:hover {
+          border-color: @blue;
+        }
+
+        .yellow {
+          color: #FFFC00 !important;
+          text-shadow: -1px 0 rgba(0,0,0,0.5), 0 1px rgba(0,0,0,0.5), 1px 0 rgba(0,0,0,0.5), 0 -1px rgba(0,0,0,0.5);
+        }
+
+        .fa, .kickstarter, .indiegogo {
+          margin: 10px 0 25px;
+          font-size: 3em;
+          color: rgba(0,0,0,0.15);
+
+          &.kickstarter {
+            font-family: "Ubuntu";
+            font-weight: bolder;
+            font-size: 2.8em;
+            color: #2BDE73;
+            margin-bottom: 22px;
+          }
+
+          &.indiegogo {
+            font-family: "Ubuntu";
+            font-weight: bolder;
+            font-size: 2.8em;
+            color: #EB1478;
+            margin-bottom: 22px;
+          }
+        }
+
+        .subname {
+          margin-top: 2px;
+          font-size: 1em;
+          font-weight: lighter;
+        }
+
+        .name {
+          font-size: 1.2em;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

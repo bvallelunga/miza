@@ -1,0 +1,18 @@
+<div class="display full builder scrape-done">
+  <% include ./form_start %>  
+  <% include ./creative_ad_preview %> 
+  <% include ./form_campaign %> 
+  <% include ./form_budget %> 
+  <% include ./targeting_social %>  
+  <% include ./finish_standard %>
+  
+  <input type="hidden" class="creative-link" name="creative[link]" required/>
+  <input type="hidden" class="creative-config" name="creative[config]" value="{}"/>
+  <input type="hidden" class="creative-format" name="creative[format]" value="" required/>
+  <input type="hidden" class="creative-size" name="creative[size]" value="" />
+  <input type="hidden" name="creative[trackers]" value=""/>
+  <input type="hidden" name="creative[image_url]" value=""/>
+  <input type="hidden" name="creative[disable_incentive]" value=""/>
+  
+  <% include ./form_end %>
+</div>
