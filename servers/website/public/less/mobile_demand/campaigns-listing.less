@@ -64,6 +64,7 @@
       }
 
       .list-container {
+        -webkit-overflow-scrolling: touch;
         overflow-x: scroll;
         overflow-y: hidden;
         margin-left: -50px;
@@ -75,10 +76,12 @@
       }
 
       .list-wrapper {
+          -webkit-overflow-scrolling: touch;
           width: 1000px;
       }
 
       a {
+        -webkit-overflow-scrolling: touch;
         position: relative;
         cursor: pointer;
         width: 175px;
@@ -92,15 +95,6 @@
         float: left;
         .border-radius(4px);
         .box-shadow(0 3px 6px 1px rgba(0,0,0,0.03));
-
-        &:hover {
-          border-color: @blue;
-        }
-
-        .yellow {
-          color: #FFFC00 !important;
-          text-shadow: -1px 0 rgba(0,0,0,0.5), 0 1px rgba(0,0,0,0.5), 1px 0 rgba(0,0,0,0.5), 0 -1px rgba(0,0,0,0.5);
-        }
 
         .fa, .kickstarter, .indiegogo {
           margin: 10px 0 25px;

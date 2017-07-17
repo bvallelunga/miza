@@ -38,7 +38,7 @@ class Dashboard
       $spinner = $(e.currentTarget).find(".fa-spin").show()
       $original = $(e.currentTarget).find(":not(.fa-spin)").hide()
 
-      $.post("/dashboard/demand/#{config.advertiser}/campaigns/update", {
+      $.post("/m/dashboard/demand/#{config.advertiser}/campaigns/update", {
         _csrf: config.csrf
         action: action
         campaigns: campaigns
@@ -73,7 +73,7 @@ class Dashboard
       }, {
         'targets': 1,
         'render': ( data, type, row, meta )->
-          return "<a href='/dashboard/demand/#{config.advertiser}/campaign/#{row.id}'>#{data}</a>"
+          return "<a href='/m/dashboard/demand/#{config.advertiser}/campaign/#{row.id}'>#{data}</a>"
       }, {
         'targets': 2,
         'render': ( data, type, row, meta )->
@@ -96,7 +96,7 @@ class Dashboard
   update: (dates, finished=(-> 1))->
     @dates = dates
 
-    $.post("/dashboard/demand/#{config.advertiser}/campaigns/list", {
+    $.post("/m/dashboard/demand/#{config.advertiser}/campaigns/list", {
       _csrf: config.csrf
       dates: dates
     }).done (response)=>

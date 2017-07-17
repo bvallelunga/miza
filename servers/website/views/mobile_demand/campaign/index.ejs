@@ -1,8 +1,6 @@
-<a class="dashboard-back fa fa-arrow-left" href="/dashboard/demand/<%= advertiser.key %>/campaigns"></a>
-
 <% if(campaign.status == "rejected") { %>
 <div class="warning" style="padding-left: 20px; padding-right: 20px; text-align: left;">
-  MODERATOR NOTES: 
+  MODERATOR NOTES:
   <%= campaign.config.rejection_notes %>
   <br><br>
   Please create a new campaign with the appropriate fixes. We
@@ -11,8 +9,8 @@
 <% } %>
 
 <div class="display full">
-  <table class="top-bar"> 
-    <tr>   
+  <table class="top-bar">
+    <tr>
       <td class="section" style="max-width:180px;">
         <div class="decription">
           Name
@@ -98,8 +96,8 @@
 </div>
 
 <div class="display full">
-  <table class="top-bar"> 
-    <tr> 
+  <table class="top-bar">
+    <tr>
       <td class="section">
         <div class="decription">Progress</div>
         <div class="title cap"><%= campaign.metrics.progress %></div>
@@ -187,8 +185,8 @@
 </div>
 
 <div class="display full creative-container">
-  <table class="top-bar creative-info left"> 
-    <tr> 
+  <table class="top-bar creative-info left">
+    <tr>
       <td class="section">
         <div class="decription">Creative</div>
         <div class="title capitalize"><%= campaign.creatives[0].format %></div>
