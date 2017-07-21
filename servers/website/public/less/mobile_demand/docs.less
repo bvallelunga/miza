@@ -2,81 +2,80 @@
 @import '../global/colors';
 
 .container.docs-dashboard {
-  .sidebar {
-    position: fixed;
-  }
-
-
   .display {
     padding: 20px;
-    
+
+    .mini-table {
+      overflow: auto;
+    }
+
     .section {
       padding-top: 60px;
     }
-    
+
     h2 {
       font-size: 2em;
     }
-    
-    h3 {      
+
+    h3 {
       span {
         color: @blue;
         padding-left: 5px;
       }
     }
-    
+
     & > span {
       color: #E6525A;
     }
-    
+
     & > span, p {
       font-size: 1.1em;
       line-height: 1.8em;
     }
-    
+
     img {
       width: 100%;
       margin: 10px 0;
     }
-    
+
     p {
-      margin: 15px 0; 
-      display: inline-block; 
-      
+      margin: 15px 0;
+      display: inline-block;
+
       span {
         color: #D0456F;
         padding: 1px 5px;
         margin: 0 3px;
         font-size: 0.85em;
-        border: solid 1px rgba(0,0,0,0.05); 
+        border: solid 1px rgba(0,0,0,0.05);
         background: rgba(0,0,0,0.02);
         .border-radius(3px);
       }
     }
-    
+
     .mini-table table {
       max-width: 100%;
-      
+
       tbody {
         text-align: left;
-        
+
         a {
           color: @blue;
-          
+
           &:hover {
             text-decoration: underline;
           }
         }
       }
-      
+
       pre code {
         width: 100%;
       }
     }
-    
+
     pre {
       display: block;
-      
+
       code {
         font-size: 1em;
         display: block;
@@ -87,7 +86,7 @@
         overflow-x: scroll;
         font-weight: normal;
       }
-      
+
     }
   }
 }

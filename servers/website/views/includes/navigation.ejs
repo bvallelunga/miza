@@ -52,6 +52,22 @@
         <a href="<%= dashboard_path %>/docs" class="<%= isActive(dashboard, "docs") %>">
           API Docs
         </a>
+        <!-- <% if( isActive(dashboard, "docs") ) { %>
+          <div class="sub-menu-links">
+            <a href="<%= dashboard_path %>/docs#intro" class="sub-link">
+              1. Introduction
+            </a>
+            <a href="<%= dashboard_path %>/docs#request" class="sub-link">
+              2. API Request
+            </a>
+            <a href="<%= dashboard_path %>/docs#response" class="sub-link">
+              3. API Response
+            </a>
+            <a href="<%= dashboard_path %>/docs#formats" class="sub-link">
+              4. Ad Formats
+            </a>
+          </div>
+        <% } %> -->
         <a href="<%= dashboard_path %>/campaigns" class="<%= isActive(dashboard, "campaigns") %> <%= isActive(dashboard, "campaign") %>">
           Campaigns
         </a>
