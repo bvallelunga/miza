@@ -1,7 +1,7 @@
-module.exports.fetch = (req, res, next)->  
+module.exports.fetch = (req, res, next)->
   if req.subdashboard
-    return res.redirect "/dashboard/demand/#{req.advertiser.key}/billing"
-  
+    return res.redirect "/m/dashboard/demand/#{req.advertiser.key}/billing"
+
   Promise.resolve().then ->
     req.advertiser.getTransfers({
       order: [
@@ -9,7 +9,7 @@ module.exports.fetch = (req, res, next)->
       ]
     }).then (transfers)->
       req.advertiser.transfers = transfers
-    
+
   .then ->
     req.advertiser.getCampaigns({
       where: {
@@ -23,15 +23,15 @@ module.exports.fetch = (req, res, next)->
       }]
     }).then (campaigns)->
       req.advertiser.campaigns = campaigns
-  
+
   .then(-> next()).catch next
-  
-  
+
+
 
 module.exports.post_charges = (req, res, next)->
   req.advertiser.approve_spending().then ->
     res.json({
       sucess: true
     })
-  
+
   .catch next

@@ -1,7 +1,7 @@
 module.exports.fetch = (req, res, next)->
   req.data.dashboard_width = "medium"
   req.data.js.push "modal"
-  
+
   Promise.props({
     members: req.advertiser.getMembers()
     invites: req.advertiser.getInvites()
@@ -9,14 +9,14 @@ module.exports.fetch = (req, res, next)->
     req.data.members = data.members
     req.data.invites = data.invites
     next()
-    
+
   .catch next
 
 
 module.exports.post_add = (req, res, next)->
   if not req.user.is_admin and req.user.id != req.advertiser.owner_id
     return next "Ownership access is required!"
-  
+
   email = req.body.email.toLowerCase().trim()
 
   LIBS.models.User.findOne({
@@ -26,7 +26,7 @@ module.exports.post_add = (req, res, next)->
   }).then (user)->
     if user?
       return req.advertiser.addMember user
-      
+
     LIBS.models.UserAccess.findOrCreate({
       where: {
         email: email
@@ -35,26 +35,26 @@ module.exports.post_add = (req, res, next)->
       defaults: {
         admin_contact_id: req.advertiser.admin_contact_id
       }
-    }).then (data)->  
+    }).then (data)->
       new_record = data[1]
-          
+
       if not new_record
         return Promise.resolve()
-        
+
       LIBS.emails.send "advertiser_invite", [{
         to: email
         data: {
           user: req.user
           advertiser: req.advertiser
         }
-      }]  
+      }]
   .then ->
     res.json {
       success: true
       next: "/dashboard/demand/#{req.advertiser.key}/members"
-    }  
-    
-  .catch next 
+    }
+
+  .catch next
 
 
 module.exports.remove_invite = (req, res, next)->
@@ -67,27 +67,26 @@ module.exports.remove_invite = (req, res, next)->
     }
   }).then ->
     res.redirect "/dashboard/demand/#{req.advertiser.key}/members"
-    
-  .catch next 
-    
+
+  .catch next
+
 
 module.exports.remove_member = (req, res, next)->
   if not req.user.is_admin and (req.user.id != req.advertiser.owner_id or req.params.member == req.advertiser.owner_id)
     return res.redirect "/dashboard/demand/#{req.advertiser.key}/members"
-  
+
   req.advertiser.removeMember(req.params.member).then ->
     res.redirect "/dashboard/demand/#{req.advertiser.key}/members"
-    
-  .catch next 
-  
-  
+
+  .catch next
+
+
 module.exports.owner_member = (req, res, next)->
   if not req.user.is_admin
     return res.redirect "/dashboard/demand/#{req.advertiser.key}/members"
-  
+
   req.advertiser.owner_id = req.params.member
   req.advertiser.save().then ->
     res.redirect "/dashboard/demand/#{req.advertiser.key}/members"
-    
-  .catch next 
 
+  .catch next
