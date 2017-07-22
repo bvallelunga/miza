@@ -2,12 +2,12 @@
 <% include ../includes/navigation %>
 
 <div class="container <%= dashboard + (!!subdashboard ? ("-" + subdashboard) : "") %>-dashboard">
-  <!-- <% notices.forEach(function(notice) { %>
+  <% notices.forEach(function(notice) { %>
     <div class="warning orange"><%= notice.message %></div>
   <% }) %>
 
   <% include ./payment_warning %>
-  <% include ./credits_notice %> -->
+  <% include ./credits_notice %>
   <%- include("./" + dashboard + "/index.ejs") %>
   <div class="clear"></div>
 </div>
