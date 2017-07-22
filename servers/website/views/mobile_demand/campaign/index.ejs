@@ -9,9 +9,12 @@
 <% } %>
 
 <div class="display full">
+  <div class="header">
+    <h1>Campaign Information
+  </div>
   <table class="top-bar">
     <tr>
-      <td class="section" style="max-width:180px;">
+      <td class="section">
         <div class="decription">
           Name
           <% if(campaign.config.is_house == true) { %>
@@ -25,9 +28,9 @@
         <div class="title uppercase">
           <%= campaign.type %>
           <% if(campaign.type == "cpm") { %>
-            <span class="info fa fa-info-circle tooltip" title="Cost per thousand impressions."></span>
+            <!-- <span class="info fa fa-info-circle tooltip" title="Cost per thousand impressions."></span> -->
           <% } else if(campaign.type == "cpc") { %>
-            <span class="info fa fa-info-circle tooltip" title="Cost per individual click."></span>
+            <!-- <span class="info fa fa-info-circle tooltip" title="Cost per individual click."></span> -->
           <% } %>
         </div>
       </td>
@@ -36,28 +39,11 @@
         <div class="title cap">
           <%= campaign.status %>
           <% if(campaign.status == "pending") { %>
-            <span class="info fa fa-info-circle tooltip" title="Your campaign is awaiting approval<br>from our moderation team."></span>
+            <!-- <span class="info fa fa-info-circle tooltip" title="Your campaign is awaiting approval<br>from our moderation team."></span> -->
           <% } else if(campaign.status == "queued") { %>
-            <span class="info fa fa-info-circle tooltip" title="Campaign will go live on the designated start date (UTC)."></span>
+            <!-- <span class="info fa fa-info-circle tooltip" title="Campaign will go live on the designated start date (UTC)."></span> -->
           <% } else if(campaign.status == "rejected") { %>
-            <span class="info fa fa-info-circle tooltip" title="Campaign has been rejected. Please<br>see the moderators notes."></span>
-          <% } %>
-        </div>
-      </td>
-      <td class="section">
-        <div class="decription">Bid</div>
-        <div class="title orange"><%= campaign.metrics.amount %></div>
-      </td>
-      <td class="section">
-        <div class="decription">Budget</div>
-        <div class="title blue"><%= campaign.metrics.budget %></div>
-      </td>
-      <td class="section">
-        <div class="decription">Spend</div>
-        <div class="title green">
-          <%= campaign.metrics.spend %>
-          <% if(campaign.credits > 0) { %>
-            <span class="info fa fa-info-circle tooltip" title="Your spend has been discounted by <%= campaign.metrics.credits %>"></span>
+            <!-- <span class="info fa fa-info-circle tooltip" title="Campaign has been rejected. Please<br>see the moderators notes."></span> -->
           <% } %>
         </div>
       </td>
@@ -91,23 +77,38 @@
           <% } %>
         </div>
       </td>
-    </tr>
-  </table>
-</div>
-
-<div class="display full">
-  <table class="top-bar">
-    <tr>
       <td class="section">
-        <div class="decription">Progress</div>
-        <div class="title cap"><%= campaign.metrics.progress %></div>
+        <div class="box">
+          <div class="title">
+            Spend
+          </div>
+          <span class="main">
+            <%= campaign.metrics.spend %>
+          </span>
+          <span class="side">
+            /<%= campaign.metrics.budget %>
+          </span>
+        </div>
       </td>
       <td class="section">
-        <div class="decription">
-          Impressions
-          <span class="info fa fa-info-circle tooltip" title="How many people viewed the ad."></span>
+        <div class="box">
+          <div class="title">
+            Progress
+          </div>
+          <span class="main">
+            <%= campaign.metrics.progress %>
+          </span>
         </div>
-        <div class="title"><%= campaign.metrics.impressions %></div>
+      </td>
+      <td class="section">
+        <div class="box">
+          <div class="title">
+            Impressions
+          </div>
+          <span class="main">
+            <%= campaign.metrics.impressions %>
+          </span>
+        </div>
       </td>
       <td class="section">
         <div class="decription">Clicks</div>
@@ -115,7 +116,7 @@
       </td>
       <td class="section">
         <div class="decription">
-          CTR <span class="info fa fa-info-circle tooltip" title="Click through rate. How many people<br>viewed the ad and then clicked."></span>
+          <!-- CTR <span class="info fa fa-info-circle tooltip" title="Click through rate. How many people<br>viewed the ad and then clicked."></span> -->
         </div>
         <div class="title cap"><%= campaign.metrics.ctr %></div>
       </td>
@@ -129,12 +130,6 @@
       </td>
     </tr>
   </table>
-  <br><br>
-  <div class="metric full main">
-    <div class="chart-wrapper">
-      <div class="chart impressions"></div>
-    </div>
-  </div>
 </div>
 
 <div class="display full table">
@@ -185,7 +180,7 @@
 </div>
 
 <div class="display full creative-container">
-  <table class="top-bar creative-info left">
+  <table class="top-bar creative-info">
     <tr>
       <td class="section">
         <div class="decription">Creative</div>
@@ -213,7 +208,7 @@
       </td>
     </tr>
   </table>
-  <div class="simulator-container right">
+  <div class="simulator-container">
     <div><iframe class="simulator-iframe right" data-src="<%= campaign.creatives[0].demo_frame() %>"></iframe></div>
   </div>
 </div>

@@ -40,7 +40,7 @@ module.exports.is_authenticated = (req, res, next)->
   if not req.user?
     return res.redirect "/login?next=#{req.originalUrl}"
 
-  if req.useragent.isMobile and !(req.path.startsWith("/m/"))
+  if req.useragent.isMobile and (req.path.startsWith("/dashboard")) and !(req.path.startsWith("/m/"))
     return res.redirect "/m#{req.originalUrl}"
 
   # if req.useragent.isMobile and not req.user.is_admin

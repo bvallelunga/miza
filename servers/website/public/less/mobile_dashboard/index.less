@@ -191,17 +191,21 @@
   }
 
   .sidebar {
-    width: 160px;
+    width: 100%;
     position: relative;
-    float: left;
 
     ul {
       font-size: 1.3em;
       color: #424770;
+      text-align: center;
+      margin: 20px 5px;
+      padding: 5px 5px;
+      border-bottom: 1px solid #e6e9eb;
 
       li {
-        margin: 20px 0;
+        display: inline-block;
         opacity: 0.75;
+        margin: 0 10px;
 
         &:hover {
           opacity: 1;
@@ -214,6 +218,7 @@
         }
 
         .fa {
+          display: none;
           font-size: 0.9em;
           margin-right: 5px;
           width: 20px;
@@ -405,6 +410,8 @@
       width: 100%;
       text-align: left;
 
+      // border: 1px solid #e6e9eb;
+
       table {
         width: 100%;
       }
@@ -419,10 +426,12 @@
       }
 
       .section {
+        display: flex;
         font-size: 1.2em;
-        padding: 18px;
+        padding: 6px 18px;
 
         .title {
+          display: inline-block;
           color: black;
           .ellipsis();
 
@@ -432,12 +441,44 @@
         }
 
         .decription {
+          width: 140px;
+          display: inline;
           color: @text_weak;
           margin-bottom: 5px;
         }
 
         .actions .action {
           margin: 8px 5px 0 0;
+        }
+
+        .box {
+          border: 1px solid #e6e9eb;
+          display: block;
+          width: 100%;
+          border-radius: 3px;
+          padding: 20px;
+          margin-bottom: 16px;
+
+          .title {
+            display: block;
+            font-size: 15px;
+            font-weight: 300;
+            color: @text_light;
+            margin-bottom: 4px;
+          }
+
+          .main {
+            color: #363b40;
+            font-size: 25px;
+            font-weight: 500;
+            line-height: 32px;
+          }
+
+          .side {
+            color: @text_light;
+            font-size: 18px;
+            font-weight: 300;
+          }
         }
       }
     }
@@ -556,5 +597,16 @@
 
   .container.add_card-dashboard {
     padding: 40px;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .container {
+    .sidebar {
+      ul {
+        margin: 20px 0px;
+        padding: 5px 0px;
+      }
+    }
   }
 }
