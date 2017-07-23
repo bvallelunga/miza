@@ -4,5 +4,6 @@ $ ->
 
   $(".nav-button").click ->
     $(".menu").css("right", 0);
+
   $(".close-menu").click ->
-    $(".menu").css("right", "-360px");
+    $(".menu").css("right", -window.innerWidth);
