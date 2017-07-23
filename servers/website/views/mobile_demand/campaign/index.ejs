@@ -134,7 +134,7 @@
 
 <div class="display full table">
   <div class="table-header">
-    <div class="actions left <%= campaign.status != "running" ? "disabled" : "" %>" data-url="/dashboard/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/industries">
+    <div class="actions <%= campaign.status != "running" ? "disabled" : "" %>" data-url="/dashboard/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/industries" style="margin-bottom: 10px;">
       <div class="action" data-action="running">
         <span class="fa fa-play"></span>
         <span class="fa fa-spin fa-refresh" style="display:none"></span>
@@ -146,7 +146,7 @@
         Pause
       </div>
     </div>
-    <div class="search-box right">
+    <div class="search-box">
       <div class="fa fa-search"></div>
       <input type="text" class="white" placeholder="Search...."/>
     </div>

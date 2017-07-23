@@ -1,39 +1,43 @@
 @import '../libs/all';
 @import '../global/colors';
 
+.dataTables_wrapper {
+  overflow: auto;
+}
+
 table.dataTable {
   width: 100% !important;
   font-size: 14px;
-  
+
   &.no-footer {
     border: none;
   }
-  
+
   thead th, thead td {
     background: #616E77;
     color: white;
-    text-align: left;  
+    text-align: left;
     border-top: solid 1px rgba(0,0,0,0.1);
     border-bottom: solid 1px rgba(0,0,0,0.1);
   }
-  
+
   thead th, thead td,
   tbody th, tbody td {
     padding: 10px 15px;
     cursor: default;
-    
+
     a {
       color: @blue;
-      
+
       &:hover {
         text-decoration: underline;
       }
     }
   }
-  
+
   tbody tr.selected {
     background: darken(#FBFBFF, 1%);
   }
-  
-  
+
+
 }
