@@ -1,38 +1,39 @@
 .container.billing-dashboard .display {
   margin-bottom: 15px;
-  
+
   &.table-container {
     min-height: 350px;
+    overflow: auto;
   }
-  
+
   .table {
     width: 100%;
     text-align: left;
     font-size: 1.15em;
     border-spacing: 0;
-    
+
     th {
       padding: 15px 15px;
       border-bottom: solid 1px #EDF1F5;
     }
-    
+
     td {
       font-size: 0.95em;
       padding: 12px 15px;
       vertical-align: text-top;
       font-weight: lighter;
-      
-      &:first-child, &:nth-child(2), 
+
+      &:first-child, &:nth-child(2),
       &:nth-child(3) {
         text-transform: capitalize;
       }
-      
+
       &:nth-child(4) {
         word-wrap: break-word;
         word-break: break-all;
-      } 
+      }
     }
-    
+
     tr:last-child td {
       border: none;
     }
