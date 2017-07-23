@@ -84,11 +84,11 @@ class Dashboard
         { "data": "name" },
         { "data": "type" },
         { "data": "status" },
-        { "data": "metrics.progress" },
-        { "data": "metrics.impressions" },
-        { "data": "metrics.clicks" }
-        { "data": "metrics.ctr" }
-        { "data": "metrics.spend" }
+        # { "data": "metrics.progress" },
+        # { "data": "metrics.impressions" },
+        # { "data": "metrics.clicks" }
+        # { "data": "metrics.ctr" }
+        # { "data": "metrics.spend" }
       ]
     })
 
