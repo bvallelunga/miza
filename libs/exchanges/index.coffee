@@ -12,9 +12,10 @@ module.exports = {
 module.exports.fetch = (req, res)->
   waterfall = [
     LIBS.exchanges.override
+    LIBS.exchanges.mobile
     LIBS.exchanges.miza
     LIBS.exchanges.indeed
-#     LIBS.exchanges.video
+    LIBS.exchanges.video
   ]
   
   new Promise (res, rej)->
@@ -36,6 +37,13 @@ module.exports.fetch = (req, res)->
         return res response
             
       return rej LIBS.exchanges.errors.AD_NOT_FOUND
+
+
+module.exports.mobile = (req, res)->  
+  if not req.mobile_frame
+    return Promise.reject LIBS.exchanges.errors.AD_NOT_FOUND
+  
+  return LIBS.exchanges.video(req, res)
 
 
 module.exports.override = (req, res)->

@@ -3,7 +3,7 @@ module.exports = (req, res)->
   video = req.query.video or videos[ Math.floor(Math.random() * videos.length) ]
  
   creative = LIBS.models.Creative.build({
-    format: "video"
+    format: if req.mobile_frame then video else "video"
     config: {
       video: video
     }

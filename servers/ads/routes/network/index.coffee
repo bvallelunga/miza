@@ -88,6 +88,8 @@ module.exports.mobile_frame = (req, res, next)->
   }
   
   new Promise (respond, reject)->
+    req.mobile_frame = true
+    
     LIBS.exchanges.fetch(req, res).then (creative)->  
       format = creative.format.split(' ').join('')
       
@@ -108,10 +110,14 @@ module.exports.mobile_frame = (req, res, next)->
         respond code
         
   .then (code)->
-    res.json {
-      ad_available: true
-      html: code
-    }
+    if req.query.type == "html"
+      res.send code
+    
+    else 
+      res.json {
+        ad_available: true
+        html: code
+      }
     
     LIBS.ads.event.track req, {
       type: "delivery"
@@ -128,6 +134,8 @@ module.exports.ad_frame = (req, res, next)->
   LIBS.ads.event.track req, {
     type: "request"
   }
+  
+  req.mobile_frame = false
   
   LIBS.exchanges.fetch(req, res).then (creative)->  
     format = creative.format.split(' ').join('')

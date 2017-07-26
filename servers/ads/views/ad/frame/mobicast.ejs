@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      html, body {
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        font-family: "Arial";
+        background: black;
+      }
+      
+      .mb-widget .tag {
+        display: none !important;
+      }
+    </style>
+    <script>
+      window["<%= publisher.key %>"] = { 
+        frame: "<%= frame %>",
+        creative: "<%= creative.id || "" %>",
+        advertiser: "<%= creative.advertiser_id || "" %>",
+        campaign: "<%= creative.campaign_id || "" %>",
+        industry: "<%= creative.industry_id || "" %>"
+      };      
+      
+      window.parent.window.postMessage({
+        name: "frame.show",
+        frame: "<%= frame %>",
+        width: <%- width %>,
+        height: <%- height %>
+      }, "*");
+      
+      <% if(!demo) { %>
+        <%- miza_script %>
+      <% } %>
+    </script>
+  </head>
+  <body>
+    <div data-mb-widget data-id="115" data-account="14" data-style="responsive" data-autoplay></div>
+    <script type="text/javascript" src="//widget-demo.mobicast.io/main.js?eeb2ac7f636fb3e5d1d3"></script>
+    <% include ./includes/footer %>
+  </body>
+</html>
