@@ -80,20 +80,7 @@ module.exports.post = (req, res, next)->
             auto_approve: 1
           }, {transaction: t}).then (advertiser)->
             req.user.addAdvertiser(advertiser)
-            if req.useragent.isMobile
-              next_page = "/mobile"
-
-              LIBS.emails.send "mobile_registration", [{
-                to: req.user.email
-                host: req.get("host")
-                data: {
-                  user: req.user
-                }
-              }]
-              req.session.destroy()
-              
-            else
-              next_page = "/dashboard/demand/#{advertiser.key}/campaigns?new_advertiser"
+            next_page = "/dashboard/demand/#{advertiser.key}/campaigns?new_advertiser"
     .then ->
       res.json {
         success: true
