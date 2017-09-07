@@ -4,7 +4,7 @@ module.exports.get_root = (req, res, next)->
   if req.user.publishers.length == 0
     return res.redirect "/dashboard/supply/new"
     
-  res.redirect "/dashboard/supply/#{req.user.publishers[0].key}/analytics"
+  res.redirect "/dashboard/supply/#{req.user.publishers[0].key}/setup"
 
 
 module.exports.get_dashboard = (req, res, next)->
@@ -13,7 +13,8 @@ module.exports.get_dashboard = (req, res, next)->
   dashboard = req.params.dashboard
   dashboard_path = "/dashboard/supply/#{req.publisher.key}"
   dashboards = [
-    "setup", "setup_mobile", "analytics", "members", "settings", "payouts"
+    # "analytics",
+    "setup", "setup_mobile", "members", "settings", "payouts"
   ]
   dashboard_size = ""
   ads_domain = CONFIG.ads_server.domain
@@ -21,7 +22,7 @@ module.exports.get_dashboard = (req, res, next)->
     return word[0].toUpperCase() + word[1..-1].toLowerCase()).join ' '
 
   if dashboard not in dashboards
-    return res.redirect "#{dashboard_path}/analytics"  
+    return res.redirect "#{dashboard_path}/setup"  
   
   if req.publisher.is_demo
     ads_domain = req.hostname

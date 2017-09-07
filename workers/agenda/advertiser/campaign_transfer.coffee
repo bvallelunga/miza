@@ -13,4 +13,4 @@ module.exports = require("../template") {
       transferred_at: null
     }
   }).each (campaign)->
-    campaign.create_transfer()
+    campaign.create_transfer().catch -> Promise.resolve()

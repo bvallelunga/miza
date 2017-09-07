@@ -28,6 +28,11 @@ API.impression_check = function(iframe) {
 API.impression_frame_init = function() { 
   API.impression = false
   
+  if(!!API.force_impression && !API.impression) {
+    API.impression = true
+    return API.status("i")
+  }
+  
   window.parent.window.postMessage({
     name: "frame.impression",
     frame: API.frame

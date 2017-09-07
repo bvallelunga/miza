@@ -17,9 +17,11 @@ module.exports = require("../template") {
       }
     }]
   }).each (advertiser)->
+    console.log advertiser.name
+  
     advertiser.approve_spending({
       created_at: {
         $lte: advertiser.auto_approve_at
       }
-    })
+    }).catch -> Promise.resolve()
   
