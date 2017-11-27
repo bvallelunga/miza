@@ -1,0 +1,143 @@
+@import '../libs/all';
+@import '../global/colors';
+
+.container.campaigns-listing-dashboard {
+
+  .header {
+    padding: 0 20px;
+  }
+
+  .display {
+    min-height: 450px;
+  }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #F1F5F9;
+    z-index: 100000;
+    border: none;
+    padding: 30px 10px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-transform: translateZ(0);
+    -webkit-overflow-scrolling: touch;
+    .border-radius(0);
+    .box-sizing(border-box);
+
+    .close {
+      color: #BBBBBB;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .close:before,
+    .close:after {
+      content: '';
+      background: #666;
+      border-radius: 1px;
+      height: 2px;
+      top: 18px;
+      left: 10px;
+      right: 10px;
+      position: absolute;
+    }
+
+    .close:before {
+      transform: rotate(45deg);
+    }
+
+    .close:after {
+      transform: rotate(135deg);
+    }
+
+    .title {
+      color: @text_weak;
+      font-size: 2em;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .listings {
+      display: block;
+      margin: 40px auto 0;
+      width: 100%;
+    }
+
+    .list {
+      width: calc(~'100vw - 20px');
+      padding: 20px 20px 0px 0px;
+      float: left;
+      // .clearfix();
+
+      .header {
+        display: block;
+        font-weight: bold;
+        margin-left: 15px;
+        font-size: 1.25em;
+      }
+
+      ::-webkit-scrollbar {
+        width: 0px;  /* remove scrollbar space */
+        background: transparent;  /* optional: just make scrollbar invisible */
+      }
+
+      a {
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+        cursor: pointer;
+        width: 100%;
+        height: 90px;
+        padding: 12px 15px;
+        margin: 15px 12px;
+        text-align: center;
+        background: white;
+        border: solid 1px rgba(0,0,0,0.1);
+        display: inline-block;
+        float: left;
+        .border-radius(4px);
+        .box-shadow(0 3px 6px 1px rgba(0,0,0,0.03));
+
+        .fa, .kickstarter, .indiegogo {
+          float: left;
+          margin: 10px 0 25px;
+          font-size: 3em;
+          color: rgba(0,0,0,0.15);
+
+          &.kickstarter {
+            font-family: "Ubuntu";
+            font-weight: bolder;
+            font-size: 2.8em;
+            color: #2BDE73;
+            margin-bottom: 22px;
+          }
+
+          &.indiegogo {
+            font-family: "Ubuntu";
+            font-weight: bolder;
+            font-size: 2.8em;
+            color: #EB1478;
+            margin-bottom: 22px;
+          }
+        }
+
+        .subname {
+          margin-top: 2px;
+          font-size: 1.2em;
+          font-weight: light;
+        }
+
+        .name {
+          font-size: 1.4em;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

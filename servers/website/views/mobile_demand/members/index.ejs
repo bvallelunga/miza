@@ -1,0 +1,82 @@
+<div class="sidebar">
+  <ul>
+    <li>
+      <a href="<%= dashboard_path %>/settings">
+        <span class="fa fa-user-circle"></span>
+        Profile
+      </a>
+    </li>
+    <li class="active">
+      <a href="<%= dashboard_path %>/members">
+        <span class="fa fa-users"></span>
+        Members
+      </a>
+    </li>
+    <% if(user.is_admin || user.id == advertiser.owner_id) { %>
+      <li>
+        <a href="/account/billing?next=<%= path %>">
+          <span class="fa fa-credit-card"></span>
+          Update Card
+        </a>
+      </li>
+    <% } %>
+  </ul>
+</div>
+<div class="display">
+  <span>
+    Members will be able to do everything <strong>but add/remove members,</strong>
+    only the owner has such privileges.
+  </span>
+  <br><br><br>
+  <% if(user.is_admin || user.id == advertiser.owner.id) { %>
+    <form class="form invite" method="POST" action="<%= dashboard_path %>/members/add">
+      <% include ../../includes/csrf %>
+      <table>
+        <tr>
+          <td><input class="input left" type="email" name="email" placeholder="Email address" required/></td>
+          <td><button class="button left" type="submit">Add Member</button></td>
+        </tr>
+      </table>
+    </form>
+  <% } %>
+  <div class="clear error"></div>
+  <table class="members-table">
+    <% invites.forEach(function(invite) { %>
+      <tr>
+        <td class="invite"><%= invite.email %></td>
+        <td class="invite">pending</td>
+        <% if(user.is_admin || user.id == advertiser.owner.id) { %>
+          <td>
+            <a class="red" href="<%= dashboard_path %>/members/invite/<%= invite.id %>/remove">Remove</a>
+          </td>
+          <% if(user.is_admin) { %>
+            <td></td>
+          <% } %>
+        <% } %>
+      </tr>
+    <% }) %>
+    <% members.forEach(function(member) { %>
+      <tr>
+        <td><%= member.name %></td>
+        <td class="<%= member.id == advertiser.owner.id ? "owner" : "member" %>">
+          <%= member.id == advertiser.owner.id ? "owner" : "member" %>
+        </td>
+        <% if(user.is_admin || user.id == advertiser.owner.id) { %>
+          <td>
+            <% if(member.id != advertiser.owner.id) { %>
+              <a class="red" href="<%= dashboard_path %>/members/member/<%= member.id %>/remove">Remove</a>
+            <% } %>
+          </td>
+          <% if(user.is_admin) { %>
+            <td>
+              <% if(member.id != advertiser.owner.id) { %>
+                <a class="red" href="<%= dashboard_path %>/members/member/<%= member.id %>/owner">Make Owner</a>
+                <span class="info fa fa-info-circle tooltip" title="Only admins can perform this action."></span>
+              <% } %>
+            </td>
+          <% } %>
+        <% } %>
+      </tr>
+    <% }) %>
+  </table>
+</div>

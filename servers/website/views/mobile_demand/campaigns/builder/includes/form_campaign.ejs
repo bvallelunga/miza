@@ -1,0 +1,29 @@
+<div class="section">
+  <div class="header">Campaign</div>
+  <table class="top-table shifted">
+    <tr>
+      <td class="title">Name<span>REQUIRED</span></td>
+      <td>
+        <input class="full-input" type="text" name="name" placeholder="New Branding Initiative" required/>
+      </td>
+    </tr>
+    <tr>
+      <td class="title">Start Date<span>OPTIONAL</span></td>
+      <td>
+        <div class="group left-align date-input">
+          <div class="fa fa-calendar"></div>
+          <input class="range-display" type="text" name="start_date" autocomplete="off" placeholder="MM-DD-YYYY" data-start-date="<%= moment().add(1, "day").format('MM-DD-YYYY') %>"/>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="title">End Date<span>OPTIONAL</span></td>
+      <td>
+        <div class="group left-align date-input last">
+          <div class="fa fa-calendar"></div>
+          <input class="range-display" type="text" name="end_date" autocomplete="off" placeholder="MM-DD-YYYY" data-start-date="<%= moment().add(2, "day").format('MM-DD-YYYY') %>"/>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

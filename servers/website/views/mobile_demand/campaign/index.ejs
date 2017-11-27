@@ -1,0 +1,262 @@
+<% if(campaign.status == "rejected") { %>
+<div class="warning" style="padding-left: 20px; padding-right: 20px; text-align: left;">
+  MODERATOR NOTES:
+  <%= campaign.config.rejection_notes %>
+  <br><br>
+  Please create a new campaign with the appropriate fixes. We
+  will approve it as soon as possible.
+</div>
+<% } %>
+
+<div class="display full">
+  <div class="header">
+    <h1>Campaign Information
+  </div>
+  <table class="top-bar">
+    <tr>
+      <td class="section">
+        <div class="decription">
+          Name
+          <% if(campaign.config.is_house == true) { %>
+            <span class="bubble">HOUSE</span>
+          <% } %>
+        </div>
+        <div class="title"><%= campaign.name %></div>
+      </td>
+      <td class="section">
+        <div class="decription">Pricing</div>
+        <div class="title uppercase">
+          <%= campaign.type %>
+          <% if(campaign.type == "cpm") { %>
+            <!-- <span class="info fa fa-info-circle tooltip" title="Cost per thousand impressions."></span> -->
+          <% } else if(campaign.type == "cpc") { %>
+            <!-- <span class="info fa fa-info-circle tooltip" title="Cost per individual click."></span> -->
+          <% } %>
+        </div>
+      </td>
+      <td class="section">
+        <div class="decription">Status</div>
+        <div class="title cap">
+          <%= campaign.status %>
+          <% if(campaign.status == "pending") { %>
+            <!-- <span class="info fa fa-info-circle tooltip" title="Your campaign is awaiting approval<br>from our moderation team."></span> -->
+          <% } else if(campaign.status == "queued") { %>
+            <!-- <span class="info fa fa-info-circle tooltip" title="Campaign will go live on the designated start date (UTC)."></span> -->
+          <% } else if(campaign.status == "rejected") { %>
+            <!-- <span class="info fa fa-info-circle tooltip" title="Campaign has been rejected. Please<br>see the moderators notes."></span> -->
+          <% } %>
+        </div>
+      </td>
+      <td class="section" style="min-width:255px;">
+        <div class="actions campaign right" data-url="/dashboard/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>">
+          <% if(campaign.status == "pending" || campaign.status == "completed" || campaign.status == "rejected") { %>
+            <div class="action" data-action="delete" data-confirm="Please confirm you want to delete!">
+              <span class="fa fa-trash"></span>
+              <span class="fa fa-spin fa-refresh" style="display:none"></span>
+              Delete
+            </div>
+          <% } else { %>
+            <% if(campaign.status == "running") { %>
+              <div class="action" data-action="paused">
+                <span class="fa fa-pause"></span>
+                <span class="fa fa-spin fa-refresh" style="display:none"></span>
+                Pause
+              </div>
+            <% } else { %>
+               <div class="action" data-action="running">
+                <span class="fa fa-play"></span>
+                <span class="fa fa-spin fa-refresh" style="display:none"></span>
+                Run
+              </div>
+            <% } %>
+            <div class="action" data-action="completed" data-confirm="Please confirm you want to archive!">
+              <span class="fa fa-archive"></span>
+              <span class="fa fa-spin fa-refresh" style="display:none"></span>
+              Archive
+            </div>
+          <% } %>
+        </div>
+      </td>
+      <td class="section">
+        <div class="box">
+          <div class="title">
+            Spend
+          </div>
+          <span class="main">
+            <%= campaign.metrics.spend %>
+          </span>
+          <span class="side">
+            /<%= campaign.metrics.budget %>
+          </span>
+        </div>
+      </td>
+      <td class="section">
+        <div class="box">
+          <div class="title">
+            Progress
+          </div>
+          <span class="main">
+            <%= campaign.metrics.progress %>
+          </span>
+        </div>
+      </td>
+      <td class="section">
+        <div class="box">
+          <div class="title">
+            Impressions
+          </div>
+          <span class="main">
+            <%= campaign.metrics.impressions %>
+          </span>
+        </div>
+      </td>
+      <td class="section">
+        <div class="decription">Clicks</div>
+        <div class="title cap"><%= campaign.metrics.clicks %></div>
+      </td>
+      <td class="section">
+        <div class="decription">
+          <!-- CTR <span class="info fa fa-info-circle tooltip" title="Click through rate. How many people<br>viewed the ad and then clicked."></span> -->
+        </div>
+        <div class="title cap"><%= campaign.metrics.ctr %></div>
+      </td>
+      <td class="section">
+        <div class="decription">Start Date</div>
+        <div class="title"><%= campaign.start_at ? moment(campaign.start_at).format("MMM DD") : "NONE" %></div>
+      </td>
+      <td class="section">
+        <div class="decription">End Date</div>
+        <div class="title"><%= campaign.end_at ? moment(campaign.end_at).format("MMM DD") : "NONE" %></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="display full table">
+  <div class="table-header">
+    <div class="actions <%= campaign.status != "running" ? "disabled" : "" %>" data-url="/dashboard/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/industries" style="margin-bottom: 10px;">
+      <div class="action" data-action="running">
+        <span class="fa fa-play"></span>
+        <span class="fa fa-spin fa-refresh" style="display:none"></span>
+        Run
+      </div>
+      <div class="action" data-action="paused">
+        <span class="fa fa-pause"></span>
+        <span class="fa fa-spin fa-refresh" style="display:none"></span>
+        Pause
+      </div>
+    </div>
+    <div class="search-box">
+      <div class="fa fa-search"></div>
+      <input type="text" class="white" placeholder="Search...."/>
+    </div>
+  </div>
+  <div class="table-body">
+    <table class="hidden" data-url="/dashboard/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/industries" data-columns="<%= JSON.stringify([
+      { "data": "id" },
+      { "data": "name" },
+      { "data": "status" },
+      { "data": "metrics.impressions" },
+      { "data": "metrics.clicks" },
+      { "data": "metrics.ctr" },
+      { "data": "metrics.amount" },
+      { "data": "metrics.spend" }
+    ]) %>">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Industry</th>
+          <th>Status</th>
+          <th>Impressions</th>
+          <th>Clicks</th>
+          <th>CTR</th>
+          <th><%= campaign.type.toUpperCase() %></th>
+          <th>Spend</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="display full creative-container">
+  <table class="top-bar creative-info">
+    <tr>
+      <td class="section">
+        <div class="decription">Creative</div>
+        <div class="title capitalize"><%= campaign.creatives[0].format %></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="section">
+        <div class="decription">Format</div>
+        <div class="title capitalize">Image <%= campaign.creatives[0].description ? " + Text" : "" %></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="section">
+        <div class="decription">Impression Trackers</div>
+        <div class="title"><%= campaign.creatives[0].trackers.filter(function(str) {
+          return str.length > 0
+        }).length %></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="section">
+        <div class="decription">Click URL</div>
+        <a class="title" target="_blank" href="<%= campaign.creatives[0].link %>"><%= campaign.creatives[0].link.slice(0,42) %>...</a>
+      </td>
+    </tr>
+  </table>
+  <div class="simulator-container">
+    <div><iframe class="simulator-iframe right" data-src="<%= campaign.creatives[0].demo_frame() %>"></iframe></div>
+  </div>
+</div>
+
+<% if(user.is_admin) { %>
+  <div class="display full table">
+    <div class="table-header admin">
+      <div class="warning-banner">Admin Only</div>
+      <div class="actions left" data-url="/dashboard/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/publishers">
+        <div class="action" data-action="enable">
+          <span class="fa fa-circle"></span>
+          <span class="fa fa-spin fa-refresh" style="display:none"></span>
+          Enable
+        </div>
+        <div class="action" data-action="block">
+          <span class="fa fa-ban"></span>
+          <span class="fa fa-spin fa-refresh" style="display:none"></span>
+          Block
+        </div>
+      </div>
+      <div class="search-box right">
+        <div class="fa fa-search"></div>
+        <input type="text" class="white" placeholder="Search...."/>
+      </div>
+    </div>
+    <div class="table-body">
+      <table class="hidden" data-url="/dashboard/demand/<%= advertiser.key %>/campaign/<%= campaign.id %>/publishers" data-columns="<%= JSON.stringify([
+        { "data": "id" },
+        { "data": "name" },
+        { "data": "industry" },
+        { "data": "status" },
+        { "data": "metrics.impressions" },
+        { "data": "metrics.clicks" },
+        { "data": "metrics.ctr" }
+      ]) %>">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Publisher</th>
+            <th>Industry</th>
+            <th>Status</th>
+            <th>Impressions</th>
+            <th>Clicks</th>
+            <th>CTR</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+<% } %>

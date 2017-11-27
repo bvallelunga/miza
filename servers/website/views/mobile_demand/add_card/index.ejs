@@ -1,0 +1,33 @@
+<form class="form card" method="POST" action="/m/dashboard/demand/<%= advertiser.key %>/add_card/<%= campaign.id %>">
+  <% include ../../includes/csrf %>
+  <div class="header">Get $<%= CONFIG.advertiser.incentive %> free!</div>
+  <div class="subheader">
+    Enter your billing information to get up to $<%= CONFIG.advertiser.incentive %>  off your campaigns.
+    For future campaigns, we will only charge your card for what has been spent out of the budget.
+  </div>
+
+  <div class="view left">
+    <div class="simulator-container left">
+      <div><iframe class="simulator-iframe right" data-src="<%= campaign.creatives[0].demo_frame() %>"></iframe></div>
+    </div>
+  </div>
+
+  <div class="view right">
+
+
+    <input type="hidden" name="next" value="<%= next %>" required>
+    <input class="top card-number" type="text" name="number" placeholder="**** **** **** ****" data-stripe="number" required>
+    <input type="text" name="name" placeholder="Tony Stark" data-stripe="name" required/>
+    <div class="split">
+      <input class="bottom left" type="text" name="expiry" placeholder="** / ****" data-stripe="exp" required/>
+      <input class="bottom right" type="text" name="cvc" placeholder="***" data-stripe="cvc" required/>
+    </div>
+    <button class="button" type="submit">Save Card</button>
+    <div class="error"></div>
+    <a class="stripe" href="http://stripe.com" target="_body">
+      <img src="/imgs/stripe.png"/>
+    </a>
+  </div>
+  <div class="clear"></div>
+  <div class="card-wrapper hidden"></div>
+</form>
